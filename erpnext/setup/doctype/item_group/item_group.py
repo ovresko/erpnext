@@ -22,9 +22,13 @@ class ItemGroup(NestedSet, WebsiteGenerator):
 	)
 
 	def autoname(self):
-		self.name = self.item_group_name
+		self.nom_groupe = self.numero+" - "+self.item_group_name
+		self.name = self.nom_groupe
 
 	def validate(self):
+		self.nom_groupe = self.numero+" - "+self.item_group_name
+		if self.name != self.nom_groupe and not self.is_new():
+			self.name = frappe.rename_doc(self.doctype,self.name,self.nom_groupe)
 		super(ItemGroup, self).validate()
 		self.make_route()
 

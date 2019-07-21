@@ -156,6 +156,15 @@ def item_query(doctype, txt, searchfield, start, page_len, filters, as_dict=Fals
 	if frappe.db.count('Item', cache=True) < 50000:
 		# scan description only if items are less than 50000
 		description_cond = 'or tabItem.description LIKE %(txt)s'
+		spaceless = txt.replace(" ","")
+		spaceless = spaceless.replace("_","")
+		spaceless = spaceless.replace("+","")
+		spaceless = spaceless.replace(",","")
+		spaceless = spaceless.replace("-","")
+		spaceless = spaceless.replace(";","")
+		spaceless = spaceless.replace(".","")
+		spaceless = spaceless.replace(":","")
+		
 
 	return frappe.db.sql("""select tabItem.name,
 		if(length(tabItem.item_name) > 40,
@@ -172,6 +181,11 @@ def item_query(doctype, txt, searchfield, start, page_len, filters, as_dict=Fals
 				or tabItem.item_code LIKE %(txt)s
 				or tabItem.item_group LIKE %(txt)s
 				or tabItem.item_name LIKE %(txt)s
+				or REPLACE(REPLACE(REPLACE(tabItem.item_code,' ',''),'+',''),'-','') LIKE %(spaceless)s
+				or tabItem.manufacturer_part_no LIKE %(txt)s
+				or tabItem.clean_manufacturer_part_number LIKE %(spaceless)s
+				or tabItem.adresse_magasin LIKE %(txt)s
+				or Match(tabItem.nom_generique_long) AGAINST(%(txt)s)
 				or tabItem.item_code IN (select parent from `tabItem Barcode` where barcode LIKE %(txt)s)
 				{description_cond})
 			{fcond} {mcond}
@@ -184,10 +198,11 @@ def item_query(doctype, txt, searchfield, start, page_len, filters, as_dict=Fals
 			key=searchfield,
 			fcond=get_filters_cond(doctype, filters, conditions).replace('%', '%%'),
 			mcond=get_match_cond(doctype).replace('%', '%%'),
-			description_cond = description_cond),
+			description_cond = description_cond,spaceless = spaceless),
 			{
 				"today": nowdate(),
 				"txt": "%%%s%%" % txt,
+				"spaceless":spaceless,
 				"_txt": txt.replace("%", ""),
 				"start": start,
 				"page_len": page_len

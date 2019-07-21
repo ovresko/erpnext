@@ -20,7 +20,7 @@ from frappe.website.doctype.website_slideshow.website_slideshow import \
 
 from frappe.website.render import clear_cache
 from frappe.website.website_generator import WebsiteGenerator
-
+from frappe.model.naming import make_autoname
 from six import iteritems
 
 
@@ -67,16 +67,27 @@ class Item(WebsiteGenerator):
 				from frappe.model.naming import set_name_by_naming_series
 				set_name_by_naming_series(self)
 				self.item_code = self.name
-		elif not self.item_code:
-			msgprint(_("Item Code is mandatory because Item is not automatically numbered"), raise_exception=1)
+		elif not self.item_code or self.generer_code_interne or self.item_code == "CODE" or self.item_code == "code":
+			group = frappe.get_doc("Item Group",self.item_group)
+			group_numero = group.numero
+			if group_numero:
+				if self.variant_of:
+					self.item_code = make_autoname(self.variant_of+"-"+".####")
+				else:
+					if(len(group_numero) < 6):
+						group_numero = group_numero.ljust(6,'0')
+					self.item_code = make_autoname(group_numero + "-" + ".######")
+			else:
+				msgprint(_("Item Code is mandatory because Item is not automatically numbered"), raise_exception=1)
 
+		self.nom_generique_long = self.item_name
 		self.item_code = strip(self.item_code)
 		self.name = self.item_code
 
 	def before_insert(self):
 		if not self.description:
 			self.description = self.item_name
-
+		self.ref_fabricant = self.manufacturer_part_no
 		# if self.is_sales_item and not self.get('is_item_from_hub'):
 		# 	self.publish_in_hub = 1
 
@@ -91,7 +102,11 @@ class Item(WebsiteGenerator):
 
 	def validate(self):
 		self.get_doc_before_save()
-
+		if self.manufacturer_part_no:
+			self.ref_fabricant = self.manufacturer_part_no
+		if self.manufacturer:
+			logo = frappe.get_doc("Manufacturer",self.manufacturer)
+			self.fabricant_logo = logo.logo
 		super(Item, self).validate()
 
 		if not self.item_name:
