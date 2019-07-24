@@ -81,6 +81,8 @@ class Item(WebsiteGenerator):
 				msgprint(_("Item Code is mandatory because Item is not automatically numbered"), raise_exception=1)
 
 		self.nom_generique_long = self.item_name
+		if self.designation_commerciale:
+			self.nom_generique_long += ' '+self.designation_commerciale
 		self.item_code = strip(self.item_code)
 		self.name = self.item_code
 
