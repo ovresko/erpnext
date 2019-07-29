@@ -110,8 +110,9 @@ class Item(WebsiteGenerator):
 			logo = frappe.get_doc("Manufacturer",self.manufacturer)
 			self.fabricant_logo = logo.logo
 		super(Item, self).validate()
-
-		if not self.item_name:
+		if self.has_variants == 0 and self.variant_of and self.variant_based_on == 'Manufacturer' and not self.manufacturer_part_no:
+			frappe.throw(_("Numero piece fabricant n'est pas valide"))
+		if not 	self.item_name:
 			self.item_name = self.item_code
 
 		if not self.description:
