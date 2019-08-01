@@ -170,6 +170,9 @@ def item_query(doctype, txt, searchfield, start, page_len, filters, as_dict=Fals
 		if(length(tabItem.item_name) > 40,
 			concat(substr(tabItem.item_name, 1, 40), "..."), item_name) as item_name,
 		tabItem.item_group,
+		tabItem.titre_article,
+		tabItem.manufacturer_part_no,
+		tabItem.manufacturer,
 		if(length(tabItem.description) > 40, \
 			concat(substr(tabItem.description, 1, 40), "..."), description) as decription
 		from tabItem
@@ -178,10 +181,11 @@ def item_query(doctype, txt, searchfield, start, page_len, filters, as_dict=Fals
 			and tabItem.disabled=0
 			and (tabItem.end_of_life > %(today)s or ifnull(tabItem.end_of_life, '0000-00-00')='0000-00-00')
 			and (tabItem.`{key}` LIKE %(txt)s
+				or tabItem.titre_article LIKE %(txt)s
 				or tabItem.item_code LIKE %(txt)s
 				or tabItem.item_group LIKE %(txt)s
 				or tabItem.item_name LIKE %(txt)s
-				or REPLACE(REPLACE(REPLACE(tabItem.item_code,' ',''),'+',''),'-','') LIKE %(spaceless)s
+				or REPLACE(REPLACE(REPLACE(tabItem.manufacturer_part_no,' ',''),'+',''),'-','') LIKE %(spaceless)s
 				or tabItem.manufacturer_part_no LIKE %(txt)s
 				or tabItem.clean_manufacturer_part_number LIKE %(spaceless)s
 				or tabItem.adresse_magasin LIKE %(txt)s

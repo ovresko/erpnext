@@ -72,7 +72,7 @@ class Item(WebsiteGenerator):
 			group_numero = group.numero
 			if group_numero:
 				if self.variant_of:
-					self.item_code = make_autoname(self.variant_of+"-"+".####")
+					self.item_code = make_autoname(self.variant_of+"-"+".###")
 				else:
 					if(len(group_numero) < 6):
 						group_numero = group_numero.ljust(6,'0')
@@ -109,6 +109,9 @@ class Item(WebsiteGenerator):
 		if self.manufacturer:
 			logo = frappe.get_doc("Manufacturer",self.manufacturer)
 			self.fabricant_logo = logo.logo
+			self.titre_article = self.nom_groupe+' : '+self.manufacturer_part_no+' '+logo.full_name
+		else:
+			self.titre_article = self.item_name
 		super(Item, self).validate()
 		if self.has_variants == 0 and self.variant_of and self.variant_based_on == 'Manufacturer' and not self.manufacturer_part_no:
 			frappe.throw(_("Numero piece fabricant n'est pas valide"))
@@ -117,7 +120,12 @@ class Item(WebsiteGenerator):
 
 		if not self.description:
 			self.description = self.item_name
-
+		nom_g = self.item_name + ' '
+		for v in self.versions:
+			nom_g += v.nom_version+' '
+		for g in self.generation_vehicule_supporte:
+			nom_g += g.nom_generation+' '
+		self.nom_generique_long = nom_g
 		self.validate_uom()
 		self.validate_description()
 		self.add_default_uom_in_conversion_factor_table()
