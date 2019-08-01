@@ -88,7 +88,7 @@ class Item(WebsiteGenerator):
 
 	def before_insert(self):
 		if not self.description:
-			self.description = self.item_name
+			self.description = self.titre_article
 		self.ref_fabricant = self.manufacturer_part_no
 		# if self.is_sales_item and not self.get('is_item_from_hub'):
 		# 	self.publish_in_hub = 1
@@ -119,7 +119,7 @@ class Item(WebsiteGenerator):
 			self.item_name = self.item_code
 
 		if not self.description:
-			self.description = self.item_name
+			self.description = self.titre_article
 		nom_g = self.item_name + ' '
 		for v in self.versions:
 			nom_g += v.nom_version+' '
