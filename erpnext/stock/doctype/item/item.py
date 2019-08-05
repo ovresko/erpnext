@@ -72,11 +72,12 @@ class Item(WebsiteGenerator):
 			group_numero = group.numero
 			if group_numero:
 				if self.variant_of:
-					self.item_code = make_autoname(self.variant_of+"-"+".###")
+					fabricant = frappe.get_doc('Manufacturer',self.manufacturer)
+					self.item_code = make_autoname(self.variant_of+"-"+fabricant.code+".##")
 				else:
 					if(len(group_numero) < 6):
 						group_numero = group_numero.ljust(6,'0')
-					self.item_code = make_autoname(group_numero + "-" + ".######")
+					self.item_code = make_autoname(group_numero + "-" + ".####")
 			else:
 				msgprint(_("Item Code is mandatory because Item is not automatically numbered"), raise_exception=1)
 
