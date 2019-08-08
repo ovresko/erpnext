@@ -245,7 +245,7 @@
    "search_index": 0, 
    "set_only_once": 0, 
    "translatable": 0, 
-   "unique": 1
+   "unique": 0
   }
  ], 
  "has_web_view": 0, 
@@ -259,7 +259,7 @@
  "issingle": 0, 
  "istable": 0, 
  "max_attachments": 0, 
- "modified": "2019-08-03 14:30:20.084254", 
+ "modified": "2019-08-06 12:26:52.944717", 
  "modified_by": "Administrator", 
  "module": "Stock", 
  "name": "Manufacturer", 
