@@ -22,6 +22,14 @@ frappe.ui.form.on("Item", {
 		if (frm.doc.is_fixed_asset) {
 			frm.trigger("set_asset_naming_series");
 		}
+		frm.fields_dict["critere_piece"].grid.get_field("valeur_p").get_query = function(doc, cdt, cdn) {
+			const row = locals[cdt][cdn];
+			return {
+				filters: {
+					"parent": row.parametre
+				}
+			}
+		}
 	},
 
 	refresh: function(frm) {
