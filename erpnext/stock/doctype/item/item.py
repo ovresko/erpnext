@@ -79,7 +79,7 @@ class Item(WebsiteGenerator):
 						group_numero = group_numero.ljust(6,'0')
 					self.item_code = make_autoname(group_numero + "-" + ".####")
 			else:
-				msgprint(_("Item Code is mandatory because Item is not automatically numbered"), raise_exception=1)
+				msgprint(_("Impossible de generer le code. Groupe article n'est pas numerote."), raise_exception=1)
 
 		self.nom_generique_long = self.item_name
 		if self.designation_commerciale:
