@@ -12,7 +12,32 @@ frappe.ui.form.on('Supplier Quotation', {
 		}
 	},
 	'importer_articles': function(frm){
-	 load_fab(frm);	
+	 var me = this;
+					frappe.call({
+					 method: 'erpnext.stock.doctype.material_request.material_request.get_supplier_quotation',
+					callback: function(r){
+						let res = [];
+						r.message.map(w => {
+							res.push(w.name);
+						})
+						if(res){					
+					erpnext.utils.map_current_doc({
+						method: "erpnext.stock.doctype.material_request.material_request.make_supplier_quotation",
+						source_doctype: "Material Request",
+						predef: res,
+						target: frm,
+						setters: {
+							company: frm.doc.company
+						},
+						get_query_filters: {
+							material_request_type: "Purchase",
+							docstatus: 1,
+							status: ["!=", "Stopped"],
+							per_ordered: ["<", 99.99]
+						}
+					});
+								
+						}}});	
 	},
 	validate: function(frm){
 	
@@ -43,6 +68,31 @@ frappe.ui.form.on('Supplier Quotation', {
 function load_fab(me){
 	
  
+}
+ 
+ 
+erpnext.buying.SupplierQuotationController = erpnext.buying.BuyingController.extend({
+	refresh: function() {
+		var me = this;
+		this._super();
+		if (this.frm.doc.docstatus === 1) {
+			cur_frm.add_custom_button(__("Purchase Order"), this.make_purchase_order,
+				__("Make"));
+			cur_frm.page.set_inner_btn_group_as_primary(__("Make"));
+			cur_frm.add_custom_button(__("Quotation"), this.make_quotation,
+				__("Make"));
+				
+			if(!this.frm.doc.auto_repeat) {	
+				cur_frm.add_custom_button(__('Subscription'), function() {
+					erpnext.utils.make_subscription(me.frm.doc.doctype, me.frm.doc.name)
+				}, __("Make"))
+			}
+		}
+		else if (this.frm.doc.docstatus===0) {
+
+			this.frm.add_custom_button(__('Material Request'),
+				function() {
+					
 					frappe.call({
 					 method: 'erpnext.stock.doctype.material_request.material_request.get_supplier_quotation',
 					callback: function(r){
@@ -68,31 +118,6 @@ function load_fab(me){
 					});
 								
 						}}});	
-}
- 
- 
-erpnext.buying.SupplierQuotationController = erpnext.buying.BuyingController.extend({
-	refresh: function() {
-		var me = this;
-		this._super();
-		if (this.frm.doc.docstatus === 1) {
-			cur_frm.add_custom_button(__("Purchase Order"), this.make_purchase_order,
-				__("Make"));
-			cur_frm.page.set_inner_btn_group_as_primary(__("Make"));
-			cur_frm.add_custom_button(__("Quotation"), this.make_quotation,
-				__("Make"));
-				
-			if(!this.frm.doc.auto_repeat) {	
-				cur_frm.add_custom_button(__('Subscription'), function() {
-					erpnext.utils.make_subscription(me.frm.doc.doctype, me.frm.doc.name)
-				}, __("Make"))
-			}
-		}
-		else if (this.frm.doc.docstatus===0) {
-
-			this.frm.add_custom_button(__('Material Request'),
-				function() {
-					load_fab(me);
 				}, __("Get items from"));
 		}
 	},
