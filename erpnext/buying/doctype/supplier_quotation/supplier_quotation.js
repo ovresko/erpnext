@@ -12,7 +12,7 @@ frappe.ui.form.on('Supplier Quotation', {
 		}
 	},
 	'importer_articles': function(frm){
-	this.load_fab();	
+	 load_fab();	
 	},
 	validate: function(frm){
 	
@@ -42,7 +42,7 @@ frappe.ui.form.on('Supplier Quotation', {
 
 function load_fab(){
 	
-
+var me= this;
 					frappe.call({
 					 method: 'erpnext.stock.doctype.material_request.material_request.get_supplier_quotation',
 					callback: function(r){
@@ -92,7 +92,7 @@ erpnext.buying.SupplierQuotationController = erpnext.buying.BuyingController.ext
 
 			this.frm.add_custom_button(__('Material Request'),
 				function() {
-					this.load_fab();
+					load_fab();
 				}, __("Get items from"));
 		}
 	},
@@ -112,15 +112,7 @@ erpnext.buying.SupplierQuotationController = erpnext.buying.BuyingController.ext
 	}
 });
 
-
-function run(){
-
-
-
-
-
-}
-
+ 
 
 // for backward compatibility: combine new and previous states
 $.extend(cur_frm.cscript, new erpnext.buying.SupplierQuotationController({frm: cur_frm}));
