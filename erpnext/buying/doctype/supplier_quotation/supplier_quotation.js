@@ -12,7 +12,7 @@ frappe.ui.form.on('Supplier Quotation', {
 		}
 	},
 	'importer_articles': function(frm){
-	 load_fab();	
+	 load_fab(frm);	
 	},
 	validate: function(frm){
 	
@@ -40,9 +40,9 @@ frappe.ui.form.on('Supplier Quotation', {
 
 });
 
-function load_fab(){
+function load_fab(me){
 	
-var me= this;
+ 
 					frappe.call({
 					 method: 'erpnext.stock.doctype.material_request.material_request.get_supplier_quotation',
 					callback: function(r){
@@ -92,7 +92,7 @@ erpnext.buying.SupplierQuotationController = erpnext.buying.BuyingController.ext
 
 			this.frm.add_custom_button(__('Material Request'),
 				function() {
-					load_fab();
+					load_fab(me);
 				}, __("Get items from"));
 		}
 	},
