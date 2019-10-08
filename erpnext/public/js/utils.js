@@ -592,7 +592,12 @@ erpnext.utils.map_current_doc = function(opts) {
 			}
 		});
 	}
-	if(opts.source_doctype) {
+	if(opts.predef){
+	   let values = opts.predef;
+	   opts.source_name = values;
+	   _map();
+	}
+	else if(opts.source_doctype) {
 		var d = new frappe.ui.form.MultiSelectDialog({
 			doctype: opts.source_doctype,
 			target: opts.target,

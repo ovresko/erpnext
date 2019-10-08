@@ -4,12 +4,37 @@
 // attach required files
 {% include 'erpnext/public/js/controllers/buying.js' %};
 
-frappe.ui.form.on('Suppier Quotation', {
+
+frappe.ui.form.on('Supplier Quotation', {
 	setup: function(frm) {
 		frm.custom_make_buttons = {
 			'Purchase Order': 'Purchase Order'
 		}
+	},
+	validate: function(frm){
+	
+		if(frm.doc.manufacturer){
+		
+		
+		
+		var _items = [];	
+		frm.doc.items.forEach(i => {
+			
+			if(i.fabricant == frm.doc.manufacturer){
+				//	Object.keys(i);
+				//.delete();
+				_items.push(i);
+			
+			}
+		
+		});
+	
+		frm.doc.items = _items;
+
+		}
+	
 	}
+
 });
 
 erpnext.buying.SupplierQuotationController = erpnext.buying.BuyingController.extend({
@@ -33,9 +58,19 @@ erpnext.buying.SupplierQuotationController = erpnext.buying.BuyingController.ext
 
 			this.frm.add_custom_button(__('Material Request'),
 				function() {
+
+					frappe.call({
+					 method: 'erpnext.stock.doctype.material_request.material_request.get_supplier_quotation',
+					callback: function(r){
+						let res = [];
+						r.message.map(w => {
+							res.push(w.name);
+						})
+						if(res){					
 					erpnext.utils.map_current_doc({
 						method: "erpnext.stock.doctype.material_request.material_request.make_supplier_quotation",
 						source_doctype: "Material Request",
+						predef: res,
 						target: me.frm,
 						setters: {
 							company: me.frm.doc.company
@@ -46,7 +81,9 @@ erpnext.buying.SupplierQuotationController = erpnext.buying.BuyingController.ext
 							status: ["!=", "Stopped"],
 							per_ordered: ["<", 99.99]
 						}
-					})
+					});
+								
+						}}});
 				}, __("Get items from"));
 		}
 	},
@@ -65,6 +102,16 @@ erpnext.buying.SupplierQuotationController = erpnext.buying.BuyingController.ext
 
 	}
 });
+
+
+function run(){
+
+
+
+
+
+}
+
 
 // for backward compatibility: combine new and previous states
 $.extend(cur_frm.cscript, new erpnext.buying.SupplierQuotationController({frm: cur_frm}));
