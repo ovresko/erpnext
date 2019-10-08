@@ -11,6 +11,9 @@ frappe.ui.form.on('Supplier Quotation', {
 			'Purchase Order': 'Purchase Order'
 		}
 	},
+	'importer_articles': function(frm){
+	this.load_fab();	
+	},
 	validate: function(frm){
 	
 		if(frm.doc.manufacturer){
@@ -37,27 +40,8 @@ frappe.ui.form.on('Supplier Quotation', {
 
 });
 
-erpnext.buying.SupplierQuotationController = erpnext.buying.BuyingController.extend({
-	refresh: function() {
-		var me = this;
-		this._super();
-		if (this.frm.doc.docstatus === 1) {
-			cur_frm.add_custom_button(__("Purchase Order"), this.make_purchase_order,
-				__("Make"));
-			cur_frm.page.set_inner_btn_group_as_primary(__("Make"));
-			cur_frm.add_custom_button(__("Quotation"), this.make_quotation,
-				__("Make"));
-				
-			if(!this.frm.doc.auto_repeat) {	
-				cur_frm.add_custom_button(__('Subscription'), function() {
-					erpnext.utils.make_subscription(me.frm.doc.doctype, me.frm.doc.name)
-				}, __("Make"))
-			}
-		}
-		else if (this.frm.doc.docstatus===0) {
-
-			this.frm.add_custom_button(__('Material Request'),
-				function() {
+function load_fab(){
+	
 
 					frappe.call({
 					 method: 'erpnext.stock.doctype.material_request.material_request.get_supplier_quotation',
@@ -83,7 +67,32 @@ erpnext.buying.SupplierQuotationController = erpnext.buying.BuyingController.ext
 						}
 					});
 								
-						}}});
+						}}});	
+}
+ 
+ 
+erpnext.buying.SupplierQuotationController = erpnext.buying.BuyingController.extend({
+	refresh: function() {
+		var me = this;
+		this._super();
+		if (this.frm.doc.docstatus === 1) {
+			cur_frm.add_custom_button(__("Purchase Order"), this.make_purchase_order,
+				__("Make"));
+			cur_frm.page.set_inner_btn_group_as_primary(__("Make"));
+			cur_frm.add_custom_button(__("Quotation"), this.make_quotation,
+				__("Make"));
+				
+			if(!this.frm.doc.auto_repeat) {	
+				cur_frm.add_custom_button(__('Subscription'), function() {
+					erpnext.utils.make_subscription(me.frm.doc.doctype, me.frm.doc.name)
+				}, __("Make"))
+			}
+		}
+		else if (this.frm.doc.docstatus===0) {
+
+			this.frm.add_custom_button(__('Material Request'),
+				function() {
+					this.load_fab();
 				}, __("Get items from"));
 		}
 	},
