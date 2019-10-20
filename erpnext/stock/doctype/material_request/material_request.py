@@ -371,9 +371,20 @@ def get_material_requests_based_on_supplier(supplier):
 		material_requests = []
 	return material_requests, supplier_items
 @frappe.whitelist()
-def get_supplier_quotation():
+def get_supplier_quotation(manufacturer):
         doclist = frappe.get_all("Material Request",filters={'docstatus':['=',1],'Material_request_type':'Purchase','status': ['=','Pending']},fields=['name'])
-        return doclist
+        docresult = []
+        for m in doclist:
+            origin = frappe.get_doc("Material Request",m)
+            items = []
+            for item in origin.items:
+                if (item.fabricant == manufacturer):
+                    items.append(item)
+            if items:
+                origin.items = items
+                docresult.append(origin)
+        return docresult
+
 @frappe.whitelist()
 def make_supplier_quotation(source_name, target_doc=None):
 	def postprocess(source, target_doc):

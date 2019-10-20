@@ -53,6 +53,7 @@ class Customer(TransactionBase):
 		self.validate_credit_limit_on_change()
 		self.set_loyalty_program()
 		self.check_customer_group_change()
+                self.region_long = self.territory + " " + self.parent_territory + " " + self.parent_parent_territory + " " + self.parent_parent_parent_territory
 
 		# set loyalty program tier
 		if frappe.db.exists('Customer', self.name):

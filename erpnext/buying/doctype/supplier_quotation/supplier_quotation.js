@@ -13,13 +13,17 @@ frappe.ui.form.on('Supplier Quotation', {
 	},
 	'importer_articles': function(frm){
 	 var me = this;
+		console.log("manufacturer : ",frm.doc.manufacturer)
 					frappe.call({
 					 method: 'erpnext.stock.doctype.material_request.material_request.get_supplier_quotation',
+						args:{manufacturer: frm.doc.manufacturer},
 					callback: function(r){
+						//frappe.msgprint("Vous devez enregistrer pour filtrer les resultats");
 						let res = [];
 						r.message.map(w => {
 							res.push(w.name);
 						})
+						console.log("get supp",res);
 						if(res){					
 					erpnext.utils.map_current_doc({
 						method: "erpnext.stock.doctype.material_request.material_request.make_supplier_quotation",
@@ -36,7 +40,10 @@ frappe.ui.form.on('Supplier Quotation', {
 							per_ordered: ["<", 99.99]
 						}
 					});
-								
+						//frm.reload_doc();
+							//frm.refresh();
+							//frm.refresh_field("items");
+							frappe.msgprint("Vous devez enregistrer pour filtrer les resultats  ")
 						}}});	
 	},
 	validate: function(frm){
@@ -47,7 +54,7 @@ frappe.ui.form.on('Supplier Quotation', {
 		
 		var _items = [];	
 		frm.doc.items.forEach(i => {
-			
+			console.log("validating ",i)
 			if(i.fabricant == frm.doc.manufacturer){
 				//	Object.keys(i);
 				//.delete();
@@ -95,6 +102,7 @@ erpnext.buying.SupplierQuotationController = erpnext.buying.BuyingController.ext
 					
 					frappe.call({
 					 method: 'erpnext.stock.doctype.material_request.material_request.get_supplier_quotation',
+					args:{manufacturer: me.frm.doc.manufacturer},
 					callback: function(r){
 						let res = [];
 						r.message.map(w => {

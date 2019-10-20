@@ -81,6 +81,10 @@ def customer_query(doctype, txt, searchfield, start, page_len, filters):
 		where docstatus < 2
 			and ({scond}) and disabled=0
 			{fcond} {mcond}
+                        or territory LIKE %(_txt)s
+                        or parent_territory LIKE %(_txt)s
+                        or parent_parent_territory LIKE %(_txt)s
+                        or parent_parent_parent_territory LIKE %(_txt)s
 		order by
 			if(locate(%(_txt)s, name), locate(%(_txt)s, name), 99999),
 			if(locate(%(_txt)s, customer_name), locate(%(_txt)s, customer_name), 99999),
