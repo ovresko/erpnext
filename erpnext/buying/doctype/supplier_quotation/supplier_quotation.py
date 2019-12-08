@@ -28,13 +28,76 @@ class SupplierQuotation(BuyingController):
 		validate_for_items(self)
 		self.validate_with_previous_doc()
 		self.validate_uom_is_integer("uom", "qty")
+                for item in self.items:
+                    mr = frappe.get_doc("Material Request Item",item.material_request_item)
+                    mr.consultation = self.name
+                    mr.flags.ignore_links = True
+                    mr.flags.ignore_mandatory = True
+                    mr.flags.ignore_validate = True
+                    mr.save()
+
+
+        def update_mr(self):
+                man = self.manufacturer
+                mr = []
+                allmr = []
+                for item in self.items:
+                    if item.material_request_item:
+                        mr.append(item.material_request_item)
+                    if item.material_request:
+                        allmr.append(item.material_request)
+
+                of_manu = frappe.get_all("Material Request Item",filters={"docstatus":("!=",2),"consulted":0,"creation":("<=",self.creation),"fabricant":man},fields=["name","consultation"])
+                for m in of_manu:
+                    #if m.name not in mr:
+                    ori = frappe.get_doc("Material Request Item",m.name)
+                    #if m.name not in mr:
+                    #    if ori and ori.docstatus != 2:
+                            #try:
+                    ori.consultation = self.name
+                    ori.consulted = 1
+                    ori.flags.ignore_mandatory = True
+                    ori.flags.ignore_validate = True
+                    ori.flags.ignore_links = True
+                    ori.save()
+                            #except:
+                                #ori.parent = ""
+                                #frappe.msgprint("Validation demande de materiel echoue !")
+                        #frappe.delete_doc("Material Request Item",m.name,force=1)
+                    #else:
+                        #try:
+                    #        ori.consultation = self.name
+                    #        ori.consulted = 1
+                    #        ori.save()
+                        #except:
+                        #    ori.consultation = self.name
+                for mat in allmr:
+                    material = frappe.get_doc("Material Request",mat)
+                    if material:
+                        #try:
+                            material.status = "Consultation"
+                            material.save()
+                        #except:
+                        #    material.status = "Consultation"
+
 
 	def on_submit(self):
 		frappe.db.set(self, "status", "Submitted")
 		self.update_rfq_supplier_status(1)
+                self.update_mr()
 
 	def on_cancel(self):
 		frappe.db.set(self, "status", "Cancelled")
+                for item in self.items:
+                    if item.material_request_item:
+                        mr = frappe.get_doc("Material Request Item",item.material_request_item)
+                        if mr:
+                            mr.consulted = 0
+                            mr.flags.ignore_mandatory = 1
+                            mr.flags.ignore_validate = 1
+                            mr.flags.ignore_links = 1
+                            mr.save()
+
 		self.update_rfq_supplier_status(0)
 
 	def on_trash(self):

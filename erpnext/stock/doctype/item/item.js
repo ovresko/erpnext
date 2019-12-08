@@ -325,7 +325,7 @@ $.extend(erpnext.item, {
 			var d = locals[cdt][cdn];
 
 			var filters = {
-				"is_group": 0
+				//"is_group": 0
 			}
 
 			if (d.parent_warehouse) {

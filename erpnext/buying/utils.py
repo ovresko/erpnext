@@ -19,24 +19,27 @@ def update_last_purchase_rate(doc, is_submit):
 	for d in doc.get("items"):
 		# get last purchase details
 		last_purchase_details = get_last_purchase_details(d.item_code, doc.name)
+                rate = None
 
 		# compare last purchase date and this transaction's date
 		last_purchase_rate = None
 		if last_purchase_details and \
 				(last_purchase_details.purchase_date > this_purchase_date):
 			last_purchase_rate = last_purchase_details['base_rate']
+                        rate = last_purchase_details['rate']
 		elif is_submit == 1:
 			# even if this transaction is the latest one, it should be submitted
 			# for it to be considered for latest purchase rate
 			if flt(d.conversion_factor):
 				last_purchase_rate = flt(d.base_rate) / flt(d.conversion_factor)
+                                rate = flt(d.rate)
 			else:
 				frappe.throw(_("UOM Conversion factor is required in row {0}").format(d.idx))
 
 		# update last purchsae rate
 		if last_purchase_rate:
-			frappe.db.sql("""update `tabItem` set last_purchase_rate = %s where name = %s""",
-				(flt(last_purchase_rate), d.item_code))
+			frappe.db.sql("""update `tabItem` set last_purchase_rate = %s,last_purchase_devise = %s where name = %s""",
+				(flt(last_purchase_rate),flt(rate), d.item_code))
 
 def validate_for_items(doc):
 	items = []

@@ -15,6 +15,11 @@ def reorder_item():
 
 	if cint(frappe.db.get_value('Stock Settings', None, 'auto_indent')):
 		return _reorder_item()
+def refresh_items():
+        models = frappe.get_all("Item",filters={"has_variants":"1"},fields=["name"])
+        for model in models:
+            doc = frappe.get_doc("Item",model.name)
+            doc.save()
 
 def _reorder_item():
 	material_requests = {"Purchase": {}, "Transfer": {}, "Material Issue": {}, "Manufacture": {}}
@@ -38,10 +43,13 @@ def _reorder_item():
 
 	item_warehouse_projected_qty = get_item_warehouse_projected_qty(items_to_consider)
 
-	def add_to_material_request(item_code, warehouse, reorder_level, reorder_qty, material_request_type, warehouse_group=None):
+	def add_to_material_request(item_code, warehouse, reorder_level, reorder_qty, material_request_type, warehouse_group=None,is_purchase=None):
 		if warehouse not in warehouse_company:
 			# a disabled warehouse
 			return
+                if is_purchase == 0 and material_request_type == "Purchase":
+                    return
+
 
 		reorder_level = flt(reorder_level)
 		reorder_qty = flt(reorder_qty)
@@ -74,7 +82,7 @@ def _reorder_item():
 		if item.get("reorder_levels"):
 			for d in item.get("reorder_levels"):
 				add_to_material_request(item_code, d.warehouse, d.warehouse_reorder_level,
-					d.warehouse_reorder_qty, d.material_request_type, warehouse_group=d.warehouse_group)
+					d.warehouse_reorder_qty, d.material_request_type, warehouse_group=d.warehouse_group,is_purchase=item.is_purchase_item)
 
 	if material_requests:
 		return create_material_request(material_requests)

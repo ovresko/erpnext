@@ -406,10 +406,12 @@ def get_price_list_rate(args, item_doc, out):
 			price_list_rate = get_price_list_rate_for(args, item_doc.variant_of)
 
 		# insert in database
-		if not price_list_rate:
-			if args.price_list and args.rate:
-				insert_item_price(args)
-			return {}
+		#if not price_list_rate:
+		if args.price_list and args.rate:
+		        insert_item_price(args)
+		return {}
+                #if price_list_rate:
+                #    insert_item_price(args)
 
 		out.price_list_rate = flt(price_list_rate) * flt(args.plc_conversion_rate) \
 			/ flt(args.conversion_rate)
@@ -430,6 +432,7 @@ def insert_item_price(args):
 			item_price = frappe.db.get_value('Item Price',
 				{'item_code': args.item_code, 'price_list': args.price_list, 'currency': args.currency},
 				['name', 'price_list_rate'], as_dict=1)
+                        #frappe.msgprint(item_price)
 			if item_price and item_price.name:
 				if item_price.price_list_rate != price_list_rate:
 					frappe.db.set_value('Item Price', item_price.name, "price_list_rate", price_list_rate)

@@ -21,9 +21,10 @@ frappe.ui.form.on('Supplier Quotation', {
 						//frappe.msgprint("Vous devez enregistrer pour filtrer les resultats");
 						let res = [];
 						r.message.map(w => {
+							//console.log("api returning :",w)
 							res.push(w.name);
 						})
-						console.log("get supp",res);
+						//console.log("get supp",res);
 						if(res){					
 					erpnext.utils.map_current_doc({
 						method: "erpnext.stock.doctype.material_request.material_request.make_supplier_quotation",
@@ -108,6 +109,7 @@ erpnext.buying.SupplierQuotationController = erpnext.buying.BuyingController.ext
 						r.message.map(w => {
 							res.push(w.name);
 						})
+						console.log("from cust");
 						if(res){					
 					erpnext.utils.map_current_doc({
 						method: "erpnext.stock.doctype.material_request.material_request.make_supplier_quotation",

@@ -537,9 +537,10 @@ erpnext.utils.map_current_doc = function(opts) {
 			// search in existing items if the source_name is already set and full qty fetched
 			var already_set = false;
 			var item_qty_map = {};
-
+			console.log("MQPPING");
 			$.each(cur_frm.doc.items, function(i, d) {
 				opts.source_name.forEach(function(src) {
+					console.log("iterate ",src);
 					if(d[link_fieldname]==src) {
 						already_set = true;
 						if (item_qty_map[d.item_code])
@@ -571,7 +572,9 @@ erpnext.utils.map_current_doc = function(opts) {
 				})
 			}
 		}
-
+		console.log("Last hope : ",opts);
+		var itm = cur_frm.doc.items;
+		console.log("curform before ", itm);
 		return frappe.call({
 			// Sometimes we hit the limit for URL length of a GET request
 			// as we send the full target_doc. Hence this is a POST request.
@@ -584,6 +587,10 @@ erpnext.utils.map_current_doc = function(opts) {
 				'args': opts.args
 			},
 			callback: function(r) {
+				console.log("cur frm :",cur_frm.doc);
+				console.log("source");
+				console.log("calling : ",opts);
+				console.log("call ",r);
 				if(!r.exc) {
 					var doc = frappe.model.sync(r.message);
 					cur_frm.dirty();
@@ -594,6 +601,7 @@ erpnext.utils.map_current_doc = function(opts) {
 	}
 	if(opts.predef){
 	   let values = opts.predef;
+	   console.log("vql; ",values)
 	   opts.source_name = values;
 	   _map();
 	}

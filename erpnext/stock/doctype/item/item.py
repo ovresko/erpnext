@@ -104,7 +104,23 @@ class Item(WebsiteGenerator):
 			self.set_opening_stock()
 
 	def validate(self):
+                self.oem_text = ""
+                for moem in self.oem:
+                    self.oem_text += moem.oem
 		self.get_doc_before_save()
+                if self.variant_of:
+                    price_list = frappe.get_all("Item Price",fields=["name","price_list","price_list_rate","currency","selling","buying","manufacturer","manufacturer_part_no"],filters={"item_model":self.variant_of})
+                    if price_list:
+                        self.prices = ""
+                        self.selling = ""
+                        for price in price_list:
+                            text = "%s %s : %s : %.2f %s" % (price.manufacturer,price.manufacturer_part_no,price.price_list,price.price_list_rate,price.currency)
+                            if price.buying == 1:
+                                self.prices += text+ " / \n"
+                            if price.selling == 1:
+                                self.selling += text +" / \n"
+                            #self.prices += "/ \n"
+
 		if self.manufacturer_part_no:
 			self.ref_fabricant = self.manufacturer_part_no
 		if self.manufacturer:
@@ -153,6 +169,28 @@ class Item(WebsiteGenerator):
 		self.validate_item_defaults()
 		self.update_defaults_from_item_group()
 		self.validate_stock_for_has_batch_and_has_serial()
+                # set table reorder
+                min_qts = self.recom_minimum
+                qts = self.recom_qts
+                levels = frappe.get_all("Item Reorder",fields=["name","parent","warehouse"],filters=[{"parent":self.name},{"warehouse":"GLOBAL - MV"}])
+                original = list(filter(lambda x: x.warehouse != "GLOBAL - MV",self.reorder_levels))
+                self.reorder_levels = []
+                if min_qts > 0 and qts > 0:
+                    row = self.append('reorder_levels',{})
+                    row.warehouse='GLOBAL - MV'
+                    row.warehouse_reorder_level=min_qts
+                    row.warehouse_reorder_qty=qts
+                    row.material_request_type='Purchase'
+
+                    #self.recom_minimum = 0
+                    #self.recom_qts = 0
+                #elif levels:
+                    #level = frappe.get_doc("Item Reorder",levels[0].name)
+                    #level.warehouse_reorder_level=min_qts
+                    #level.warehouse_reorder_qty=qts
+                    #level.save()
+                #original = list(filter(lambda(x: x.warehouse != "GLOBAL - MV",self.reorder_levels))
+                self.reorder_levels.extend(original)
 
 		if not self.get("__islocal"):
 			self.old_item_group = frappe.db.get_value(self.doctype, self.name, "item_group")

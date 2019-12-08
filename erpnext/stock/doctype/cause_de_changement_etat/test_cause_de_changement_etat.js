@@ -2,15 +2,15 @@
 // rename this file from _test_[name] to test_[name] to activate
 // and remove above this line
 
-QUnit.test("test: Item", function (assert) {
+QUnit.test("test: Cause de Changement Etat", function (assert) {
 	let done = assert.async();
 
 	// number of asserts
 	assert.expect(1);
 
 	frappe.run_serially([
-		// insert a new Item
-		() => frappe.tests.make('Item', [
+		// insert a new Cause de Changement Etat
+		() => frappe.tests.make('Cause de Changement Etat', [
 			// values to be set
 			{key: 'value'}
 		]),

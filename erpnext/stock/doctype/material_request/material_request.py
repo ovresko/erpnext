@@ -70,7 +70,7 @@ class MaterialRequest(BuyingController):
 		from erpnext.controllers.status_updater import validate_status
 		validate_status(self.status,
 			["Draft", "Submitted", "Stopped", "Cancelled", "Pending",
-			"Partially Ordered", "Ordered", "Issued", "Transferred"])
+			"Partially Ordered", "Ordered", "Issued", "Transferred","Consultation"])
 
 		validate_for_items(self)
 
@@ -83,7 +83,7 @@ class MaterialRequest(BuyingController):
 		'''Set title as comma separated list of items'''
 		if not self.title:
 			items = ', '.join([d.item_name for d in self.items][:3])
-			self.title = _('{0} Request for {1}').format(self.material_request_type, items)[:100]
+			self.title = _('{0} Pour {1}').format(self.material_request_type, items)[:100]
 
 	def on_submit(self):
 		# frappe.db.set(self, 'status', 'Submitted')
@@ -372,24 +372,25 @@ def get_material_requests_based_on_supplier(supplier):
 	return material_requests, supplier_items
 @frappe.whitelist()
 def get_supplier_quotation(manufacturer):
-        doclist = frappe.get_all("Material Request",filters={'docstatus':['=',1],'Material_request_type':'Purchase','status': ['=','Pending']},fields=['name'])
+        doclist = frappe.get_all("Material Request",filters={'docstatus':['=',1],'Material_request_type':'Purchase','status': ['!=','Stopped']},fields=['name'])
         docresult = []
         for m in doclist:
             origin = frappe.get_doc("Material Request",m)
             items = []
             for item in origin.items:
-                if (item.fabricant == manufacturer):
+                if (item.fabricant == manufacturer) and (item.consulted == 0):
                     items.append(item)
             if items:
                 origin.items = items
                 docresult.append(origin)
+                #msgprint("make sup quot %d " % len(origin.items))
         return docresult
 
 @frappe.whitelist()
 def make_supplier_quotation(source_name, target_doc=None):
 	def postprocess(source, target_doc):
 		set_missing_values(source, target_doc)
-
+        #frappe.msgprint("source in make_supplier_quot : %s _ %s" % (source_name,target_doc))
 	doclist = get_mapped_doc("Material Request", source_name, {
 		"Material Request": {
 			"doctype": "Supplier Quotation",
@@ -407,7 +408,7 @@ def make_supplier_quotation(source_name, target_doc=None):
 			}
 		}
 	}, target_doc, postprocess)
-
+        #frappe.msgprint("LENG : %d " % len(doclist.items))
 	return doclist
 
 @frappe.whitelist()

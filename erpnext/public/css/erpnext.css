@@ -370,3 +370,6 @@ body[data-route="pos"] .collapse-btn {
 .leaderboard .list-item_content {
   padding-right: 45px;
 }
+.navbar-default{
+background-color:#263561 !important;
+}		
