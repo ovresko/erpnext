@@ -17,9 +17,21 @@ def reorder_item():
 		return _reorder_item()
 def refresh_items():
         models = frappe.get_all("Item",filters={"has_variants":"1"},fields=["name"])
+        print("found %d " % len(models))
         for model in models:
+            print("handeling %s" % model.name)
             doc = frappe.get_doc("Item",model.name)
+            #doc.update_variants()
             doc.save()
+        # default warehouse
+        defaults = frappe.get_all("Item Default",fields=["name"])
+        settings = frappe.get_doc("Stock Settings")
+        wr = settings.default_warehouse
+        if not wr:
+            wr = "GLOBAL - MV"
+        for d in defaults:
+            default = frappe.get_doc("Item Default", d.name)
+            default.default_warehouse = wr
 
 def _reorder_item():
 	material_requests = {"Purchase": {}, "Transfer": {}, "Material Issue": {}, "Manufacture": {}}

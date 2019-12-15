@@ -74,12 +74,19 @@ class PurchaseReceipt(BuyingController):
 
 		if getdate(self.posting_date) > getdate(nowdate()):
 			throw(_("Posting Date cannot be future date"))
+                if self.docstatus == 0:
+                    for item in self.items:
+                        if item.original_qts != item.qty and (not item.original_qts or item.original_qts == 0):
+                            item.original_qts = item.qty
+                        item.qts_ecart = item.original_qts - item.qty
+                        item.montant_ecart = item.qts_ecart * item.rate
+
 
 	def validate_with_previous_doc(self):
 		super(PurchaseReceipt, self).validate_with_previous_doc({
 			"Purchase Order": {
 				"ref_dn_field": "purchase_order",
-				"compare_fields": [["supplier", "="], ["company", "="],	["currency", "="]],
+				"compare_fields": [["supplier", "="], ["company", "="], ["currency","="]],
 			},
 			"Purchase Order Item": {
 				"ref_dn_field": "purchase_order_item",

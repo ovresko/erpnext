@@ -876,6 +876,29 @@ class PurchaseInvoice(BuyingController):
 		self.calculate_taxes_and_totals()
 
 @frappe.whitelist()
+def make_pr(source_name,target_doc=None):
+        def set_curr(source, target):
+                target.currency = "DZD"
+        doc = get_mapped_doc("Purchase Invoice",source_name, {
+                "Purchase Invoice": {
+                        "doctype": "Purchase Receipt",
+                        "validation": {
+                                "docstatus":["=",1]
+                        }
+                },
+                "Purchase Invoice Item": {
+                        "doctype": "Purchase Receipt Item",
+                        "field_map": {
+                            "qty":"received_qty",
+                            "po_detail":"purchase_order_item",
+                            "purchase_order":"purchase_order"
+                        },
+                }
+        },target_doc)
+        return doc
+
+
+@frappe.whitelist()
 def make_debit_note(source_name, target_doc=None):
 	from erpnext.controllers.sales_and_purchase_return import make_return_doc
 	return make_return_doc("Purchase Invoice", source_name, target_doc)

@@ -70,6 +70,7 @@ class Item(WebsiteGenerator):
 		elif not self.item_code or self.generer_code_interne or self.item_code == "CODE" or self.item_code == "code":
 			group = frappe.get_doc("Item Group",self.item_group)
 			group_numero = group.numero
+                        self.item_name = group.name
 			if group_numero:
 				if self.variant_of:
 					fabricant = frappe.get_doc('Manufacturer',self.manufacturer)
@@ -108,8 +109,8 @@ class Item(WebsiteGenerator):
                 for moem in self.oem:
                     self.oem_text += moem.oem
 		self.get_doc_before_save()
-                if self.variant_of:
-                    price_list = frappe.get_all("Item Price",fields=["name","price_list","price_list_rate","currency","selling","buying","manufacturer","manufacturer_part_no"],filters={"item_model":self.variant_of})
+                if self.has_variants:
+                    price_list = frappe.get_all("Item Price",fields=["name","price_list","price_list_rate","currency","selling","buying","manufacturer","manufacturer_part_no"],filters={"item_model":self.name})
                     if price_list:
                         self.prices = ""
                         self.selling = ""

@@ -232,7 +232,6 @@ scheduler_events = {
 		"erpnext.projects.doctype.project.project.collect_project_status"
 	],
 	"daily": [
-                "erpnext.stock.reorder_item.refresh_items",
 		"erpnext.stock.reorder_item.reorder_item",
 		"erpnext.setup.doctype.email_digest.email_digest.send",
 		"erpnext.support.doctype.issue.issue.auto_close_tickets",
@@ -253,6 +252,7 @@ scheduler_events = {
 		"erpnext.projects.doctype.project.project.send_project_status_email_to_users"
 	],
 	"daily_long": [
+                "erpnext.stock.reorder_item.refresh_items",
 		"erpnext.manufacturing.doctype.bom_update_tool.bom_update_tool.update_latest_price_in_all_boms"
 	],
 	"monthly_long": [

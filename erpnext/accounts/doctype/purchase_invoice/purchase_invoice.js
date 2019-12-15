@@ -71,6 +71,8 @@ erpnext.accounts.PurchaseInvoice = erpnext.buying.BuyingController.extend({
 				cur_frm.add_custom_button(__('Return / Debit Note'),
 					this.make_debit_note, __("Make"));
 			}
+			
+			cur_frm.add_custom_button("Recu d'achat",this.make_pr,__("Make"));
 
 			if(!doc.auto_repeat) {
 				cur_frm.add_custom_button(__('Subscription'), function() {
@@ -322,6 +324,14 @@ erpnext.accounts.PurchaseInvoice = erpnext.buying.BuyingController.extend({
 		$.each(this.frm.doc["items"] || [], function(i, row) {
 			if(row.purchase_receipt) frappe.model.clear_doc("Purchase Receipt", row.purchase_receipt)
 		})
+	},
+
+	make_pr: function() {
+		frappe.model.open_mapped_doc({
+			method:"erpnext.accounts.doctype.purchase_invoice.purchase_invoice.make_pr",
+			frm: cur_frm
+		});
+
 	},
 
 	make_debit_note: function() {
