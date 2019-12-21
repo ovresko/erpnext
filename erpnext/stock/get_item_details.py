@@ -409,7 +409,8 @@ def get_price_list_rate(args, item_doc, out):
 		#if not price_list_rate:
 		if args.price_list and args.rate:
 		        insert_item_price(args)
-		return {}
+                        #if not price_list_rate:
+                        return {}
                 #if price_list_rate:
                 #    insert_item_price(args)
 

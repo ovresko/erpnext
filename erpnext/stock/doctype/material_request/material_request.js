@@ -5,6 +5,13 @@
 {% include 'erpnext/public/js/controllers/buying.js' %};
 
 frappe.ui.form.on('Material Request', {
+	items_add: function(doc,cdt,cdn){
+		console.log("cdn" + cdn);_
+		console.log("adding default warehouse");
+		var row = frappe.get_doc(cdt,cdn);
+		if(!row.warehouse && this.form.doc.warehouse) row.warehouse = this.form.doc.warehouse;
+
+	},
 	setup: function(frm) {
 		frm.custom_make_buttons = {
 			'Stock Entry': 'Issue Material',

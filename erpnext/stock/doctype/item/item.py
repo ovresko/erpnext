@@ -104,11 +104,7 @@ class Item(WebsiteGenerator):
 		if self.opening_stock:
 			self.set_opening_stock()
 
-	def validate(self):
-                self.oem_text = ""
-                for moem in self.oem:
-                    self.oem_text += moem.oem
-		self.get_doc_before_save()
+        def set_prices(self): 
                 if self.has_variants:
                     price_list = frappe.get_all("Item Price",fields=["name","price_list","price_list_rate","currency","selling","buying","manufacturer","manufacturer_part_no"],filters={"item_model":self.name})
                     if price_list:
@@ -121,6 +117,12 @@ class Item(WebsiteGenerator):
                             if price.selling == 1:
                                 self.selling += text +" / \n"
                             #self.prices += "/ \n"
+
+	def validate(self):
+                self.oem_text = ""
+                for moem in self.oem:
+                    self.oem_text += moem.oem
+		self.get_doc_before_save()
 
 		if self.manufacturer_part_no:
 			self.ref_fabricant = self.manufacturer_part_no

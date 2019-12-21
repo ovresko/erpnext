@@ -60,7 +60,11 @@ class MaterialRequest(BuyingController):
 	# ---------------------
 	def validate(self):
 		super(MaterialRequest, self).validate()
-
+                
+                if self.warehouse:
+                    for i in self.get("items"):
+                        if not i.warehouse:
+                            i.warehouse = self.warehouse
 		self.validate_schedule_date()
 		self.validate_uom_is_integer("uom", "qty")
 
