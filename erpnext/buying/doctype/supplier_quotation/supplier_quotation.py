@@ -30,11 +30,12 @@ class SupplierQuotation(BuyingController):
 		self.validate_uom_is_integer("uom", "qty")
                 for item in self.items:
                     mr = frappe.get_doc("Material Request Item",item.material_request_item)
-                    mr.consultation = self.name
-                    mr.flags.ignore_links = True
-                    mr.flags.ignore_mandatory = True
-                    mr.flags.ignore_validate = True
-                    mr.save()
+		    if mr:
+                    	mr.consultation = self.name
+                    	mr.flags.ignore_links = True
+                    	mr.flags.ignore_mandatory = True
+                    	mr.flags.ignore_validate = True
+                    	mr.save()
 
 
         def update_mr(self):
