@@ -406,13 +406,10 @@ def get_price_list_rate(args, item_doc, out):
 			price_list_rate = get_price_list_rate_for(args, item_doc.variant_of)
 
 		# insert in database
-		#if not price_list_rate:
-		if args.price_list and args.rate:
-		        insert_item_price(args)
-                        #if not price_list_rate:
-                        return {}
-                #if price_list_rate:
-                #    insert_item_price(args)
+		if not price_list_rate:
+			if args.price_list and args.rate:
+				insert_item_price(args)
+			return {}
 
 		out.price_list_rate = flt(price_list_rate) * flt(args.plc_conversion_rate) \
 			/ flt(args.conversion_rate)
@@ -433,7 +430,6 @@ def insert_item_price(args):
 			item_price = frappe.db.get_value('Item Price',
 				{'item_code': args.item_code, 'price_list': args.price_list, 'currency': args.currency},
 				['name', 'price_list_rate'], as_dict=1)
-                        #frappe.msgprint(item_price)
 			if item_price and item_price.name:
 				if item_price.price_list_rate != price_list_rate:
 					frappe.db.set_value('Item Price', item_price.name, "price_list_rate", price_list_rate)
@@ -491,7 +487,6 @@ def get_price_list_rate_for(args, item_code):
 		For example, desired qty is 10 and Item Price Rates exists
 		for min_qty 9 and min_qty 20. It returns Item Price Rate for qty 9 as
 		the best fit in the range of avaliable min_qtyies
-
 		:param customer: link to Customer DocType
 		:param supplier: link to Supplier DocType
 		:param price_list: str (Standard Buying or Standard Selling)
@@ -728,7 +723,7 @@ def get_serial_no_details(item_code, warehouse, stock_qty, serial_no):
 	return {'serial_no': serial_no}
 
 @frappe.whitelist()
-def get_bin_details_and_serial_nos(item_code, warehouse, has_batch_no, stock_qty=None, serial_no=None):
+def get_bin_details_and_serial_nos(item_code, warehouse, has_batch_no=None, stock_qty=None, serial_no=None):
 	bin_details_and_serial_nos = {}
 	bin_details_and_serial_nos.update(get_bin_details(item_code, warehouse))
 	if flt(stock_qty) > 0:
@@ -762,10 +757,8 @@ def get_batch_qty(batch_no, warehouse, item_code):
 def apply_price_list(args, as_doc=False):
 	"""Apply pricelist on a document-like dict object and return as
 	{'parent': dict, 'children': list}
-
 	:param args: See below
 	:param as_doc: Updates value in the passed dict
-
 		args = {
 			"doctype": "",
 			"name": "",
@@ -838,12 +831,12 @@ def get_price_list_currency(price_list):
 def get_price_list_uom_dependant(price_list):
 	if price_list:
 		result = frappe.db.get_value("Price List", {"name": price_list,
-			"enabled": 1}, ["name", "price_not_uom_dependant"], as_dict=True)
+			"enabled": 1}, ["name", "price_not_uom_dependent"], as_dict=True)
 
 		if not result:
 			throw(_("Price List {0} is disabled or does not exist").format(price_list))
 
-		return not result.price_not_uom_dependant
+		return not result.price_not_uom_dependent
 
 
 def get_price_list_currency_and_exchange_rate(args):
