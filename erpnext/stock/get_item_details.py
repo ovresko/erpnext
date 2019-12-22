@@ -406,7 +406,6 @@ def get_price_list_rate(args, item_doc, out):
 			price_list_rate = get_price_list_rate_for(args, item_doc.variant_of)
 
 		# insert in database
-		# if not price_list_rate:
 		if args.price_list and args.rate:
 			insert_item_price(args)
 		if not price_list_rate:
@@ -488,6 +487,7 @@ def get_price_list_rate_for(args, item_code):
 		For example, desired qty is 10 and Item Price Rates exists
 		for min_qty 9 and min_qty 20. It returns Item Price Rate for qty 9 as
 		the best fit in the range of avaliable min_qtyies
+
 		:param customer: link to Customer DocType
 		:param supplier: link to Supplier DocType
 		:param price_list: str (Standard Buying or Standard Selling)
@@ -758,8 +758,10 @@ def get_batch_qty(batch_no, warehouse, item_code):
 def apply_price_list(args, as_doc=False):
 	"""Apply pricelist on a document-like dict object and return as
 	{'parent': dict, 'children': list}
+
 	:param args: See below
 	:param as_doc: Updates value in the passed dict
+
 		args = {
 			"doctype": "",
 			"name": "",
