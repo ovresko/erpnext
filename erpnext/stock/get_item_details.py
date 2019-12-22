@@ -287,7 +287,7 @@ def get_basic_details(args, item):
 			get_conversion_factor(item.name, args.uom).get("conversion_factor")
 
 	args.conversion_factor = out.conversion_factor
-	out.stock_qty = float(out.qty) * float(out.conversion_factor)
+	out.stock_qty = out.qty * out.conversion_factor
 
 	# calculate last purchase rate
 	if args.get('doctype') in purchase_doctypes:
@@ -406,10 +406,9 @@ def get_price_list_rate(args, item_doc, out):
 			price_list_rate = get_price_list_rate_for(args, item_doc.variant_of)
 
 		# insert in database
-		# if not price_list_rate:
-		if args.price_list and args.rate:
-			insert_item_price(args)
 		if not price_list_rate:
+			if args.price_list and args.rate:
+				insert_item_price(args)
 			return {}
 
 		out.price_list_rate = flt(price_list_rate) * flt(args.plc_conversion_rate) \
