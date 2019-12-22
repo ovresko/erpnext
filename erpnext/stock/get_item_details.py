@@ -287,7 +287,7 @@ def get_basic_details(args, item):
 			get_conversion_factor(item.name, args.uom).get("conversion_factor")
 
 	args.conversion_factor = out.conversion_factor
-	out.stock_qty = out.qty * out.conversion_factor
+	out.stock_qty = float(out.qty) * float(out.conversion_factor)
 
 	# calculate last purchase rate
 	if args.get('doctype') in purchase_doctypes:
