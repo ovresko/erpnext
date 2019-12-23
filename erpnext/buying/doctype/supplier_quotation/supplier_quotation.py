@@ -38,11 +38,12 @@ class SupplierQuotation(BuyingController):
 		#		mr.flags.ignore_validate = True
 		#		mr.save()
 
-        def on_update(self):		
-		for i in self.items:
-			frappe.msgprint("i %s" % i.name)
-			i.ref_devis = i.name
-			i.save()
+        def on_update(self):	
+		frappe.enqueue("on_update_dv",items=self.items,timeout=10000)
+		#for i in self.items:
+		#	frappe.msgprint("i %s" % i.name)
+		#	i.ref_devis = i.name
+		#	i.save()
 
 	def update_mr(self):
                 man = self.manufacturer
@@ -174,7 +175,13 @@ def get_list_context(context=None):
 	})
 
 	return list_context
-	
+
+
+def on_update_dv(items):		
+	for i in items:
+		i.ref_devis = i.name
+		i.save()
+			
 @frappe.whitelist()
 def make_purchase_order(source_name, target_doc=None):
 	def set_missing_values(source, target):
