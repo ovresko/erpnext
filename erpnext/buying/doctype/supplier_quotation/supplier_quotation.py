@@ -39,7 +39,12 @@ class SupplierQuotation(BuyingController):
 				mr.save()
 
 
-        def update_mr(self):
+        def on_update(self):
+		for i in self.items:
+			i.ref_devis = i.parent
+			i.save()
+
+	def update_mr(self):
                 man = self.manufacturer
                 mr = []
                 allmr = []
