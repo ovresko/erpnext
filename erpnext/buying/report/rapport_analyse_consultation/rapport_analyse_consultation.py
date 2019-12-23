@@ -49,62 +49,62 @@ def execute(filters=None):
 		})
 	columns.append({
 			"fieldname": "qts_demande",
-			"label": _("Qté Demandée"),
+			"label": _("Qte Demandee"),
 			"width": 100
 		})
 	columns.append({
 			"fieldname": "qts_demande_modele",
-			"label": _("Qté Demandée Modele"),
+			"label": _("Qte Demandee Modele"),
 			"width": 180
 		})
 	columns.append({
 			"fieldname": "qts_reliquat",
-			"label": _("Qté reliquats"),
+			"label": _("Qte reliquats"),
 			"width": 80
 		})
 	columns.append({
 			"fieldname": "qts_reliquat_modele",
-			"label": _("Qté reliquats Modele"),
+			"label": _("Qte reliquats Modele"),
 			"width": 80
 		})
 	columns.append({
 			"fieldname": "qts_variante_stock",
-			"label": _("Qté Variante En Stock"),
+			"label": _("Qte Variante En Stock"),
 			"width": 80
 		})
 	columns.append({
 			"fieldname": "qts_projete",
-			"label": _("Qté Projeté"),
+			"label": _("Qte Projete"),
 			"width": 80
 		})
 	columns.append({
 			"fieldname": "qts_max_achat",
-			"label": _("Qté Max d'achat"),
+			"label": _("Qte Max d'achat"),
 			"width": 80
 		})
 	columns.append({
 			"fieldname": "qts_a_commande",
-			"label": "Qté à commandée (demandées - projté)",
+			"label": "Qte à commandee (demandees - projte)",
 			"width": 80
 		})
 	columns.append({
 			"fieldname": "qts_a_commande_modele",
-			"label": "Qté à commandée par modéle (demandées - projté)",
+			"label": "Qte à commandee par modele (demandees - projte)",
 			"width": 80
 		})
 	columns.append({
 			"fieldname": "last_purchase_rate",
-			"label": "Dérnier Prix d'achat",
+			"label": "Dernier Prix d'achat",
 			"width": 80
 		})
 	columns.append({
 			"fieldname": "last_purchase_rate",
-			"label": "Dérnier Prix d'achat (Devise)",
+			"label": "Dernier Prix d'achat (Devise)",
 			"width": 80
 		})
 	columns.append({
 			"fieldname": "last_purchase_rate",
-			"label": "Dérnier Prix d'achat (Devise)",
+			"label": "Dernier Prix d'achat (Devise)",
 			"width": 80
 		})
 	
