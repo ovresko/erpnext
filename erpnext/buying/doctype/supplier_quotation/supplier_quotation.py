@@ -186,7 +186,7 @@ def on_update_consultation(items,pname):
 			mr = frappe.get_doc("Material Request Item",item.material_request_item)
 			if mr:
 				mr.consultation = pname
-				mr.consulted = 0
+				mr.consulted = 1
 				mr.flags.ignore_links = True
 				mr.flags.ignore_mandatory = True
 				mr.flags.ignore_validate = True
