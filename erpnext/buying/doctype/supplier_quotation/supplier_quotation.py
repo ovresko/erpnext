@@ -39,7 +39,7 @@ class SupplierQuotation(BuyingController):
 		#		mr.save()
 
         def on_update(self):	
-		frappe.enqueue("on_update_dv",items=self.items,timeout=10000)
+		frappe.enqueue("erpnext.buying.doctype.supplier_quotation.supplier_quotation.on_update_dv",items=self.items,timeout=10000)
 		#for i in self.items:
 		#	frappe.msgprint("i %s" % i.name)
 		#	i.ref_devis = i.name
@@ -176,7 +176,7 @@ def get_list_context(context=None):
 
 	return list_context
 
-
+@frappe.whitelist()
 def on_update_dv(items):		
 	for i in items:
 		i.ref_devis = i.name
