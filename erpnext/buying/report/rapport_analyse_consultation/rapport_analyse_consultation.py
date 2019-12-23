@@ -28,29 +28,29 @@ def execute(filters=None):
 			"label": _("Material Request"),
 			"fieldtype": "Link",
 			"options": "Material Request",
-			"width": 80
+			"width": 150
 		})
 	columns.append({
 			"fieldname": "supplier_quotation",
 			"label": _("Consultation"),
 			"fieldtype": "Link",
 			"options": "Supplier Quotation",
-			"width": 80
+			"width": 150
 		})
 	columns.append({
 			"fieldname": "fabricant",
 			"label": _("Fabricant"),
-			"width": 80
+			"width": 150
 		})
 	columns.append({
 			"fieldname": "ref_fabricant",
 			"label": _("Ref Fabricant"),
-			"width": 80
+			"width": 150
 		})
 	columns.append({
 			"fieldname": "qts_demande",
 			"label": _("Qte Demandee"),
-			"width": 100
+			"width": 150
 		})
 	columns.append({
 			"fieldname": "qts_demande_modele",
@@ -60,52 +60,57 @@ def execute(filters=None):
 	columns.append({
 			"fieldname": "qts_reliquat",
 			"label": _("Qte reliquats"),
-			"width": 80
+			"width": 150
 		})
 	columns.append({
 			"fieldname": "qts_reliquat_modele",
 			"label": _("Qte reliquats Modele"),
-			"width": 80
+			"width": 150
 		})
 	columns.append({
 			"fieldname": "qts_variante_stock",
 			"label": _("Qte Variante En Stock"),
-			"width": 80
+			"width": 150
+		})
+	columns.append({
+			"fieldname": "qts_variante_stock",
+			"label": _("Qte Modele En Stock"),
+			"width": 150
 		})
 	columns.append({
 			"fieldname": "qts_projete",
 			"label": _("Qte Projete"),
-			"width": 80
+			"width": 150
 		})
 	columns.append({
 			"fieldname": "qts_max_achat",
 			"label": _("Qte Max d'achat"),
-			"width": 80
+			"width": 150
 		})
 	columns.append({
 			"fieldname": "qts_a_commande",
 			"label": "Qte a commandee (demandees - projte)",
-			"width": 80
+			"width": 150
 		})
 	columns.append({
 			"fieldname": "qts_a_commande_modele",
 			"label": "Qte a commandee par modele (demandees - projte)",
-			"width": 80
+			"width": 150
 		})
 	columns.append({
 			"fieldname": "last_purchase_rate",
 			"label": "Dernier Prix d'achat",
-			"width": 80
+			"width": 150
 		})
 	columns.append({
 			"fieldname": "last_purchase_rate",
 			"label": "Dernier Prix d'achat (Devise)",
-			"width": 80
+			"width": 150
 		})
 	columns.append({
 			"fieldname": "last_purchase_rate",
 			"label": "Dernier Prix d'achat (Devise)",
-			"width": 80
+			"width": 150
 		})
 	
 	price_lists= frappe.get_all("Price List",filters={"buying":1},fields=["name","currency"])
@@ -114,15 +119,21 @@ def execute(filters=None):
 			columns.append({
 				"fieldname": pl.name,
 				"label": pl.name,
-				"width": 80
+				"width": 100
 			})
 			
-	mris = frappe.get_all("Material Request Item",filters={"docstatus":1,"consulted" : filters.article_consulted}, fields=["last_purchase_rate","max_order_qty","projected_qty","actual_qty","stock_qty","ordered_qty","name","item_code","item_name","parent","consultation","fabricant","ref_fabricant"])
+	mris = []
+	if filters.fabricant:
+		mris = frappe.get_all("Material Request Item",filters={"fabricant":filters.fabricant,"docstatus":1,"consulted" : filters.article_consulted}, fields=["last_purchase_rate","max_order_qty","projected_qty","actual_qty","stock_qty","ordered_qty","name","item_code","item_name","parent","consultation","fabricant","ref_fabricant"])
+	else:
+		mris = frappe.get_all("Material Request Item",filters={"docstatus":1,"consulted" : filters.article_consulted}, fields=["last_purchase_rate","max_order_qty","projected_qty","actual_qty","stock_qty","ordered_qty","name","item_code","item_name","parent","consultation","fabricant","ref_fabricant"])
+	
 	for mri in mris:
 		last_purchase_devise = frappe.get_value('Item', mri.item_code, 'last_purchase_devise')
-		modele_stock_qty = sum([a.stock_qty for a in mris if a.model == mri.model])
-		modele_ordered_qty = sum([a.ordered_qty for a in mris if a.model == mri.model])
+		modele_stock_qty = sum([a.stock_qty for a in mris if a.model and a.model == mri.model])
+		modele_ordered_qty = sum([a.ordered_qty for a in mris if a.model and a.model == mri.model])
 		qts_a_commande = mri.stock_qty - mri.projected_qty
+		modele_actual_qty = sum([a.actual_qty for a in mris if a.model and a.model == mri.model])
 		modele_qts_a_commande =  mri.stock_qty - modele_ordered_qty
 		row = [mri.item_code,
 		       mri.item_name,
@@ -135,6 +146,7 @@ def execute(filters=None):
 		       mri.ordered_qty,
 		       modele_ordered_qty,
 		       mri.actual_qty,
+		       modele_actual_qty,
 		       mri.projected_qty,
 		       mri.max_order_qty,
 		       qts_a_commande,
@@ -146,7 +158,7 @@ def execute(filters=None):
 		if price_lists:
 			for pl in price_lists:
 				if pl.name:
-					price = frappe.db.sql("""select price_list_rate from `tabItem Price` where price_list=%s and item_code=%s""",(pl.name,mri.item_code))
+					price = frappe.db.sql("""select price_list_rate from `tabItem Price` where buying=1 and price_list=%s and item_code=%s""",(pl.name,mri.item_code))
 					if price:
 						row.append(price)
 					else:
