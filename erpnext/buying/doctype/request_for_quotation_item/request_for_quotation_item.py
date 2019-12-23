@@ -7,4 +7,5 @@ import frappe
 from frappe.model.document import Document
 
 class RequestforQuotationItem(Document):
-	pass
+	def validate(self):
+		self.ref_devis = self.parent
