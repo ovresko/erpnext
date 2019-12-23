@@ -3,6 +3,6 @@
 
 frappe.ui.form.on('Supplier Quotation Item', {
 	refresh: function(frm) {
-
+		frm.set_value("red_devis",frm.doc.parent);
 	}
 });
