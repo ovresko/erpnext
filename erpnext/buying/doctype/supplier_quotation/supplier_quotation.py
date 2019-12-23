@@ -28,6 +28,7 @@ class SupplierQuotation(BuyingController):
 		validate_for_items(self)
 		self.validate_with_previous_doc()
 		self.validate_uom_is_integer("uom", "qty")
+		frappe.enqueue("erpnext.buying.doctype.supplier_quotation.supplier_quotation.on_update_consultation",items=self.items,timeout=10000)
                 #for item in self.items:
 		#    if item.material_request_item:
 		#	mr = frappe.get_doc("Material Request Item",item.material_request_item)
@@ -177,9 +178,21 @@ def get_list_context(context=None):
 	return list_context
 
 @frappe.whitelist()
+def on_update_consultation(items):		
+	 for item in self.items:
+			if item.material_request_item:
+				mr = frappe.get_doc("Material Request Item",item.material_request_item)
+				if mr:
+					mr.consultation = self.name
+					mr.flags.ignore_links = True
+					mr.flags.ignore_mandatory = True
+					mr.flags.ignore_validate = True
+					mr.save()
+		
+@frappe.whitelist()
 def on_update_dv(items):		
 	for i in items:
-		i.ref_devis = i.name
+		i.ref_devis = i.parent
 		i.save()
 			
 @frappe.whitelist()
