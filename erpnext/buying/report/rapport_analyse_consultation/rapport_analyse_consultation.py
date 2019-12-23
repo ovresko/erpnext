@@ -119,7 +119,7 @@ def execute(filters=None):
 			
 	mris = frappe.get_all("Material Request Item",filters={"docstatus":1,"consulted" : filters.article_consulted}, fields=["last_purchase_rate","max_order_qty","projected_qty","actual_qty","stock_qty","ordered_qty","name","item_code","item_name","parent","consultation","fabricant","ref_fabricant"])
 	for mri in mris:
-		last_purchase_devise = frappe.get_value('Item', item_code, 'last_purchase_devise')
+		last_purchase_devise = frappe.get_value('Item', mri.item_code, 'last_purchase_devise')
 		modele_stock_qty = sum([a.stock_qty for a in mris if a.model == mri.model])
 		modele_ordered_qty = sum([a.ordered_qty for a in mris if a.model == mri.model])
 		qts_a_commande = mri.stock_qty - mri.projected_qty
