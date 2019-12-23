@@ -116,40 +116,7 @@ def execute(filters=None):
 				"label": pl.name,
 				"width": 80
 			})
-	
-	#	mr_item.item_name as "Item Name::250",
-	#	mr_item.item_code as "Code Article:Link/Item:120",
-#	mr_item.item_name as "Item Name::250",
-#	mr.name as "DM:Link/Material Request:80",
-##	mr_item.consultation as "Consultation::100",
-#	mr_item.fabricant as "Fabricant::70",
-#	mr_item.ref_fabricant as "Ref Fabricant::100",
-#
-##	sum(ifnull(mr_item.stock_qty, 0)) as "Qté demandé:Float:100", 
-#	sum(ifnull(mr_item.ordered_qty, 0)) as "Qté reliquats:Float:120", 
-#	sum(ifnull(mr_item.actual_qty, 0)) as "Qté Variante En Stock:Float:100", 
-#	sum(ifnull(mr_item.projected_qty, 0)) as "Qté Projeté:Float:100", 
-#	sum(ifnull(mr_item.max_order_qty, 0)) as "Qté Max d'achat:Float:150", 
-#	(sum(mr_item.stock_qty) - sum(ifnull(mr_item.ordered_qty, 0))) as "Qté à commandée:Float:130",
-#	mr_item.last_purchase_rate as "Dérnier Prix d'achat::150",
-#	it.last_purchase_devise as "Dérnier Prix d'achat (EUR)::170",
-#	it.prices as "Prix d'achat::650",
-#	it.selling as "Prix de vente::650" 
-#	
-#from
-#	`tabMaterial Request Item` mr_item ,`tabMaterial Request` mr, `tabItem` it   
-#where
-#	mr_item.parent = mr.name 
-#	and it.name = mr_item.item_code
-#	and mr.material_request_type = "Purchase"
-#	and mr_item.docstatus = 1
-#	and mr_item.consulted = 0
-#	and mr.status != "Stopped"
-#group by mr_item.item_code
-#having
-#	sum(ifnull(mr_item.ordered_qty, 0)) < sum(ifnull(mr_item.stock_qty, 0))
-#order by mr_item.creation asc
-
+			
 	mris = frappe.get_all("Material Request Item",filters={"docstatus":1,"consulted" : filters.article_consulted}, fields=["last_purchase_rate","max_order_qty","projected_qty","actual_qty","stock_qty","ordered_qty","name","item_code","item_name","parent","consultation","fabricant","ref_fabricant"])
 	for mri in mris:
 		last_purchase_devise = frappe.get_value('Item', item_code, 'last_purchase_devise')
