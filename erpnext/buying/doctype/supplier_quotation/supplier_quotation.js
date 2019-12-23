@@ -76,10 +76,7 @@ frappe.ui.form.on('Supplier Quotation', {
 	},
 	validate: function(frm){
 	
-		if(frm.doc.manufacturer){
-		
-		
-		
+		if(frm.doc.manufacturer){ 
 		var _items = [];	
 		frm.doc.items.forEach(i => {
 			console.log("validating ")
@@ -96,6 +93,11 @@ frappe.ui.form.on('Supplier Quotation', {
 	
 		frm.doc.items = _items;
 
+		}else{
+			frm.doc.items.forEach(i => {
+			console.log("validating ")
+			i.ref_devis = frm.doc.name; 
+		});
 		}
 	
 	}
