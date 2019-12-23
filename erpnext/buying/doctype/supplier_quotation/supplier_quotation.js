@@ -30,7 +30,7 @@ frappe.ui.form.on('Supplier Quotation', {
 				data.push(row);
 			});
 
-			frappe.tools.downloadify(data, null, title);
+			frappe.tools.downloadify(data, null, "FICHE CONSULTATION "+frm.doc.supplier_name);
 		}
 	
 		
