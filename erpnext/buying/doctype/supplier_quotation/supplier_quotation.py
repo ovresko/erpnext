@@ -28,7 +28,6 @@ class SupplierQuotation(BuyingController):
 		validate_for_items(self)
 		self.validate_with_previous_doc()
 		self.validate_uom_is_integer("uom", "qty")
-		frappe.enqueue("erpnext.buying.doctype.supplier_quotation.supplier_quotation.on_update_consultation",items=self.items,pname=self.name,timeout=10000)
                 #for item in self.items:
 		#    if item.material_request_item:
 		#	mr = frappe.get_doc("Material Request Item",item.material_request_item)
@@ -39,7 +38,8 @@ class SupplierQuotation(BuyingController):
 		#		mr.flags.ignore_validate = True
 		#		mr.save()
 
-        def on_update(self):	
+        def on_update(self):
+		frappe.enqueue("erpnext.buying.doctype.supplier_quotation.supplier_quotation.on_update_consultation",items=self.items,pname=self.name,timeout=10000)
 		frappe.enqueue("erpnext.buying.doctype.supplier_quotation.supplier_quotation.on_update_dv",items=self.items,timeout=10000)
 		#for i in self.items:
 		#	frappe.msgprint("i %s" % i.name)
@@ -178,16 +178,18 @@ def get_list_context(context=None):
 	return list_context
 
 @frappe.whitelist()
-def on_update_consultation(items,pname):		
-	 for item in items:
-			if item.material_request_item:
-				mr = frappe.get_doc("Material Request Item",item.material_request_item)
-				if mr:
-					mr.consultation = pname
-					mr.flags.ignore_links = True
-					mr.flags.ignore_mandatory = True
-					mr.flags.ignore_validate = True
-					mr.save()
+def on_update_consultation(items,pname):
+	print("doing update xxx consultation")
+	for item in items:
+		if item.material_request_item:
+			print("item req : %s" % item.material_request_item)
+			mr = frappe.get_doc("Material Request Item",item.material_request_item)
+			if mr:
+				mr.consultation = pname
+				mr.flags.ignore_links = True
+				mr.flags.ignore_mandatory = True
+				mr.flags.ignore_validate = True
+				mr.save()
 		
 @frappe.whitelist()
 def on_update_dv(items):		
