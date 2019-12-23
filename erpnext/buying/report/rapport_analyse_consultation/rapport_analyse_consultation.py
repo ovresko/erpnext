@@ -128,11 +128,19 @@ def execute(filters=None):
 		       mri.item_name,
 		       mri.parent,
 		       mri.consultation,
-		       mri.fabricant
-		       mri.ref_fabricant,mri.stock_qty,modele_stock_qty,
-		       mri.ordered_qty,modele_ordered_qty,mri.actual_qty,
-		       mri.projected_qty,mri.max_order_qty,qts_a_commande,modele_qts_a_commande,
-		       mri.last_purchase_rate,last_purchase_devise]
+		       mri.fabricant,
+		       mri.ref_fabricant,
+		       mri.stock_qty,
+		       modele_stock_qty,
+		       mri.ordered_qty,
+		       modele_ordered_qty,
+		       mri.actual_qty,
+		       mri.projected_qty,
+		       mri.max_order_qty,
+		       qts_a_commande,
+		       modele_qts_a_commande,
+		       mri.last_purchase_rate,
+		       last_purchase_devise]
 		
 		# get prices in each price list
 		if price_lists:
