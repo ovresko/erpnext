@@ -11,6 +11,32 @@ frappe.ui.form.on('Supplier Quotation', {
 			'Purchase Order': 'Purchase Order'
 		}
 	},
+	'download_fiche': function(frm){
+		
+		if(frm.doc.items != null)
+		{
+			var data = [];
+			var docfields = [];
+			data.push(["Consultation","Réf Article","Qts"]);
+			$.each(this.frm.doc.items || [], (i, d) => {
+				var row = [];
+				 
+					var fabricant = d["fabricant"];
+					var ref_fabricant = d["ref_fabricant"];
+					 
+
+					row.push([this.frm.doc.name,ref_fabricant,fabricant] || "");
+				 
+				data.push(row);
+			});
+
+			frappe.tools.downloadify(data, null, title);
+		}
+	
+		
+		
+		
+	},
 	'importer_articles': function(frm){
 	 var me = this;
 		console.log("manufacturer : ",frm.doc.manufacturer)
