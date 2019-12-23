@@ -84,12 +84,12 @@ def execute(filters=None):
 		})
 	columns.append({
 			"fieldname": "qts_a_commande",
-			"label": "Qte à commandee (demandees - projte)",
+			"label": "Qte a commandee (demandees - projte)",
 			"width": 80
 		})
 	columns.append({
 			"fieldname": "qts_a_commande_modele",
-			"label": "Qte à commandee par modele (demandees - projte)",
+			"label": "Qte a commandee par modele (demandees - projte)",
 			"width": 80
 		})
 	columns.append({
