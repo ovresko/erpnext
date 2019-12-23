@@ -39,10 +39,9 @@ class SupplierQuotation(BuyingController):
 				mr.save()
 
 
-        def on_update(self):
+        def on_update(self):		
 		for i in self.items:
-			i.ref_devis = i.parent
-			i.save()
+			frappe.enqueue(on_update_item, doc=i)
 
 	def update_mr(self):
                 man = self.manufacturer
@@ -175,6 +174,12 @@ def get_list_context(context=None):
 
 	return list_context
 
+@frappe.whitelist()
+def on_update_item(i, method=None):
+    if i:
+	i.ref_devis = i.parent
+	i.save()
+	
 @frappe.whitelist()
 def make_purchase_order(source_name, target_doc=None):
 	def set_missing_values(source, target):
