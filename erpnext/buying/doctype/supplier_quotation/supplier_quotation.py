@@ -28,25 +28,21 @@ class SupplierQuotation(BuyingController):
 		validate_for_items(self)
 		self.validate_with_previous_doc()
 		self.validate_uom_is_integer("uom", "qty")
-                for item in self.items:
-		    if item.material_request_item:
-			mr = frappe.get_doc("Material Request Item",item.material_request_item)
-			if mr:
-				mr.consultation = self.name
-				mr.flags.ignore_links = True
-				mr.flags.ignore_mandatory = True
-				mr.flags.ignore_validate = True
-				mr.save()
-
-	def on_update_item(i, method=None):
-	    if i:
-		frappe.msgprint("i %s" % i.name)
-		i.ref_devis = i.name
-		i.save()
+                #for item in self.items:
+		#    if item.material_request_item:
+		#	mr = frappe.get_doc("Material Request Item",item.material_request_item)
+		#	if mr:
+		#		mr.consultation = self.name
+		#		mr.flags.ignore_links = True
+		#		mr.flags.ignore_mandatory = True
+		#		mr.flags.ignore_validate = True
+		#		mr.save()
 
         def on_update(self):		
 		for i in self.items:
-			self.on_update_item(i)
+			frappe.msgprint("i %s" % i.name)
+			i.ref_devis = i.name
+			i.save()
 
 	def update_mr(self):
                 man = self.manufacturer
