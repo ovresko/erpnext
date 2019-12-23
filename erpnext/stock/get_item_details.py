@@ -406,7 +406,7 @@ def get_price_list_rate(args, item_doc, out):
 			price_list_rate = get_price_list_rate_for(args, item_doc.variant_of)
 
 		# insert in database
-		if args.price_list and args.rate:
+		if args.price_list and args.rate and ((price_list_rate and price_list_rate != args.rate) || not price_list_rate ) :
 			insert_item_price(args)
 		if not price_list_rate:
 			return {}
