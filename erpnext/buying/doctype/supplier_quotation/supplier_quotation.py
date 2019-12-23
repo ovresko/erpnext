@@ -41,7 +41,7 @@ class SupplierQuotation(BuyingController):
 
         def on_update(self):		
 		for i in self.items:
-			frappe.enqueue(on_update_item, doc=i)
+			frappe.enqueue(on_update_item, doc=frappe.get_doc("Supplier Quotation Item", i.name))
 
 	def update_mr(self):
                 man = self.manufacturer
