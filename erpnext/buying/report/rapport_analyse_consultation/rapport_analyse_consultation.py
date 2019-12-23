@@ -14,7 +14,7 @@ def execute(filters=None):
 			"options": "Item"
 		})
 	
-	mris = frappe.get_all("Material Request Item",filters={"docstatus":1,"material_request_type": "Purchase","consulted" : 0,"status": ("!=", "Stopped")}, fields=["name","item_code","item_name"])
+	mris = frappe.get_all("Material Request Item",filters={"docstatus":1,"material_request_type": "Purchase","consulted" : filters.article_consulted}, fields=["name","item_code","item_name"])
 	for mri in mris:
 		data.append([mri.item_code])
 		
