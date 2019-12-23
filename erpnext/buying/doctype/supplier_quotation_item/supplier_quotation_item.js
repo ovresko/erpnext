@@ -3,6 +3,6 @@
 
 frappe.ui.form.on('Supplier Quotation Item', {
 	before_save: function(frm) {
-		frm.set_value("ref_devis",frm.doc.parent);
+		//frm.set_value("ref_devis",frm.doc.parent);
 	}
 });
