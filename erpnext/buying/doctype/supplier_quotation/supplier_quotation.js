@@ -23,6 +23,33 @@ frappe.ui.form.on('Supplier Quotation', {
 				 
 					var fabricant = d["fabricant"];
 					var ref_fabricant = d["ref_fabricant"];
+					var qty =  Math.floor( d["qty"] * 0.7);
+					 
+
+					row.push([""+i,d["item_code"],d["item_name"],ref_fabricant,fabricant,qty,frm.doc.name] || "");
+				 
+				data.push(row);
+			});
+
+			frappe.tools.downloadify(data, null, "FICHE CONSULTATION "+frm.doc.supplier_name);
+		}
+	
+		
+		
+		
+	},
+	'download_fiche_all': function(frm){
+		
+		if(frm.doc.items != null)
+		{
+			var data = [];
+			var docfields = [];
+			data.push(["#","Code Article","Designation","Ref Article","Fabricant","Qts","Num Consultation"]);
+			$.each(frm.doc.items || [], (i, d) => {
+				var row = [];
+				 
+					var fabricant = d["fabricant"];
+					var ref_fabricant = d["ref_fabricant"];
 					var qty = d["qty"];
 					 
 
