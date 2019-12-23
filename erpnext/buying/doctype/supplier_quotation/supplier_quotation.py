@@ -179,7 +179,7 @@ def get_list_context(context=None):
 
 @frappe.whitelist()
 def on_update_consultation(items):		
-	 for item in self.items:
+	 for item in items:
 			if item.material_request_item:
 				mr = frappe.get_doc("Material Request Item",item.material_request_item)
 				if mr:
