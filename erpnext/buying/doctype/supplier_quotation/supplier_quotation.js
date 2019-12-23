@@ -17,15 +17,16 @@ frappe.ui.form.on('Supplier Quotation', {
 		{
 			var data = [];
 			var docfields = [];
-			data.push(["Consultation","Réf Article","Qts"]);
+			data.push(["Num Consultation","Ref Article","Fabricant","Qts"]);
 			$.each(frm.doc.items || [], (i, d) => {
 				var row = [];
 				 
 					var fabricant = d["fabricant"];
 					var ref_fabricant = d["ref_fabricant"];
+					var qty = d["qty"];
 					 
 
-					row.push([frm.doc.name,ref_fabricant,fabricant] || "");
+					row.push([frm.doc.name,ref_fabricant,fabricant,qty] || "");
 				 
 				data.push(row);
 			});
