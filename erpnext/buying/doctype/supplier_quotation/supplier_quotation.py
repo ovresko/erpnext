@@ -40,7 +40,8 @@ class SupplierQuotation(BuyingController):
 
 	def on_update_item(i, method=None):
 	    if i:
-		i.ref_devis = i.parent
+		frappe.msgprint("i %s" % i.name)
+		i.ref_devis = "test"
 		i.save()
 
         def on_update(self):		
