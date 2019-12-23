@@ -4,6 +4,11 @@
 
 frappe.query_reports["Rapport Analyse Consultation"] = {
 	"filters": [
-
+	{
+		"fieldname": "article_consulted",
+		"label": __("Articles Consultés Seulement"),
+		"fieldtype": "Check",
+		"default": 1
+	}
 	]
 }
