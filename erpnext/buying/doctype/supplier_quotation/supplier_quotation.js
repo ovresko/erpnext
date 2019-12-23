@@ -17,7 +17,7 @@ frappe.ui.form.on('Supplier Quotation', {
 		{
 			var data = [];
 			var docfields = [];
-			data.push(["Num Consultation","Ref Article","Fabricant","Qts"]);
+			data.push(["#","Code Article","Designation","Ref Article","Fabricant","Qts","Num Consultation"]);
 			$.each(frm.doc.items || [], (i, d) => {
 				var row = [];
 				 
@@ -26,7 +26,7 @@ frappe.ui.form.on('Supplier Quotation', {
 					var qty = d["qty"];
 					 
 
-					row.push([frm.doc.name,ref_fabricant,fabricant,qty] || "");
+					row.push([""+i,d["item_code"],d["item_name"],ref_fabricant,fabricant,qty,frm.doc.name] || "");
 				 
 				data.push(row);
 			});
