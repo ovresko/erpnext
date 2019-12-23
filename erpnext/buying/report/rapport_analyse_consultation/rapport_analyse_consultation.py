@@ -145,9 +145,12 @@ def execute(filters=None):
 		# get prices in each price list
 		if price_lists:
 			for pl in price_lists:
-				price = frappe.db.sql("""select price_list_rate from `tabItem Price` where price_list == %s and item_code == %s""",(pl.name,mri.item_code))
-				if price:
-					row.append(price)
+				if pl.name:
+					price = frappe.db.sql("""select price_list_rate from `tabItem Price` where price_list=%s and item_code=%s""",(pl.name,mri.item_code))
+					if price:
+						row.append(price)
+					else:
+						row.append(0)
 				else:
 					row.append(0)
 		
