@@ -73,7 +73,7 @@ frappe.ui.form.on('Supplier Quotation', {
 							//frm.refresh_field("items");
 							frappe.msgprint("Vous devez enregistrer pour filtrer les resultats  ")
 						}}});	
-	},
+	}, 
 	validate: function(frm){
 	
 		if(frm.doc.manufacturer){ 
@@ -84,7 +84,7 @@ frappe.ui.form.on('Supplier Quotation', {
 			if(i.fabricant == frm.doc.manufacturer){
 				//	Object.keys(i);
 				//.delete();
-				i.ref_devis = frm.doc.name;
+				 
 				_items.push(i);
 			
 			}
@@ -93,12 +93,7 @@ frappe.ui.form.on('Supplier Quotation', {
 	
 		frm.doc.items = _items;
 
-		}else{
-			frm.doc.items.forEach(i => {
-			console.log("validating ")
-			i.ref_devis = frm.doc.name; 
-		});
-		}
+		} 
 	
 	}
 
