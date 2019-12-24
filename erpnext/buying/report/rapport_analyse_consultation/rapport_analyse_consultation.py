@@ -125,6 +125,8 @@ def execute(filters=None):
 	mris = []
 	if filters.fabricant:
 		mris = frappe.get_all("Material Request Item",filters={"fabricant":filters.fabricant,"docstatus":1,"consulted" : filters.article_consulted}, fields=["last_purchase_rate","max_order_qty","projected_qty","actual_qty","stock_qty","ordered_qty","name","item_code","item_name","parent","consultation","fabricant","ref_fabricant"])
+	elif filters.consultation:
+		mris = frappe.get_all("Material Request Item",filters={"consultation":filters.consultation,"docstatus":1,"consulted" : filters.article_consulted}, fields=["last_purchase_rate","max_order_qty","projected_qty","actual_qty","stock_qty","ordered_qty","name","item_code","item_name","parent","consultation","fabricant","ref_fabricant"])
 	else:
 		mris = frappe.get_all("Material Request Item",filters={"docstatus":1,"consulted" : filters.article_consulted}, fields=["last_purchase_rate","max_order_qty","projected_qty","actual_qty","stock_qty","ordered_qty","name","item_code","item_name","parent","consultation","fabricant","ref_fabricant"])
 	
@@ -160,7 +162,7 @@ def execute(filters=None):
 				if pl.name:
 					price = frappe.db.sql("""select price_list_rate from `tabItem Price` where buying=1 and price_list=%s and item_code=%s""",(pl.name,mri.item_code))
 					if price:
-						row.append(price[0])
+						row.append(price[0].price_list_rate)
 					else:
 						row.append(0)
 				else:
