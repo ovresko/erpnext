@@ -118,8 +118,8 @@ def execute(filters=None):
 		for pl in price_lists:
 			columns.append({
 				"fieldname": pl.name,
-				"label": pl.name,
-				"width": 100
+				"label": "%s (%s)" % (pl.name,pl.currency),
+				"width": 150
 			})
 			
 	mris = []
@@ -132,10 +132,10 @@ def execute(filters=None):
 	
 	for mri in mris:
 		last_purchase_devise = frappe.get_value('Item', mri.item_code, 'last_purchase_devise')
-		modele_stock_qty = sum([a.stock_qty  for a in mris if a.stock_qty and a.model and a.model == mri.model])
-		modele_ordered_qty = sum([a.ordered_qty for a in mris if a.ordered_qty and a.model and a.model == mri.model])
+		modele_stock_qty = sum([a.stock_qty  for a in mris if (a.stock_qty and a.model == mri.model)])
+		modele_ordered_qty = sum([a.ordered_qty for a in mris if (a.ordered_qty and a.model and a.model == mri.model)])
 		qts_a_commande = mri.stock_qty - mri.projected_qty
-		modele_actual_qty = sum([a.actual_qty for a in mris if  a.actual_qty and a.model and a.model == mri.model])
+		modele_actual_qty = sum([a.actual_qty for a in mris if ( a.actual_qty and a.model and a.model == mri.model)])
 		modele_qts_a_commande =  mri.stock_qty - modele_ordered_qty
 		row = [mri.item_code,
 		       mri.item_name,
