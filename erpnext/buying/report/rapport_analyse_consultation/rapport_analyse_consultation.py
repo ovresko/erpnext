@@ -162,7 +162,7 @@ def execute(filters=None):
 				if pl.name:
 					price = frappe.db.sql("""select price_list_rate from `tabItem Price` where buying=1 and price_list=%s and item_code=%s ORDER BY creation DESC LIMIT 1;""",(pl.name,mri.item_code))
 					if price:
-						row.append("C")
+						row.append(price[0][0])
 					else:
 						row.append(0)
 				else:
