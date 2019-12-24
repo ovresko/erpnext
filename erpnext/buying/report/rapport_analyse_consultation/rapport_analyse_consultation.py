@@ -6,7 +6,6 @@ import frappe
 from frappe import _
 from erpnext.stock.get_item_details import get_item_details
 
-
 def execute(filters=None):
 	columns, data = [], []
 	columns.append({
@@ -83,6 +82,11 @@ def execute(filters=None):
 			"width": 150
 		})
 	columns.append({
+			"fieldname": "qts_projete_model",
+			"label": _("Qte Projete Modele"),
+			"width": 150
+		})
+	columns.append({
 			"fieldname": "qts_max_achat",
 			"label": _("Qte Max d'achat"),
 			"width": 150
@@ -124,18 +128,23 @@ def execute(filters=None):
 			
 	mris = []
 	if filters.fabricant:
-		mris = frappe.get_all("Material Request Item",filters={"fabricant":filters.fabricant,"docstatus":1,"consulted" : filters.article_consulted}, fields=["last_purchase_rate","max_order_qty","projected_qty","actual_qty","stock_qty","ordered_qty","name","item_code","item_name","parent","consultation","fabricant","ref_fabricant"])
+		mris = frappe.get_all("Material Request Item",filters={"fabricant":filters.fabricant,"docstatus":1,"consulted" : filters.article_consulted}, fields=["qty","last_purchase_rate","max_order_qty","projected_qty","actual_qty","stock_qty","ordered_qty","name","item_code","item_name","parent","consultation","fabricant","ref_fabricant"])
 	elif filters.consultation:
-		mris = frappe.get_all("Material Request Item",filters={"consultation":filters.consultation,"docstatus":1,"consulted" : filters.article_consulted}, fields=["last_purchase_rate","max_order_qty","projected_qty","actual_qty","stock_qty","ordered_qty","name","item_code","item_name","parent","consultation","fabricant","ref_fabricant"])
+		mris = frappe.get_all("Material Request Item",filters={"consultation":filters.consultation,"docstatus":1,"consulted" : filters.article_consulted}, fields=["qty","last_purchase_rate","max_order_qty","projected_qty","actual_qty","stock_qty","ordered_qty","name","item_code","item_name","parent","consultation","fabricant","ref_fabricant"])
 	else:
-		mris = frappe.get_all("Material Request Item",filters={"docstatus":1,"consulted" : filters.article_consulted}, fields=["last_purchase_rate","max_order_qty","projected_qty","actual_qty","stock_qty","ordered_qty","name","item_code","item_name","parent","consultation","fabricant","ref_fabricant"])
+		mris = frappe.get_all("Material Request Item",filters={"docstatus":1,"consulted" : filters.article_consulted}, fields=["qty","last_purchase_rate","max_order_qty","projected_qty","actual_qty","stock_qty","ordered_qty","name","item_code","item_name","parent","consultation","fabricant","ref_fabricant"])
 	
 	for mri in mris:
 		last_purchase_devise = frappe.get_value('Item', mri.item_code, 'last_purchase_devise')
-		modele_stock_qty = sum([a.stock_qty  for a in mris if (a.stock_qty and a.model == mri.model)])
-		modele_ordered_qty = sum([a.ordered_qty for a in mris if (a.ordered_qty and a.model and a.model == mri.model)])
+		bins = get_latest_stock_qty(mri.model,"GLOBAL - MV")
+		modele_stock_qty = bins[1]
+		modele_ordered_qty = bins[3]
+		modele_actual_qty = bins[0]
+		modele_proj = bins[2]
+		#modele_stock_qty = sum([a.stock_qty  for a in mris if (a.stock_qty and a.model == mri.model)])
+		#modele_ordered_qty = sum([a.ordered_qty for a in mris if (a.ordered_qty and a.model and a.model == mri.model)])
 		qts_a_commande = mri.stock_qty - mri.projected_qty
-		modele_actual_qty = sum([a.actual_qty for a in mris if ( a.actual_qty and a.model and a.model == mri.model)])
+		#modele_actual_qty = sum([a.actual_qty for a in mris if ( a.actual_qty and a.model and a.model == mri.model)])
 		modele_qts_a_commande =  mri.stock_qty - modele_ordered_qty
 		row = [mri.item_code,
 		       mri.item_name,
@@ -143,13 +152,14 @@ def execute(filters=None):
 		       mri.consultation,
 		       mri.fabricant,
 		       mri.ref_fabricant,
-		       mri.stock_qty,
+		       mri.qty,
 		       modele_stock_qty,
 		       mri.ordered_qty,
 		       modele_ordered_qty,
 		       mri.actual_qty,
 		       modele_actual_qty,
 		       mri.projected_qty,
+		       modele_proj,
 		       mri.max_order_qty,
 		       qts_a_commande,
 		       modele_qts_a_commande,
@@ -171,3 +181,23 @@ def execute(filters=None):
 		data.append(row)
 		
 	return columns, data
+
+def get_latest_stock_qty(item_code, warehouse=None):
+	values, condition = [item_code], ""
+	if warehouse:
+		lft, rgt, is_group = frappe.db.get_value("Warehouse", warehouse, ["lft", "rgt", "is_group"])
+
+		if is_group:
+			values.extend([lft, rgt])
+			condition += "and exists (\
+				select name from `tabWarehouse` wh where wh.name = tabBin.warehouse\
+				and wh.lft >= %s and wh.rgt <= %s)"
+
+		else:
+			values.append(warehouse)
+			condition += " AND warehouse = %s"
+
+	actual_qty = frappe.db.sql("""select sum(actual_qty), sum(indented), sum(projected_qty), sum(ordered_qty) from tabBin
+		where model=%s {0}""".format(condition), values)[0]
+
+	return actual_qty
