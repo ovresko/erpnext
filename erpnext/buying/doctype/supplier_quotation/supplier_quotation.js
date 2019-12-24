@@ -17,18 +17,20 @@ frappe.ui.form.on('Supplier Quotation', {
 		{
 			var data = [];
 			var docfields = [];
+			//#	Num Consultation	Fabricant	Code Article	Designation	oem	Ref Article	Qts
+
 			data.push(["Date",frm.doc.transaction_date,"","","","",""]);
 			data.push(["Fournisseur",frm.doc.supplier_name,"","","","",""]);
-			data.push(["#","Code Article","Designation","Ref Article","Fabricant","Qts","Num Consultation"]);
+			data.push(["#","Num Consultation","Fabricant","Code Article","Designation","Ref Article","Qts"]);
 			$.each(frm.doc.items || [], (i, d) => {
 				var row = [];
 				 
 					var fabricant = d["fabricant"];
 					var ref_fabricant = d["ref_fabricant"];
 					var qty =  Math.floor( d["qty"] * 0.7);
-					 
+					  
 
-					row.push([""+i,d["item_code"],d["item_name"],ref_fabricant,fabricant,qty,frm.doc.name] || [""]);
+					row.push([""+i,frm.doc.name,fabricant,d["item_code"],d["item_name"],ref_fabricant,qty] || [""]);
 				 
 				data.push(row);
 			});
@@ -48,16 +50,16 @@ frappe.ui.form.on('Supplier Quotation', {
 			var docfields = [];
 			data.push(["Date",frm.doc.transaction_date,"","","","",""]);
 			data.push(["Fournisseur",frm.doc.supplier_name,"","","","",""]);
-			data.push(["#","Code Article","Designation","Ref Article","Fabricant","Qts","Num Consultation"]);
+			data.push(["#","Num Consultation","Fabricant","Code Article","Designation","Ref Article","Qts"]);
 			$.each(frm.doc.items || [], (i, d) => {
 				var row = [];
 				 
 					var fabricant = d["fabricant"];
 					var ref_fabricant = d["ref_fabricant"];
-					var qty = d["qty"];
-					 
+					var qty =  Math.floor( d["qty"] * 0.7);
+					  
 
-					row.push([""+i,d["item_code"],d["item_name"],ref_fabricant,fabricant,qty,frm.doc.name] || "");
+					row.push([""+i,frm.doc.name,fabricant,d["item_code"],d["item_name"],ref_fabricant,qty] || [""]);
 				 
 				data.push(row);
 			});
