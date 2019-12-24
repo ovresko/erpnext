@@ -88,7 +88,7 @@ def execute(filters=None):
 		})
 	columns.append({
 			"fieldname": "qts_max_achat",
-			"label": _("Qte Max d'achat"),
+			"label": _("Qte Max d'achat (Modele)"),
 			"width": 150
 		})
 	columns.append({
