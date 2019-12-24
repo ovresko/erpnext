@@ -145,7 +145,10 @@ def execute(filters=None):
 		#modele_ordered_qty = sum([a.ordered_qty for a in mris if (a.ordered_qty and a.model and a.model == mri.model)])
 		qts_a_commande = mri.stock_qty - mri.projected_qty
 		#modele_actual_qty = sum([a.actual_qty for a in mris if ( a.actual_qty and a.model and a.model == mri.model)])
-		modele_qts_a_commande =  mri.stock_qty - modele_ordered_qty
+		if modele_ordered_qty:
+			modele_qts_a_commande =  mri.stock_qty - modele_ordered_qty
+		else:
+			modele_qts_a_commande = 0
 		row = [mri.item_code,
 		       mri.item_name,
 		       mri.parent,
