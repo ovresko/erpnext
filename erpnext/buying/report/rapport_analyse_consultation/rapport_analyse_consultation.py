@@ -185,20 +185,11 @@ def execute(filters=None):
 		
 	return columns, data
 
-def get_latest_stock_qty(item_code, warehouse=None):
-	values, condition = [item_code], ""
+def get_latest_stock_qty(model, warehouse=None):
+	values, condition = [model], ""
 	if warehouse:
-		lft, rgt, is_group = frappe.db.get_value("Warehouse", warehouse, ["lft", "rgt", "is_group"])
-
-		if is_group:
-			values.extend([lft, rgt])
-			condition += "and exists (\
-				select name from `tabWarehouse` wh where wh.name = tabBin.warehouse\
-				and wh.lft >= %s and wh.rgt <= %s)"
-
-		else:
-			values.append(warehouse)
-			condition += " AND warehouse = %s"
+		values.append(warehouse)
+		condition += " AND warehouse = %s"
 
 	actual_qty = frappe.db.sql("""select sum(actual_qty), sum(indented_qty), sum(projected_qty), sum(ordered_qty) from tabBin
 		where model=%s {0}""".format(condition), values)[0]
