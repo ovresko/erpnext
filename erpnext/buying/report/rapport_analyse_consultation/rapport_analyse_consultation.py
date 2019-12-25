@@ -107,8 +107,8 @@ def execute(filters=None):
 		})
 	columns.append({
 			"fieldname": "qts_a_commande_modele",
-			"label": "Qte a commandee par modele (demandees - projte)",
-			"width": 150
+			"label": "Qte a commandee par modele (demandees - projete)",
+			"width": 280
 		})
 	columns.append({
 			"fieldname": "last_purchase_rate",
