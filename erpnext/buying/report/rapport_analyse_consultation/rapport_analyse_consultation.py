@@ -137,7 +137,7 @@ def execute(filters=None):
 		modele_ordered_qty = bins[3]
 		modele_actual_qty = bins[0]
 		modele_proj = bins[2]
-		modele_stock_qty = sum([a.qty  for a in mris if (a.qty and a.model == mri.model)])
+		modele_stock_qty = sum(a.qty for a in mris if (a.qty and a.model  and a.model == mri.model))
 		#modele_ordered_qty = sum([a.ordered_qty for a in mris if (a.ordered_qty and a.model and a.model == mri.model)])
 		qts_a_commande = mri.stock_qty - mri.projected_qty
 		#modele_actual_qty = sum([a.actual_qty for a in mris if ( a.actual_qty and a.model and a.model == mri.model)])
