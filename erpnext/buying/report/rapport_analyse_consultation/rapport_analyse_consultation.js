@@ -14,7 +14,7 @@ frappe.query_reports["Rapport Analyse Consultation"] = {
 		"fieldname":"from_date",
 		"label": __("From Date"),
 		"fieldtype": "Date",
-		"default": frappe.datetime.add_months(frappe.datetime.get_today(), -1),
+		"default": frappe.datetime.add_days(frappe.datetime.get_today(), -10),
 		"width": "80"
 	},
 	{
