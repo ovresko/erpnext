@@ -7,8 +7,8 @@ from frappe import _
 from erpnext.stock.get_item_details import get_item_details
 
 def execute(filters=None):
-	if not filters.consultation:
-		frappe.msgprint("Sélectionner une consultation")
+	if not filters.consultation and not filters.demande:
+		frappe.msgprint("Sélectionner une consultation ou une demande de materiel")
 		return
 	columns, data = [], []
 	columns.append({
@@ -130,10 +130,14 @@ def execute(filters=None):
 			})
 			
 	mris = []
-	if filters.fabricant:
+	if filters.demande:
 		mris = frappe.get_all("Material Request Item",
-				      filters={"creation":(">=",filters.from_date),"fabricant":filters.fabricant,"docstatus":1,"consulted" : filters.article_consulted},
+				      filters={"creation":(">=",filters.from_date),"parent":filters.demande,"docstatus":1,"consulted" : filters.article_consulted},
 				      fields=["model","qty","last_purchase_rate","max_order_qty","projected_qty","actual_qty","stock_qty","ordered_qty","name","item_code","item_name","parent","consultation","fabricant","ref_fabricant"])
+	#if filters.fabricant:
+	#	mris = frappe.get_all("Material Request Item",
+	#			      filters={"creation":(">=",filters.from_date),"fabricant":filters.fabricant,"docstatus":1,"consulted" : filters.article_consulted},
+	#			      fields=["model","qty","last_purchase_rate","max_order_qty","projected_qty","actual_qty","stock_qty","ordered_qty","name","item_code","item_name","parent","consultation","fabricant","ref_fabricant"])
 	elif filters.consultation:
 		mris = frappe.get_all("Material Request Item",
 				      filters={"creation":(">=",filters.from_date),"consultation":filters.consultation,"docstatus":1,"consulted" : filters.article_consulted}, fields=["model","qty","last_purchase_rate","max_order_qty","projected_qty","actual_qty","stock_qty","ordered_qty","name","item_code","item_name","parent","consultation","fabricant","ref_fabricant"])
