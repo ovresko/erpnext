@@ -9,6 +9,13 @@ frappe.query_reports["Rapport Analyse Consultation"] = {
 		"label": __("Avec Devis / Sans Devis"),
 		"fieldtype": "Check",
 		"default": 1
+},
+	{
+		"fieldname":"from_date",
+		"label": __("From Date"),
+		"fieldtype": "Date",
+		"default": frappe.datetime.add_months(frappe.datetime.get_today(), -1),
+		"width": "80"
 	},
 	{
 		"fieldname": "fabricant",
