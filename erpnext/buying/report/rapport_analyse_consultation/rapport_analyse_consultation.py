@@ -10,7 +10,7 @@ def execute(filters=None):
 	
 	columns, data = [], []
 	if not filters.consultation and not filters.demande:
-		frappe.msgprint("Sélectionner une consultation ou une demande de materiel")
+		frappe.msgprint("Selectionner une consultation ou une demande de materiel")
 		return columns, data
 	columns.append({
 			"fieldname": "item_code",
