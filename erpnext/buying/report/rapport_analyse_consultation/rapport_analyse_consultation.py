@@ -15,8 +15,6 @@ def execute(filters=None):
 	columns.append({
 			"fieldname": "item_code",
 			"label": _("Item Code"),
-			"fieldtype": "Link",
-			"options": "Item",
 			"width": 150
 		})
 	
