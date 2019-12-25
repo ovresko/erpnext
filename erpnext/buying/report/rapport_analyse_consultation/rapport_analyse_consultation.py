@@ -125,14 +125,14 @@ def execute(filters=None):
 	if filters.fabricant:
 		mris = frappe.get_all("Material Request Item",
 				      filters={"creation":(">=",filters.from_date),"fabricant":filters.fabricant,"docstatus":1,"consulted" : filters.article_consulted},
-				      fields=["qty","last_purchase_rate","max_order_qty","projected_qty","actual_qty","stock_qty","ordered_qty","name","item_code","item_name","parent","consultation","fabricant","ref_fabricant"])
+				      fields=["model","qty","last_purchase_rate","max_order_qty","projected_qty","actual_qty","stock_qty","ordered_qty","name","item_code","item_name","parent","consultation","fabricant","ref_fabricant"])
 	elif filters.consultation:
 		mris = frappe.get_all("Material Request Item",
-				      filters={"creation":(">=",filters.from_date),"consultation":filters.consultation,"docstatus":1,"consulted" : filters.article_consulted}, fields=["qty","last_purchase_rate","max_order_qty","projected_qty","actual_qty","stock_qty","ordered_qty","name","item_code","item_name","parent","consultation","fabricant","ref_fabricant"])
+				      filters={"creation":(">=",filters.from_date),"consultation":filters.consultation,"docstatus":1,"consulted" : filters.article_consulted}, fields=["model","qty","last_purchase_rate","max_order_qty","projected_qty","actual_qty","stock_qty","ordered_qty","name","item_code","item_name","parent","consultation","fabricant","ref_fabricant"])
 	else:
 		mris = frappe.get_all("Material Request Item",
 				      filters={"creation":(">=",filters.from_date),"docstatus":1,"consulted" : filters.article_consulted},
-				      fields=["qty","last_purchase_rate","max_order_qty","projected_qty","actual_qty","stock_qty","ordered_qty","name","item_code","item_name","parent","consultation","fabricant","ref_fabricant"])
+				      fields=["model","qty","last_purchase_rate","max_order_qty","projected_qty","actual_qty","stock_qty","ordered_qty","name","item_code","item_name","parent","consultation","fabricant","ref_fabricant"])
 
 	for mri in mris:
 		last_purchase_devise = frappe.get_value('Item', mri.item_code, 'last_purchase_devise')
@@ -142,7 +142,7 @@ def execute(filters=None):
 		modele_ordered_qty = bins[3]
 		modele_actual_qty = bins[0]
 		modele_proj = bins[2]
-		modele_stock_qty = sum(a.qty for a in mris if a.model)
+		modele_stock_qty = sum(a.qty for a in mris if a.qty and a.model  and a.model == mri.model)
 		#and a.model == mri.model
 		#modele_ordered_qty = sum([a.ordered_qty for a in mris if (a.ordered_qty and a.model and a.model == mri.model)])
 		qts_a_commande = mri.stock_qty - mri.projected_qty
