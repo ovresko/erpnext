@@ -60,10 +60,10 @@ class SupplierQuotation(BuyingController):
                 for m in of_manu:
                     #if m.name not in mr:
                     ori = frappe.get_doc("Material Request Item",m.name)
-                    #if m.name not in mr:
-                    #    if ori and ori.docstatus != 2:
-                            #try:
-                    ori.consultation = self.name
+                    if m.name in mr:
+			ori.consultation = self.name
+		    else:
+			ori.consultation = ""
                     ori.consulted = 1
                     ori.flags.ignore_mandatory = True
                     ori.flags.ignore_validate = True
