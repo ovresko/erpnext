@@ -133,11 +133,11 @@ def execute(filters=None):
 		last_purchase_devise = frappe.get_value('Item', mri.item_code, 'last_purchase_devise')
 		model = frappe.get_value('Item', mri.item_code, 'variant_of')
 		bins = get_latest_stock_qty(mri.model,"GLOBAL - MV")
-		modele_stock_qty = bins[1]
+		#modele_stock_qty = bins[1]
 		modele_ordered_qty = bins[3]
 		modele_actual_qty = bins[0]
 		modele_proj = bins[2]
-		#modele_stock_qty = sum([a.stock_qty  for a in mris if (a.stock_qty and a.model == mri.model)])
+		modele_stock_qty = sum([a.qty  for a in mris if (a.qty and a.model == mri.model)])
 		#modele_ordered_qty = sum([a.ordered_qty for a in mris if (a.ordered_qty and a.model and a.model == mri.model)])
 		qts_a_commande = mri.stock_qty - mri.projected_qty
 		#modele_actual_qty = sum([a.actual_qty for a in mris if ( a.actual_qty and a.model and a.model == mri.model)])
