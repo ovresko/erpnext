@@ -975,7 +975,6 @@ def get_last_purchase_details(item_code, doc_name=None, conversion_rate=1.0):
 	conversion_rate = flt(conversion_rate) or 1.0
 	out.update({
 		"price_list_rate": out.base_price_list_rate / conversion_rate,
-		"rate": out.base_rate / conversion_rate,
 		"base_rate": out.base_rate
 	})
 
