@@ -35,7 +35,7 @@ frappe.ui.form.on('Supplier Quotation', {
 				data.push(row);
 			});
 
-			frappe.tools.downloadify(data, null, "FICHE CONSULTATION "+frm.doc.supplier_name);
+			frappe.tools.downloadify(data, null, "FICHE CONSULTATION "+frm.doc.name+" "+frm.doc.supplier_name);
 		}
 	
 		
@@ -56,7 +56,7 @@ frappe.ui.form.on('Supplier Quotation', {
 				 
 					var fabricant = d["fabricant"];
 					var ref_fabricant = d["ref_fabricant"];
-					var qty =  Math.floor( d["qty"] * 0.7);
+					var qty =  Math.floor( d["qty"] * 0.25);
 					  
 
 					row.push([""+i,frm.doc.name,fabricant,d["item_code"],d["item_name"],ref_fabricant,qty]);
@@ -64,7 +64,7 @@ frappe.ui.form.on('Supplier Quotation', {
 				data.push(row);
 			});
 
-			frappe.tools.downloadify(data, null, "FICHE CONSULTATION "+frm.doc.supplier_name);
+			frappe.tools.downloadify(data, null, "FICHE CONSULTATION "+frm.doc.name+" "+frm.doc.supplier_name);
 		}
 	
 		
