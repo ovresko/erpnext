@@ -57,8 +57,8 @@ def execute(filters=None):
 		})
 	columns.append({
 			"fieldname": "qts_demande_g",
-			"label": _("Qte Demandee En attente"),
-			"width": 150
+			"label": _("Qte Demandee En attente Partout"),
+			"width": 220
 		})
 	columns.append({
 			"fieldname": "qts_demande_modele",
