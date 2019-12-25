@@ -8,7 +8,7 @@ frappe.query_reports["Rapport Analyse Consultation"] = {
 		"fieldname": "article_consulted",
 		"label": __("Avec Devis / Sans Devis"),
 		"fieldtype": "Check",
-		"default": 1
+		"default": 0
 },
 	{
 		"fieldname":"from_date",
