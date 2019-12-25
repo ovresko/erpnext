@@ -9,7 +9,7 @@ frappe.query_reports["Rapport Analyse Consultation"] = {
 		"label": __("Avec Devis / Sans Devis"),
 		"fieldtype": "Check",
 		"default": 0
-},
+	},
 	{
 		"fieldname":"from_date",
 		"label": __("From Date"),
@@ -28,6 +28,7 @@ frappe.query_reports["Rapport Analyse Consultation"] = {
 		"label": __("Consultation"),
 		fieldtype: "Link",
 		options: "Supplier Quotation",
+		"reqd": 1,
 	}
 		
 	]
