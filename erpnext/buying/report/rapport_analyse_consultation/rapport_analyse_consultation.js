@@ -18,10 +18,11 @@ frappe.query_reports["Rapport Analyse Consultation"] = {
 		"width": "80"
 	},
 	{
-		"fieldname": "fabricant",
-		"label": __("Fabricant"),
+		"fieldname": "demande",
+		"label": __("Demande de materiel"),
 		fieldtype: "Link",
-		options: "Manufacturer",
+		options: "Material Request",
+		"reqd": 1,
 	},
 	{
 		"fieldname": "consultation",
