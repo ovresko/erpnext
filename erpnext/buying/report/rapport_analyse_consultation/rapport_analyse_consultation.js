@@ -3,13 +3,7 @@
 /* eslint-disable */
 
 frappe.query_reports["Rapport Analyse Consultation"] = {
-	"filters": [
-	{
-		"fieldname": "article_consulted",
-		"label": __("Avec Devis / Sans Devis"),
-		"fieldtype": "Check",
-		"default": 0
-	},
+	"filters": [ 
 	{
 		"fieldname":"from_date",
 		"label": __("From Date"),
