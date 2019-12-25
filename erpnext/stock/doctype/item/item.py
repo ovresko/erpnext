@@ -925,7 +925,7 @@ def get_last_purchase_details(item_code, doc_name=None, conversion_rate=1.0):
 	last_purchase_order = frappe.db.sql("""\
 		select po.name, po.transaction_date, po.conversion_rate,
 			po_item.conversion_factor, po_item.base_price_list_rate,
-			po_item.discount_percentage, po_item.base_rate
+			po_item.discount_percentage, po_item.base_rate, po_item.rate
 		from `tabPurchase Order` po, `tabPurchase Order Item` po_item
 		where po.docstatus = 1 and po_item.item_code = %s and po.name != %s and
 			po.name = po_item.parent
@@ -936,7 +936,7 @@ def get_last_purchase_details(item_code, doc_name=None, conversion_rate=1.0):
 	last_purchase_receipt = frappe.db.sql("""\
 		select pr.name, pr.posting_date, pr.posting_time, pr.conversion_rate,
 			pr_item.conversion_factor, pr_item.base_price_list_rate, pr_item.discount_percentage,
-			pr_item.base_rate
+			pr_item.base_rate, pr_item.rate
 		from `tabPurchase Receipt` pr, `tabPurchase Receipt Item` pr_item
 		where pr.docstatus = 1 and pr_item.item_code = %s and pr.name != %s and
 			pr.name = pr_item.parent
@@ -968,7 +968,8 @@ def get_last_purchase_details(item_code, doc_name=None, conversion_rate=1.0):
 		"base_price_list_rate": flt(last_purchase.base_price_list_rate) / conversion_factor,
 		"base_rate": flt(last_purchase.base_rate) / conversion_factor,
 		"discount_percentage": flt(last_purchase.discount_percentage),
-		"purchase_date": purchase_date
+		"purchase_date": purchase_date,
+		"rate":flt(last_purchase.rate)
 	})
 
 	conversion_rate = flt(conversion_rate) or 1.0
