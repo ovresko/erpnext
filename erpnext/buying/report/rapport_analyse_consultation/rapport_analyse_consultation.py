@@ -52,6 +52,11 @@ def execute(filters=None):
 			"width": 150
 		})
 	columns.append({
+			"fieldname": "qts_demande_g",
+			"label": _("Qte Demandee Partout"),
+			"width": 150
+		})
+	columns.append({
 			"fieldname": "qts_demande_modele",
 			"label": _("Qte Demandee Modele"),
 			"width": 180
@@ -138,11 +143,12 @@ def execute(filters=None):
 		last_purchase_devise = frappe.get_value('Item', mri.item_code, 'last_purchase_devise')
 		model = frappe.get_value('Item', mri.item_code, 'variant_of')
 		bins = get_latest_stock_qty(mri.model,"GLOBAL - MV")
-		#modele_stock_qty = bins[1]
+		ibins = get_item_qty(mri.item_code,"GLOBAL - MV")
+		modele_stock_qty = bins[1]
 		modele_ordered_qty = bins[3]
 		modele_actual_qty = bins[0]
 		modele_proj = bins[2]
-		modele_stock_qty = sum(a.qty for a in mris if a.qty and a.model  and a.model == mri.model)
+		#modele_stock_qty = sum(a.qty for a in mris if a.qty and a.model  and a.model == mri.model)
 		#and a.model == mri.model
 		#modele_ordered_qty = sum([a.ordered_qty for a in mris if (a.ordered_qty and a.model and a.model == mri.model)])
 		qts_a_commande = mri.stock_qty - mri.projected_qty
@@ -158,12 +164,13 @@ def execute(filters=None):
 		       mri.fabricant,
 		       mri.ref_fabricant,
 		       mri.qty,
+		       ibins[1],
 		       modele_stock_qty,
-		       mri.ordered_qty,
+		       ibins[3],
 		       modele_ordered_qty,
-		       mri.actual_qty,
+		       ibins[0],
 		       modele_actual_qty,
-		       mri.projected_qty,
+		       ibins[2],
 		       modele_proj,
 		       mri.max_order_qty,
 		       qts_a_commande,
@@ -195,5 +202,16 @@ def get_latest_stock_qty(model, warehouse=None):
 
 	actual_qty = frappe.db.sql("""select sum(actual_qty), sum(indented_qty), sum(projected_qty), sum(ordered_qty) from tabBin
 		where model=%s {0}""".format(condition), values)[0]
+
+	return actual_qty
+
+def get_item_qty(model, warehouse=None):
+	values, condition = [model], ""
+	if warehouse:
+		values.append(warehouse)
+		condition += " AND warehouse = %s"
+
+	actual_qty = frappe.db.sql("""select sum(actual_qty), sum(indented_qty), sum(projected_qty), sum(ordered_qty) from tabBin
+		where item_code=%s {0}""".format(condition), values)[0]
 
 	return actual_qty
