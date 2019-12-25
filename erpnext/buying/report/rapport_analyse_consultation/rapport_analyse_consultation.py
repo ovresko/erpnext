@@ -7,10 +7,11 @@ from frappe import _
 from erpnext.stock.get_item_details import get_item_details
 
 def execute(filters=None):
+	
+	columns, data = [], []
 	if not filters.consultation and not filters.demande:
 		frappe.msgprint("Sélectionner une consultation ou une demande de materiel")
-		return
-	columns, data = [], []
+		return columns, data
 	columns.append({
 			"fieldname": "item_code",
 			"label": _("Item Code"),
