@@ -173,18 +173,20 @@ class Item(WebsiteGenerator):
 		self.update_defaults_from_item_group()
 		self.validate_stock_for_has_batch_and_has_serial()
                 # set table reorder
-                min_qts = self.recom_minimum
-                qts = self.recom_qts
-                levels = frappe.get_all("Item Reorder",fields=["name","parent","warehouse"],filters=[{"parent":self.name},{"warehouse":"GLOBAL - MV"}])
-                original = list(filter(lambda x: x.warehouse != "GLOBAL - MV",self.reorder_levels))
-                self.reorder_levels = []
+              
                 if min_qts > 0 and qts > 0:
+		    min_qts = self.recom_minimum
+                    qts = self.recom_qts
+                    levels = frappe.get_all("Item Reorder",fields=["warehouse_group","name","parent","warehouse"],filters=[{"parent":self.name},{"warehouse":"GLOBAL - MV"}])
+                    original = list(filter(lambda x: x.warehouse != "GLOBAL - MV",self.reorder_levels))
+                    self.reorder_levels = []
                     row = self.append('reorder_levels',{})
                     row.warehouse='GLOBAL - MV'
+		    row.warehouse_group='GLOBAL - MV'
                     row.warehouse_reorder_level=min_qts
                     row.warehouse_reorder_qty=qts
                     row.material_request_type='Purchase'
-
+		    self.reorder_levels.extend(original)
                     #self.recom_minimum = 0
                     #self.recom_qts = 0
                 #elif levels:
@@ -193,7 +195,6 @@ class Item(WebsiteGenerator):
                     #level.warehouse_reorder_qty=qts
                     #level.save()
                 #original = list(filter(lambda(x: x.warehouse != "GLOBAL - MV",self.reorder_levels))
-                self.reorder_levels.extend(original)
 
 		if not self.get("__islocal"):
 			self.old_item_group = frappe.db.get_value(self.doctype, self.name, "item_group")
