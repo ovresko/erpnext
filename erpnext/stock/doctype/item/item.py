@@ -173,10 +173,9 @@ class Item(WebsiteGenerator):
 		self.update_defaults_from_item_group()
 		self.validate_stock_for_has_batch_and_has_serial()
                 # set table reorder
-              
+                min_qts = self.recom_minimum
+		qts = self.recom_qts
                 if min_qts > 0 and qts > 0:
-		    min_qts = self.recom_minimum
-                    qts = self.recom_qts
                     levels = frappe.get_all("Item Reorder",fields=["warehouse_group","name","parent","warehouse"],filters=[{"parent":self.name},{"warehouse":"GLOBAL - MV"}])
                     original = list(filter(lambda x: x.warehouse != "GLOBAL - MV",self.reorder_levels))
                     self.reorder_levels = []
