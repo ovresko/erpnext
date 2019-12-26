@@ -114,11 +114,14 @@ def get_item_warehouse_projected_qty(items_to_consider):
 			item_warehouse_projected_qty[item_code][warehouse] = flt(projected_qty)
 
 		warehouse_doc = frappe.get_doc("Warehouse", warehouse)
-
+		print("getting parent of %s" % warehouse)
+		print("projected_qty in %s : %d" % (warehouse,projected_qty))
 		while warehouse_doc.parent_warehouse:
 			if not item_warehouse_projected_qty.get(item_code, {}).get(warehouse_doc.parent_warehouse):
+				print("parent_warehouse in %s : %d" % (warehouse_doc.parent_warehouse,projected_qty))
 				item_warehouse_projected_qty.setdefault(item_code, {})[warehouse_doc.parent_warehouse] = flt(projected_qty)
 			else:
+				print("parent_warehouse in %s : %d" % (warehouse_doc.parent_warehouse,projected_qty))
 				item_warehouse_projected_qty[item_code][warehouse_doc.parent_warehouse] += flt(projected_qty)
 			warehouse_doc = frappe.get_doc("Warehouse", warehouse_doc.parent_warehouse)
 
