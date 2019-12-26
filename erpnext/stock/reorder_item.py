@@ -67,7 +67,7 @@ def _reorder_item():
 		reorder_qty = flt(reorder_qty)
 
 		# projected_qty will be 0 if Bin does not exist
-		if warehouse_group:
+		if warehouse_group and warehouse != "GLOBAL - MV":
 			projected_qty = flt(item_warehouse_projected_qty.get(item_code, {}).get(warehouse_group))
 		else:
 			projected_qty = flt(item_warehouse_projected_qty.get(item_code, {}).get(warehouse))
