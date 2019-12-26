@@ -50,12 +50,12 @@ def execute(filters=None):
 		})
 	columns.append({
 			"fieldname": "qts_demande",
-			"label": _("Qte Demandee"),
+			"label": _("Qte Demandee Variante"),
 			"width": 150
 		})
 	columns.append({
 			"fieldname": "qts_demande_g",
-			"label": _("Qte Demandee En attente Partout"),
+			"label": _("Total de Qte Demande de materiel"),
 			"width": 220
 		})
 	columns.append({
@@ -65,8 +65,8 @@ def execute(filters=None):
 		})
 	columns.append({
 			"fieldname": "qts_reliquat",
-			"label": _("Qte reliquats"),
-			"width": 150
+			"label": _("Qte reliquats Variante"),
+			"width": 160
 		})
 	columns.append({
 			"fieldname": "qts_reliquat_modele",
@@ -85,7 +85,7 @@ def execute(filters=None):
 		})
 	columns.append({
 			"fieldname": "qts_projete",
-			"label": _("Qte Projete"),
+			"label": _("Qte Projete Variante"),
 			"width": 150
 		})
 	columns.append({
@@ -110,7 +110,7 @@ def execute(filters=None):
 		})
 	columns.append({
 			"fieldname": "last_purchase_rate",
-			"label": "Dernier Prix d'achat",
+			"label": "Dernier Prix d'achat (DZD)",
 			"width": 150
 		})
 	columns.append({
