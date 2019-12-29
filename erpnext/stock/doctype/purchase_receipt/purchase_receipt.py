@@ -70,12 +70,13 @@ class PurchaseReceipt(BuyingController):
 		self.validate_uom_is_integer("uom", ["qty", "received_qty"])
 		self.validate_uom_is_integer("stock_uom", "stock_qty")
 
-		self.check_for_closed_status()
-
+		self.check_for_closed_status()	
+                for item in self.items:
+			if self.pays:
+				item.pays = self.pays
 		if getdate(self.posting_date) > getdate(nowdate()):
-			throw(_("Posting Date cannot be future date"))
-                if self.docstatus == 0:
-                    for item in self.items:
+			throw(_("Posting Date cannot be future date")) 
+		if self.docstatus == 0:
                         if item.original_qts != item.qty and (not item.original_qts or item.original_qts == 0):
                             item.original_qts = item.qty
                         item.qts_ecart = item.original_qts - item.qty
