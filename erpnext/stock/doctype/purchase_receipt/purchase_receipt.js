@@ -38,6 +38,33 @@ frappe.ui.form.on("Purchase Receipt", {
 		if(frm.doc.company) {
 			frm.trigger("toggle_display_account_head");
 		}
+		frm.add_custom_button("Télécharger Fiche Franchise",
+			() => 
+		if(frm.doc.items != null)
+		{
+			var data = [];
+			var docfields = [];
+			//#	Num Consultation	Fabricant	Code Article	Designation	oem	Ref Article	Qts
+
+			//data.push(["Date",frm.doc.transaction_date,"","","","",""]);
+			//data.push(["Fournisseur",frm.doc.supplier_name,"","","","",""]);
+			data.push(["#","Code Article","Designation","Ref Article","Qts","Poids Total","Prix Unitaire","Montant"]);
+			$.each(frm.doc.items || [], (i, d) => {
+				var row = [];
+				 
+					
+
+					row.push(['"'+i+'"','"'+d["item_code"]+'"','"'+d["item_name"]+'"','"'+d["supplier_part_no"]+'"','"'+d["qty"]+'"','"'+d["total_weight"]+'"','"'+d["rate"]+'"','"'+d["amount"]+'"']);
+				 
+				data.push(row);
+			});
+
+			frappe.tools.downloadify(data, null, "FICHE FRANCHISE "+frm.doc.name+" "+frm.doc.supplier_name);
+		}
+	
+				      
+				     
+				     );
 	},
 
 	company: function(frm) {
