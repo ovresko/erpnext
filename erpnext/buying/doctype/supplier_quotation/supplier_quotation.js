@@ -30,7 +30,7 @@ frappe.ui.form.on('Supplier Quotation', {
 					var qty =  Math.floor( d["qty"] * 0.7);
 					  
 
-					row.push([""+i,frm.doc.name,fabricant,d["item_code"],d["item_name"],ref_fabricant,qty]);
+					row.push(['"'+i+'"','"'+frm.doc.name+'"','"'+fabricant+'"','"'+d["item_code"]+'"','"'+d["item_name"]+'"','"'+ref_fabricant+'"','"'+qty+'"']);
 				 
 				data.push(row);
 			});
@@ -59,7 +59,7 @@ frappe.ui.form.on('Supplier Quotation', {
 					var qty =  Math.floor( d["qty"] * 0.25);
 					  
 
-					row.push([""+i,frm.doc.name,fabricant,d["item_code"],d["item_name"],ref_fabricant,qty]);
+					row.push(['"'+i+'"','"'+frm.doc.name+'"','"'+fabricant+'"','"'+d["item_code"]+'"','"'+d["item_name"]+'"','"'+ref_fabricant+'"','"'+qty+'"']);
 				 
 				data.push(row);
 			});
