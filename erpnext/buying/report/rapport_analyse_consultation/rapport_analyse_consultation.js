@@ -11,17 +11,36 @@ frappe.query_reports["Rapport Analyse Consultation"] = {
 		"default": frappe.datetime.add_days(frappe.datetime.get_today(), -60),
 		"width": "80"
 	},
+	 
 	{
 		"fieldname": "demande",
 		"label": __("Demande de materiel"),
 		fieldtype: "Link",
 		options: "Material Request", 
+		"get_query": function() {
+			return {
+				"doctype": "Material Request",
+				"filters": {
+					"status": "Pending",
+				}
+			}
+		}
+		
+		
 	},
 	{
 		"fieldname": "consultation",
 		"label": __("Consultation"),
 		fieldtype: "Link",
 		options: "Supplier Quotation", 
+		"get_query": function() {
+			return {
+				"doctype": "Supplier Quotation",
+				"filters": {
+					"docstatus": 0,
+				}
+			}
+		}
 	}
 		
 	]
