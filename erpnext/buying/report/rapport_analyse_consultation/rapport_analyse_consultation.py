@@ -205,7 +205,7 @@ def get_latest_stock_qty(model, warehouse=None):
 		condition += " AND warehouse = %s"
 
 	actual_qty = frappe.db.sql("""select sum(actual_qty), sum(indented_qty), sum(projected_qty), sum(ordered_qty) from tabBin
-		where model=%s {0}""".format(condition), values)[0]
+		where model=%s {0} and is_group=0""".format(condition), values)[0]
 
 	return actual_qty
 
@@ -216,6 +216,6 @@ def get_item_qty(model, warehouse=None):
 		condition += " AND warehouse = %s"
 
 	actual_qty = frappe.db.sql("""select sum(actual_qty), sum(indented_qty), sum(projected_qty), sum(ordered_qty) from tabBin
-		where item_code=%s {0}""".format(condition), values)[0]
+		where item_code=%s {0} and is_group=0""".format(condition), values)[0]
 
 	return actual_qty
