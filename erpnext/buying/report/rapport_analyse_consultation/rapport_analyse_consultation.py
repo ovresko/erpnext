@@ -150,8 +150,8 @@ def execute(filters=None):
 	for mri in mris:
 		last_purchase_devise = frappe.get_value('Item', mri.item_code, 'last_purchase_devise')
 		model = frappe.get_value('Item', mri.item_code, 'variant_of')
-		bins = get_latest_stock_qty(mri.model,"GLOBAL - MV")
-		ibins = get_item_qty(mri.item_code,"GLOBAL - MV")
+		bins = get_latest_stock_qty(mri.model)
+		ibins = get_item_qty(mri.item_code)
 		modele_stock_qty = bins[1]
 		modele_ordered_qty = bins[3]
 		modele_actual_qty = bins[0]
