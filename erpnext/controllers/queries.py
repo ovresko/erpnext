@@ -173,7 +173,8 @@ def item_query(doctype, txt, searchfield, start, page_len, filters, as_dict=Fals
 		txt = txt.replace("qq ","")
 		if txt.endswith(' '):
 			txt = txt.rstrip(' ')
-		txt = txt.replace(" ","* +<")
+		piece = txt.split(' ', 1)[0]
+		txt = txt.replace(" ","* +")
 		return frappe.db.sql("""select tabItem.name,
 		if(length(tabItem.item_name) > 40,
 			concat(substr(tabItem.item_name, 1, 40), "..."), item_name) as item_name,
@@ -187,6 +188,7 @@ def item_query(doctype, txt, searchfield, start, page_len, filters, as_dict=Fals
 		where tabItem.docstatus < 2
 			and tabItem.has_variants=0
 			and tabItem.disabled=0
+			and tabItem.item_name LIKE %(piece)s
 			and (tabItem.end_of_life > %(today)s or ifnull(tabItem.end_of_life, '0000-00-00')='0000-00-00')
 			and (Match(tabItem.nom_generique_long) AGAINST(%(txt)s IN BOOLEAN MODE)
 				{description_cond})
