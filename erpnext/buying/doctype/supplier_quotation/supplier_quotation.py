@@ -183,7 +183,7 @@ def on_update_consultation(items,pname):
 	for item in items:
 		wg = item.weight_per_unit
 		if wg and wg > 0:
-			frappe.db.sql(""" update `tabItem` set weight_per_unit = %d
+			frappe.db.sql(""" update `tabItem` set weight_per_unit = %s
 		where item_code=%s""",(wg,item.item_code))
 		wgi = item.weight_uom
 		if wgi:
