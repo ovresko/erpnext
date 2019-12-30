@@ -145,6 +145,7 @@ def execute(filters=None):
 
 	for mri in mris:
 		last_purchase_devise = frappe.get_value('Item', mri.item_code, 'last_purchase_devise')
+		max_order_qty = frappe.get_value('Item', mri.item_code, 'max_order_qty')
 		model = frappe.get_value('Item', mri.item_code, 'variant_of')
 		bins = get_latest_stock_qty(mri.model)
 		ibins = get_item_qty(mri.item_code)
@@ -176,7 +177,7 @@ def execute(filters=None):
 		       modele_actual_qty,
 		       ibins[2],
 		       modele_proj,
-		       mri.max_order_qty,
+		       max_order_qty,
 		       qts_a_commande,
 		       modele_qts_a_commande,
 		       mri.last_purchase_rate,
