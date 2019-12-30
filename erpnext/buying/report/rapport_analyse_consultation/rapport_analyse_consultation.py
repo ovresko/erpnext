@@ -27,15 +27,11 @@ def execute(filters=None):
 	columns.append({
 			"fieldname": "material_request",
 			"label": _("Material Request"),
-			"fieldtype": "Link",
-			"options": "Material Request",
 			"width": 150
 		})
 	columns.append({
 			"fieldname": "supplier_quotation",
 			"label": _("Consultation"),
-			"fieldtype": "Link",
-			"options": "Supplier Quotation",
 			"width": 150
 		})
 	columns.append({
