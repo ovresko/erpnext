@@ -171,7 +171,7 @@ def item_query(doctype, txt, searchfield, start, page_len, filters, as_dict=Fals
 	
 	if txt.startswith('qq '):
 		txt = txt.replace("qq ","")
-		txt = txt.replace(" ",",")
+		txt = txt.replace(" ","*,")
 		return frappe.db.sql("""select tabItem.name,
 		if(length(tabItem.item_name) > 40,
 			concat(substr(tabItem.item_name, 1, 40), "..."), item_name) as item_name,
@@ -186,11 +186,7 @@ def item_query(doctype, txt, searchfield, start, page_len, filters, as_dict=Fals
 			and tabItem.has_variants=0
 			and tabItem.disabled=0
 			and (tabItem.end_of_life > %(today)s or ifnull(tabItem.end_of_life, '0000-00-00')='0000-00-00')
-			and (tabItem.`{key}` LIKE %(txt)s
-				or REPLACE(REPLACE(REPLACE(tabItem.manufacturer_part_no,' ',''),'+',''),'-','') LIKE %(spaceless)s
-				or tabItem.manufacturer_part_no LIKE %(txt)s
-				or tabItem.clean_manufacturer_part_number LIKE %(spaceless)s
-				or Match(tabItem.nom_generique_long) AGAINST(%(txt)s)
+			and (Match(tabItem.nom_generique_long) AGAINST(%(txt)s IN BOOLEAN MODE)
 				{description_cond})
 			{fcond} {mcond}
 		order by
