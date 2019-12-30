@@ -172,7 +172,7 @@ def item_query(doctype, txt, searchfield, start, page_len, filters, as_dict=Fals
 	if txt.startswith('qq '):
 		txt = txt.replace("qq ","")
 		if txt.endswith(' '):
-			txt = txt..rstrip(' ')
+			txt = txt.rstrip(' ')
 		txt = txt.replace(" ","* +<")
 		return frappe.db.sql("""select tabItem.name,
 		if(length(tabItem.item_name) > 40,
