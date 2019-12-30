@@ -140,7 +140,11 @@ class Item(WebsiteGenerator):
 
 		if not self.description:
 			self.description = self.titre_article
-		nom_g = self.item_name + ' '
+		nom_g = ''
+		if self.variant_of:
+			nom_g = self.manufacturer +' '+self.manufacturer_part_no +' '+ self.item_name + ' '
+		if self.has_variants:
+			nom_g = self.item_name + ' '
 		for v in self.versions:
 			nom_g += v.nom_version+' '
 		for g in self.generation_vehicule_supporte:
