@@ -181,6 +181,10 @@ def get_list_context(context=None):
 def on_update_consultation(items,pname):
 	print("doing update xxx consultation")
 	for item in items:
+		wg = item.weight_per_unit
+		if wg and wg > 0:
+			frappe.db.sql(""" update `tabItem` set weight_per_unit = {0}
+		where item_code=={1}""".format(wg,item.item_code))
 		if item.material_request_item:
 			print("item req : %s" % item.material_request_item)
 			mr = frappe.get_doc("Material Request Item",item.material_request_item)
