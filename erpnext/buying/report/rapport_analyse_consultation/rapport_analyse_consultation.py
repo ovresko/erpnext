@@ -9,9 +9,9 @@ from erpnext.stock.get_item_details import get_item_details
 def execute(filters=None):
 	
 	columns, data = [], []
-	#if not filters.consultation and not filters.demande:
-	#	frappe.msgprint("Selectionner une consultation ou une demande de materiel")
-	#	return columns, data
+	if not filters.consultation and not filters.demande:
+		frappe.msgprint("Selectionner une consultation ou une demande de materiel")
+		return columns, data
 	columns.append({
 			"fieldname": "item_code",
 			"label": _("Item Code"),
@@ -139,11 +139,13 @@ def execute(filters=None):
 	#			      fields=["model","qty","last_purchase_rate","max_order_qty","projected_qty","actual_qty","stock_qty","ordered_qty","name","item_code","item_name","parent","consultation","fabricant","ref_fabricant"])
 	elif filters.consultation:
 		mris = frappe.get_all("Material Request Item",
-				      filters={"ordered_qty":0,"creation":(">=",filters.from_date),"consultation":filters.consultation,"docstatus":1}, fields=["model","qty","last_purchase_rate","max_order_qty","projected_qty","actual_qty","stock_qty","ordered_qty","name","item_code","item_name","parent","consultation","fabricant","ref_fabricant"])
-	else:
-		mris = frappe.get_all("Material Request Item",
-				      filters={"ordered_qty":0,"creation":(">=",filters.from_date),"docstatus":1},
+				      filters={"ordered_qty":0,"creation":(">=",filters.from_date),
+					       "consultation":filters.consultation,"docstatus":1}, 
 				      fields=["model","qty","last_purchase_rate","max_order_qty","projected_qty","actual_qty","stock_qty","ordered_qty","name","item_code","item_name","parent","consultation","fabricant","ref_fabricant"])
+	#else:
+	#	mris = frappe.get_all("Material Request Item",
+	#			      filters={"ordered_qty":0,"creation":(">=",filters.from_date),"docstatus":1},
+	#			      fields=["model","qty","last_purchase_rate","max_order_qty","projected_qty","actual_qty","stock_qty","ordered_qty","name","item_code","item_name","parent","consultation","fabricant","ref_fabricant"])
 
 	for mri in mris:
 		last_purchase_devise = frappe.get_value('Item', mri.item_code, 'last_purchase_devise')
