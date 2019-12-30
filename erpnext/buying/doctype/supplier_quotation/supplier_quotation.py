@@ -185,6 +185,10 @@ def on_update_consultation(items,pname):
 		if wg and wg > 0:
 			frappe.db.sql(""" update `tabItem` set weight_per_unit = {0}
 		where item_code=={1}""".format(wg,item.item_code))
+		wgi = item.weight_uom
+		if wgi:
+			frappe.db.sql(""" update `tabItem` set weight_uom = {0}
+		where item_code=={1}""".format(wgi,item.item_code))
 		if item.material_request_item:
 			print("item req : %s" % item.material_request_item)
 			mr = frappe.get_doc("Material Request Item",item.material_request_item)
