@@ -206,6 +206,7 @@ def item_query(doctype, txt, searchfield, start, page_len, filters, as_dict=Fals
 			{
 				"today": nowdate(),
 				"txt": "%%%s%%" % txt,
+				"piece": "%%%s%%" % piece,
 				"spaceless":spaceless,
 				"_txt": txt.replace("%", ""),
 				"start": start,
