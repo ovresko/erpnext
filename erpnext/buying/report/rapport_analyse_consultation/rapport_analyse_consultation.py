@@ -75,7 +75,7 @@ def execute(filters=None):
 			"width": 150
 		})
 	columns.append({
-			"fieldname": "qts_variante_stock",
+			"fieldname": "qts_variante_model",
 			"label": _("Qte Modele En Stock"),
 			"width": 150
 		})
@@ -110,7 +110,7 @@ def execute(filters=None):
 			"width": 150
 		})
 	columns.append({
-			"fieldname": "last_purchase_rate",
+			"fieldname": "last_purchase_devise",
 			"label": "Dernier Prix d'achat (Devise)",
 			"width": 150
 		})
