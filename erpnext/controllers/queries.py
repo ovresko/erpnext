@@ -160,15 +160,56 @@ def item_query(doctype, txt, searchfield, start, page_len, filters, as_dict=Fals
 	if frappe.db.count('Item', cache=True) < 50000:
 		# scan description only if items are less than 50000
 		description_cond = 'or tabItem.description LIKE %(txt)s'
-		spaceless = txt.replace(" ","")
-		spaceless = spaceless.replace("_","")
-		spaceless = spaceless.replace("+","")
-		spaceless = spaceless.replace(",","")
-		spaceless = spaceless.replace("-","")
-		spaceless = spaceless.replace(";","")
-		spaceless = spaceless.replace(".","")
-		spaceless = spaceless.replace(":","")
-		
+	spaceless = txt.replace("$","")
+	spaceless = spaceless.replace("_","")
+	spaceless = spaceless.replace("+","")
+	spaceless = spaceless.replace(",","")
+	spaceless = spaceless.replace("-","")
+	spaceless = spaceless.replace(";","")
+	spaceless = spaceless.replace(".","")
+	spaceless = spaceless.replace(":","")
+	
+	if txt.startswith('qq ')
+		txt = txt.replace("qq ","")
+		return frappe.db.sql("""select tabItem.name,
+		if(length(tabItem.item_name) > 40,
+			concat(substr(tabItem.item_name, 1, 40), "..."), item_name) as item_name,
+		tabItem.item_group,
+		tabItem.titre_article,
+		tabItem.manufacturer_part_no,
+		tabItem.manufacturer,
+		if(length(tabItem.description) > 40, \
+			concat(substr(tabItem.description, 1, 40), "..."), description) as decription
+		from tabItem
+		where tabItem.docstatus < 2
+			and tabItem.has_variants=0
+			and tabItem.disabled=0
+			and (tabItem.end_of_life > %(today)s or ifnull(tabItem.end_of_life, '0000-00-00')='0000-00-00')
+			and (tabItem.`{key}` LIKE %(txt)s
+				or REPLACE(REPLACE(REPLACE(tabItem.manufacturer_part_no,' ',''),'+',''),'-','') LIKE %(spaceless)s
+				or tabItem.manufacturer_part_no LIKE %(txt)s
+				or tabItem.clean_manufacturer_part_number LIKE %(spaceless)s
+				or Match(tabItem.nom_generique_long) AGAINST(%(txt)s)
+				{description_cond})
+			{fcond} {mcond}
+		order by
+			if(locate(%(_txt)s, name), locate(%(_txt)s, name), 99999),
+			if(locate(%(_txt)s, item_name), locate(%(_txt)s, item_name), 99999),
+			idx desc,
+			name, item_name
+		limit %(start)s, %(page_len)s """.format(
+			key=searchfield,
+			fcond=get_filters_cond(doctype, filters, conditions).replace('%', '%%'),
+			mcond=get_match_cond(doctype).replace('%', '%%'),
+			description_cond = description_cond,spaceless = spaceless),
+			{
+				"today": nowdate(),
+				"txt": "%%%s%%" % txt,
+				"spaceless":spaceless,
+				"_txt": txt.replace("%", ""),
+				"start": start,
+				"page_len": page_len
+			}, as_dict=as_dict)
 
 	return frappe.db.sql("""select tabItem.name,
 		if(length(tabItem.item_name) > 40,
