@@ -169,7 +169,7 @@ def item_query(doctype, txt, searchfield, start, page_len, filters, as_dict=Fals
 	spaceless = spaceless.replace(".","")
 	spaceless = spaceless.replace(":","")
 	
-	if txt.startswith('qq ')
+	if txt.startswith('qq '):
 		txt = txt.replace("qq ","")
 		return frappe.db.sql("""select tabItem.name,
 		if(length(tabItem.item_name) > 40,
