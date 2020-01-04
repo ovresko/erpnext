@@ -112,6 +112,8 @@ def get_item_warehouse_projected_qty(items_to_consider):
 
 		if warehouse not in item_warehouse_projected_qty.get(item_code):
 			item_warehouse_projected_qty[item_code][warehouse] = flt(projected_qty)
+		else:
+			item_warehouse_projected_qty[item_code][warehouse] += flt(projected_qty)
 
 		warehouse_doc = frappe.get_doc("Warehouse", warehouse)
 		print("%s getting parent of %s" % (item_code, warehouse))
