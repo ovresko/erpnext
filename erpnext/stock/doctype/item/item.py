@@ -179,7 +179,9 @@ class Item(WebsiteGenerator):
                 # set table reorder
                 min_qts = self.recom_minimum
 		qts = self.recom_qts
-                if min_qts > 0 and qts > 0:
+                if min_qts > 0 :
+		    if qts == 0:
+			qts = 1
                     levels = frappe.get_all("Item Reorder",fields=["warehouse_group","name","parent","warehouse"],filters=[{"parent":self.name},{"warehouse":"GLOBAL - MV"}])
                     original = list(filter(lambda x: x.warehouse != "GLOBAL - MV",self.reorder_levels))
                     self.reorder_levels = []
@@ -190,8 +192,8 @@ class Item(WebsiteGenerator):
                     row.warehouse_reorder_qty=qts
                     row.material_request_type='Purchase'
 		    self.reorder_levels.extend(original)
-                    #self.recom_minimum = 0
-                    #self.recom_qts = 0
+                    self.recom_minimum = 0
+                    self.recom_qts = 0
                 #elif levels:
                     #level = frappe.get_doc("Item Reorder",levels[0].name)
                     #level.warehouse_reorder_level=min_qts
