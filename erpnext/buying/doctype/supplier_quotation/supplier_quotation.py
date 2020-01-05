@@ -94,7 +94,18 @@ class SupplierQuotation(BuyingController):
 		frappe.db.set(self, "status", "Submitted")
 		self.update_rfq_supplier_status(1)
                 self.update_mr()
-
+		
+	def on_trash(self):
+		frappe.db.set(self, "status", "Cancelled")
+                for item in self.items:
+                    if item.material_request_item:
+                        mr = frappe.get_doc("Material Request Item",item.material_request_item)
+                        if mr:
+                            mr.consulted = 0
+                            mr.flags.ignore_mandatory = 1
+                            mr.flags.ignore_validate = 1
+                            mr.flags.ignore_links = 1
+                            mr.save()
 	def on_cancel(self):
 		frappe.db.set(self, "status", "Cancelled")
                 for item in self.items:
