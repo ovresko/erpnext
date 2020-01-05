@@ -180,7 +180,7 @@ class Item(WebsiteGenerator):
                 min_qts = self.recom_minimum
 		qts = self.recom_qts
                 if min_qts > 0 :
-		    if qts == 0:
+		    if not qts or qts == 0:
 			qts = 1
                     levels = frappe.get_all("Item Reorder",fields=["warehouse_group","name","parent","warehouse"],filters=[{"parent":self.name},{"warehouse":"GLOBAL - MV"}])
                     original = list(filter(lambda x: x.warehouse != "GLOBAL - MV",self.reorder_levels))
