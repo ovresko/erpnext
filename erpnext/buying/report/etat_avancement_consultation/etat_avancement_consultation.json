@@ -1,0 +1,32 @@
+{
+ "add_total_row": 1, 
+ "creation": "2020-01-05 10:19:56.949155", 
+ "disable_prepared_report": 0, 
+ "disabled": 0, 
+ "docstatus": 0, 
+ "doctype": "Report", 
+ "idx": 0, 
+ "is_standard": "Yes", 
+ "letter_head": "MON VEHCIULE", 
+ "modified": "2020-01-05 10:21:10.651779", 
+ "modified_by": "Administrator", 
+ "module": "Buying", 
+ "name": "Etat avancement Consultation", 
+ "owner": "Administrator", 
+ "prepared_report": 0, 
+ "query": "select \n\tmr.item_code as \"Item Code:Link/Item:120\",\n\tmr.ref_fabricant as \"Ref Fabricant::150\",\n\tmr.fabricant as \"Fabricant::150\",\n\tifnull(mr.qty, 0) as \"Qty Command\u00e9\":Float:100\"\n\nfrom\n\t`tabPurchase Order Item` mr\n", 
+ "ref_doctype": "Supplier Quotation", 
+ "report_name": "Etat avancement Consultation", 
+ "report_type": "Query Report", 
+ "roles": [
+  {
+   "role": "Stock User"
+  }, 
+  {
+   "role": "Purchase Manager"
+  }, 
+  {
+   "role": "Purchase User"
+  }
+ ]
+}
