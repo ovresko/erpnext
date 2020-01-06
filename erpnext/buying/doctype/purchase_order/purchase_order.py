@@ -218,6 +218,8 @@ class PurchaseOrder(BuyingController):
 			self.company, self.base_grand_total)
 
 		self.update_blanket_order()
+		# update handled
+		frappe.enqueue("erpnext.buying.doctype.purchase_order.purchase_order.on_update_purchase_order",items=self.items,pname=self.name,timeout=10000)
 
 
 	def on_cancel(self):
@@ -243,6 +245,7 @@ class PurchaseOrder(BuyingController):
 		self.update_ordered_qty()
 
 		self.update_blanket_order()
+		frappe.enqueue("erpnext.buying.doctype.purchase_order.purchase_order.on_cancel_purchase_order",items=self.items,pname=self.name,timeout=10000)
 
 
 	def on_update(self):
@@ -494,3 +497,33 @@ def update_status(status, name):
 	po = frappe.get_doc("Purchase Order", name)
 	po.update_status(status)
 	po.update_delivered_qty_in_sales_order()
+	
+@frappe.whitelist()
+def on_cancel_purchase_order(items,pname):
+	#print("doing update xxx consultation")
+	for item in items:
+		if item.supplier_quotation_item:
+			print("item req : %s" % item.supplier_quotation_item)
+			mr = frappe.get_doc("Supplier Quotation Item",item.supplier_quotation_item)
+			if mr:
+				mr.handled_cmd = ""
+				mr.handled = 0
+				mr.flags.ignore_links = True
+				mr.flags.ignore_mandatory = True
+				mr.flags.ignore_validate = True
+				mr.save()
+
+@frappe.whitelist()
+def on_update_purchase_order(items,pname):
+	#print("doing update xxx consultation")
+	for item in items:
+		if item.supplier_quotation_item:
+			print("item req : %s" % item.supplier_quotation_item)
+			mr = frappe.get_doc("Supplier Quotation Item",item.supplier_quotation_item)
+			if mr:
+				mr.handled_cmd = pname
+				mr.handled = 1
+				mr.flags.ignore_links = True
+				mr.flags.ignore_mandatory = True
+				mr.flags.ignore_validate = True
+				mr.save()
