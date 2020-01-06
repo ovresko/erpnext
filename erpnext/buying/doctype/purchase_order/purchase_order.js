@@ -346,6 +346,7 @@ erpnext.buying.PurchaseOrderController = erpnext.buying.BuyingController.extend(
 					},
 					get_query_filters: {
 						docstatus: 1,
+						handled: 0,
 						status: ["!=", "Stopped"],
 					}
 				})
