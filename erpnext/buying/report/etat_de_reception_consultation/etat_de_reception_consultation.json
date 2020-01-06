@@ -1,6 +1,6 @@
 {
  "add_total_row": 1, 
- "creation": "2020-01-05 10:19:56.949155", 
+ "creation": "2020-01-06 09:23:24.828053", 
  "disable_prepared_report": 0, 
  "disabled": 0, 
  "docstatus": 0, 
@@ -8,15 +8,15 @@
  "idx": 0, 
  "is_standard": "Yes", 
  "letter_head": "MON VEHCIULE", 
- "modified": "2020-01-06 09:22:36.964476", 
+ "modified": "2020-01-06 09:23:24.828053", 
  "modified_by": "Administrator", 
  "module": "Buying", 
- "name": "Etat avancement Consultation", 
+ "name": "Etat de Reception Consultation", 
  "owner": "Administrator", 
  "prepared_report": 0, 
  "query": "select \n\tmr.parent as \"Bon de Commande:Link/Purchase Order:120\",\n\tmr.material_request as \"Demande de mat\u00e9riel::120\",\n\tmr.supplier_quotation as \"Devis Fournisseur::100\",\n\tmr.delivered_by_supplier as \"Cech::100\",\n\t\n\tmr.item_code as \"Item Code:Link/Item:100\",\n\tmr.ref_fabricant as \"Ref Fabricant::100\",\n\tmr.fabricant as \"Fabricant::100\",\n\tifnull(mr.qty, 0) as \"Qty Command\u00e9:Float:100\",\n\tifnull(mr.received_qty, 0) as \"Qty re\u00e7u:Float:100\",\n\tifnull(mr.rate, 0) as \"P.U.:Float:100\",\n\tifnull(mr.amount, 0) as \"Total:Float:100\"\n\n\nfrom\n\t`tabPurchase Order Item` mr\nwhere\n\tmr.received_qty < mr.qty", 
  "ref_doctype": "Supplier Quotation", 
- "report_name": "Etat avancement Consultation", 
+ "report_name": "Etat de Reception Consultation", 
  "report_type": "Query Report", 
  "roles": [
   {

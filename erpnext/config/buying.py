@@ -27,6 +27,19 @@ def get_data():
 					"name": "Purchase Order",
 					"description": _("Purchase Orders given to Suppliers."),
 				},
+				{
+					"type":"report",
+					"name":"Etat de Reception Consultation",
+					"doctype":"Supplier Quotation",
+					"is_query_report":True,
+				},
+				{
+					"type":"report",
+					"name":"Rapport Analyse Consultation",
+					"doctype":"Supplier Quotation",
+					"is_query_report":True,
+				},
+				
 			]
 		},
 		{
