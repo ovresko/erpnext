@@ -216,9 +216,11 @@ def on_update_consultation(items,pname):
 				mr.flags.ignore_mandatory = True
 				mr.flags.ignore_validate = True
 				mr.save()
+	print("doign updadte")
 	setbc = set(bc)
 	bc = list(setbc)
 	bcs = ' '.joint(bc)
+	print(bcs)
 	if pname:
 		frappe.db.set_value("Supplier Quotation",pname,"bon_de_commande",bcs)
 		
