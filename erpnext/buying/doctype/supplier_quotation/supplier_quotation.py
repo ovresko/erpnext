@@ -194,7 +194,10 @@ def update_mr(doc):
 @frappe.whitelist()
 def on_update_consultation(items,pname):
 	#print("doing update xxx consultation")
+	bc = []
 	for item in items:
+		if item.handled_cmd:
+			bc.append(item.handled_cmd)
 		wg = item.weight_per_unit
 		if wg and wg > 0:
 			frappe.db.sql(""" update `tabItem` set weight_per_unit = %s
@@ -213,6 +216,9 @@ def on_update_consultation(items,pname):
 				mr.flags.ignore_mandatory = True
 				mr.flags.ignore_validate = True
 				mr.save()
+	bcs = ' '.joint(bc)
+	if pname:
+		frappe.db.set_value("Supplier Quotation",pname,"bon_de_commande",bcs)
 		
 @frappe.whitelist()
 def on_update_dv(items):		
