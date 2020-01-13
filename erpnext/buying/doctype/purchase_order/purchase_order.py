@@ -516,7 +516,9 @@ def on_cancel_purchase_order(items,pname):
 @frappe.whitelist()
 def on_update_purchase_order(items,pname):
 	#print("doing update xxx consultation")
+	bc =[]
 	for item in items:
+		bc.append(pname)
 		if item.supplier_quotation_item:
 			print("item req : %s" % item.supplier_quotation_item)
 			mr = frappe.get_doc("Supplier Quotation Item",item.supplier_quotation_item)
@@ -527,3 +529,10 @@ def on_update_purchase_order(items,pname):
 				mr.flags.ignore_mandatory = True
 				mr.flags.ignore_validate = True
 				mr.save()
+	print("doing update")
+	setbc = set(bc)
+	bc = list(setbc)
+	bcs = ' '.joint(bc)
+	print(bcs)
+	if pname:
+		frappe.db.set_value("Supplier Quotation",pname,"bon_de_commande",bcs)
