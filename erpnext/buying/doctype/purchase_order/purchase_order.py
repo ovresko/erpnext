@@ -516,7 +516,7 @@ def on_cancel_purchase_order(items,pname):
 				mr.save()
 	for dv in dvs:
 		old = frappe.db.get_value("Supplier Quotation",dv,"bon_de_commande")
-		frappe.db.set_value("Supplier Quotation",dv,"bon_de_commande",old.replace("pname","")
+		frappe.db.set_value("Supplier Quotation",dv,"bon_de_commande",old.replace("pname",""))
 
 @frappe.whitelist()
 def on_update_purchase_order(items,pname):
