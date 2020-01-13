@@ -541,7 +541,7 @@ def on_update_purchase_order(items,pname):
 	dvs = list(setdvs)
 	setbc = set(bc)
 	bc = list(setbc)
-	bcs = ' '.joint(bc)
+	bcs = ' '.join(bc)
 	print(bcs)
 	for dv in dvs:
 		old = frappe.db.get_value("Supplier Quotation",dv,"bon_de_commande")
