@@ -36,8 +36,8 @@ class MaterialRequest(BuyingController):
 		item_count = len(self.items)
 		consulted = sum(1 for i in self.items if i.consulted == 1)
 		if consulted > 0:
-			per = consulted / item_count
-		result = per * 100
+			per = float(consulted / item_count)
+		result = float(per * 100)
 		frappe.db.sql("""update `tabMaterial Request` set per_consulted = %s
 			where name = %s""", (result, self.name))
 
