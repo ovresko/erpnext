@@ -185,6 +185,7 @@ def update_mr(doc):
 	    material = frappe.get_doc("Material Request",mat)
 	    if material:
 		#try:
+		    material.handle_per_consulted()
 		    material.status = "Consultation"
 		    material.save()
 		#except:
@@ -195,7 +196,10 @@ def update_mr(doc):
 def on_update_consultation(items,pname):
 	#print("doing update xxx consultation")
 	bc = []
+	dms = []
 	for item in items:
+		if item.material_request:
+			dms.append(item.material_request)
 		if item.handled_cmd:
 			bc.append(item.handled_cmd)
 		wg = item.weight_per_unit
@@ -216,6 +220,14 @@ def on_update_consultation(items,pname):
 				mr.flags.ignore_mandatory = True
 				mr.flags.ignore_validate = True
 				mr.save()
+	if dms:
+		setdms = set(dms)
+		dms = list(setdms)
+		for d in dms:
+			if d:
+				demnade = frappe.get_doc("Material Request",d)
+				demande.handle_per_consulted()
+	
 		
 @frappe.whitelist()
 def on_update_dv(items):		
