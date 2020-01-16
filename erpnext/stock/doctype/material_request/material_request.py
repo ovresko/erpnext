@@ -38,7 +38,7 @@ class MaterialRequest(BuyingController):
 		if consulted > 0:
 			per = consulted / item_count
 		result = per * 100
-		frappe.db.sql("""update `tabMaterial Request` set per_consulted = %s
+		frappe.db.sql("""update `tabMaterial Request` set per_consulted = %d
 			where name = %s""", (result, self.name))
 
 	def validate_qty_against_so(self):
