@@ -225,7 +225,7 @@ def on_update_consultation(items,pname):
 		dms = list(setdms)
 		for d in dms:
 			if d:
-				demnade = frappe.get_doc("Material Request",d)
+				demande = frappe.get_doc("Material Request",d)
 				demande.handle_per_consulted()
 	
 		
