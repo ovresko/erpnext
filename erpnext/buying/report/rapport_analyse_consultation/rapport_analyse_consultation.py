@@ -114,6 +114,11 @@ def execute(filters=None):
 			"label": "Dernier Prix d'achat (Devise)",
 			"width": 150
 		})
+	columns.append({
+			"fieldname": "devis_status",
+			"label": "Etat dans consultation",
+			"width": 150
+		})
 	
 	price_lists= frappe.get_all("Price List",filters={"buying":1},fields=["name","currency"])
 	if price_lists:
@@ -158,6 +163,10 @@ def execute(filters=None):
 		#modele_ordered_qty = sum([a.ordered_qty for a in mris if (a.ordered_qty and a.model and a.model == mri.model)])
 		qts_a_commande = mri.stock_qty - mri.projected_qty
 		#modele_actual_qty = sum([a.actual_qty for a in mris if ( a.actual_qty and a.model and a.model == mri.model)])
+		article_cons = frappe.get_all("Supplier Quotation Item",filters={"material_request_item":mri.name},fields=["name"])
+		article_cons_result = "Non definis"
+		if article_cons:
+			article_cons_result = article_cons[0].name
 		if modele_ordered_qty:
 			modele_qts_a_commande =  mri.stock_qty - modele_ordered_qty
 		else:
@@ -181,7 +190,8 @@ def execute(filters=None):
 		       qts_a_commande,
 		       modele_qts_a_commande,
 		       mri.last_purchase_rate,
-		       last_purchase_devise]
+		       last_purchase_devise,
+		       article_cons_result]
 		
 		# get prices in each price list
 		if price_lists and model:
