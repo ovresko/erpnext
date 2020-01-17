@@ -205,7 +205,7 @@ def update_mr(doc):
 	    if material:
 		#try:
 		    material.handle_per_consulted()
-		    material.status = "Consultation"
+		    #material.status = "Consultation"
 		    material.save()
 		#except:
 		#    material.status = "Consultation"
