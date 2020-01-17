@@ -167,6 +167,8 @@ def get_list_context(context=None):
 @frappe.whitelist()
 def update_mr(doc):
 	man = doc.manufacturer
+	if not man:
+		return
 	mr = []
 	allmr = []
 	for item in doc.items:
