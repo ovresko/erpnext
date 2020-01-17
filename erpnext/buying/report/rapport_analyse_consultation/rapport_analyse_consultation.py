@@ -172,8 +172,8 @@ def execute(filters=None):
 		article_cons_result = "Non definis"
 		qts_cons = 0
 		if article_cons:
-			article_cons_result = article_cons[0].name
-			qts_cons = article_cons[0].qty
+			article_cons_result = article_cons[-1].name
+			qts_cons = article_cons[-1].qty
 		if modele_ordered_qty:
 			modele_qts_a_commande =  mri.stock_qty - modele_ordered_qty
 		else:
