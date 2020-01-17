@@ -54,8 +54,10 @@ class SupplierQuotation(BuyingController):
                 #self.update_mr()
 		
 	def on_trash(self):
-		frappe.db.set(self, "status", "Cancelled")
+		dms = []
                 for item in self.items:
+		    if item.material_request:
+			dms.append(item.material_request)
                     if item.material_request_item:
                         mr = frappe.get_doc("Material Request Item",item.material_request_item)
                         if mr:
@@ -64,9 +66,20 @@ class SupplierQuotation(BuyingController):
                             mr.flags.ignore_validate = 1
                             mr.flags.ignore_links = 1
                             mr.save()
+		if dms:
+			setdms = set(dms)
+			dms = list(setdms)
+			for d in dms:
+				if d:
+					demande = frappe.get_doc("Material Request",d)
+					demande.handle_per_consulted()
+
 	def on_cancel(self):
 		frappe.db.set(self, "status", "Cancelled")
+		dms = []
                 for item in self.items:
+		    if item.material_request:
+			dms.append(item.material_request)
                     if item.material_request_item:
                         mr = frappe.get_doc("Material Request Item",item.material_request_item)
                         if mr:
@@ -77,9 +90,14 @@ class SupplierQuotation(BuyingController):
                             mr.save()
 
 		self.update_rfq_supplier_status(0)
+		if dms:
+			setdms = set(dms)
+			dms = list(setdms)
+			for d in dms:
+				if d:
+					demande = frappe.get_doc("Material Request",d)
+					demande.handle_per_consulted()
 
-	def on_trash(self):
-		pass
 
 	def validate_with_previous_doc(self):
 		super(SupplierQuotation, self).validate_with_previous_doc({
@@ -227,8 +245,7 @@ def on_update_consultation(items,pname):
 			if d:
 				demande = frappe.get_doc("Material Request",d)
 				demande.handle_per_consulted()
-	
-		
+
 @frappe.whitelist()
 def on_update_dv(items):		
 	for i in items:
