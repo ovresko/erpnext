@@ -33,6 +33,8 @@ class SupplierQuotation(BuyingController):
 			is_purchase = frappe.db.get_value("Item", item.item_code, "is_purchase_item")
 			if is_purchase:
 				nv_items.push(item)
+			else:
+				frappe.msgprint("Article a ne pas acheter a ete detecte : %s" % item.item_code)
 		self.items = nv_items
 		#    if item.material_request_item:
 		#	mr = frappe.get_doc("Material Request Item",item.material_request_item)
