@@ -167,8 +167,6 @@ def get_list_context(context=None):
 @frappe.whitelist()
 def update_mr(doc):
 	man = doc.manufacturer
-	if not man:
-		return
 	mr = []
 	allmr = []
 	for item in doc.items:
@@ -177,19 +175,20 @@ def update_mr(doc):
 	    if item.material_request:
 		allmr.append(item.material_request)
 
-	of_manu = frappe.get_all("Material Request Item",filters={"docstatus":("!=",2),"consulted":0,"creation":("<=",doc.creation),"fabricant":man},fields=["name","consultation"])
-	for m in of_manu:
-	    #if m.name not in mr:
-	    ori = frappe.get_doc("Material Request Item",m.name)
-	    if m.name in mr:
-		ori.consultation = doc.name
-	    else:
-		ori.consultation = ""
-	    ori.consulted = 1
-	    ori.flags.ignore_mandatory = True
-	    ori.flags.ignore_validate = True
-	    ori.flags.ignore_links = True
-	    ori.save()
+	if man:
+		of_manu = frappe.get_all("Material Request Item",filters={"docstatus":("!=",2),"consulted":0,"creation":("<=",doc.creation),"fabricant":man},fields=["name","consultation"])
+		for m in of_manu:
+		    #if m.name not in mr:
+		    ori = frappe.get_doc("Material Request Item",m.name)
+		    if m.name in mr:
+			ori.consultation = doc.name
+		    else:
+			ori.consultation = ""
+		    ori.consulted = 1
+		    ori.flags.ignore_mandatory = True
+		    ori.flags.ignore_validate = True
+		    ori.flags.ignore_links = True
+		    ori.save()
 		    #except:
 			#ori.parent = ""
 			#frappe.msgprint("Validation demande de materiel echoue !")
