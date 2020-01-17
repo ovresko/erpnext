@@ -21,7 +21,7 @@ frappe.ui.form.on('Supplier Quotation', {
 
 			//data.push(["Date",frm.doc.transaction_date,"","","","",""]);
 			//data.push(["Fournisseur",frm.doc.supplier_name,"","","","",""]);
-			data.push(["#","Num Consultation","Fabricant","Code Article","Designation","Ref Article","Qts","Poids","Prix"]);
+			data.push(["#","Num Consultation","Fabricant","Code Article","Designation","Ref Article","Poids","Qts","Prix"]);
 			$.each(frm.doc.items || [], (i, d) => {
 				var row = [];
 				 
@@ -30,7 +30,7 @@ frappe.ui.form.on('Supplier Quotation', {
 					var qty =  Math.floor( d["qty"] * 0.25);
 					  
 
-					row.push(['"'+i+'"','"'+frm.doc.name+'"','"'+fabricant+'"','"'+d["item_code"]+'"','"'+d["item_name"]+'"','"'+ref_fabricant+'"','"'+qty+'"','"'+d["weight_per_unit"]+'"']);
+					row.push(['"'+i+'"','"'+frm.doc.name+'"','"'+fabricant+'"','"'+d["item_code"]+'"','"'+d["item_name"]+'"','"'+ref_fabricant+'"','"'+d["weight_per_unit"]+'"','"'+qty+'"']);
 				 
 				data.push(row);
 			});
@@ -50,7 +50,7 @@ frappe.ui.form.on('Supplier Quotation', {
 			var docfields = [];
 			//data.push(["Date",frm.doc.transaction_date,"","","","",""]);
 			//data.push(["Fournisseur",frm.doc.supplier_name,"","","","",""]);
-			data.push(["#","Num Consultation","Fabricant","Code Article","Designation","Ref Article","Qts","Poids","Prix"]);
+			data.push(["#","Num Consultation","Fabricant","Code Article","Designation","Ref Article","Poids","Qts","Prix"]);
 			$.each(frm.doc.items || [], (i, d) => {
 				var row = [];
 				 
@@ -59,7 +59,7 @@ frappe.ui.form.on('Supplier Quotation', {
 					var qty =  d["qty"] ;// Math.floor( d["qty"] * 0.25);
 					  
 
-					row.push(['"'+i+'"','"'+frm.doc.name+'"','"'+fabricant+'"','"'+d["item_code"]+'"','"'+d["item_name"]+'"','"'+ref_fabricant+'"','"'+qty+'"','"'+d["weight_per_unit"]+'"']);
+					row.push(['"'+i+'"','"'+frm.doc.name+'"','"'+fabricant+'"','"'+d["item_code"]+'"','"'+d["item_name"]+'"','"'+ref_fabricant+'"','"'+d["weight_per_unit"]+'"','"'+qty+'"']);
 				 
 				data.push(row);
 			});
