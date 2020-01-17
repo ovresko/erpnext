@@ -108,6 +108,9 @@ class MaterialRequest(BuyingController):
 		if self.material_request_type == 'Purchase':
 			self.validate_budget()
 
+	def on_update(self):
+		self.handle_per_consulted()
+
 	def before_save(self):
 		self.set_status(update=True)
 
@@ -159,6 +162,7 @@ class MaterialRequest(BuyingController):
 
 	def on_cancel(self):
 		self.update_requested_qty()
+		self.handle_per_consulted()
 		self.update_requested_qty_in_production_plan()
 
 	def update_completed_qty(self, mr_items=None, update_modified=True):
