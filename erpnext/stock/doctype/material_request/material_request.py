@@ -28,7 +28,10 @@ class MaterialRequest(BuyingController):
 
 	def check_if_already_pulled(self):
 		pass
-	
+
+	def on_update_after_submit(self):
+		self.handle_per_consulted()
+
 	def handle_per_consulted(self):
 		if self.docstatus == 2:
 			return
