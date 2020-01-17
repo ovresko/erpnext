@@ -112,12 +112,9 @@ frappe.ui.form.on('Supplier Quotation', {
 		if(frm.doc.manufacturer){ 
 		var _items = [];	
 		frm.doc.items.forEach(i => {
-			console.log("validating ")
 			
 			if(i.fabricant == frm.doc.manufacturer){
-				//	Object.keys(i);
-				//.delete();
-				 
+				
 				_items.push(i);
 			
 			}
