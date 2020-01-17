@@ -79,7 +79,7 @@ class MaterialRequest(BuyingController):
                             i.warehouse = self.warehouse
 		self.validate_schedule_date()
 		self.validate_uom_is_integer("uom", "qty")
-
+		self.handle_per_consulted()
 		if not self.status:
 			self.status = "Draft"
 
@@ -112,6 +112,7 @@ class MaterialRequest(BuyingController):
 		self.handle_per_consulted()
 
 	def before_save(self):
+		self.handle_per_consulted()
 		self.set_status(update=True)
 
 	def before_submit(self):
@@ -136,6 +137,7 @@ class MaterialRequest(BuyingController):
 		self.status_can_change(status)
 		self.set_status(update=True, status=status)
 		self.update_requested_qty()
+		self.handle_per_consulted()
 
 	def status_can_change(self, status):
 		"""
