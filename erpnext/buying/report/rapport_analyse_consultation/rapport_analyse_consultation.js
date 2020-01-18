@@ -29,15 +29,29 @@ frappe.query_reports["Rapport Analyse Consultation"] = {
 		
 	},
 	{
-		"fieldname": "consultation",
-		"label": __("Consultation"),
+		"fieldname": "consultation_interne",
+		"label": __("Consultation interne"),
 		fieldtype: "Link",
 		options: "Supplier Quotation", 
 		"get_query": function() {
 			return {
 				"doctype": "Supplier Quotation",
 				"filters": {
-					"docstatus": 0,
+					"etat_consultation_deux": "Consultation Interne",
+				}
+			}
+		}
+	},
+	{
+		"fieldname": "consultation_externe",
+		"label": __("Consultation externe"),
+		fieldtype: "Link",
+		options: "Supplier Quotation", 
+		"get_query": function() {
+			return {
+				"doctype": "Supplier Quotation",
+				"filters": {
+					"etat_consultation_deux": "Consultation Externe",
 				}
 			}
 		}
