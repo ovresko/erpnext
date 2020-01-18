@@ -195,7 +195,7 @@ def update_mr(doc):
 		    ori.flags.ignore_mandatory = True
 		    ori.flags.ignore_validate = True
 		    ori.flags.ignore_links = True
-		    if ori.docstatus != 2
+		    if ori.docstatus != 2:
 			ori.save()
 		    #except:
 			#ori.parent = ""
