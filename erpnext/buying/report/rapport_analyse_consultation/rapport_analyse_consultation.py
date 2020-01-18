@@ -122,13 +122,13 @@ def execute(filters=None):
 		})
 	columns.append({
 			"fieldname": "devis_status",
-			"label": "Etat dans consultation",
-			"width": 150
+			"label": "Etat d'article dans consultation",
+			"width": 180
 		})
 	columns.append({
 			"fieldname": "qts_consultation",
-			"label": "Qts dans consultation",
-			"width": 150
+			"label": "Qts d'article dans consultation",
+			"width": 180
 		})
 	
 	price_lists= frappe.get_all("Price List",filters={"buying":1},fields=["name","currency"])
@@ -175,10 +175,10 @@ def execute(filters=None):
 		qts_a_commande = mri.stock_qty - mri.projected_qty
 		#modele_actual_qty = sum([a.actual_qty for a in mris if ( a.actual_qty and a.model and a.model == mri.model)])
 		article_cons = frappe.get_all("Supplier Quotation Item",filters={"material_request_item":mri.name},fields=["name","qty"])
-		article_cons_result = "Non definis"
+		article_cons_result = "Rejete"
 		qts_cons = 0
 		if article_cons:
-			article_cons_result = article_cons[-1].name
+			article_cons_result = "En cours"
 			qts_cons = article_cons[-1].qty
 		if modele_ordered_qty:
 			modele_qts_a_commande =  mri.stock_qty - modele_ordered_qty
