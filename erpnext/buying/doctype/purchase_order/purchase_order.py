@@ -545,4 +545,6 @@ def on_update_purchase_order(items,pname):
 	print(bcs)
 	for dv in dvs:
 		old = frappe.db.get_value("Supplier Quotation",dv,"bon_de_commande")
+		if not old:
+			old = ""
 		frappe.db.set_value("Supplier Quotation",dv,"bon_de_commande","%s %s" % (old,bcs))
