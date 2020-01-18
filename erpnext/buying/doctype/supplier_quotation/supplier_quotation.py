@@ -67,7 +67,7 @@ class SupplierQuotation(BuyingController):
 			dms.append(item.material_request)
                     if item.material_request_item:
                         mr = frappe.get_doc("Material Request Item",item.material_request_item)
-                        if mr:
+                        if mr and mr.docstatus != 2:
                             mr.consulted = 0
                             mr.flags.ignore_mandatory = 1
                             mr.flags.ignore_validate = 1
@@ -89,7 +89,7 @@ class SupplierQuotation(BuyingController):
 			dms.append(item.material_request)
                     if item.material_request_item:
                         mr = frappe.get_doc("Material Request Item",item.material_request_item)
-                        if mr:
+                        if mr and mr.docstatus != 2:
                             mr.consulted = 0
                             mr.flags.ignore_mandatory = 1
                             mr.flags.ignore_validate = 1
@@ -195,7 +195,8 @@ def update_mr(doc):
 		    ori.flags.ignore_mandatory = True
 		    ori.flags.ignore_validate = True
 		    ori.flags.ignore_links = True
-		    ori.save()
+		    if ori.docstatus != 2
+			ori.save()
 		    #except:
 			#ori.parent = ""
 			#frappe.msgprint("Validation demande de materiel echoue !")
@@ -239,7 +240,7 @@ def on_update_consultation(items,pname):
 		if item.material_request_item:
 			print("item req : %s" % item.material_request_item)
 			mr = frappe.get_doc("Material Request Item",item.material_request_item)
-			if mr:
+			if mr and mr.docstatus != 2:
 				mr.consultation = pname
 				mr.consulted = 1
 				mr.flags.ignore_links = True
