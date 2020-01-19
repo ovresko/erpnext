@@ -46,11 +46,11 @@ frappe.ui.form.on("Purchase Receipt", {
 			var data = [];
 			var docfields = []; 
 			
-			data.push(["Ref Facture",'"'+frm.doc.ref_facture+'"',"","DATE",'"'+frm.doc.posting_date+'"',"","","","",""]);
-			data.push(["#","Code Article","Designation","Ref Article","Qts","Poids","Poids Total","Prix Unitaire","Montant","pays d'origine"]);
+			data.push(["Ref Facture",'"'+frm.doc.ref_facture+'"',"","DATE",'"'+frm.doc.posting_date+'"',"","","","","",""]);
+			data.push(["#","Code Article","Designation","Ref Article","Qts","Poids","Poids Total","Prix Unitaire","Montant","pays d'origine","pays de provenance"]);
 			$.each(frm.doc.items || [], (i, d) => {
 				var row = []; 
-				row.push(['"'+i+'"','"'+d["item_code"]+'"','"'+d["item_name"]+'"','"'+d["supplier_part_no"]+'"','"'+d["qty"]+'"','"'+d["weight_per_unit"]+'"','"'+d["total_weight"]+'"','"'+d["rate"]+'"','"'+d["amount"]+'"','"'+d["pays"]+'"']);
+				row.push(['"'+i+'"','"'+d["item_code"]+'"','"'+d["item_name"]+'"','"'+d["supplier_part_no"]+'"','"'+d["qty"]+'"','"'+d["weight_per_unit"]+'"','"'+d["total_weight"]+'"','"'+d["rate"]+'"','"'+d["amount"]+'"','"'+d["pays"]+'"','"'+d["pays_de_provenance"]+'"']);
 				data.push(row);
 			});
 
