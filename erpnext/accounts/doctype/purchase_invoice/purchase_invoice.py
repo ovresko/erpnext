@@ -330,6 +330,15 @@ class PurchaseInvoice(BuyingController):
 	def on_submit(self):
 		super(PurchaseInvoice, self).on_submit()
 
+		for item in self.items:
+			wg = item.weight_per_unit
+			if wg and wg > 0:
+				frappe.db.sql(""" update `tabItem` set weight_per_unit = %s
+			where item_code=%s""",(wg,item.item_code))
+			wgi = item.weight_uom
+			if wgi:
+				frappe.db.sql(""" update `tabItem` set weight_uom = %s
+			where item_code=%s""",(wgi,item.item_code))
 		self.check_prev_docstatus()
 		self.update_status_updater_args()
 		self.update_prevdoc_status()
