@@ -38,7 +38,23 @@ erpnext.accounts.PurchaseInvoice = erpnext.buying.BuyingController.extend({
 		if(doc.update_stock==1 && doc.docstatus==1) {
 			this.show_stock_ledger();
 		}
+		frm.add_custom_button("Télécharger Fiche Franchise",
+			() => {
+		if(frm.doc.items != null)
+		{
+			var data = [];
+			var docfields = []; 
+			
+			data.push(["Ref Facture",'"'+frm.doc.bill_no+'"',"","DATE",'"'+frm.doc.posting_date+'"',"","","","","",""]);
+			data.push(["#","Code Article","Designation","Ref Article","Qts","Poids","Poids Total","Prix Unitaire","Montant","pays d'origine","pays de provenance"]);
+			$.each(frm.doc.items || [], (i, d) => {
+				var row = []; 
+				row.push(['"'+i+'"','"'+d["item_code"]+'"','"'+d["item_name"]+'"','"'+d["ref_fabricant"]+'"','"'+d["qty"]+'"','"'+d["weight_per_unit"]+'"','"'+d["total_weight"]+'"','"'+d["rate"]+'"','"'+d["amount"]+'"','"'+d["pays"] +'"','"'+frm.doc.pays_de_provenance+'"']);
+				data.push(row);
+			});
 
+			frappe.tools.downloadify(data, null, "FICHE FRANCHISE "+frm.doc.name+" "+frm.doc.supplier_name);
+		}  });
 		if(!doc.is_return && doc.docstatus == 1 && doc.outstanding_amount != 0){
 			if(doc.on_hold) {
 				this.frm.add_custom_button(
