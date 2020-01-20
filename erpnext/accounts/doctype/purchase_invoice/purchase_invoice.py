@@ -64,7 +64,10 @@ class PurchaseInvoice(BuyingController):
 			self.is_opening = 'No'
 
 		self.validate_posting_time()
-
+		if self.docstatus == 0:
+			for item in self.items:
+				if self.pays:
+					item.pays = self.pays
 		super(PurchaseInvoice, self).validate()
 
 		# apply tax withholding only if checked and applicable
