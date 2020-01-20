@@ -31,7 +31,7 @@
 			) or not (doc.item_code == doc.item_name == doc.description)
 		))
 	-%}
-	<p>{{ doc.get_formatted("description", translated=True) }}</p>
+	<!-- <p>{{ doc.get_formatted("description", translated=True) }}</p> -->
 	{%- endif %}
 
 	{% if compact -%}
