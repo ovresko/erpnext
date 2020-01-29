@@ -4,7 +4,7 @@ frappe.listview_settings['Item'] = {
 	filters: [["disabled", "=", "0"]],
 	onload: function(listview) {
 		listview.page.add_menu_item(__("Print Bulk"), function() {
-			names=[];
+			var names=[];
 			$.each(listview.get_checked_items(), function(key, value){
 				names.push(value._name);
 			});
