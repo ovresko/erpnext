@@ -5,9 +5,13 @@ frappe.listview_settings['Item'] = {
 	onload: function(listview) {
 		listview.page.add_menu_item(__("Print Bulk"), function() {
 			var names=[];
-			$.each(listview.get_checked_items(), function(key, value){
-				names.push(value._name);
-			});
+			const selected_docs = listview.get_checked_items(true);
+			for (let doc of selected_docs) {
+				names.push(doc);
+			}
+			//$.each(listview.get_checked_items(), function(key, value){
+			//	names.push(value._name);
+			//});
 			var w = window.open("/api/method/erpnext.stock.doctype.item.item.bulk_print_memberships?"
 							+"names="+encodeURIComponent(names));
 	
