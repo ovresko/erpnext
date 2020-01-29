@@ -1167,3 +1167,7 @@ def dignity_get_pdf(html, options=None):
 
 
 	return filedata
+
+def cleanup(fname):
+	if os.path.exists(fname):
+		os.remove(fname)
