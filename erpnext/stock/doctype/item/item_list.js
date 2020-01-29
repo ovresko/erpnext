@@ -2,7 +2,20 @@ frappe.listview_settings['Item'] = {
 	add_fields: ["item_name", "stock_uom", "item_group", "image", "variant_of",
 		"has_variants", "end_of_life", "disabled"],
 	filters: [["disabled", "=", "0"]],
-
+	onload: function(listview) {
+		listview.page.add_menu_item(__("Print Bulk"), function() {
+			names=[];
+			$.each(listview.get_checked_items(), function(key, value){
+				names.push(value._name);
+			});
+			var w = window.open("/api/method/erpnext.stock.doctype.item.item.bulk_print_memberships?"
+							+"names="+encodeURIComponent(names));
+	
+			if(!w) {
+				frappe.msgprint(__("Please enable pop-ups")); return;
+			}
+		});
+	},
 	get_indicator: function(doc) {
 		if (doc.disabled) {
 			return [__("Disabled"), "grey", "disabled,=,Yes"];
