@@ -51,6 +51,11 @@ class JournalEntry(AccountsController):
 		self.update_expense_claim()
 		self.update_loan()
 		self.update_inter_company_jv()
+		if self.ref_facture and self.is_taxed:
+			invoice = frappe.get_doc("Purchase Invoice",self.ref_facture)
+			if invoice:
+				invoice.workflow_state = "Taxed"
+				invoice.save()
 
 
 	def get_title(self):

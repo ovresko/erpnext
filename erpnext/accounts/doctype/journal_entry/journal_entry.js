@@ -149,6 +149,9 @@ erpnext.accounts.JournalEntry = frappe.ui.form.Controller.extend({
 		me.frm.set_query("account", "accounts", function(doc, cdt, cdn) {
 			return erpnext.journal_entry.account_query(me.frm);
 		});
+		me.frm.set_query("ref_facture",function(doc) {
+		return { filters: {'workflow_state':'Ouverte'}}
+		});
 
 		me.frm.set_query("cost_center", "accounts", function(doc, cdt, cdn) {
 			return {
