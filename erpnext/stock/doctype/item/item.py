@@ -1105,8 +1105,8 @@ def bulk_print_memberships(names):
 	final_html = prepare_bulk_print_html(names)
 
 	pdf_options = { 
-					"page-height" : "25.4cm",
-					"page-width" : "17.5cm",
+					"page-height" : "29.7cm",
+					"page-width" : "21.0cm",
 					"margin-top": "0mm",
 					"margin-bottom": "0mm",
 					"margin-left": "0mm",
@@ -1116,7 +1116,7 @@ def bulk_print_memberships(names):
 					"title": "Catalogue"
 				}
 		
-	frappe.local.response.filename = "{filename}.pdf".format(filename="senior_citizen_list".replace(" ", "-").replace("/", "-"))
+	frappe.local.response.filename = "{filename}.pdf".format(filename="catalogue".replace(" ", "-").replace("/", "-"))
 	frappe.local.response.filecontent = dignity_get_pdf(final_html, options=pdf_options) #get_pdf(final_html, pdf_options)
 	frappe.local.response.type = "download"
 	
