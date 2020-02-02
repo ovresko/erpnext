@@ -138,7 +138,7 @@ def get_conditions(filters):
 	if filters.get('variant_of'):
 		conditions.append("(item_code=%(variant_of)s or variant_of=%(variant_of)s)")
 	if filters.get('is_purchase'):	
-		conditions.append("is_purchase_item=%(is_purchase)s")
+		conditions.append("is_purchase_item=1")
 	#if filters.get('modele'):
 	#	conditions.append("(variant_of=%(modele)s or item_code=%(modele)s)")
 	
