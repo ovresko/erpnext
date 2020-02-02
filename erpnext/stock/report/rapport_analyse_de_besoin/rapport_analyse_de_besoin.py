@@ -147,11 +147,15 @@ def get_conditions(filters):
 		if modele_vehicule:
 			conditions.append("""item_code in (select parent from `tabVersion vehicule item`
 		where modele_vehicule=%s)""" % (modele_vehicule.modele))
+
+	if filters.get('marque_vehicule'):
+		conditions.append("""item_code in (select parent from `tabVersion vehicule item` where marque_vehicule=%s)""" % (filters.marque_vehicule))
+	
 	#if filters.get('modele'):
 	#	conditions.append("(variant_of=%(modele)s or item_code=%(modele)s)")
 	
 	if filters.get('manufacturer'):
-		conditions.append("(has_variants = 1 or manufacturer=%(manufacturer)s)")
+		conditions.append("(manufacturer=%(manufacturer)s)")
 
 	return "and {}".format(" and ".join(conditions)) if conditions else ""
 
