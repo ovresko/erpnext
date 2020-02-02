@@ -8,7 +8,7 @@ from erpnext.stock.get_item_details import get_item_details
 
 def execute(filters=None):
 	columns, data = [], []
-	if not filters.group and not filters.variant_of and not filters.modele and not filters.manufacturer:
+	if not filters.group and not filters.variant_of and not filters.modele_vehicule and not filters.version and not filters.manufacturer:
 		frappe.msgprint("Appliquer un filtre")
 		return columns, data
 	columns.append({
