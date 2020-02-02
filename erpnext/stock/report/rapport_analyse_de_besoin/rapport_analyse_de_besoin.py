@@ -151,7 +151,7 @@ def get_conditions(filters):
 	#	conditions.append("(variant_of=%(modele)s or item_code=%(modele)s)")
 	
 	if filters.get('manufacturer'):
-		conditions.append("manufacturer=%(manufacturer)s")
+		conditions.append("(has_variants = 1 or manufacturer=%(manufacturer)s)")
 
 	return "and {}".format(" and ".join(conditions)) if conditions else ""
 
