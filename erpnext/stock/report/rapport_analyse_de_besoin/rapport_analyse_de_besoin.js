@@ -9,6 +9,19 @@ frappe.query_reports["Rapport analyse de besoin"] = {
 			"label": __("Item Group"),
 			fieldtype: "Link",
 			options: "Item Group"
+		},{
+			"fieldname": "variant_of",
+			"label": "Modéle",
+			fieldtype: "Link",
+			options: "Item",
+			"get_query": function() {
+			return {
+				"doctype": "Item",
+				"filters": {
+					"has_variants": 1,
+					   }
+				}
+			}
 		},
 		{
 			"fieldname": "modele",
