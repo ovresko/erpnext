@@ -4,6 +4,11 @@
 
 frappe.query_reports["Rapport Analyse de prix"] = {
 	"filters": [
-
+		{
+			"fieldname":"group",
+			"label": __("Groupe Article"),
+			"fieldtype": "Link",
+			"options": "Item Group"
+		},
 	]
 }
