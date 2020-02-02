@@ -24,10 +24,10 @@ frappe.query_reports["Rapport analyse de besoin"] = {
 			}
 		},
 		{
-			"fieldname": "version",
-			"label": __("Version vehicule"),
+			"fieldname": "marque_vehicule",
+			"label": __("Marque vehicule"),
 			fieldtype: "Link",
-			options: "Version vehicule"
+			options: "Marque vehicule"
 		},
 		{
 			"fieldname": "modele_vehicule",
@@ -35,6 +35,13 @@ frappe.query_reports["Rapport analyse de besoin"] = {
 			fieldtype: "Link",
 			options: "Modele de vehicule"
 		},
+		{
+			"fieldname": "version",
+			"label": __("Version vehicule"),
+			fieldtype: "Link",
+			options: "Version vehicule"
+		},
+		
 		
 		{
 			"fieldname": "manufacturer",
