@@ -5,8 +5,9 @@
 frappe.query_reports["Rapport analyse de besoin"] = {
 	"formatter": function (value, row, column, data, default_formatter) {
 		value = default_formatter(value, row, column, data);
-		console.log(row);
-		if (row[0].content.length == 11) {
+		
+		
+		if (row[1] && row[1].content.length == 11) {
 			value = "<span style='color:red'>" + value + "</span>";
 		}
 		else {
