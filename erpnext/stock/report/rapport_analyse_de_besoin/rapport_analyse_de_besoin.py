@@ -9,7 +9,7 @@ from erpnext.stock.get_item_details import get_item_details
 def execute(filters=None):
 	columns, data = [], []
 	if not filters.group:
-		frappe.msgprint("Selectionner un groupe d'article")
+		frappe.msgprint("Appliquer un filtre")
 		return columns, data
 	columns.append({
 			"fieldname": "item_code",
