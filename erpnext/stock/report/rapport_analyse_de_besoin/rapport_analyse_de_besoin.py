@@ -78,7 +78,7 @@ def execute(filters=None):
 		select
 			variant_of,has_variants,item_name, item_code, manufacturer,last_purchase_rate , manufacturer_part_no, item_group,last_purchase_devise,max_order_qty,max_ordered_variante
 		from `tabItem`
-		where {conditions}
+		where disabled=0 {conditions}
 		{order_by_statement}
 		""".format(
 			conditions=get_conditions(filters),
