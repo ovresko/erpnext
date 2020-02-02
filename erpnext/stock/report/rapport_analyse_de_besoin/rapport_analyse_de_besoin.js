@@ -4,6 +4,11 @@
 
 frappe.query_reports["Rapport analyse de besoin"] = {
 	"filters": [
-
+		{
+		"fieldname": "group",
+		"label": __("Item Group"),
+		fieldtype: "Link",
+		options: "Item Group"
+	}
 	]
 }
