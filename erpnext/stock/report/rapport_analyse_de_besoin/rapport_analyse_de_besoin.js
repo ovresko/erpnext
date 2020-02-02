@@ -3,6 +3,16 @@
 /* eslint-disable */
 
 frappe.query_reports["Rapport analyse de besoin"] = {
+	"formatter": function (value, row, column, data, default_formatter) {
+		value = default_formatter(value, row, column, data);
+		if (row['item_code'].length == 11) {
+			value = "<span style='color:red'>" + value + "</span>";
+		}
+		else {
+			value = "<span style='color:green'>" + value + "</span>";
+		}
+		return value
+	},
 	"filters": [
 		{
 			"fieldname": "group",
