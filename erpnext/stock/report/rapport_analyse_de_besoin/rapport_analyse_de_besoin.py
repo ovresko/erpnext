@@ -78,7 +78,7 @@ def execute(filters=None):
 		select
 			variant_of,has_variants,item_name, item_code, manufacturer,last_purchase_rate , manufacturer_part_no, item_group,last_purchase_devise,max_order_qty,max_ordered_variante
 		from `tabItem`
-		where is_purchase_item=1 {conditions}
+		where {conditions}
 		{order_by_statement}
 		""".format(
 			conditions=get_conditions(filters),
@@ -137,6 +137,8 @@ def get_conditions(filters):
 		conditions.append("item_group=%(group)s")
 	if filters.get('variant_of'):
 		conditions.append("(item_code=%(variant_of)s or variant_of=%(variant_of)s)")
+	if filters.get('is_purchase'):	
+		conditions.append("is_purchase_item=%(is_purchase)s")
 	#if filters.get('modele'):
 	#	conditions.append("(variant_of=%(modele)s or item_code=%(modele)s)")
 	
