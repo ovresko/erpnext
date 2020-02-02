@@ -86,7 +86,7 @@ def execute(filters=None):
 		),
 		filters, as_dict=1)
 	for mri in items:
-		info = {}
+		info
 		qts_max_achat = 0
 		if mri.variant_of:
 			#variante
