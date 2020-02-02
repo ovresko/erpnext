@@ -118,13 +118,13 @@ def execute(filters=None):
 		if price_lists and not mri.has_variants:
 			for pl in price_lists:
 				if pl.name:
-					price = frappe.db.sql("""select price_list_rate from `tabItem Price` where buying=1 and price_list=%s and ( item_model=%s or item_code=%s) ORDER BY creation DESC LIMIT 1;""",(pl.name,model,mri.item_code))
+					price = frappe.db.sql("""select price_list_rate from `tabItem Price` where buying=1 and price_list=%s and (  item_code=%s) ORDER BY creation DESC LIMIT 1;""",(pl.name,mri.item_code))
 					if price:
 						row.append(price[0][0])
 					else:
-						row.append(0)
+						row.append("_")
 				else:
-					row.append(0)
+					row.append("_")
 		
 		data.append(row)
 		
