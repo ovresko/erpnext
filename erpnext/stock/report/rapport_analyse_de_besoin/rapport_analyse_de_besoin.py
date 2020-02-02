@@ -136,9 +136,9 @@ def get_conditions(filters):
 	if filters.get('group'):
 		conditions.append("item_group=%(group)s")
 	if filters.get('variant_of'):
-		conditions.append("item_code LIKE '%%%s%%'" % filters.variant_of)
-	if filters.get('modele'):
-		conditions.append("(variant_of=%(modele)s or item_code=%(modele)s)")
+		conditions.append("(item_code=%(variant_of)s or variant_of=%(variant_of)s")
+	#if filters.get('modele'):
+	#	conditions.append("(variant_of=%(modele)s or item_code=%(modele)s)")
 	
 	if filters.get('manufacturer'):
 		conditions.append("manufacturer=%(manufacturer)s")
