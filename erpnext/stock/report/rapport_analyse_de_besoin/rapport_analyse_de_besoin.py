@@ -156,7 +156,7 @@ def get_conditions(filters):
 	
 	if filters.get('manufacturer'):
 		conditions.append("(manufacturer=%(manufacturer)s)")
-
+		
 	return "and {}".format(" and ".join(conditions)) if conditions else ""
 
 def info_modele(model, warehouse=None):
