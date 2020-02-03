@@ -23,32 +23,42 @@ def execute(filters=None):
 		})
 	columns.append({
 			"fieldname": "fabricant",
-			"label": _("Fabricant"),
+			"label": "Fabricant",
 			"width": 150
 		})
 	columns.append({
 			"fieldname": "ref_fabricant",
-			"label": _("Ref Fabricant"),
+			"label": "Ref Fabricant",
+			"width": 150
+		})
+	columns.append({
+			"fieldname": "poids",
+			"label": _("Poids"),
+			"width": 150
+		})
+	columns.append({
+			"fieldname": "last_qty",
+			"label": "Dernière Qts Achetée",
 			"width": 150
 		})
 	columns.append({
 			"fieldname": "qts_reliquat",
-			"label": _("Qte reliquats"),
+			"label": "Qte reliquats",
 			"width": 160
 		})
 	columns.append({
 			"fieldname": "qts",
-			"label": _("Qte"),
+			"label": "Qte",
 			"width": 150
 		})
 	columns.append({
 			"fieldname": "qts_projete",
-			"label": _("Qte Projete"),
+			"label": "Qte Projete",
 			"width": 150
 		})
 	columns.append({
 			"fieldname": "qts_max_achat",
-			"label": _("Qte Max d'achat"),
+			"label": "Qte Max d'achat",
 			"width": 150
 		})
 	columns.append({
@@ -76,7 +86,7 @@ def execute(filters=None):
 	items = frappe.db.sql(
 		"""
 		select
-			variant_of,has_variants,item_name, item_code, manufacturer,last_purchase_rate , manufacturer_part_no, item_group,last_purchase_devise,max_order_qty,max_ordered_variante
+			weight_per_unit,variant_of,has_variants,item_name, item_code, manufacturer,last_purchase_rate , manufacturer_part_no, item_group,last_purchase_devise,max_order_qty,max_ordered_variante
 		from `tabItem`
 		where disabled=0 {conditions}
 		{order_by_statement}
@@ -95,11 +105,21 @@ def execute(filters=None):
 		elif mri.has_variants:
 			info = info_modele(mri.item_code)
 			qts_max_achat = mri.max_order_qty
-		
+		last_qty = frappe.db.sql("""
+		select actual_qty 
+		from
+			`tabStock Ledger Entry`
+		where item_code= %s and vouher_type='Purchase Receipt'
+		order by posting_date, posting_time limit 1""" %
+		(mri.item_code), as_dict=1)[0][0]
 		row = [mri.item_code,
 		       mri.item_name,
 		       mri.manufacturer,
 		       mri.manufacturer_part_no,
+		       #poids
+		       mri.weight_per_unit,
+		       #last_qty
+		       last_qty,
 		       #qts_reliquat
 		       info[3],
 		       #qts
