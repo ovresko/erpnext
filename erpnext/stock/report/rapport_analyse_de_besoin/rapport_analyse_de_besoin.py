@@ -42,6 +42,16 @@ def execute(filters=None):
 			"width": 150
 		})
 	columns.append({
+			"fieldname": "last_valuation",
+			"label": "Derniere taux de valorisation",
+			"width": 150
+		})
+	columns.append({
+			"fieldname": "consom",
+			"label": "Consommation 1 ans",
+			"width": 150
+		})
+	columns.append({
 			"fieldname": "qts_reliquat",
 			"label": "Qte reliquats",
 			"width": 160
@@ -105,12 +115,14 @@ def execute(filters=None):
 		elif mri.has_variants:
 			info = info_modele(mri.item_code)
 			qts_max_achat = mri.max_order_qty
-		sqllast_qty = frappe.db.sql("""select actual_qty from `tabStock Ledger Entry` 
+		sqllast_qty = frappe.db.sql("""select actual_qty,valuation_rate from `tabStock Ledger Entry` 
 		where item_code=%s and voucher_type=%s 
 		order by posting_date, posting_time limit 1""", (mri.item_code,"Purchase Receipt"), as_dict=1)
 		last_qty = 0
+		last_valuation = 0
 		if sqllast_qty:
 			last_qty = sqllast_qty[0].actual_qty
+			last_valuation = sqllast_qty[0].valuation_rate
 		row = [mri.item_code,
 		       mri.item_name,
 		       mri.manufacturer,
@@ -119,6 +131,10 @@ def execute(filters=None):
 		       mri.weight_per_unit,
 		       #last_qty
 		       last_qty,
+		       #last_valuation
+		       last_valuation,
+		       #consom,
+		       "_",
 		       #qts_reliquat
 		       info[3],
 		       #qts
