@@ -1097,6 +1097,18 @@ def set_item_demande(item_code,qty):
 			item.save()
 			return "Qts enregistree"
 
+@frappe.whitelist()
+def set_item_achat(item_code):
+	if item_code:
+		item = frappe.get_doc("Item",item_code)
+		if item:
+			if item.is_purchase_item:
+				item.is_purchase_item = 0
+			else:
+				item.is_purchase_item = 1
+			item.save()
+			return "ACHAT : %s" % item.is_purchase_item
+
 def update_variants(variants, template, publish_progress=True):
 	count=0
 	for d in variants:
