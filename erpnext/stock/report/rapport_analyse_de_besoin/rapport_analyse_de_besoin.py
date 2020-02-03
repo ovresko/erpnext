@@ -14,7 +14,7 @@ def execute(filters=None):
 	columns.append({
 			"fieldname": "commander",
 			"label": "Commander",
-			"width": 250
+			"width": 300
 		})
 	columns.append({
 			"fieldname": "item_code",
