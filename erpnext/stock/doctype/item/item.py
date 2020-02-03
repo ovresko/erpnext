@@ -1087,6 +1087,16 @@ def get_item_attribute(parent, attribute_value=''):
 	return frappe.get_all("Item Attribute Value", fields = ["attribute_value"],
 		filters = {'parent': parent, 'attribute_value': ("like", "%%%s%%" % attribute_value)})
 
+@frappe.whitelist()
+def set_item_demande(item_code,qty):
+	if item_code and qty:
+		item = frappe.get_doc("Item",item_code)
+		if item:
+			item.recom_qts = qty
+			item.recom_minimum = 1
+			item.save()
+			return "Qts enregistree"
+
 def update_variants(variants, template, publish_progress=True):
 	count=0
 	for d in variants:
