@@ -2,7 +2,7 @@
 // For license information, please see license.txt
 /* eslint-disable */
 function demander_item(data) {
-	alert(data)
+	console.log("code:",data);
 }
 
 frappe.query_reports["Rapport analyse de besoin"] = {
