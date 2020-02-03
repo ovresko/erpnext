@@ -1,6 +1,9 @@
 // Copyright (c) 2016, Frappe Technologies Pvt. Ltd. and contributors
 // For license information, please see license.txt
 /* eslint-disable */
+function demander_item(data) {
+	alert(data)
+}
 
 frappe.query_reports["Rapport analyse de besoin"] = {
 	"formatter": function (value, row, column, data, default_formatter) {
