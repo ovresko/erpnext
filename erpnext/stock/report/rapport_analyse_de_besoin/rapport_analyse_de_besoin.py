@@ -128,7 +128,7 @@ def execute(filters=None):
 		if sqllast_qty:
 			last_qty = sqllast_qty[0].actual_qty
 			last_valuation = sqllast_qty[0].valuation_rate
-		row = ["<button id='%s' onClick='demander_item(%s)' type='button'>Demander</button><input placeholder='Qts' id='input_%s'></input>" % (mri.item_code,mri.item_code,mri.item_code),
+		row = ["""<button id='%s' onClick="demander_item('%s')" type='button'>Demander</button><input placeholder='Qts' id='input_%s'></input>""" % (mri.item_code,mri.item_code,mri.item_code),
 		       mri.item_code,
 		       mri.item_name,
 		       mri.manufacturer,
