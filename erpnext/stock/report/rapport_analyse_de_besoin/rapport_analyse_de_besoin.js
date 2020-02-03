@@ -1,6 +1,22 @@
 // Copyright (c) 2016, Frappe Technologies Pvt. Ltd. and contributors
 // For license information, please see license.txt
 /* eslint-disable */
+
+function achat_item(data){
+//	
+	console.log("code:",data);
+	frappe.call({
+			method: "erpnext.stock.doctype.item.item.set_item_achat",
+			args: {
+				item_code: data
+			},
+			callback: function(r) {
+				if (r.message) {
+					alert(r.message);
+				}
+			}
+		});
+}
 function demander_item(data) {
 	console.log("code:",data);
 	var qty_id = 'input_'+data;
