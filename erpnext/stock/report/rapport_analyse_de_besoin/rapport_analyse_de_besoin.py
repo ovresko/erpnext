@@ -12,6 +12,11 @@ def execute(filters=None):
 		frappe.msgprint("Appliquer un filtre")
 		return columns, data
 	columns.append({
+			"fieldname": "commander",
+			"label": "Commander",
+			"width": 150
+		})
+	columns.append({
 			"fieldname": "item_code",
 			"label": _("Item Code"),
 			"width": 150
@@ -123,7 +128,8 @@ def execute(filters=None):
 		if sqllast_qty:
 			last_qty = sqllast_qty[0].actual_qty
 			last_valuation = sqllast_qty[0].valuation_rate
-		row = [mri.item_code,
+		row = ["<button type='button'>add</button>",
+		       mri.item_code,
 		       mri.item_name,
 		       mri.manufacturer,
 		       mri.manufacturer_part_no,
