@@ -38,7 +38,7 @@ def execute(filters=None):
 		})
 	columns.append({
 			"fieldname": "last_qty",
-			"label": "Dernière Qts Achetée",
+			"label": "Derniere Qts Achetee",
 			"width": 150
 		})
 	columns.append({
