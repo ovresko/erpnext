@@ -85,7 +85,8 @@ frappe.query_reports["Rapport analyse de besoin"] = {
 		},{
 			"fieldname": "is_purchase",
 			"label": "Article d'achat",
-			"fieldtype": "Check"
+			"fieldtype": "Check",
+			"default": 1
 		}
 	]
 }
