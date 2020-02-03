@@ -109,7 +109,7 @@ def execute(filters=None):
 		select actual_qty 
 		from
 			`tabStock Ledger Entry`
-		where item_code= %s and vouher_type= %s 
+		where item_code= %s and voucher_type= %s
 		order by posting_date, posting_time limit 1""" %
 		(mri.item_code,"Purchase Receipt"), as_dict=1)[0][0]
 		row = [mri.item_code,
