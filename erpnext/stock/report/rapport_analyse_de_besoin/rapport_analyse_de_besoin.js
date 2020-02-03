@@ -10,7 +10,7 @@ frappe.query_reports["Rapport analyse de besoin"] = {
 		value = default_formatter(value, row, column, data);
 		
 		
-		if (row && row != null && row[1] && row[1].content.length == 11) {
+		if (row && row != null && row[2] && row[2].content.length == 11) {
 			value = "<span style='color: white;background-color: #43458e;padding: 5px;'>" + value + "</span>";
 		}
 		else {
