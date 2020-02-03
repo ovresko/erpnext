@@ -101,7 +101,7 @@ def execute(filters=None):
 	items = frappe.db.sql(
 		"""
 		select
-			weight_per_unit,variant_of,has_variants,item_name, item_code, manufacturer,last_purchase_rate , manufacturer_part_no, item_group,last_purchase_devise,max_order_qty,max_ordered_variante
+			is_purchase_item,weight_per_unit,variant_of,has_variants,item_name, item_code, manufacturer,last_purchase_rate , manufacturer_part_no, item_group,last_purchase_devise,max_order_qty,max_ordered_variante
 		from `tabItem`
 		where disabled=0 {conditions}
 		{order_by_statement}
@@ -128,7 +128,7 @@ def execute(filters=None):
 		if sqllast_qty:
 			last_qty = sqllast_qty[0].actual_qty
 			last_valuation = sqllast_qty[0].valuation_rate
-		row = ["""<button id='%s' onClick="demander_item('%s')" type='button'>Demander</button><input placeholder='Qts' id='input_%s' style='color:black'></input>""" % (mri.item_code,mri.item_code,mri.item_code),
+		row = ["""<button id='%s' onClick="demander_item('%s')" type='button'>Demander</button><input placeholder='Qts' id='input_%s' style='color:black'></input><button   onClick="achat_item('%s')" type='button'>ACHAT %s</button>""" % (mri.item_code,mri.item_code,mri.item_code,mri.item_code,mri.is_purchase_item),
 		       mri.item_code,
 		       mri.item_name,
 		       mri.manufacturer,
