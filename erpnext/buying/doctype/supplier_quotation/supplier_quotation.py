@@ -90,11 +90,14 @@ class SupplierQuotation(BuyingController):
                     if item.material_request_item:
                         mr = frappe.get_doc("Material Request Item",item.material_request_item)
                         if mr and mr.docstatus != 2:
-                            mr.consulted = 0
-                            mr.flags.ignore_mandatory = 1
-                            mr.flags.ignore_validate = 1
-                            mr.flags.ignore_links = 1
-                            mr.save()
+				try:
+					mr.consulted = 0
+					mr.flags.ignore_mandatory = 1
+					mr.flags.ignore_validate = 1
+					mr.flags.ignore_links = 1
+					mr.save()
+				except:
+					print("An exception occurred")
 
 		self.update_rfq_supplier_status(0)
 		if dms:
@@ -103,7 +106,10 @@ class SupplierQuotation(BuyingController):
 			for d in dms:
 				if d:
 					demande = frappe.get_doc("Material Request",d)
-					demande.handle_per_consulted()
+					try:
+						demande.handle_per_consulted()
+					except:
+						print("An exception occurred")
 
 
 	def validate_with_previous_doc(self):
@@ -185,18 +191,21 @@ def update_mr(doc):
 	if man:
 		of_manu = frappe.get_all("Material Request Item",filters={"docstatus":("!=",2),"consulted":0,"creation":("<=",doc.creation),"fabricant":man},fields=["name","consultation"])
 		for m in of_manu:
-		    #if m.name not in mr:
-		    ori = frappe.get_doc("Material Request Item",m.name)
-		    if m.name in mr:
-			ori.consultation = doc.name
-		    else:
-			ori.consultation = ""
-		    ori.consulted = 1
-		    ori.flags.ignore_mandatory = True
-		    ori.flags.ignore_validate = True
-		    ori.flags.ignore_links = True
-		    if ori.docstatus != 2:
-			ori.save()
+		    try:
+			    #if m.name not in mr:
+			    ori = frappe.get_doc("Material Request Item",m.name)
+			    if m.name in mr:
+				ori.consultation = doc.name
+			    else:
+				ori.consultation = ""
+			    ori.consulted = 1
+			    ori.flags.ignore_mandatory = True
+			    ori.flags.ignore_validate = True
+			    ori.flags.ignore_links = True
+			    if ori.docstatus != 2:
+				ori.save()
+		    except:
+			    print("An exception occurred")
 		    #except:
 			#ori.parent = ""
 			#frappe.msgprint("Validation demande de materiel echoue !")
@@ -211,12 +220,12 @@ def update_mr(doc):
 	for mat in allmr:
 	    material = frappe.get_doc("Material Request",mat)
 	    if material:
-		#try:
+		try:
 		    material.handle_per_consulted()
 		    #material.status = "Consultation"
 		    material.save()
-		#except:
-		#    material.status = "Consultation"
+		except:
+		    print("An exception occurred")
 			
 			
 @frappe.whitelist()
@@ -225,35 +234,41 @@ def on_update_consultation(items,pname):
 	bc = []
 	dms = []
 	for item in items:
-		if item.material_request:
-			dms.append(item.material_request)
-		if item.handled_cmd:
-			bc.append(item.handled_cmd)
-		wg = item.weight_per_unit
-		if wg and wg > 0:
-			frappe.db.sql(""" update `tabItem` set weight_per_unit = %s
-		where item_code=%s""",(wg,item.item_code))
-		wgi = item.weight_uom
-		if wgi:
-			frappe.db.sql(""" update `tabItem` set weight_uom = %s
-		where item_code=%s""",(wgi,item.item_code))
-		if item.material_request_item:
-			print("item req : %s" % item.material_request_item)
-			mr = frappe.get_doc("Material Request Item",item.material_request_item)
-			if mr and mr.docstatus != 2:
-				mr.consultation = pname
-				mr.consulted = 1
-				mr.flags.ignore_links = True
-				mr.flags.ignore_mandatory = True
-				mr.flags.ignore_validate = True
-				mr.save()
+		try:
+			if item.material_request:
+				dms.append(item.material_request)
+			if item.handled_cmd:
+				bc.append(item.handled_cmd)
+			wg = item.weight_per_unit
+			if wg and wg > 0:
+				frappe.db.sql(""" update `tabItem` set weight_per_unit = %s
+			where item_code=%s""",(wg,item.item_code))
+			wgi = item.weight_uom
+			if wgi:
+				frappe.db.sql(""" update `tabItem` set weight_uom = %s
+			where item_code=%s""",(wgi,item.item_code))
+			if item.material_request_item:
+				print("item req : %s" % item.material_request_item)
+				mr = frappe.get_doc("Material Request Item",item.material_request_item)
+				if mr and mr.docstatus != 2:
+					mr.consultation = pname
+					mr.consulted = 1
+					mr.flags.ignore_links = True
+					mr.flags.ignore_mandatory = True
+					mr.flags.ignore_validate = True
+					mr.save()
+		except:
+			print("An exception occurred")
 	if dms:
 		setdms = set(dms)
 		dms = list(setdms)
 		for d in dms:
 			if d:
-				demande = frappe.get_doc("Material Request",d)
-				demande.handle_per_consulted()
+				try:
+					demande = frappe.get_doc("Material Request",d)
+					demande.handle_per_consulted()
+				except:
+					print("An exception occurred")
 
 @frappe.whitelist()
 def on_update_dv(items):		
