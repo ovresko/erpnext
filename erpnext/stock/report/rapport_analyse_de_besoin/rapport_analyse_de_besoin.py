@@ -11,6 +11,11 @@ def execute(filters=None):
 	if not filters.group and not filters.variant_of and not filters.modele_vehicule and not filters.version and not filters.manufacturer:
 		frappe.msgprint("Appliquer un filtre")
 		return columns, data
+	
+	if filters.get('manufacturer'):
+		manufacturers = cstr(filters.get("manufacturer")).strip()
+		filters.manufacturer = [d.strip() for d in manufacturers.split(',') if d]
+		
 	columns.append({
 			"fieldname": "commander",
 			"label": "Commander",
