@@ -1100,7 +1100,7 @@ def set_item_demande(item_code,qty):
 				item.recom_qts = -1
 				item.recom_minimum = -1
 				item.save()
-				return "Recommande supprimé: %s" % qty
+				return "Recommande supprimé"
 			else:
 				item.recom_qts = qty
 				item.recom_minimum = int(float(qty) * float(0.1))
