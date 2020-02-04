@@ -28,6 +28,11 @@ def execute(filters=None):
 			"width": 150
 		})
 	columns.append({
+			"fieldname": "date_recom",
+			"label": "Date Recommande",
+			"width": 150
+		})
+	columns.append({
 			"fieldname": "item_name",
 			"label": _("Item Name"),
 			"width": 150
@@ -146,14 +151,18 @@ def execute(filters=None):
 			last_qty = 0
 			last_valuation = 0
 			recom = 0
-			_recom = frappe.get_all("Item Reorder",fields=["warehouse_reorder_qty"],filters=[{"parent":mri.item_code},{"warehouse":"GLOBAL - MV"}])
+			date = ""
+			_recom = frappe.get_all("Item Reorder",fields=["warehouse_reorder_qty","modified"],filters=[{"parent":mri.item_code},{"warehouse":"GLOBAL - MV"}])
 			if _recom:
 				recom = _recom[0].warehouse_reorder_qty
+				date = _recom[0].modified
 			if sqllast_qty:
 				last_qty = sqllast_qty[0].actual_qty
 				last_valuation = sqllast_qty[0].valuation_rate
 			row = ["""<button id='%s' onClick="demander_item('%s')" type='button'>Demander</button><input placeholder='Qts' id='input_%s' style='color:black'></input><button   onClick="achat_item('%s')" type='button'>ACHAT %s</button>""" % (mri.item_code,mri.item_code,mri.item_code,mri.item_code,mri.is_purchase_item),
 			       mri.item_code,
+			       #date
+			       date,
 			       mri.item_name,
 			       mri.manufacturer,
 			       mri.manufacturer_part_no,
