@@ -28,6 +28,13 @@ class SupplierQuotation(BuyingController):
 		validate_for_items(self)
 		self.validate_with_previous_doc()
 		self.validate_uom_is_integer("uom", "qty")
+		if self.manufacturer:
+			_items = []
+			for item in self.items:
+				if item.fabricant == self.manufacturer:
+					_items.append(item)
+			self.items = _items
+
 		#nv_items = []
                 #for item in self.items:
 		#	is_purchase = frappe.db.get_value("Item", item.item_code, "is_purchase_item")
