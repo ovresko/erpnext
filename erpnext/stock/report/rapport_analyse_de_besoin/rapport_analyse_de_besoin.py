@@ -114,7 +114,7 @@ def execute(filters=None):
 	item_dc = {}
 	models = {item.variant_of for item in items}
 	for model in models:
-		_mitems = [item for item in items if item.variant_of = model]
+		_mitems = [item for item in items if item.variant_of == model]
 		origin_model = frappe.get_doc("Item",model)
 		mitems = [origin_model]
 		mitems.extend(_mitems)
