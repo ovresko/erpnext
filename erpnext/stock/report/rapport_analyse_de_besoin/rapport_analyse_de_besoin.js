@@ -92,8 +92,8 @@ frappe.query_reports["Rapport analyse de besoin"] = {
 		{
 			"fieldname": "manufacturer",
 			"label": __("Manufacturer"),
-			fieldtype: "Link",
-			options: "Manufacturer",
+			"fieldtype": "MultiSelectList",
+			"options": "Manufacturer",
 			"get_query": function() {
 			return {
 				"doctype": "Manufacturer",
@@ -101,6 +101,9 @@ frappe.query_reports["Rapport analyse de besoin"] = {
 					"actif": 1,
 					   }
 				}
+			},
+			get_data: function(txt) {
+				return frappe.db.get_link_options('Manufacturer', txt);
 			}
 		},
 		{
