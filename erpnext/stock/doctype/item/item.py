@@ -1096,11 +1096,11 @@ def set_item_demande(item_code,qty):
 	if item_code and qty:
 		item = frappe.get_doc("Item",item_code)
 		if item:
-			if qty == 0:
+			if qty == '0':
 				item.recom_qts = -1
 				item.recom_minimum = -1
 				item.save()
-				return "Recommande supprimé: %d" % (qty)
+				return "Recommande supprimé: %s" % qty
 			else:
 				item.recom_qts = qty
 				item.recom_minimum = int(float(qty) * float(0.1))
