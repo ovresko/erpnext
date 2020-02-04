@@ -90,21 +90,12 @@ frappe.query_reports["Rapport analyse de besoin"] = {
 		
 		
 		{
-			"fieldname": "manufacturer",
+			"fieldname":"manufacturer",
 			"label": __("Manufacturer"),
 			"fieldtype": "MultiSelectList",
-			"options": "Manufacturer",
-			"get_query": function() {
-			return {
-				"doctype": "Manufacturer",
-				"filters": {
-					"actif": 1,
-					   }
-				}
-			},
 			get_data: function(txt) {
 				return frappe.db.get_link_options('Manufacturer', txt);
-			}
+			} 
 		},
 		{
 			"fieldname":"age_plus",
