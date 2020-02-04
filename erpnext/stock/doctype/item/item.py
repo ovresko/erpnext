@@ -1101,7 +1101,7 @@ def set_item_demande(item_code,qty):
 				item.recom_minimum = -1
 			else:
 				item.recom_qts = qty
-				item.recom_minimum = int(qty * 0.1)
+				item.recom_minimum = int(float(qty) * float(0.1))
 			item.save()
 			return "Qts enregistree"
 
