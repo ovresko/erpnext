@@ -109,19 +109,19 @@ frappe.ui.form.on('Supplier Quotation', {
 	}, 
 	validate: function(frm){
 	
-		if(frm.doc.manufacturer){ 
-		var _items = [];	
-		frm.doc.items.forEach(i => {
-			
-			if(i.fabricant == frm.doc.manufacturer){
-				
-				_items.push(i);
-			
-			}
-		
-		});
+		//if(frm.doc.manufacturer){ 
+		//var _items = [];	
+		//frm.doc.items.forEach(i => {
+		//	
+		//	if(i.fabricant == frm.doc.manufacturer){
+		//		
+		//		_items.push(i);
+		//	
+		//	}
+		//
+		//});
 	
-		frm.doc.items = _items;
+		//frm.doc.items = _items;
 
 		} 
 	
