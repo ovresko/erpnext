@@ -1099,11 +1099,13 @@ def set_item_demande(item_code,qty):
 			if qty == 0:
 				item.recom_qts = -1
 				item.recom_minimum = -1
+				item.save()
+				return "Recommande supprimé: %d" % (qty)
 			else:
 				item.recom_qts = qty
 				item.recom_minimum = int(float(qty) * float(0.1))
-			item.save()
-			return "Qts enregistree"
+				item.save()
+				return "Qts enregistree"
 
 @frappe.whitelist()
 def set_item_achat(item_code):
