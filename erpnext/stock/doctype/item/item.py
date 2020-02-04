@@ -182,6 +182,10 @@ class Item(WebsiteGenerator):
                 # set table reorder
                 min_qts = self.recom_minimum
 		qts = self.recom_qts
+		if min_qts == -1 and qts == -1:
+		    self.reorder_levels = []
+		    self.recom_minimum = 0
+                    self.recom_qts = 0
                 if min_qts > 0 :
 		    if not qts or qts == 0:
 			qts = 1
@@ -1092,8 +1096,12 @@ def set_item_demande(item_code,qty):
 	if item_code and qty:
 		item = frappe.get_doc("Item",item_code)
 		if item:
-			item.recom_qts = qty
-			item.recom_minimum = 1
+			if qty == 0:
+				item.recom_qts = -1
+				item.recom_minimum = -1
+			else:
+				item.recom_qts = qty
+				item.recom_minimum = qty 
 			item.save()
 			return "Qts enregistree"
 
