@@ -83,6 +83,11 @@ def execute(filters=None):
 			"width": 150
 		})
 	columns.append({
+			"fieldname": "qts_recom",
+			"label": "Recommande auto",
+			"width": 150
+		})
+	columns.append({
 			"fieldname": "last_purchase_rate",
 			"label": "Dernier Prix d'achat (DZD)",
 			"width": 150
@@ -140,6 +145,10 @@ def execute(filters=None):
 			order by posting_date, posting_time limit 1""", (mri.item_code,"Purchase Receipt"), as_dict=1)
 			last_qty = 0
 			last_valuation = 0
+			recom = 0
+			_recom = frappe.get_all("Item Reorder",fields=["warehouse_reorder_qty"],filters=[{"parent":mri.item_code},{"warehouse":"GLOBAL - MV"}])
+			if _recom:
+				recom = _recom[0].warehouse_reorder_qty
 			if sqllast_qty:
 				last_qty = sqllast_qty[0].actual_qty
 				last_valuation = sqllast_qty[0].valuation_rate
@@ -164,6 +173,8 @@ def execute(filters=None):
 			       info[2],
 			       #qts_max_achat
 			       qts_max_achat,
+			       #recom
+			       recom,
 			       #last_purchase_rate
 			       mri.last_purchase_rate,
 			       #last_purchase_devise
