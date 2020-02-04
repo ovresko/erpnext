@@ -106,8 +106,9 @@ frappe.ui.form.on('Supplier Quotation', {
 							//frm.refresh_field("items");
 							frappe.msgprint("Vous devez enregistrer pour filtrer les resultats  ")
 						}}});	
-	}, 
-	validate: function(frm){
+	}
+	//, 
+	//validate: function(frm){
 	
 		//if(frm.doc.manufacturer){ 
 		//var _items = [];	
@@ -123,9 +124,9 @@ frappe.ui.form.on('Supplier Quotation', {
 	
 		//frm.doc.items = _items;
 
-		} 
+		//} 
 	
-	}
+	//}
 
 });
 
