@@ -29,7 +29,7 @@ def execute(filters=None):
 		})
 	columns.append({
 			"fieldname": "date_recom",
-			"label": "Date Recommande",
+			"label": "Derniere Date Commande",
 			"width": 150
 		})
 	columns.append({
