@@ -92,9 +92,31 @@ frappe.query_reports["Rapport analyse de besoin"] = {
 		{
 			"fieldname":"manufacturer",
 			"label": __("Manufacturer"),
-			"fieldtype": "MultiSelectList",
-			get_data: function(txt) {
-				return frappe.db.get_link_options('Manufacturer', txt);
+			"fieldtype": "MultiSelect",
+			get_data: function() {
+				var manufacturers = frappe.query_report.get_filter_value("manufacturer") || "";
+
+				const values = manufacturers.split(/\s*,\s*/).filter(d => d);
+				const txt = manufacturers.match(/[^,\s*]*$/)[0] || '';
+				let data = [];
+
+				frappe.call({
+					type: "GET",
+					method:'frappe.desk.search.search_link',
+					async: false,
+					no_spinner: true,
+					args: {
+						doctype: "Manufacturer",
+						txt: txt,
+						filters: {
+							"name": ["not in", values]
+						}
+					},
+					callback: function(r) {
+						data = r.results;
+					}
+				});
+				return data;
 			} 
 		},
 		{
