@@ -103,71 +103,80 @@ def execute(filters=None):
 		select
 			is_purchase_item,weight_per_unit,variant_of,has_variants,item_name, item_code, manufacturer,last_purchase_rate , manufacturer_part_no, item_group,last_purchase_devise,max_order_qty,max_ordered_variante
 		from `tabItem`
-		where disabled=0 {conditions}
+		where disabled=0 and has_variants=0 {conditions}
 		{order_by_statement}
 		""".format(
 			conditions=get_conditions(filters),
 			order_by_statement=order_by_statement
 		),
 		filters, as_dict=1)
-	for mri in items:
-		global info
-		qts_max_achat = 0
-		if mri.variant_of:
-			#variante
-			info = info_variante(mri.item_code)
-			qts_max_achat = mri.max_ordered_variante
-		elif mri.has_variants:
-			info = info_modele(mri.item_code)
-			qts_max_achat = mri.max_order_qty
-		sqllast_qty = frappe.db.sql("""select actual_qty,valuation_rate from `tabStock Ledger Entry` 
-		where item_code=%s and voucher_type=%s 
-		order by posting_date, posting_time limit 1""", (mri.item_code,"Purchase Receipt"), as_dict=1)
-		last_qty = 0
-		last_valuation = 0
-		if sqllast_qty:
-			last_qty = sqllast_qty[0].actual_qty
-			last_valuation = sqllast_qty[0].valuation_rate
-		row = ["""<button id='%s' onClick="demander_item('%s')" type='button'>Demander</button><input placeholder='Qts' id='input_%s' style='color:black'></input><button   onClick="achat_item('%s')" type='button'>ACHAT %s</button>""" % (mri.item_code,mri.item_code,mri.item_code,mri.item_code,mri.is_purchase_item),
-		       mri.item_code,
-		       mri.item_name,
-		       mri.manufacturer,
-		       mri.manufacturer_part_no,
-		       #poids
-		       mri.weight_per_unit,
-		       #last_qty
-		       last_qty,
-		       #last_valuation
-		       last_valuation,
-		       #consom,
-		       "_",
-		       #qts_reliquat
-		       info[3],
-		       #qts
-		       info[0],
-		       #qts_projete
-		       info[2],
-		       #qts_max_achat
-		       qts_max_achat,
-		       #last_purchase_rate
-		       mri.last_purchase_rate,
-		       #last_purchase_devise
-		       mri.last_purchase_devise
-		      ]
+	all_items = []
+	item_dc = {}
+	models = {item.variant_of for item in items}
+	for model in models:
+		_mitems = [item for item in items if item.variant_of = model]
+		origin_model = frappe.get_doc("Item",model)
+		mitems = [origin_model]
+		mitems.extend(_mitems)
 		
-		# get prices in each price list
-		if price_lists and not mri.has_variants:
-			for pl in price_lists:
-				if pl.name:
-					price = frappe.db.sql("""select price_list_rate from `tabItem Price` where buying=1 and price_list=%s and (  item_code=%s) ORDER BY creation DESC LIMIT 1;""",(pl.name,mri.item_code))
-					if price:
-						row.append(price[0][0])
+		for mri in mitems:
+			global info
+			qts_max_achat = 0
+			if mri.variant_of:
+				#variante
+				info = info_variante(mri.item_code)
+				qts_max_achat = mri.max_ordered_variante
+			elif mri.has_variants:
+				info = info_modele(mri.item_code)
+				qts_max_achat = mri.max_order_qty
+			sqllast_qty = frappe.db.sql("""select actual_qty,valuation_rate from `tabStock Ledger Entry` 
+			where item_code=%s and voucher_type=%s 
+			order by posting_date, posting_time limit 1""", (mri.item_code,"Purchase Receipt"), as_dict=1)
+			last_qty = 0
+			last_valuation = 0
+			if sqllast_qty:
+				last_qty = sqllast_qty[0].actual_qty
+				last_valuation = sqllast_qty[0].valuation_rate
+			row = ["""<button id='%s' onClick="demander_item('%s')" type='button'>Demander</button><input placeholder='Qts' id='input_%s' style='color:black'></input><button   onClick="achat_item('%s')" type='button'>ACHAT %s</button>""" % (mri.item_code,mri.item_code,mri.item_code,mri.item_code,mri.is_purchase_item),
+			       mri.item_code,
+			       mri.item_name,
+			       mri.manufacturer,
+			       mri.manufacturer_part_no,
+			       #poids
+			       mri.weight_per_unit,
+			       #last_qty
+			       last_qty,
+			       #last_valuation
+			       last_valuation,
+			       #consom,
+			       "_",
+			       #qts_reliquat
+			       info[3],
+			       #qts
+			       info[0],
+			       #qts_projete
+			       info[2],
+			       #qts_max_achat
+			       qts_max_achat,
+			       #last_purchase_rate
+			       mri.last_purchase_rate,
+			       #last_purchase_devise
+			       mri.last_purchase_devise
+			      ]
+
+			# get prices in each price list
+			if price_lists and not mri.has_variants:
+				for pl in price_lists:
+					if pl.name:
+						price = frappe.db.sql("""select price_list_rate from `tabItem Price` where buying=1 and price_list=%s and (  item_code=%s) ORDER BY creation DESC LIMIT 1;""",(pl.name,mri.item_code))
+						if price:
+							row.append(price[0][0])
+						else:
+							row.append("_")
 					else:
 						row.append("_")
-				else:
-					row.append("_")
-		
-		data.append(row)
+
+			data.append(row)
 		
 	return columns, data
 					       
