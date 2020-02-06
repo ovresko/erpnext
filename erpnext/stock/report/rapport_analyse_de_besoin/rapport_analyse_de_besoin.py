@@ -151,11 +151,13 @@ def execute(filters=None):
 			last_qty = 0
 			last_valuation = 0
 			recom = 0
-			date = ""
+			_date = ""
+			date =""
 			_recom = frappe.get_all("Item Reorder",fields=["warehouse_reorder_qty","modified"],filters=[{"parent":mri.item_code},{"warehouse":"GLOBAL - MV"}])
 			if _recom:
 				recom = _recom[0].warehouse_reorder_qty
-				date = _recom[0].modified
+				_date = _recom[0].modified
+				date = frappe.utils.get_datetime(date).strftime("%d/%m/%Y")
 			if sqllast_qty:
 				last_qty = sqllast_qty[0].actual_qty
 				last_valuation = sqllast_qty[0].valuation_rate
@@ -230,6 +232,13 @@ def get_conditions(filters):
 	if filters.get('marque_v'):
 		conditions.append("""(item_code in (select parent from `tabVersion vehicule item` vr 
 		where vr.marque_vehicule=%(marque_v)s))""")
+
+	if filters.get('generation_v'):
+		#generation_vehicule
+		generation = frappe.db.get_value("Generation vehicule", filters.generation_v, "generation")
+		if generation:
+			conditions.append("""(item_code in (select parent from `tabVersion vehicule item` vsr 
+		where vsr.generation_vehicule='%s'))""" % generation)
 	
 	#if filters.get('modele'):
 	#	conditions.append("(variant_of=%(modele)s or item_code=%(modele)s)")
