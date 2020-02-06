@@ -220,10 +220,11 @@ def get_conditions(filters):
 		conditions.append("""(item_code in (select parent from `tabVersion vehicule item` vv
 		where vv.version_vehicule=%(version)s))"""  )
 	if filters.get('modele_vehicule'):
-		modele_vehicule = frappe.get_doc('Modele de vehicule',filters.modele_vehicule)
+		modele_vehicule = frappe.db.get_value("Modele de vehicule", filters.modele_vehicule, "modele")
+		#frappe.get_doc('Modele de vehicule',filters.modele_vehicule)
 		if modele_vehicule:
 			conditions.append("""(item_code in (select parent from `tabVersion vehicule item` vm
-		where vm.modele_vehicule=%(modele_vehicule)s))""")
+		where vm.modele_vehicule=%s))""" % modele_vehicule)
 
 	if filters.get('marque_v'):
 		conditions.append("""(item_code in (select parent from `tabVersion vehicule item` vr 
