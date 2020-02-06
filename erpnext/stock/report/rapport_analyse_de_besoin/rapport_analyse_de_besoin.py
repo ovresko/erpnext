@@ -225,9 +225,9 @@ def get_conditions(filters):
 			conditions.append("""(item_code in (select parent from `tabVersion vehicule item` vm
 		where vm.modele_vehicule=%s))""" % (modele_vehicule.modele))
 
-	if filters.get('marque_vehicule'):
+	if filters.get('marque_v'):
 		conditions.append("""(item_code in (select parent from `tabVersion vehicule item` vr 
-		where vr.marque_vehicule=%s))""" % (filters.marque_vehicule))
+		where vr.marque_vehicule=%(marque_v)s))""")
 	
 	#if filters.get('modele'):
 	#	conditions.append("(variant_of=%(modele)s or item_code=%(modele)s)")
