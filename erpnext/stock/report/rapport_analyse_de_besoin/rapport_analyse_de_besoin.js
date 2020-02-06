@@ -82,6 +82,12 @@ frappe.query_reports["Rapport analyse de besoin"] = {
 			options: "Modele de vehicule"
 		},
 		{
+			"fieldname": "generation_v",
+			"label": "Generation vehicule",
+			fieldtype: "Link",
+			options: "Generation vehicule"
+		}, 
+		{
 			"fieldname": "version",
 			"label": __("Version vehicule"),
 			fieldtype: "Link",
