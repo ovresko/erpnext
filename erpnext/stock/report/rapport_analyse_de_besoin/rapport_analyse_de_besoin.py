@@ -9,7 +9,7 @@ from frappe.utils import getdate, cstr, flt, fmt_money
 
 def execute(filters=None):
 	columns, data = [], []
-	if not filters.group and not filters.variant_of and not filters.modele_vehicule and not filters.version and not filters.manufacturer:
+	if not filters.group and not filters.variant_of and not filters.modele_v and not filters.version and not filters.manufacturer:
 		frappe.msgprint("Appliquer un filtre")
 		return columns, data
 	
@@ -219,12 +219,13 @@ def get_conditions(filters):
 	if filters.get('version'):
 		conditions.append("""(item_code in (select parent from `tabVersion vehicule item` vv
 		where vv.version_vehicule=%(version)s))"""  )
-	if filters.get('modele_vehicule'):
-		modele_vehicule = frappe.db.get_value("Modele de vehicule", filters.modele_vehicule, "modele")
+	if filters.get('modele_v'):
+		modele = frappe.db.get_value("Modele de vehicule", filters.modele_v, "modele")
 		#frappe.get_doc('Modele de vehicule',filters.modele_vehicule)
-		if modele_vehicule:
-			conditions.append("""(item_code in (select parent from `tabVersion vehicule item` vm
-		where vm.modele_vehicule=%s))""" % modele_vehicule)
+		if modele:
+			query = """(item_code in (select parent from `tabVersion vehicule item` vm
+		where vm.modele_vehicule=%s))""" % modele
+			conditions.append(query)
 
 	if filters.get('marque_v'):
 		conditions.append("""(item_code in (select parent from `tabVersion vehicule item` vr 
