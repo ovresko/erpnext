@@ -224,7 +224,7 @@ def get_conditions(filters):
 		#frappe.get_doc('Modele de vehicule',filters.modele_vehicule)
 		if modele:
 			query = """(item_code in (select parent from `tabVersion vehicule item` vm
-		where vm.modele_vehicule=%s))""" % modele
+		where vm.modele_vehicule='%s'))""" % modele
 			conditions.append(query)
 
 	if filters.get('marque_v'):
