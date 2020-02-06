@@ -217,16 +217,17 @@ def get_conditions(filters):
 	if filters.get('is_purchase'):	
 		conditions.append("is_purchase_item=1")
 	if filters.get('version'):
-		conditions.append("""item_code in (select parent from `tabVersion vehicule item` vv
-		where vv.version_vehicule=%s)""" % (filters.version))
+		conditions.append("""(item_code in (select parent from `tabVersion vehicule item` vv
+		where vv.version_vehicule=%s))""" % (filters.version))
 	if filters.get('modele_vehicule'):
 		modele_vehicule = frappe.get_doc('Modele de vehicule',filters.modele_vehicule)
 		if modele_vehicule:
-			conditions.append("""item_code in (select parent from `tabVersion vehicule item` vm
-		where vm.modele_vehicule=%s)""" % (modele_vehicule.modele))
+			conditions.append("""(item_code in (select parent from `tabVersion vehicule item` vm
+		where vm.modele_vehicule=%s))""" % (modele_vehicule.modele))
 
 	if filters.get('marque_vehicule'):
-		conditions.append("""item_code in (select parent from `tabVersion vehicule item` vr where vr.marque_vehicule=%s)""" % (filters.marque_vehicule))
+		conditions.append("""(item_code in (select parent from `tabVersion vehicule item` vr 
+		where vr.marque_vehicule=%s))""" % (filters.marque_vehicule))
 	
 	#if filters.get('modele'):
 	#	conditions.append("(variant_of=%(modele)s or item_code=%(modele)s)")
