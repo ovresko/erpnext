@@ -51,6 +51,16 @@ frappe.query_reports["Rapport analyse de besoin"] = {
 	},
 	"filters": [
 		{
+			"fieldname": "item_code",
+			"label": "Code d'article",
+			fieldtype: "Data"
+		},
+		{
+			"fieldname": "ref_fabricant",
+			"label": "Ref Fabricant",
+			fieldtype: "Data"
+		},
+		{
 			"fieldname": "group",
 			"label": __("Item Group"),
 			fieldtype: "Link",
