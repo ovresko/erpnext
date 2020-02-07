@@ -269,10 +269,10 @@ def get_conditions(filters):
 		conditions.append("manufacturer in %(manufacturer)s")
 	
 	if filters.get('ref_fabricant'):
-		conditions.append("manufacturer_part_no = %(ref_fabricant)s")
+		conditions.append("manufacturer_part_no LIKE %(ref_fabricant)s")
 	
 	if filters.get('item_code'):
-		conditions.append("item_code = %(item_code)s")
+		conditions.append("item_code LIKE %(item_code)s")
 		#conditions.append("(manufacturer=%(manufacturer)s)")
 		
 	return "and {}".format(" and ".join(conditions)) if conditions else ""
