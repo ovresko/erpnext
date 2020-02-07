@@ -150,6 +150,13 @@ frappe.query_reports["Rapport analyse de besoin"] = {
 			fieldtype: "Link",
 			options: "Perfection"
 			
+		},
+		{
+			"fieldname": "price_list",
+			"label": "Liste de prix",
+			fieldtype: "Link",
+			options: "Price List"
+			
 		}
 		,{
 			"fieldname": "show_price",
