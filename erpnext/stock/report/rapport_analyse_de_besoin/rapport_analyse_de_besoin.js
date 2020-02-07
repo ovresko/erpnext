@@ -143,7 +143,15 @@ frappe.query_reports["Rapport analyse de besoin"] = {
 			"label": "Article d'achat",
 			"fieldtype": "Check",
 			"default": 1
-		},{
+		},
+		{
+			"fieldname": "perfection",
+			"label": "Perfection",
+			fieldtype: "Link",
+			options: "Perfection"
+			
+		}
+		,{
 			"fieldname": "show_price",
 			"label": "Afficher les prix",
 			"fieldtype": "Check",
