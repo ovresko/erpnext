@@ -53,6 +53,11 @@ def execute(filters=None):
 			"width": 150
 		})
 	columns.append({
+			"fieldname": "perfection",
+			"label": "Perfection",
+			"width": 150
+		})
+	columns.append({
 			"fieldname": "last_qty",
 			"label": "Derniere Qts Achetee",
 			"width": 150
@@ -70,6 +75,11 @@ def execute(filters=None):
 	columns.append({
 			"fieldname": "qts_reliquat",
 			"label": "Qte reliquats",
+			"width": 160
+		})
+	columns.append({
+			"fieldname": "qts_dem",
+			"label": "Qte Demande non commande",
 			"width": 160
 		})
 	columns.append({
@@ -117,7 +127,7 @@ def execute(filters=None):
 	items = frappe.db.sql(
 		"""
 		select
-			is_purchase_item,weight_per_unit,variant_of,has_variants,item_name, item_code, manufacturer,last_purchase_rate , manufacturer_part_no, item_group,last_purchase_devise,max_order_qty,max_ordered_variante
+			perfection,is_purchase_item,weight_per_unit,variant_of,has_variants,item_name, item_code, manufacturer,last_purchase_rate , manufacturer_part_no, item_group,last_purchase_devise,max_order_qty,max_ordered_variante
 		from `tabItem`
 		where disabled=0 and has_variants=0 {conditions}
 		{order_by_statement}
@@ -170,6 +180,8 @@ def execute(filters=None):
 			       mri.manufacturer_part_no,
 			       #poids
 			       mri.weight_per_unit,
+			       #perfection
+			       mri.perfection,
 			       #last_qty
 			       last_qty,
 			       #last_valuation
@@ -178,6 +190,8 @@ def execute(filters=None):
 			       "_",
 			       #qts_reliquat
 			       info[3],
+			       #qts_dem
+			       info[1],
 			       #qts
 			       info[0],
 			       #qts_projete
@@ -214,6 +228,10 @@ def get_conditions(filters):
 	# group, modele, manufacturer, age_plus, age_minus
 	if filters.get('group'):
 		conditions.append("item_group=%(group)s")
+		
+	#perfection
+	if filters.get('perfection'):
+		conditions.append("perfection=%(perfection)s")
 	if filters.get('variant_of'):
 		conditions.append("(item_code=%(variant_of)s or variant_of=%(variant_of)s)")
 	if filters.get('is_purchase'):	
