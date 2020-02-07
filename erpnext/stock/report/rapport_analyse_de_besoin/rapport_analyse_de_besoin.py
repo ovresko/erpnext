@@ -257,7 +257,11 @@ def get_conditions(filters):
 		if generation:
 			conditions.append("""(item_code in (select parent from `tabVersion vehicule item` vsr 
 		where vsr.generation_vehicule='%s'))""" % generation)
-	
+
+	if filters.get('price_list'):
+		conditions.append("""(item_code in (select distinct item_code from `tabItem Price` vpr 
+		where vpr.price_list=%(price_list)s))""")
+
 	#if filters.get('modele'):
 	#	conditions.append("(variant_of=%(modele)s or item_code=%(modele)s)")
 	
