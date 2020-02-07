@@ -9,7 +9,7 @@ from frappe.utils import getdate, cstr, flt, fmt_money
 
 def execute(filters=None):
 	columns, data = [], []
-	if not filters.group and not filters.generation_v and not filters.marque_v and not filters.variant_of and not filters.modele_v and not filters.version and not filters.price_list and not filters.perfection and not filters.manufacturer:
+	if not filters.group and not filters.ref_fabricant and not filters.item_code and not filters.generation_v and not filters.marque_v and not filters.variant_of and not filters.modele_v and not filters.version and not filters.price_list and not filters.perfection and not filters.manufacturer:
 		frappe.msgprint("Appliquer un filtre")
 		return columns, data
 	
@@ -267,6 +267,12 @@ def get_conditions(filters):
 	
 	if filters.get('manufacturer'):
 		conditions.append("manufacturer in %(manufacturer)s")
+	
+	if filters.get('ref_fabricant'):
+		conditions.append("manufacturer_part_no = %(ref_fabricant)s")
+	
+	if filters.get('item_code'):
+		conditions.append("item_code = %(item_code)s")
 		#conditions.append("(manufacturer=%(manufacturer)s)")
 		
 	return "and {}".format(" and ".join(conditions)) if conditions else ""
