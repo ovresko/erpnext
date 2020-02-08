@@ -259,7 +259,8 @@ def get_conditions(filters):
 		where vsr.generation_vehicule='%s'))""" % generation)
 
 	if filters.get('price_list'):
-		conditions.append("""(item_code in (select item_code from `tabItem Price` vpr 
+		conditions.append(""" (item_code in (select item_code from `tabItem Price` vpr 
+		where vpr.price_list=%(price_list)s) or variant_of in (select item_model from `tabItem Price` vpr 
 		where vpr.price_list=%(price_list)s))""")
 
 	#if filters.get('modele'):
