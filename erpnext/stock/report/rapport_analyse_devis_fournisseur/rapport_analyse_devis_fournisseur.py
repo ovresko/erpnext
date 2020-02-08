@@ -242,7 +242,7 @@ def execute(filters=None):
 					devis_status = "CONSULTE"
 				if mri.titem_code == mri.item_code:
 					supplier = frappe.db.get_value("Supplier Quotation",mri.tname,"supplier_name")
-					_bon_commande = frappe.db.sql("""select handled_cmd from 'tabSupplier Quotation Item' where material_request_item = '%s' """ % mri.torigin, as_dict=1)
+					_bon_commande = frappe.db.sql("""select handled_cmd from 'tabSupplier Quotation Item' where material_request_item = '%s' """ % mri.torigin), as_dict=1)
 					if _bon_commande and _bon_commande[0]:
 						bon_commande = _bon_commande[0].handled_cmd
 					tname = mri.tname
