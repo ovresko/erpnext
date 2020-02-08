@@ -1,6 +1,6 @@
 {
  "add_total_row": 1, 
- "creation": "2020-02-02 18:01:54.637634", 
+ "creation": "2020-02-08 19:00:00.216570", 
  "disable_prepared_report": 0, 
  "disabled": 0, 
  "docstatus": 0, 
@@ -8,14 +8,14 @@
  "idx": 0, 
  "is_standard": "Yes", 
  "letter_head": "MON VEHCIULE", 
- "modified": "2020-02-04 20:49:11.486446", 
+ "modified": "2020-02-08 19:00:00.216570", 
  "modified_by": "Administrator", 
  "module": "Stock", 
- "name": "Rapport analyse de besoin", 
+ "name": "Rapport analyse devis fournisseur", 
  "owner": "Administrator", 
  "prepared_report": 1, 
  "ref_doctype": "Item", 
- "report_name": "Rapport analyse de besoin", 
+ "report_name": "Rapport analyse devis fournisseur", 
  "report_type": "Script Report", 
  "roles": [
   {
