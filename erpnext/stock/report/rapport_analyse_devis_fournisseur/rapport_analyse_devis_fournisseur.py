@@ -197,7 +197,7 @@ def execute(filters=None):
 			it.last_purchase_devise as 'last_purchase_devise',
 			it.max_order_qty as 'max_order_qty',
 			it.max_ordered_variante as 'max_ordered_variante',
-			tmri.name as 'tname',
+			tmri.parent as 'tname',
 			tmri.qty as 'tqty',
 			tmri.creation as 'tcreation',
 			tmri.consultation as 'tconsultation',
