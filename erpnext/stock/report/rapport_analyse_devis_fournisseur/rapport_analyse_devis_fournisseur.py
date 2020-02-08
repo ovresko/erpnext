@@ -103,11 +103,6 @@ def execute(filters=None):
 			"label": "Qts d'article dans consultation",
 			"width": 180
 		})
-	columns.append({
-			"fieldname": "qts_demande_g",
-			"label": _("Total de Qte Demande de materiel"),
-			"width": 220
-		})
 	##########
 	columns.append({
 			"fieldname": "last_qty",
@@ -179,9 +174,28 @@ def execute(filters=None):
 	items = frappe.db.sql(
 		"""
 		select
-			stock_uom, perfection,is_purchase_item,weight_per_unit,variant_of,has_variants,item_name, item_code, manufacturer,last_purchase_rate , manufacturer_part_no, item_group,last_purchase_devise,max_order_qty,max_ordered_variante
-		from `tabItem`
-		where disabled=0 and has_variants=0 {conditions}
+			it.stock_uom as 'stock_uom', 
+			it.perfection as 'perfection',
+			it.is_purchase_item as 'is_purchase_item',
+			it.weight_per_unit as 'weight_per_unit',
+			it.variant_of as 'variant_of',
+			it.has_variants as 'has_variants',
+			it.item_name as 'item_name', 
+			it.item_code as 'item_code', 
+			it.manufacturer as 'manufacturer',
+			it.last_purchase_rate  as 'last_purchase_rate', 
+			it.manufacturer_part_no as 'manufacturer_part_no', 
+			it.item_group as 'item_group',
+			it.last_purchase_devise as 'last_purchase_devise',
+			it.max_order_qty as 'max_order_qty',
+			it.max_ordered_variante as 'max_ordered_variante',
+			tmri.name as 'tname',
+			tmri.qty as 'tqty',
+			tmri.consultation as 'tconsultation',
+			tmri.consulted as 'tconsulted'
+			
+		from `tabItem` it, `tabMaterial Request Item` tmri
+		where it.item_code = tmri.item_code and disabled=0 and has_variants=0 {conditions}
 		{order_by_statement}
 		""".format(
 			conditions=get_conditions(filters),
@@ -199,6 +213,10 @@ def execute(filters=None):
 		
 		for mri in mitems:
 			global info
+			devis_status = 'NON CONSULTE'
+			qts_consultation = 0
+			if mri.tconsultation:
+				devis_status = "CONSULTE"
 			qts_max_achat = 0
 			if mri.variant_of:
 				#variante
@@ -237,14 +255,21 @@ def execute(filters=None):
 			       #perfection
 			       mri.perfection,
 			       #material_request
+			       mri.tname,
 			       #supplier_quotation
+			       mri.tconsultation,
 			       #bon_commande
+			       'NA',
 			       #qts_demande
+			       mri.tqty,
 			       #qts_devis
+			       'NA',
 			       #qts_commande
+			       'NA',
 			       #devis_status
+			       devis_status,
 			       #qts_consultation
-			       #qts_demande_g
+			       qts_consultation,
 			       #last_qty
 			       last_qty,
 			       #last_valuation
@@ -290,53 +315,49 @@ def get_conditions(filters):
 	conditions = []
 	# group, modele, manufacturer, age_plus, age_minus
 	if filters.get('group'):
-		conditions.append("item_group=%(group)s")
+		conditions.append("it.item_group=%(group)s")
 	
 	#consultation_externe
 	if filters.get('demande'):
-		conditions.append("""(item_code in (select item_code from `tabMaterial Request Item` mr
-		where mr.parent=%(demande)s and mr.docstatus=1))""")
+		conditions.append("""tmri.parent=%(demande)s and tmri.docstatus=1""")
 
 	#consultation_externe
 	if filters.get('from_date'):
-		conditions.append("""(item_code in (select item_code from `tabMaterial Request Item` mr_from_date
-		where mr_from_date.creation>=%(from_date)s))""")
+		conditions.append("""tmri.creation >= %(from_date)s""")
 	#consultation_interne
 	if filters.get('consultation_interne'):
-		conditions.append("""(item_code in (select item_code from `tabSupplier Quotation Item` mr_consultation_interne
-		where mr_consultation_interne.parent=%(consultation_interne)s))""")
+		conditions.append("""tmri.consultation=%(consultation_interne)s""")
 	#consultation_externe
 	if filters.get('consultation_externe'):
-		conditions.append("""(item_code in (select item_code from `tabSupplier Quotation Item` mr_consultation_externe
-		where mr_consultation_externe.parent=%(consultation_interne)s))""")
+		conditions.append("""tmri.consultation=%(consultation_interne)s""")
 	
 	#perfection
 	if filters.get('perfection'):
-		conditions.append("perfection=%(perfection)s")
+		conditions.append("it.perfection=%(perfection)s")
 	if filters.get('variant_of'):
-		conditions.append("(item_code=%(variant_of)s or variant_of=%(variant_of)s)")
+		conditions.append("(it.item_code=%(variant_of)s or it.variant_of=%(variant_of)s)")
 	if filters.get('is_purchase'):	
-		conditions.append("is_purchase_item=1")
+		conditions.append("it.is_purchase_item=1")
 	if filters.get('version'):
-		conditions.append("""(item_code in (select parent from `tabVersion vehicule item` vv
+		conditions.append("""(it.item_code in (select parent from `tabVersion vehicule item` vv
 		where vv.version_vehicule=%(version)s))"""  )
 	if filters.get('modele_v'):
 		modele = frappe.db.get_value("Modele de vehicule", filters.modele_v, "modele")
 		#frappe.get_doc('Modele de vehicule',filters.modele_vehicule)
 		if modele:
-			query = """(item_code in (select parent from `tabVersion vehicule item` vm
+			query = """(it.item_code in (select parent from `tabVersion vehicule item` vm
 		where vm.modele_vehicule='%s'))""" % modele
 			conditions.append(query)
 
 	if filters.get('marque_v'):
-		conditions.append("""(item_code in (select parent from `tabVersion vehicule item` vr 
+		conditions.append("""(it.item_code in (select parent from `tabVersion vehicule item` vr 
 		where vr.marque_vehicule=%(marque_v)s))""")
 
 	if filters.get('generation_v'):
 		#generation_vehicule
 		generation = frappe.db.get_value("Generation vehicule", filters.generation_v, "generation")
 		if generation:
-			conditions.append("""(item_code in (select parent from `tabVersion vehicule item` vsr 
+			conditions.append("""(it.item_code in (select parent from `tabVersion vehicule item` vsr 
 		where vsr.generation_vehicule='%s'))""" % generation)
 
 	if filters.get('price_list'):
@@ -344,21 +365,21 @@ def get_conditions(filters):
 		req = ")"
 		if filters.get('manufacturer_lp'):
 			req = " and vpr.fabricant in  %(manufacturer_lp)s )"
-		conditions.append(""" (item_code in (select item_code from `tabItem Price` vpr 
-		where vpr.price_list=%(price_list)s"""+  (req)+""" or variant_of in (select item_model from `tabItem Price` vpr 
+		conditions.append(""" (it.item_code in (select item_code from `tabItem Price` vpr 
+		where vpr.price_list=%(price_list)s"""+  (req)+""" or it.variant_of in (select item_model from `tabItem Price` vpr 
 		where vpr.price_list=%(price_list)s """+  (req)+""")""")
 
 	#if filters.get('modele'):
 	#	conditions.append("(variant_of=%(modele)s or item_code=%(modele)s)")
 	
 	if filters.get('manufacturer'):
-		conditions.append("manufacturer in %(manufacturer)s")
+		conditions.append("it.manufacturer in %(manufacturer)s")
 	
 	if filters.get('ref_fabricant'):
-		conditions.append("(manufacturer_part_no LIKE  '%%{0}%%' or clean_manufacturer_part_number LIKE  '%%{0}%%')".format(filters.ref_fabricant))
+		conditions.append("(it.manufacturer_part_no LIKE  '%%{0}%%' or it.clean_manufacturer_part_number LIKE  '%%{0}%%')".format(filters.ref_fabricant))
 	
 	if filters.get('item_code'):
-		conditions.append("item_code LIKE '%%{0}%%'".format(filters.item_code))
+		conditions.append("it.item_code LIKE '%%{0}%%'".format(filters.item_code))
 		#conditions.append("(manufacturer=%(manufacturer)s)")
 		
 	return "and {}".format(" and ".join(conditions)) if conditions else ""
