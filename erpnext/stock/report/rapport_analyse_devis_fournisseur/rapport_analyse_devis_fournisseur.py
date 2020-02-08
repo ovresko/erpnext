@@ -203,6 +203,7 @@ def execute(filters=None):
 			it.max_order_qty as 'max_order_qty',
 			it.max_ordered_variante as 'max_ordered_variante',
 			tmri.parent as 'tname',
+			tmri.name as 'torigin',
 			tmri.qty as 'tqty',
 			tmri.item_code as 'titem_code',
 			tmri.creation as 'tcreation',
@@ -235,11 +236,15 @@ def execute(filters=None):
 			tqty = 0
 			tcreation = ''
 			supplier = ''
+			bon_commande = ''
 			if hasattr(mri, 'tconsultation'):
 				if mri.tconsultation:
 					devis_status = "CONSULTE"
 				if mri.titem_code == mri.item_code:
 					supplier = frappe.db.get_value("Supplier Quotation",mri.tname,"supplier_name")
+					_bon_commande = frappe.db.sql("""select handled_cmd from 'tabSupplier Quotation Item' where material_request_item = '%s' """ % mri.torigin, as_dict=1)
+					if _bon_commande:
+						bon_commande = _bon_commande[0].handled_cmd
 					tname = mri.tname
 					tconsultation = mri.tconsultation
 					tqty = mri.tqty
