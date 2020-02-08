@@ -218,8 +218,15 @@ def execute(filters=None):
 			global info
 			devis_status = 'NON CONSULTE'
 			qts_consultation = 0
-			if mri.tconsultation:
-				devis_status = "CONSULTE"
+			tname = ''
+			tconsultation = ''
+			tqty = 0
+			if hasattr(mri, 'tconsultation'):
+				if mri.tconsultation:
+					devis_status = "CONSULTE"
+				tname = mri.tname
+				tconsultation = mri.tconsultation
+				tqty = mri.tqty
 			qts_max_achat = 0
 			if mri.variant_of:
 				#variante
@@ -258,13 +265,13 @@ def execute(filters=None):
 			       #perfection
 			       mri.perfection,
 			       #material_request
-			       mri.tname,
+			       tname,
 			       #supplier_quotation
-			       mri.tconsultation,
+			       tconsultation,
 			       #bon_commande
 			       'NA',
 			       #qts_demande
-			       mri.tqty,
+			       tqty,
 			       #qts_devis
 			       'NA',
 			       #qts_commande
