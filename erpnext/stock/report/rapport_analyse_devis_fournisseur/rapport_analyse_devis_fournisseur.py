@@ -68,7 +68,7 @@ def execute(filters=None):
 	##########
 	columns.append({
 			"fieldname": "date_material_request",
-			"label": "Date Demande"),
+			"label": "Date Demande",
 			"width": 150
 		})
 	columns.append({
