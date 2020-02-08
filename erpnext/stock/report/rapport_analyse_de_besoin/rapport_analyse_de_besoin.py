@@ -265,7 +265,7 @@ def get_conditions(filters):
 		manufacturer_lp = filters.manufacturer_lp
 		req = ""
 		if filters.get('manufacturer_lp'):
-			req = " and fabricant in  %(manufacturer_lp)s"
+			req = " and vpr.fabricant in  %(manufacturer_lp)s"
 		conditions.append(""" (item_code in (select item_code from `tabItem Price` vpr 
 		where vpr.price_list=%(price_list)s) or variant_of in (select item_model from `tabItem Price` vpr 
 		where vpr.price_list=%(price_list)s) )""" + (req))
