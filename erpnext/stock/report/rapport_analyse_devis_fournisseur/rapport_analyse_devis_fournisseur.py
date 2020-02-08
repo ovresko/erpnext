@@ -199,6 +199,7 @@ def execute(filters=None):
 			it.max_ordered_variante as 'max_ordered_variante',
 			tmri.parent as 'tname',
 			tmri.qty as 'tqty',
+			tmri.item_code as 'titem_code',
 			tmri.creation as 'tcreation',
 			tmri.consultation as 'tconsultation',
 			tmri.consulted as 'tconsulted'
@@ -231,10 +232,11 @@ def execute(filters=None):
 			if hasattr(mri, 'tconsultation'):
 				if mri.tconsultation:
 					devis_status = "CONSULTE"
-				tname = mri.tname
-				tconsultation = mri.tconsultation
-				tqty = mri.tqty
-				tcreation = mri.tcreation
+				if mri.titem_code = mri.item_code:
+					tname = mri.tname
+					tconsultation = mri.tconsultation
+					tqty = mri.tqty
+					tcreation = mri.tcreation
 			qts_max_achat = 0
 			if mri.variant_of:
 				#variante
