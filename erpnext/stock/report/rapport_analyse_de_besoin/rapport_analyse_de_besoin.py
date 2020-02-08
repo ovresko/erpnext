@@ -41,6 +41,11 @@ def execute(filters=None):
 			"width": 150
 		})
 	columns.append({
+			"fieldname": "uom",
+			"label": "Unite Mesure",
+			"width": 150
+		})
+	columns.append({
 			"fieldname": "fabricant",
 			"label": "Fabricant",
 			"width": 150
@@ -130,7 +135,7 @@ def execute(filters=None):
 	items = frappe.db.sql(
 		"""
 		select
-			perfection,is_purchase_item,weight_per_unit,variant_of,has_variants,item_name, item_code, manufacturer,last_purchase_rate , manufacturer_part_no, item_group,last_purchase_devise,max_order_qty,max_ordered_variante
+			stock_uom, perfection,is_purchase_item,weight_per_unit,variant_of,has_variants,item_name, item_code, manufacturer,last_purchase_rate , manufacturer_part_no, item_group,last_purchase_devise,max_order_qty,max_ordered_variante
 		from `tabItem`
 		where disabled=0 and has_variants=0 {conditions}
 		{order_by_statement}
@@ -179,6 +184,8 @@ def execute(filters=None):
 			       #date
 			       date,
 			       mri.item_name,
+			       #uom
+			       mri.stock_uom,
 			       mri.manufacturer,
 			       mri.manufacturer_part_no,
 			       #poids
