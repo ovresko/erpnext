@@ -211,7 +211,7 @@ def execute(filters=None):
 			tmri.consulted as 'tconsulted'
 			
 		from `tabItem` it, `tabMaterial Request Item` tmri
-		where (it.item_code = tmri.item_code or (it.variant_of = tmri.model and it.item_code != tmri.item_code ) ) and disabled=0 and has_variants=0 {conditions}
+		where tmri.ordered_qty = 0 and tmri.docstatus=0 and = tmri.consulted=1 and  (it.item_code = tmri.item_code or (it.variant_of = tmri.model and it.item_code != tmri.item_code ) ) and disabled=0 and has_variants=0 {conditions}
 		{order_by_statement}
 		""".format(
 			conditions=get_conditions(filters),
