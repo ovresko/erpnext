@@ -232,7 +232,7 @@ def execute(filters=None):
 			if hasattr(mri, 'tconsultation'):
 				if mri.tconsultation:
 					devis_status = "CONSULTE"
-				if mri.titem_code = mri.item_code:
+				if mri.titem_code == mri.item_code:
 					tname = mri.tname
 					tconsultation = mri.tconsultation
 					tqty = mri.tqty
