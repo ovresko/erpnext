@@ -43,7 +43,7 @@ frappe.query_reports["Rapport analyse devis fournisseur"] = {
 		
 		
 		if (row && row != null && row[2] && row[2].content.length == 11) {
-			value = "<div style='color: white;background-color: #004266;padding: 5px;'>" + value + "</div>";
+			value = "<div style='color: white;background-color: #8BB91C;padding: 5px;'>" + value + "</div>";
 		}
 		else {
 			value = "<div style='color:black'>" + value + "</div>";
