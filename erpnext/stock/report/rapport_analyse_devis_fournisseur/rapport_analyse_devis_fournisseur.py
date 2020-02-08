@@ -67,6 +67,11 @@ def execute(filters=None):
 		})
 	##########
 	columns.append({
+			"fieldname": "date_material_request",
+			"label": "Date Demande"),
+			"width": 150
+		})
+	columns.append({
 			"fieldname": "material_request",
 			"label": _("Material Request"),
 			"width": 150
@@ -194,6 +199,7 @@ def execute(filters=None):
 			it.max_ordered_variante as 'max_ordered_variante',
 			tmri.name as 'tname',
 			tmri.qty as 'tqty',
+			tmri.creation as 'tcreation',
 			tmri.consultation as 'tconsultation',
 			tmri.consulted as 'tconsulted'
 			
@@ -221,12 +227,14 @@ def execute(filters=None):
 			tname = ''
 			tconsultation = ''
 			tqty = 0
+			tcreation = ''
 			if hasattr(mri, 'tconsultation'):
 				if mri.tconsultation:
 					devis_status = "CONSULTE"
 				tname = mri.tname
 				tconsultation = mri.tconsultation
 				tqty = mri.tqty
+				tcreation = mri.tcreation
 			qts_max_achat = 0
 			if mri.variant_of:
 				#variante
@@ -264,6 +272,8 @@ def execute(filters=None):
 			       mri.weight_per_unit,
 			       #perfection
 			       mri.perfection,
+			       #datedm
+			       tcreation,
 			       #material_request
 			       tname,
 			       #supplier_quotation
