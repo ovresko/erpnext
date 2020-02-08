@@ -295,7 +295,7 @@ def execute(filters=None):
 			       #supplier
 			       supplier,
 			       #bon_commande
-			       'NA',
+			       bon_commande,
 			       #qts_demande
 			       tqty,
 			       #qts_devis
