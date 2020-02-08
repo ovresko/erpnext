@@ -332,7 +332,7 @@ def get_conditions(filters):
 		conditions.append("""tmri.consultation=%(consultation_interne)s""")
 	#consultation_externe
 	if filters.get('consultation_externe'):
-		conditions.append("""tmri.consultation=%(consultation_interne)s""")
+		conditions.append("""tmri.consultation=%(consultation_externe)s""")
 	
 	#perfection
 	if filters.get('perfection'):
