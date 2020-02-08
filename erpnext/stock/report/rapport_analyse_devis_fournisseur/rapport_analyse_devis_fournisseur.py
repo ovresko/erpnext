@@ -82,6 +82,11 @@ def execute(filters=None):
 			"width": 150
 		})
 	columns.append({
+			"fieldname": "supplier",
+			"label": "Fournisseur",
+			"width": 150
+		})
+	columns.append({
 			"fieldname": "bon_commande",
 			"label": "Bon de Commande",
 			"width": 150
@@ -229,10 +234,12 @@ def execute(filters=None):
 			tconsultation = ''
 			tqty = 0
 			tcreation = ''
+			supplier = ''
 			if hasattr(mri, 'tconsultation'):
 				if mri.tconsultation:
 					devis_status = "CONSULTE"
 				if mri.titem_code == mri.item_code:
+					supplier = frappe.db.get_value("Supplier Quotation",mri.tname,"supplier_name")
 					tname = mri.tname
 					tconsultation = mri.tconsultation
 					tqty = mri.tqty
@@ -280,6 +287,8 @@ def execute(filters=None):
 			       tname,
 			       #supplier_quotation
 			       tconsultation,
+			       #supplier
+			       supplier,
 			       #bon_commande
 			       'NA',
 			       #qts_demande
