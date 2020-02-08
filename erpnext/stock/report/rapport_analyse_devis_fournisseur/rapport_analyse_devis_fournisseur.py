@@ -238,9 +238,9 @@ def execute(filters=None):
 			supplier = ''
 			bon_commande = ''
 			if hasattr(mri, 'tconsultation'):
-				if mri.tconsultation:
-					devis_status = "CONSULTE"
 				if mri.titem_code == mri.item_code:
+					if mri.tconsultation:
+						devis_status = "CONSULTE"
 					supplier = frappe.db.get_value("Supplier Quotation",mri.tname,"supplier_name")
 					_bon_commande = frappe.db.sql("""select handled_cmd from `tabSupplier Quotation Item` where material_request_item = %s """,(mri.torigin), as_dict=1)
 					if _bon_commande and _bon_commande[0]:
