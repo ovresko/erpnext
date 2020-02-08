@@ -167,7 +167,7 @@ frappe.query_reports["Rapport analyse de besoin"] = {
 			fieldtype: "Link",
 			options: "Price List"
 			
-		}
+		},
 		{
 			"fieldname":"manufacturer_lp",
 			"label": "Fabricant LP",
@@ -197,7 +197,7 @@ frappe.query_reports["Rapport analyse de besoin"] = {
 				});
 				return data;
 			} 
-		},
+		}
 		,{
 			"fieldname": "show_price",
 			"label": "Afficher les prix",
