@@ -16,6 +16,9 @@ def execute(filters=None):
 	if filters.get('manufacturer'):
 		manufacturers = cstr(filters.get("manufacturer")).strip()
 		filters.manufacturer = [d.strip() for d in manufacturers.split(',') if d]
+	if filters.get('manufacturer_lp'):
+		manufacturer_lp = cstr(filters.get("manufacturer_lp")).strip()
+		filters.manufacturer_lp = [d.strip() for d in manufacturer_lp.split(',') if d]
 		
 	columns.append({
 			"fieldname": "commander",
@@ -259,9 +262,13 @@ def get_conditions(filters):
 		where vsr.generation_vehicule='%s'))""" % generation)
 
 	if filters.get('price_list'):
+		manufacturer_lp = filters.manufacturer_lp
+		req = ""
+		if filters.get('manufacturer_lp'):
+			req = " and fabricant in  %(manufacturer_lp)s"
 		conditions.append(""" (item_code in (select item_code from `tabItem Price` vpr 
 		where vpr.price_list=%(price_list)s) or variant_of in (select item_model from `tabItem Price` vpr 
-		where vpr.price_list=%(price_list)s))""")
+		where vpr.price_list=%(price_list)s) %s )""" % req)
 
 	#if filters.get('modele'):
 	#	conditions.append("(variant_of=%(modele)s or item_code=%(modele)s)")
