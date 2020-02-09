@@ -341,3 +341,20 @@ def make_quotation(source_name, target_doc=None):
 	}, target_doc)
 
 	return doclist
+
+#delete from devis
+@frappe.whitelist()
+def set_item_achat(item_code):
+	if item_code:
+		frappe.delete_doc("Supplier Quotation Item", item_code)
+		return "ARTICLE SUPPRIME : %s" % item_code
+	
+@frappe.whitelist()
+def set_item_demande(item_code,qty):
+	if item_code and qty:
+		item = frappe.get_doc("Supplier Quotation Item",item_code)
+		if item:
+			item.qty = float(qty)
+			item.save()
+			return "Nouvelle Qts enregistree"
+			
