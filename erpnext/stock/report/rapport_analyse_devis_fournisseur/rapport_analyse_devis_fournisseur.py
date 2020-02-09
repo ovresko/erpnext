@@ -169,9 +169,19 @@ def execute(filters=None):
 	mris = []
 
 	order_by_statement = "order by sqi.item_code"
+	#parent material_request_item - material_request - qty - variant_of - creation
 	items = frappe.db.sql(
 		"""
-		select sqi.*,
+		select sqi.parent,
+		sqi.material_request_item,
+		sqi.material_request,
+		sqi.qty,
+		sqi.creation,
+		it.item_code,
+		it.item_name,
+		it.stock_uom,
+		it.weight_per_unit,
+		it.item_group,
 		it.variant_of,
 		it.perfection,
 		it.is_purchase_item,
@@ -203,18 +213,18 @@ def execute(filters=None):
 		ids = {o.item_code for o in mitems if item.item_code}
 		others = frappe.get_all("Item",filters={"variant_of":model,"item_code":("not in",ids)},fields=[
 		"variant_of",
-		#"stock_uom", 
+		"stock_uom", 
 		"perfection",
 		"is_purchase_item",
-		#"weight_per_unit",
+		"weight_per_unit",
 		"variant_of",
 		"has_variants",
-		#"item_name", 
-		#"item_code", 
+		"item_name", 
+		"item_code", 
 		"manufacturer",
 		"last_purchase_rate" , 
 		"manufacturer_part_no", 
-		#"item_group",
+		"item_group",
 		"last_purchase_devise",
 		"max_order_qty",
 		"max_ordered_variante"])
