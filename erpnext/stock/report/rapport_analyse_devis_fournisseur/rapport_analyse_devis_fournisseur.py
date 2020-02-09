@@ -226,10 +226,16 @@ def execute(filters=None):
 			supplier = ''
 			qts_demande = 0
 			devis_status = ''
+			material_request = ''
+			supplier_quotation =  ''
+			qts_devis = 0
 			if hasattr(mri, 'material_request'):
 				supplier = frappe.db.get_value("Supplier Quotation",mri.parent,"supplier_name")
 				qts_demande = frappe.db.get_value("Material Request Item",mri.material_request_item,"qty")
 				devis_status = frappe.db.get_value("Supplier Quotation",mri.parent,"etat_consultation_deux")
+				material_request = mri.material_request
+				supplier_quotation = mri.parent
+				qts_devis = mri.qty
 			qts_max_achat = 0
 			if mri.variant_of:
 				#variante
@@ -271,15 +277,15 @@ def execute(filters=None):
 			       #datedm
 			       mri.creation,
 			       #material_request
-			       mri.material_request,
+			       material_request,
 			       #supplier_quotation
-			       mri.parent,
+			       supplier_quotation,
 			       #supplier
 			       supplier,
 			       #qts_demande
 			       qts_demande,
 			       #qts_devis
-			       mri.qty,
+			       qts_devis,
 			       #devis_status
 			       devis_status,
 			       #last_qty
