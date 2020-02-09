@@ -7,7 +7,7 @@ function achat_item(data){
 //	
 	console.log("code:",data);
 	frappe.call({
-			method: "erpnext.stock.doctype.item.item.set_item_achat",
+			method: "erpnext.buying.doctype.supplier_quotation.supplier_quotation.set_item_achat",
 			args: {
 				item_code: data
 			},
@@ -19,12 +19,10 @@ function achat_item(data){
 		});
 }
 function demander_item(data) {
-	console.log("code:",data);
 	var qty_id = 'input_'+data;
 	var qty = $('#'+qty_id).val();
-	console.log("qty:",qty);
 	frappe.call({
-			method: "erpnext.stock.doctype.item.item.set_item_demande",
+			method: "erpnext.buying.doctype.supplier_quotation.supplier_quotation.set_item_demande",
 			args: {
 				item_code: data,
 				qty: qty
