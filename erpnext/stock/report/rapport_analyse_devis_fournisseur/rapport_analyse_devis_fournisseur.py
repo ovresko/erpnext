@@ -213,7 +213,7 @@ def execute(filters=None):
 		sqi.owner,
 		sqi.amount,
 		sqi.base_rate,
-		
+		sqi.name,
 		it.item_code,
 		it.item_name,
 		it.stock_uom,
@@ -262,7 +262,7 @@ def execute(filters=None):
 		sqi.owner,
 		sqi.amount,
 		sqi.base_rate,
-		
+		sqi.name,
 		it.item_code,
 		it.item_name,
 		it.stock_uom,
@@ -368,7 +368,7 @@ def execute(filters=None):
 			if sqllast_qty:
 				last_qty = sqllast_qty[0].actual_qty
 				last_valuation = sqllast_qty[0].valuation_rate
-			row = ["""<button id='%s' onClick="demander_item('%s')" type='button'>Changer</button><input placeholder='Qts devis' id='input_%s' style='color:black'></input><button   onClick="achat_item('%s')" type='button'> X </button>""" % (mri.item_code,mri.item_code,mri.item_code,mri.item_code),
+			row = ["""<button id='%s' onClick="demander_item('%s')" type='button'>Changer</button><input placeholder='Qts devis' id='input_%s' style='color:black'></input><button   onClick="achat_item('%s')" type='button'> X </button>""" % (mri.name,mri.name,mri.name,mri.name),
 			       mri.item_code,
 			       #date
 			       date,
