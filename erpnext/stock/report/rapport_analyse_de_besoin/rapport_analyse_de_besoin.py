@@ -193,27 +193,27 @@ def execute(filters=None):
 			       #perfection
 			       mri.perfection,
 			       #last_qty
-			       last_qty,
+			       last_qty or 0,
 			       #last_valuation
-			       last_valuation,
+			       last_valuation or 0,
 			       #consom,
 			       "_",
 			       #qts_reliquat
-			       info[3],
+			       info[3] or 0,
 			       #qts_dem
-			       info[1],
+			       info[1] or 0,
 			       #qts
-			       info[0],
+			       info[0] or 0,
 			       #qts_projete
-			       info[2],
+			       info[2] or 0,
 			       #qts_max_achat
-			       qts_max_achat,
+			       qts_max_achat or 0,
 			       #recom
-			       recom,
+			       recom or 0,
 			       #last_purchase_rate
-			       mri.last_purchase_rate,
+			       mri.last_purchase_rate or 0,
 			       #last_purchase_devise
-			       mri.last_purchase_devise
+			       mri.last_purchase_devise or 0
 			      ]
 
 			if filters.show_price:
