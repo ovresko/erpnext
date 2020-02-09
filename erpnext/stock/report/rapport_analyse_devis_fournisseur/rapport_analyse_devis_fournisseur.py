@@ -97,6 +97,36 @@ def execute(filters=None):
 			"width": 150
 		})
 	columns.append({
+			"fieldname": "prix_devis",
+			"label": "Prix Devis",
+			"width": 150
+		})
+	columns.append({
+			"fieldname": "base_amount",
+			"label": "base_amount",
+			"width": 150
+		})
+	columns.append({
+			"fieldname": "prix_target",
+			"label": "prix_target",
+			"width": 150
+		})
+	columns.append({
+			"fieldname": "base_rate",
+			"label": "base_rate",
+			"width": 150
+		})
+	columns.append({
+			"fieldname": "amount",
+			"label": "amount",
+			"width": 150
+		})
+	columns.append({
+			"fieldname": "owner",
+			"label": "owner",
+			"width": 150
+		})
+	columns.append({
 			"fieldname": "devis_status",
 			"label": "Etat d'article dans consultation",
 			"width": 180
@@ -177,6 +207,13 @@ def execute(filters=None):
 		sqi.material_request,
 		sqi.qty,
 		sqi.creation,
+		sqi.rate,
+		sqi.base_amount,
+		sqi.prix_target,
+		sqi.owner,
+		sqi.amount,
+		sqi.base_rate,
+		
 		it.item_code,
 		it.item_name,
 		it.stock_uom,
@@ -219,6 +256,13 @@ def execute(filters=None):
 		sqi.material_request,
 		sqi.qty,
 		sqi.creation,
+		sqi.rate,
+		sqi.base_amount,
+		sqi.prix_target,
+		sqi.owner,
+		sqi.amount,
+		sqi.base_rate,
+		
 		it.item_code,
 		it.item_name,
 		it.stock_uom,
@@ -271,6 +315,18 @@ def execute(filters=None):
 			supplier_quotation =  ''
 			qts_devis = 0
 			datedm = ''
+			#rate,
+			rate= 0
+			#base_amount,
+			base_amount = 0
+			#prix_target,
+			prix_target = 0
+			#base_rate,
+			base_rate= 0
+			#amount,
+			amount = 0
+			#owner,
+			owner=  ''
 			if hasattr(mri, 'material_request'):
 				supplier = frappe.db.get_value("Supplier Quotation",mri.parent,"supplier_name")
 				qts_demande = frappe.db.get_value("Material Request Item",mri.material_request_item,"qty")
@@ -278,6 +334,12 @@ def execute(filters=None):
 				material_request = mri.material_request
 				supplier_quotation = mri.parent
 				qts_devis = mri.qty
+				rate = mri.rate
+				base_amount = mri.base_amount
+				prix_target = mri.prix_target
+				base_rate = mri.base_rate
+				amount = mri.amount
+				owner = mri.owner
 				_datedm =frappe.db.get_value("Material Request Item",mri.material_request_item,"creation")
 				if _datedm:
 					datedm = frappe.utils.get_datetime(_datedm).strftime("%d/%m/%Y")
@@ -331,6 +393,18 @@ def execute(filters=None):
 			       qts_demande,
 			       #qts_devis
 			       qts_devis,
+			       #prix_devis
+			       rate,
+			       #base_amount,
+			       base_amount,
+			       #prix_target,
+			       prix_target,
+			       #base_rate,
+			       base_rate,
+			       #amount,
+			       amount,
+			       #owner,
+			       owner,
 			       #devis_status
 			       devis_status,
 			       #last_qty
