@@ -211,7 +211,38 @@ def execute(filters=None):
 		mitems = [origin_model]
 		mitems.extend(_mitems)
 		ids = {o.item_code for o in mitems if item.item_code}
-		others = frappe.get_all("Item",filters={"variant_of":model,"item_code":("not in",ids)},fields=[
+		lids = "','".join(ids)
+		other_sq =  frappe.db.sql(
+		"""
+		select sqi.parent,
+		sqi.material_request_item,
+		sqi.material_request,
+		sqi.qty,
+		sqi.creation,
+		it.item_code,
+		it.item_name,
+		it.stock_uom,
+		it.weight_per_unit,
+		it.item_group,
+		it.variant_of,
+		it.perfection,
+		it.is_purchase_item,
+		it.variant_of,
+		it.has_variants,
+		it.manufacturer,
+		it.last_purchase_rate , 
+		it.manufacturer_part_no, 
+		it.last_purchase_devise,
+		it.max_order_qty,
+		it.max_ordered_variante
+		from `tabSupplier Quotation Item` sqi left join `tabItem` it
+		ON sqi.item_code = it.item_code
+		where sqi.docstatus=0 and it.variant_of = %s and sqi.item_code not in ('{0}')
+		""".format(lids),
+		filters, as_dict=1)
+		mitems.extend(other_sq)
+		oids = {o.item_code for o in mitems if item.item_code}
+		others = frappe.get_all("Item",filters={"variant_of":model,"item_code":("not in",oids)},fields=[
 		"variant_of",
 		"stock_uom", 
 		"perfection",
@@ -239,6 +270,7 @@ def execute(filters=None):
 			material_request = ''
 			supplier_quotation =  ''
 			qts_devis = 0
+			datedm = ''
 			if hasattr(mri, 'material_request'):
 				supplier = frappe.db.get_value("Supplier Quotation",mri.parent,"supplier_name")
 				qts_demande = frappe.db.get_value("Material Request Item",mri.material_request_item,"qty")
@@ -246,6 +278,9 @@ def execute(filters=None):
 				material_request = mri.material_request
 				supplier_quotation = mri.parent
 				qts_devis = mri.qty
+				_datedm =frappe.db.get_value("Material Request Item",mri.material_request_item,"creation")
+				if _datedm:
+					datedm = frappe.utils.get_datetime(_datedm).strftime("%d/%m/%Y")
 			qts_max_achat = 0
 			if mri.variant_of:
 				#variante
@@ -285,7 +320,7 @@ def execute(filters=None):
 			       #perfection
 			       mri.perfection,
 			       #datedm
-			       mri.creation,
+			       datedm,
 			       #material_request
 			       material_request,
 			       #supplier_quotation
