@@ -87,11 +87,6 @@ def execute(filters=None):
 			"width": 150
 		})
 	columns.append({
-			"fieldname": "bon_commande",
-			"label": "Bon de Commande",
-			"width": 150
-		})
-	columns.append({
 			"fieldname": "qts_demande",
 			"label": _("Qte Demandee"),
 			"width": 150
@@ -102,18 +97,8 @@ def execute(filters=None):
 			"width": 150
 		})
 	columns.append({
-			"fieldname": "qts_commande",
-			"label": "Qte Bon de Commande",
-			"width": 150
-		})
-	columns.append({
 			"fieldname": "devis_status",
 			"label": "Etat d'article dans consultation",
-			"width": 180
-		})
-	columns.append({
-			"fieldname": "qts_consultation",
-			"label": "Qts d'article dans consultation",
 			"width": 180
 		})
 	##########
@@ -183,35 +168,24 @@ def execute(filters=None):
 				})
 	mris = []
 
-	order_by_statement = "order by item_code"
+	order_by_statement = "order by sqi.item_code"
 	items = frappe.db.sql(
 		"""
-		select
-			it.stock_uom as 'stock_uom', 
-			it.perfection as 'perfection',
-			it.is_purchase_item as 'is_purchase_item',
-			it.weight_per_unit as 'weight_per_unit',
-			it.variant_of as 'variant_of',
-			it.has_variants as 'has_variants',
-			it.item_name as 'item_name', 
-			it.item_code as 'item_code', 
-			it.manufacturer as 'manufacturer',
-			it.last_purchase_rate  as 'last_purchase_rate', 
-			it.manufacturer_part_no as 'manufacturer_part_no', 
-			it.item_group as 'item_group',
-			it.last_purchase_devise as 'last_purchase_devise',
-			it.max_order_qty as 'max_order_qty',
-			it.max_ordered_variante as 'max_ordered_variante',
-			tmri.parent as 'tname',
-			tmri.name as 'torigin',
-			tmri.qty as 'tqty',
-			tmri.item_code as 'titem_code',
-			tmri.creation as 'tcreation',
-			tmri.consultation as 'tconsultation',
-			tmri.consulted as 'tconsulted'
-			
-		from `tabItem` it, `tabMaterial Request Item` tmri
-		where tmri.ordered_qty = 0 and tmri.docstatus=0 and = tmri.consulted=1 and  (it.item_code = tmri.item_code or (it.variant_of = tmri.model and it.item_code != tmri.item_code ) ) and disabled=0 and has_variants=0 {conditions}
+		select sqi.*,
+		it.variant_of,
+		it.perfection,
+		it.is_purchase_item,
+		it.variant_of,
+		it.has_variants,
+		it.manufacturer,
+		it.last_purchase_rate , 
+		it.manufacturer_part_no, 
+		it.last_purchase_devise,
+		it.max_order_qty,
+		it.max_ordered_variante
+		from `tabSupplier Quotation Item` sqi left join `tabItem` it
+		ON sqi.item_code = it.item_code
+		where sqi.docstatus=0 {conditions}
 		{order_by_statement}
 		""".format(
 			conditions=get_conditions(filters),
@@ -226,29 +200,36 @@ def execute(filters=None):
 		origin_model = frappe.get_doc("Item",model)
 		mitems = [origin_model]
 		mitems.extend(_mitems)
+		ids = {o.item_code for o in mitems if item.item_code}
+		others = frappe.get_all("Item",filters={"variant_of":model,"item_code":("not in",ids)},fields=[
+		"variant_of",
+		#"stock_uom", 
+		"perfection",
+		"is_purchase_item",
+		#"weight_per_unit",
+		"variant_of",
+		"has_variants",
+		#"item_name", 
+		#"item_code", 
+		"manufacturer",
+		"last_purchase_rate" , 
+		"manufacturer_part_no", 
+		#"item_group",
+		"last_purchase_devise",
+		"max_order_qty",
+		"max_ordered_variante"])
+		
+		mitems.extend(others)
 		
 		for mri in mitems:
 			global info
-			devis_status = 'NON CONSULTE'
-			qts_consultation = 0
-			tname = ''
-			tconsultation = ''
-			tqty = 0
-			tcreation = ''
 			supplier = ''
-			bon_commande = ''
-			if hasattr(mri, 'tconsultation'):
-				if mri.titem_code == mri.item_code:
-					if mri.tconsultation:
-						devis_status = "CONSULTE"
-					supplier = frappe.db.get_value("Supplier Quotation",mri.tname,"supplier_name")
-					_bon_commande = frappe.db.sql("""select handled_cmd from `tabSupplier Quotation Item` where material_request_item = %s """,(mri.torigin), as_dict=1)
-					if _bon_commande and _bon_commande[0]:
-						bon_commande = _bon_commande[0].handled_cmd
-					tname = mri.tname
-					tconsultation = mri.tconsultation
-					tqty = mri.tqty
-					tcreation = mri.tcreation
+			qts_demande = 0
+			devis_status = ''
+			if hasattr(mri, 'material_request'):
+				supplier = frappe.db.get_value("Supplier Quotation",mri.parent,"supplier_name")
+				qts_demande = frappe.db.get_value("Material Request Item",mri.material_request_item,"qty")
+				devis_status = frappe.db.get_value("Supplier Quotation",mri.parent,"etat_consultation_deux")
 			qts_max_achat = 0
 			if mri.variant_of:
 				#variante
@@ -265,11 +246,12 @@ def execute(filters=None):
 			recom = 0
 			_date = ""
 			date =""
+			date = frappe.utils.get_datetime(mri.creation).strftime("%d/%m/%Y")
 			_recom = frappe.get_all("Item Reorder",fields=["warehouse_reorder_qty","modified"],filters=[{"parent":mri.item_code},{"warehouse":"GLOBAL - MV"}])
 			if _recom:
 				recom = _recom[0].warehouse_reorder_qty
 				_date = _recom[0].modified
-				date = frappe.utils.get_datetime(date).strftime("%d/%m/%Y")
+				#date = frappe.utils.get_datetime(date).strftime("%d/%m/%Y")
 			if sqllast_qty:
 				last_qty = sqllast_qty[0].actual_qty
 				last_valuation = sqllast_qty[0].valuation_rate
@@ -287,25 +269,19 @@ def execute(filters=None):
 			       #perfection
 			       mri.perfection,
 			       #datedm
-			       tcreation,
+			       mri.creation,
 			       #material_request
-			       tname,
+			       mri.material_request,
 			       #supplier_quotation
-			       tconsultation,
+			       mri.parent,
 			       #supplier
 			       supplier,
-			       #bon_commande
-			       bon_commande,
 			       #qts_demande
-			       tqty,
+			       qts_demande,
 			       #qts_devis
-			       'NA_',
-			       #qts_commande
-			       'NA_',
+			       mri.qty,
 			       #devis_status
 			       devis_status,
-			       #qts_consultation
-			       qts_consultation,
 			       #last_qty
 			       last_qty,
 			       #last_valuation
@@ -355,17 +331,17 @@ def get_conditions(filters):
 	
 	#consultation_externe
 	if filters.get('demande'):
-		conditions.append("""tmri.parent=%(demande)s and tmri.docstatus=1""")
+		conditions.append("""sqi.material_request=%(demande)s""")
 
 	#consultation_externe
 	if filters.get('from_date'):
-		conditions.append("""tmri.creation >= %(from_date)s""")
+		conditions.append("""sqi.creation >= %(from_date)s""")
 	#consultation_interne
 	if filters.get('consultation_interne'):
-		conditions.append("""tmri.consultation=%(consultation_interne)s""")
+		conditions.append("""sqi.parent=%(consultation_interne)s""")
 	#consultation_externe
 	if filters.get('consultation_externe'):
-		conditions.append("""tmri.consultation=%(consultation_externe)s""")
+		conditions.append("""sqi.parent=%(consultation_externe)s""")
 	
 	#perfection
 	if filters.get('perfection'):
