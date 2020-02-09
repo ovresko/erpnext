@@ -239,7 +239,7 @@ def execute(filters=None):
 		ON sqi.item_code = it.item_code
 		where sqi.docstatus=0 and it.variant_of = %s and sqi.item_code not in ('{0}')
 		""".format(lids),
-		filters, as_dict=1)
+		(model), as_dict=1)
 		mitems.extend(other_sq)
 		oids = {o.item_code for o in mitems if item.item_code}
 		others = frappe.get_all("Item",filters={"variant_of":model,"item_code":("not in",oids)},fields=[
