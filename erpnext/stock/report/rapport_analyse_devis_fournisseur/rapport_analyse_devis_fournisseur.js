@@ -2,6 +2,45 @@
 // For license information, please see license.txt
 /* eslint-disable */
 
+function approuver(supplier_quotation_item){
+	frappe.call({
+			method: "erpnext.buying.doctype.supplier_quotation.supplier_quotation.approuver_item",
+			args: {
+				item_code: data
+			},
+			callback: function(r) {
+				if (r.message) {
+					alert(r.message);
+				}
+			}
+		});
+}
+function en_cours(supplier_quotation_item){
+	frappe.call({
+			method: "erpnext.buying.doctype.supplier_quotation.supplier_quotation.en_cours_item",
+			args: {
+				item_code: data
+			},
+			callback: function(r) {
+				if (r.message) {
+					alert(r.message);
+				}
+			}
+		});
+}
+function annuler(supplier_quotation_item){
+	frappe.call({
+			method: "erpnext.buying.doctype.supplier_quotation.supplier_quotation.annuler_item",
+			args: {
+				item_code: data
+			},
+			callback: function(r) {
+				if (r.message) {
+					alert(r.message);
+				}
+			}
+		});
+}
 
 function achat_item(data){
 //	
