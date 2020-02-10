@@ -2,7 +2,7 @@
 // For license information, please see license.txt
 /* eslint-disable */
 
-function approuver(supplier_quotation_item){
+function approuver(data){
 	frappe.call({
 			method: "erpnext.buying.doctype.supplier_quotation.supplier_quotation.approuver_item",
 			args: {
@@ -15,7 +15,7 @@ function approuver(supplier_quotation_item){
 			}
 		});
 }
-function en_cours(supplier_quotation_item){
+function en_cours(data){
 	frappe.call({
 			method: "erpnext.buying.doctype.supplier_quotation.supplier_quotation.en_cours_item",
 			args: {
@@ -28,7 +28,7 @@ function en_cours(supplier_quotation_item){
 			}
 		});
 }
-function annuler(supplier_quotation_item){
+function annuler(data){
 	frappe.call({
 			method: "erpnext.buying.doctype.supplier_quotation.supplier_quotation.annuler_item",
 			args: {
@@ -83,6 +83,7 @@ frappe.query_reports["Rapport analyse devis fournisseur"] = {
 			value = "<div style='color: white;background-color: #8BB91C;padding: 5px;'>" + value + "</div>";
 		}
 		else {
+			
 			value = "<div style='color:black'>" + value + "</div>";
 		}
 		return value
