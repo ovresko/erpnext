@@ -358,3 +358,29 @@ def set_item_demande(item_code,qty):
 			item.save()
 			return "Nouvelle Qts enregistree"
 			
+@frappe.whitelist()
+def approuver_item(item_code):
+	if item_code:
+		item = frappe.get_doc("Supplier Quotation Item",item_code)
+		if item:
+			item.confirmation = "Approuve"
+			item.save()
+			return "Article Approuve"
+	
+@frappe.whitelist()
+def en_cours_item(item_code):
+	if item_code:
+		item = frappe.get_doc("Supplier Quotation Item",item_code)
+		if item:
+			item.confirmation = "En cours"
+			item.save()
+			return "Article En cours"
+		
+@frappe.whitelist()
+def annuler_item(item_code):
+	if item_code:
+		item = frappe.get_doc("Supplier Quotation Item",item_code)
+		if item:
+			item.confirmation = "Annule"
+			item.save()
+			return "Article Annule"
