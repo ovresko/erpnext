@@ -411,7 +411,9 @@ def execute(filters=None):
 				supplier = frappe.db.get_value("Supplier Quotation",mri.parent,"supplier_name")
 				qts_demande = frappe.db.get_value("Material Request Item",mri.material_request_item,"qty")
 				devis_status = frappe.db.get_value("Supplier Quotation",mri.parent,"etat_consultation_deux")
-				convertion_rate = frappe.db.get_value("Supplier Quotation",mri.parent,"convertion_rate")
+				convertion_rate = frappe.db.get_value("Supplier Quotation",mri.parent,"conversion_rate")
+				if not convertion_rate:
+					convertion_rate = 1
 				material_request = mri.material_request
 				supplier_quotation = mri.parent
 				qts_devis = mri.qty
