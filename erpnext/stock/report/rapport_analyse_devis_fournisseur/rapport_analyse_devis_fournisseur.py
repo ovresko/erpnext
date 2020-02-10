@@ -92,16 +92,6 @@ def execute(filters=None):
 			"width": 150
 		})
 	columns.append({
-			"fieldname": "qts_devis",
-			"label": "Qte Devis",
-			"width": 150
-		})
-	columns.append({
-			"fieldname": "prix_devis",
-			"label": "Prix Devis",
-			"width": 150
-		})
-	columns.append({
 			"fieldname": "base_amount",
 			"label": "base_amount",
 			"width": 150
@@ -187,6 +177,72 @@ def execute(filters=None):
 			"label": "Dernier Prix d'achat (Devise)",
 			"width": 150
 		})
+	columns.append({
+			"fieldname": "qts_devis",
+			"label": "Qte Devis",
+			"width": 150
+		})
+	columns.append({
+			"fieldname": "offre_fournisseur",
+			"label": "Offre fournisseur",
+			"width": 150
+		})
+	columns.append({
+			"fieldname": "taux_app",
+			"label": "Taux approche",
+			"width": 150
+		})
+	columns.append({
+			"fieldname": "offre_fournisseur_dz",
+			"label": "Offre Fournisseur DZD",
+			"width": 150
+		})
+	columns.append({
+			"fieldname": "target_price",
+			"label": "Prix Target",
+			"width": 150
+		})
+	columns.append({
+			"fieldname": "target_price_dz",
+			"label": "Prix Target DZD",
+			"width": 150
+		})
+	columns.append({
+			"fieldname": "target_qts",
+			"label": "Qts Target",
+			"width": 150
+		})
+	columns.append({
+			"fieldname": "remarque",
+			"label": "Remarque",
+			"width": 150
+		})
+	columns.append({
+			"fieldname": "prix_devis",
+			"label": "Dernier Offre",
+			"width": 150
+		})
+	columns.append({
+			"fieldname": "prix_devis_dz",
+			"label": "Dernier Offre DZD",
+			"width": 150
+		})
+	columns.append({
+			"fieldname": "set_qts_devis",
+			"label": "Qts a commande",
+			"width": 150
+		})
+	columns.append({
+			"fieldname": "etat_confirmation",
+			"label": "Confirmation",
+			"width": 150
+		})
+	columns.append({
+			"fieldname": "confirmation",
+			"label": "Confirmation",
+			"width": 150
+		})
+	
 	if filters.show_price:
 		price_lists= frappe.get_all("Price List",filters={"buying":1},fields=["name","currency"])
 		if price_lists:
@@ -214,6 +270,13 @@ def execute(filters=None):
 		sqi.amount,
 		sqi.base_rate,
 		sqi.name,
+		sqi.prix_de_revient,
+		sqi.prix_fournisseur,
+		sqi.prix_fournisseur_dzd,
+		sqi.prix_target,
+		sqi.qts_target,
+		sqi.remarque,
+		sqi.confirmation,
 		it.item_code,
 		it.item_name,
 		it.stock_uom,
@@ -263,6 +326,13 @@ def execute(filters=None):
 		sqi.amount,
 		sqi.base_rate,
 		sqi.name,
+		sqi.prix_de_revient,
+		sqi.prix_fournisseur,
+		sqi.prix_fournisseur_dzd,
+		sqi.prix_target,
+		sqi.qts_target,
+		sqi.remarque,
+		sqi.confirmation,
 		it.item_code,
 		it.item_name,
 		it.stock_uom,
@@ -317,6 +387,7 @@ def execute(filters=None):
 			datedm = ''
 			#rate,
 			rate= 0
+			rate_dzd=0
 			#base_amount,
 			base_amount = 0
 			#prix_target,
@@ -327,10 +398,20 @@ def execute(filters=None):
 			amount = 0
 			#owner,
 			owner=  ''
+			prix_fournisseur = 0
+			prix_de_revient = 0
+			prix_fournisseur_dzd = 0
+			prix_target = 0
+			prix_target_dzd = 0
+			convertion_rate = 1
+			qts_target = 0
+			remarque = ''
+			confirmation = ''
 			if hasattr(mri, 'material_request'):
 				supplier = frappe.db.get_value("Supplier Quotation",mri.parent,"supplier_name")
 				qts_demande = frappe.db.get_value("Material Request Item",mri.material_request_item,"qty")
 				devis_status = frappe.db.get_value("Supplier Quotation",mri.parent,"etat_consultation_deux")
+				convertion_rate = frappe.db.get_value("Supplier Quotation",mri.parent,"convertion_rate")
 				material_request = mri.material_request
 				supplier_quotation = mri.parent
 				qts_devis = mri.qty
@@ -340,6 +421,15 @@ def execute(filters=None):
 				base_rate = mri.base_rate
 				amount = mri.amount
 				owner = mri.owner
+				prix_fournisseur = mri.prix_fournisseur
+				prix_de_revient = mri.prix_de_revient
+				prix_fournisseur_dzd = mri.prix_fournisseur_dzd
+				prix_target = mri.prix_target
+				qts_target = mri.qts_target
+				remarque = mri.remarque
+				prix_target_dzd = prix_target * convertion_rate * prix_de_revient * 1.19
+				rate_dzd = rate * convertion_rate * prix_de_revient * 1.19
+				confirmation = mri.confirmation
 				_datedm =frappe.db.get_value("Material Request Item",mri.material_request_item,"creation")
 				if _datedm:
 					datedm = frappe.utils.get_datetime(_datedm).strftime("%d/%m/%Y")
@@ -391,10 +481,7 @@ def execute(filters=None):
 			       supplier,
 			       #qts_demande
 			       qts_demande,
-			       #qts_devis
-			       qts_devis,
-			       #prix_devis
-			       rate,
+			       
 			       #base_amount,
 			       base_amount,
 			       #prix_target,
@@ -428,7 +515,34 @@ def execute(filters=None):
 			       #last_purchase_rate
 			       mri.last_purchase_rate  or 0,
 			       #last_purchase_devise
-			       mri.last_purchase_devise  or 0
+			       mri.last_purchase_devise  or 0,
+			       #qts_devis
+			       qts_devis,
+			       #prix_fournisseur
+			       prix_fournisseur,
+			       #prix_de_revient
+			       prix_de_revient,
+			       #prix_fournisseur_dzd
+			       prix_fournisseur_dzd,
+			       #prix_target
+			       prix_target,
+			       #prix_target_dzd
+			       prix_target_dzd,
+			       #qts_target
+			       qts_target,
+			       #remarque
+			       remarque,
+			       #prix_devis
+			       rate,
+			       #rate_dzd,
+			       rate_dzd,
+			       #qts_devis
+			       qts_devis,
+			       #confirmation
+			       confirmation,
+			       #cmd
+			       """<button id='approuver_%s' onClick="approuver('%s')" type='button'>Approuver</button><button id='en_cours_%s' onClick="en_cours('%s')" type='button'>En Cours</button><button id='annuler_%s' onClick="annuler('%s')" type='button'>Annuler</button>""" % (mri.name,mri.name,mri.name,mri.name,mri.name,mri.name),
+			      
 			      ]
 
 			if filters.show_price:
