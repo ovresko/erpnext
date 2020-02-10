@@ -85,7 +85,7 @@ frappe.query_reports["Rapport analyse devis fournisseur"] = {
 		else {
 			
 			value = "<div style='color:black'>" + value + "</div>";
-			console.log("column",column);
+			console.log("row",row);
 		}
 		return value
 	},
