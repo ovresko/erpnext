@@ -189,7 +189,7 @@ def execute(filters=None):
 		})
 	columns.append({
 			"fieldname": "taux_app",
-			"label": "Taux approche",
+			"label": "Taux approche %",
 			"width": 150
 		})
 	columns.append({
@@ -240,7 +240,7 @@ def execute(filters=None):
 	columns.append({
 			"fieldname": "confirmation",
 			"label": "Confirmation",
-			"width": 150
+			"width": 350
 		})
 	
 	if filters.show_price:
@@ -407,6 +407,7 @@ def execute(filters=None):
 			qts_target = 0
 			remarque = ''
 			confirmation = ''
+			conf_cmd = ''
 			if hasattr(mri, 'material_request'):
 				supplier = frappe.db.get_value("Supplier Quotation",mri.parent,"supplier_name")
 				qts_demande = frappe.db.get_value("Material Request Item",mri.material_request_item,"qty")
@@ -435,6 +436,8 @@ def execute(filters=None):
 				_datedm =frappe.db.get_value("Material Request Item",mri.material_request_item,"creation")
 				if _datedm:
 					datedm = frappe.utils.get_datetime(_datedm).strftime("%d/%m/%Y")
+				conf_cmd = """<button id='approuver_%s' onClick="approuver('%s')" type='button'>Approuver</button><button id='en_cours_%s' onClick="en_cours('%s')" type='button'>En Cours</button><button id='annuler_%s' onClick="annuler('%s')" type='button'>Annuler</button>""" % (mri.name,mri.name,mri.name,mri.name,mri.name,mri.name),
+
 			qts_max_achat = 0
 			if mri.variant_of:
 				#variante
@@ -460,6 +463,7 @@ def execute(filters=None):
 			if sqllast_qty:
 				last_qty = sqllast_qty[0].actual_qty
 				last_valuation = sqllast_qty[0].valuation_rate
+
 			row = ["""<button id='%s' onClick="demander_item('%s')" type='button'>Changer</button><input placeholder='Qts devis' id='input_%s' style='color:black'></input><button   onClick="achat_item('%s')" type='button'> X </button>""" % (mri.name,mri.name,mri.name,mri.name),
 			       mri.item_code,
 			       #date
@@ -543,8 +547,7 @@ def execute(filters=None):
 			       #confirmation
 			       confirmation,
 			       #cmd
-			       """<button id='approuver_%s' onClick="approuver('%s')" type='button'>Approuver</button><button id='en_cours_%s' onClick="en_cours('%s')" type='button'>En Cours</button><button id='annuler_%s' onClick="annuler('%s')" type='button'>Annuler</button>""" % (mri.name,mri.name,mri.name,mri.name,mri.name,mri.name),
-			      
+			       conf_cmd			      
 			      ]
 
 			if filters.show_price:
