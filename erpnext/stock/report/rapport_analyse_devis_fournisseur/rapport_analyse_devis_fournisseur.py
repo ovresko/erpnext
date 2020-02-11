@@ -174,7 +174,7 @@ def execute(filters=None):
 		})
 	columns.append({
 			"fieldname": "qts_devis",
-			"label": "Qte Devis",
+			"label": "Qte En Devis",
 			"width": 150
 		})
 	columns.append({
@@ -184,27 +184,27 @@ def execute(filters=None):
 		})
 	columns.append({
 			"fieldname": "taux_app",
-			"label": "Taux approche %",
+			"label": "Taux approche",
 			"width": 150
 		})
 	columns.append({
 			"fieldname": "offre_fournisseur_dz",
-			"label": "Offre Fournisseur DZD",
+			"label": "Offre Fournisseur DZD ( Prix de Vente TTc)",
 			"width": 150
 		})
 	columns.append({
 			"fieldname": "target_price",
-			"label": "Prix Target",
+			"label": "Prix Target Devise",
 			"width": 250
 		})
 	columns.append({
 		"fieldname": "mb",
-		"label": "MB",
+		"label": "Taux NB %",
 		"width": 150
 	})
 	columns.append({
 			"fieldname": "target_price_dz",
-			"label": "Prix Target DZD",
+			"label": "Prix Target DZD ( Prix vente Target DZD TTC )",
 			"width": 150
 		})
 	columns.append({
@@ -219,13 +219,13 @@ def execute(filters=None):
 		})
 	columns.append({
 			"fieldname": "prix_devis",
-			"label": "Dernier Offre",
+			"label": "Offre Final Fournisseur",
 			"width": 150
 		})
 	columns.append({
 			"fieldname": "prix_devis_dz",
-			"label": "Dernier Offre DZD",
-			"width": 150
+			"label": "Dernier Offre DZD ( Prix vente offre final )",
+			"width": 200
 		})
 	columns.append({
 			"fieldname": "set_qts_devis",
