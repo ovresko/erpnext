@@ -359,6 +359,7 @@ def set_item_demande(item_code,qty):
 		item = frappe.get_doc("Supplier Quotation Item",item_code)
 		if item:
 			item.qty = float(qty)
+			item.confirmation = "Approuve"
 			item.save()
 			return "Nouvelle Qts enregistree"
 			
@@ -391,14 +392,24 @@ def annuler_item(item_code):
 			item.qty = 0
 			item.save()
 			return "Article Annule"
-
-	
+#negociation_item
+@frappe.whitelist()
+def negociation_item(item_code):
+	if item_code:
+		item = frappe.get_doc("Supplier Quotation Item",item_code)
+		if item:
+			item.confirmation = "En negociation"
+			#item.rate = item.prix_fournisseur
+			#item.qty = 0
+			item.save()
+			return "Article Annule"
 @frappe.whitelist()
 def prix_target_item(item_code,qty):
 	if item_code and qty:
 		item = frappe.get_doc("Supplier Quotation Item",item_code)
 		if item:
 			item.prix_target = float(qty)
+			item.confirmation = "En negociation"
 			item.save()
 			return "prix target enregistree"
 	
@@ -408,6 +419,7 @@ def qts_target_item(item_code,qty):
 		item = frappe.get_doc("Supplier Quotation Item",item_code)
 		if item:
 			item.qts_target = float(qty)
+			item.confirmation = "En negociation"
 			item.save()
 			return "qts target enregistree"
 
