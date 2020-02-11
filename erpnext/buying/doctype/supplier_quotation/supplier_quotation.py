@@ -359,7 +359,10 @@ def set_item_demande(item_code,qty):
 		item = frappe.get_doc("Supplier Quotation Item",item_code)
 		if item:
 			item.qty = float(qty)
-			item.confirmation = "Approuve"
+			if item.qty == 0:
+				item.confirmation = "Annule"
+			else:
+				item.confirmation = "Approuve"
 			item.save()
 			return "Nouvelle Qts enregistree"
 			
