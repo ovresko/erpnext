@@ -93,6 +93,20 @@ function annuler(data){
 		});
 }
 
+function negociation(data){
+	frappe.call({
+			method: "erpnext.buying.doctype.supplier_quotation.supplier_quotation.negociation_item",
+			args: {
+				item_code: data
+			},
+			callback: function(r) {
+				if (r.message) {
+					alert(r.message);
+				}
+			}
+		});
+}
+
 function achat_item(data){
 //	
 	console.log("code:",data);
@@ -131,7 +145,7 @@ frappe.query_reports["Rapport analyse devis fournisseur"] = {
 		
 		
 		if (row && row != null && row[2].content!=null && row[2] && row[2].content.length == 11) {
-			value = "<div style='color: white;background-color: #8BB91C;padding: 5px;'>" + value + "</div>";
+			value = "<div style='color: white;background-color: #E97A13;padding: 5px;'>" + value + "</div>";
 		}
 		else {
 			
@@ -142,6 +156,8 @@ frappe.query_reports["Rapport analyse devis fournisseur"] = {
 				value = "<div style='color:red'>" + value + "</div>";
 			}else if(data!= null && data["etat_confirmation"] == "En cours"){
 				value = "<div style='color:blue'>" + value + "</div>";
+			}else if(data!= null && data["etat_confirmation"] == "En negociation"){
+				value = "<div style='color:orange'>" + value + "</div>";
 			}else{
 				value = "<div style='color:black'>" + value + "</div>";
 			}
@@ -154,7 +170,7 @@ frappe.query_reports["Rapport analyse devis fournisseur"] = {
 			"fieldname": "confirmation",
 			"label": "Confirmation",
 			"fieldtype": "Select",
-			"options": ["","En cours", "Approuve", "Annule"],
+			"options": ["","En cours", "Approuve", "Annule","En negociation"],
 			"default": ""
 		},
 		{
