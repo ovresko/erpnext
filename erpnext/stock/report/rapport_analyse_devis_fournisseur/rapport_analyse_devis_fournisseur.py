@@ -611,6 +611,8 @@ def get_conditions(filters):
 	if filters.get('version'):
 		conditions.append("""(it.item_code in (select parent from `tabVersion vehicule item` vv
 		where vv.version_vehicule=%(version)s))"""  )
+	if filters.get('confirmation'):
+		conditions.append("""sqi.confirmation=%(confirmation)s""")
 	if filters.get('modele_v'):
 		modele = frappe.db.get_value("Modele de vehicule", filters.modele_v, "modele")
 		#frappe.get_doc('Modele de vehicule',filters.modele_vehicule)
