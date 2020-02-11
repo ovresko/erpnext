@@ -385,3 +385,32 @@ def annuler_item(item_code):
 			item.qty = 0
 			item.save()
 			return "Article Annule"
+
+	
+@frappe.whitelist()
+def prix_target_item(item_code,qty):
+	if item_code and qty:
+		item = frappe.get_doc("Supplier Quotation Item",item_code)
+		if item:
+			item.prix_target = float(qty)
+			item.save()
+			return "prix target enregistree"
+	
+@frappe.whitelist()
+def qts_target_item(item_code,qty):
+	if item_code and qty:
+		item = frappe.get_doc("Supplier Quotation Item",item_code)
+		if item:
+			item.qts_target = float(qty)
+			item.save()
+			return "qts target enregistree"
+
+
+@frappe.whitelist()
+def remarque_item(item_code,qty):
+	if item_code and qty:
+		item = frappe.get_doc("Supplier Quotation Item",item_code)
+		if item:
+			item.remarque = qty
+			item.save()
+			return "remarque enregistree"
