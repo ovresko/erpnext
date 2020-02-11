@@ -28,6 +28,9 @@ class SupplierQuotation(BuyingController):
 		validate_for_items(self)
 		self.validate_with_previous_doc()
 		self.validate_uom_is_integer("uom", "qty")
+		for item in self.items:
+			if not item.confirmation:
+				item.confirmation = "En cours"
 		if self.manufacturer:
 			_items = []
 			for item in self.items:
