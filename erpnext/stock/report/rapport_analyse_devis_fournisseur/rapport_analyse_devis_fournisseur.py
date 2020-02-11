@@ -198,6 +198,11 @@ def execute(filters=None):
 			"width": 250
 		})
 	columns.append({
+		"fieldname": "mb",
+		"label": "MB",
+		"width": 150
+	})
+	columns.append({
 			"fieldname": "target_price_dz",
 			"label": "Prix Target DZD",
 			"width": 150
@@ -406,12 +411,14 @@ def execute(filters=None):
 			s_prix_target = ''
 			s_qts_target = '' 
 			s_remarque = ''
+			mb=''
 			if hasattr(mri, 'material_request') and mri.parent:
 				conf_cmd = """<button id='approuver_%s' onClick="approuver('%s')" type='button'>Approuver</button><button id='en_cours_%s' onClick="en_cours('%s')" type='button'>En Cours</button><button id='annuler_%s' onClick="annuler('%s')" type='button'>Annuler</button>""" % (mri.name,mri.name,mri.name,mri.name,mri.name,mri.name)
 				supplier = frappe.db.get_value("Supplier Quotation",mri.parent,"supplier_name")
 				qts_demande = frappe.db.get_value("Material Request Item",mri.material_request_item,"qty")
 				devis_status = frappe.db.get_value("Supplier Quotation",mri.parent,"etat_consultation_deux")
 				convertion_rate = frappe.db.get_value("Supplier Quotation",mri.parent,"conversion_rate") or 1
+				mb = frappe.db.get_value("Supplier Quotation",mri.parent,"taux_mb") or 1
 				if not convertion_rate:
 					convertion_rate = 1
 				material_request = mri.material_request
@@ -429,8 +436,8 @@ def execute(filters=None):
 				prix_target = mri.prix_target or 0
 				qts_target = mri.qts_target or 0
 				remarque = mri.remarque or ''
-				prix_target_dzd = prix_target * convertion_rate * prix_de_revient * 1.19
-				rate_dzd = rate * convertion_rate * prix_de_revient * 1.19
+				prix_target_dzd = prix_target * mb * prix_de_revient * 1.19
+				rate_dzd = rate * mb * prix_de_revient * 1.19
 				confirmation = mri.confirmation
 				_datedm =frappe.db.get_value("Material Request Item",mri.material_request_item,"creation")
 				if _datedm:
@@ -532,6 +539,7 @@ def execute(filters=None):
 			       prix_fournisseur_dzd,
 			       #s_prix_target 
 			       s_prix_target,
+			       mb,
 			       #prix_target_dzd
 			       prix_target_dzd,
 			       s_qts_target,
