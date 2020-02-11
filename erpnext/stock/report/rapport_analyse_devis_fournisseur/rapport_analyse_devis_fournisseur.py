@@ -234,7 +234,7 @@ def execute(filters=None):
 		})
 	columns.append({
 			"fieldname": "etat_confirmation",
-			"label": "Confirmation",
+			"label": "Status",
 			"width": 150
 		})
 	columns.append({
