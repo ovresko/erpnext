@@ -440,11 +440,14 @@ def execute(filters=None):
 				prix_fournisseur = mri.prix_fournisseur or 0
 				prix_de_revient = mri.prix_de_revient or 1
 				prix_fournisseur_dzd = prix_fournisseur *  taux_approche * (1+taux_mb) * 1.19
+				prix_fournisseur_dzd = round(prix_fournisseur_dzd,2)
 				prix_target = mri.prix_target or 0
 				qts_target = mri.qts_target or 0
 				remarque = mri.remarque or ''
 				prix_target_dzd = prix_target * taux_approche * (1+taux_mb) * 1.19
+				prix_target_dzd = round(prix_target_dzd,2)
 				rate_dzd = rate * (1+taux_mb) * taux_approche * 1.19
+				rate_dzd = round(rate_dzd,2)
 				confirmation = mri.confirmation
 				_datedm =frappe.db.get_value("Material Request Item",mri.material_request_item,"creation")
 				if _datedm:
