@@ -403,6 +403,9 @@ def execute(filters=None):
 			remarque = ''
 			confirmation = ''
 			conf_cmd = ''
+			s_prix_target = ''
+			s_qts_target = '' 
+			s_remarque = ''
 			if hasattr(mri, 'material_request'):
 				conf_cmd = """<button id='approuver_%s' onClick="approuver('%s')" type='button'>Approuver</button><button id='en_cours_%s' onClick="en_cours('%s')" type='button'>En Cours</button><button id='annuler_%s' onClick="annuler('%s')" type='button'>Annuler</button>""" % (mri.name,mri.name,mri.name,mri.name,mri.name,mri.name)
 				supplier = frappe.db.get_value("Supplier Quotation",mri.parent,"supplier_name")
@@ -432,7 +435,10 @@ def execute(filters=None):
 				_datedm =frappe.db.get_value("Material Request Item",mri.material_request_item,"creation")
 				if _datedm:
 					datedm = frappe.utils.get_datetime(_datedm).strftime("%d/%m/%Y")
-
+				s_prix_target = """<input placeholder='Prix target' id='prix_target_%s' value='%s' style='color:black'></input><button  onClick="prix_target_item('%s')" type='button'> OK </button>""" % (mri.name,prix_target,mri.name)
+				s_qts_target = """<input placeholder='qts_target' id='qts_target_%s' value='%s' style='color:black'></input><button  onClick="qts_target_item('%s')" type='button'> OK </button>""" % (mri.name,qts_target,mri.name)
+				s_remarque = """<input placeholder='remarque' id='remarque_%s' value='%s' style='color:black'></input><button  onClick="remarque_item('%s')" type='button'> OK </button>""" % (mri.name,remarque,mri.name)
+			       
 			qts_max_achat = 0
 			if mri.variant_of:
 				#variante
@@ -524,14 +530,13 @@ def execute(filters=None):
 			       prix_de_revient,
 			       #prix_fournisseur_dzd
 			       prix_fournisseur_dzd,
-			       #prix_target 
-			       """<input placeholder='Prix target' id='prix_target_%s' value='%s' style='color:black'></input><button  onClick="prix_target_item('%s')" type='button'> OK </button>""" % (mri.name,prix_target,mri.name),
+			       #s_prix_target 
+			       s_prix_target,
 			       #prix_target_dzd
 			       prix_target_dzd,
-			       #qts_target
-			       """<input placeholder='qts_target' id='qts_target_%s' value='%s' style='color:black'></input><button  onClick="qts_target_item('%s')" type='button'> OK </button>""" % (mri.name,qts_target,mri.name),
-			       #remarque
-			       """<input placeholder='remarque' id='remarque_%s' value='%s' style='color:black'></input><button  onClick="remarque_item('%s')" type='button'> OK </button>""" % (mri.name,remarque,mri.name),
+			       s_qts_target,
+			       #s_remarque
+			       s_remarque,
 			       #prix_devis
 			       rate,
 			       #rate_dzd,
