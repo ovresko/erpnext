@@ -23,7 +23,7 @@ def execute(filters=None):
 	columns.append({
 			"fieldname": "commander",
 			"label": "Supprimer",
-			"width": 300
+			"width": 50
 		})
 	columns.append({
 			"fieldname": "item_code",
@@ -230,7 +230,7 @@ def execute(filters=None):
 	columns.append({
 			"fieldname": "set_qts_devis",
 			"label": "Qts a commande",
-			"width": 150
+			"width": 200
 		})
 	columns.append({
 			"fieldname": "etat_confirmation",
@@ -240,7 +240,7 @@ def execute(filters=None):
 	columns.append({
 			"fieldname": "confirmation",
 			"label": "Confirmation",
-			"width": 350
+			"width": 220
 		})
 	
 	if filters.show_price:
@@ -450,7 +450,7 @@ def execute(filters=None):
 				s_prix_target = """<input placeholder='Prix target' id='prix_target_%s' value='%s' style='color:black'></input><button  onClick="prix_target_item('%s')" type='button'> OK </button>""" % (mri.name,prix_target,mri.name)
 				s_qts_target = """<input placeholder='qts_target' id='qts_target_%s' value='%s' style='color:black'></input><button  onClick="qts_target_item('%s')" type='button'> OK </button>""" % (mri.name,qts_target,mri.name)
 				s_remarque = """<input placeholder='remarque' id='remarque_%s' value='%s' style='color:black'></input><button  onClick="remarque_item('%s')" type='button'> OK </button>""" % (mri.name,remarque,mri.name)
-				s_qts_devis = """ <input placeholder='Qts devis' id='input_%s' value='%s style='color:black'></input> <button id='%s' onClick="demander_item('%s')" type='button'>OK</button>""" % (mri.name,qts_devis,mri.name,mri.name)
+				s_qts_devis = """ <input placeholder='Qts devis' id='input_%s' value='%s' style='color:black'></input> <button id='%s' onClick="demander_item('%s')" type='button'>OK</button>""" % (mri.name,qts_devis,mri.name,mri.name)
 			qts_max_achat = 0
 			if mri.variant_of:
 				#variante
