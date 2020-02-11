@@ -240,7 +240,7 @@ def execute(filters=None):
 	columns.append({
 			"fieldname": "confirmation",
 			"label": "Confirmation",
-			"width": 220
+			"width": 280
 		})
 	
 	if filters.show_price:
