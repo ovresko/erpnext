@@ -22,7 +22,7 @@ def execute(filters=None):
 		
 	columns.append({
 			"fieldname": "commander",
-			"label": "Commander",
+			"label": "Supprimer",
 			"width": 300
 		})
 	columns.append({
@@ -403,25 +403,29 @@ def execute(filters=None):
 			prix_fournisseur_dzd = 0
 			prix_target = 0
 			prix_target_dzd = 0
-			convertion_rate = 1
 			qts_target = 0
+			taux_mb = 1
+			taux_approche = 1
 			remarque = ''
 			confirmation = ''
 			conf_cmd = ''
 			s_prix_target = ''
 			s_qts_target = '' 
 			s_remarque = ''
-			mb=''
+			s_qts_devis= ''
+			#mb=''
 			if hasattr(mri, 'material_request') and mri.parent:
 				conf_cmd = """<button id='approuver_%s' onClick="approuver('%s')" type='button'>Approuver</button><button id='en_cours_%s' onClick="en_cours('%s')" type='button'>En Cours</button><button id='annuler_%s' onClick="annuler('%s')" type='button'>Annuler</button>""" % (mri.name,mri.name,mri.name,mri.name,mri.name,mri.name)
 				supplier = frappe.db.get_value("Supplier Quotation",mri.parent,"supplier_name")
+				supplier_id = frappe.db.get_value("Supplier Quotation",mri.parent,"supplier")
 				qts_demande = frappe.db.get_value("Material Request Item",mri.material_request_item,"qty")
 				devis_status = frappe.db.get_value("Supplier Quotation",mri.parent,"etat_consultation_deux")
 				convertion_rate = frappe.db.get_value("Supplier Quotation",mri.parent,"conversion_rate") or 1
-				_mb = frappe.db.get_value("Supplier Quotation",mri.parent,"taux_mb") or 1
-				mb = float(_mb) or 1
-				if not convertion_rate:
-					convertion_rate = 1
+				taux_mb = frappe.db.get_value("Supplier",supplier_id,"taux_mb") or 1
+				taux_approche = frappe.db.get_value("Supplier",supplier_id,"taux_approche") or 1
+				
+				taux_approche = float(taux_approche) or 1
+				taux_mb = float(taux_mb) or 1
 				material_request = mri.material_request
 				supplier_quotation = mri.parent
 				qts_devis = mri.qty or 0
@@ -433,12 +437,12 @@ def execute(filters=None):
 				owner = mri.owner
 				prix_fournisseur = mri.prix_fournisseur or 0
 				prix_de_revient = mri.prix_de_revient or 1
-				prix_fournisseur_dzd = mri.prix_fournisseur_dzd or 0
+				prix_fournisseur_dzd = prix_fournisseur *  taux_approche * (1+taux_mb) * 1.19
 				prix_target = mri.prix_target or 0
 				qts_target = mri.qts_target or 0
 				remarque = mri.remarque or ''
-				prix_target_dzd = prix_target * mb * prix_de_revient * 1.19
-				rate_dzd = rate * mb * prix_de_revient * 1.19
+				prix_target_dzd = prix_target * taux_approche * (1+taux_mb) * 1.19
+				rate_dzd = rate * (1+taux_mb) * taux_approche * 1.19
 				confirmation = mri.confirmation
 				_datedm =frappe.db.get_value("Material Request Item",mri.material_request_item,"creation")
 				if _datedm:
@@ -446,7 +450,7 @@ def execute(filters=None):
 				s_prix_target = """<input placeholder='Prix target' id='prix_target_%s' value='%s' style='color:black'></input><button  onClick="prix_target_item('%s')" type='button'> OK </button>""" % (mri.name,prix_target,mri.name)
 				s_qts_target = """<input placeholder='qts_target' id='qts_target_%s' value='%s' style='color:black'></input><button  onClick="qts_target_item('%s')" type='button'> OK </button>""" % (mri.name,qts_target,mri.name)
 				s_remarque = """<input placeholder='remarque' id='remarque_%s' value='%s' style='color:black'></input><button  onClick="remarque_item('%s')" type='button'> OK </button>""" % (mri.name,remarque,mri.name)
-			       
+				s_qts_devis = """ <input placeholder='Qts devis' id='input_%s' value='%s style='color:black'></input> <button id='%s' onClick="demander_item('%s')" type='button'>OK</button>""" % (mri.name,qts_devis,mri.name,mri.name)
 			qts_max_achat = 0
 			if mri.variant_of:
 				#variante
@@ -473,7 +477,7 @@ def execute(filters=None):
 				last_qty = sqllast_qty[0].actual_qty
 				last_valuation = sqllast_qty[0].valuation_rate
 
-			row = ["""<button id='%s' onClick="demander_item('%s')" type='button'>Changer</button><input placeholder='Qts devis' id='input_%s' style='color:black'></input><button   onClick="achat_item('%s')" type='button'> X </button>""" % (mri.name,mri.name,mri.name,mri.name),
+			row = ["""<button   onClick="achat_item('%s')" type='button'> X </button>""" % (mri.name),
 			       mri.item_code,
 			       #date
 			       date,
@@ -535,12 +539,12 @@ def execute(filters=None):
 			       #prix_fournisseur
 			       prix_fournisseur,
 			       #prix_de_revient
-			       prix_de_revient,
+			       taux_approche,
 			       #prix_fournisseur_dzd
 			       prix_fournisseur_dzd,
 			       #s_prix_target 
 			       s_prix_target,
-			       mb,
+			       taux_mb,
 			       #prix_target_dzd
 			       prix_target_dzd,
 			       s_qts_target,
@@ -551,7 +555,7 @@ def execute(filters=None):
 			       #rate_dzd,
 			       rate_dzd,
 			       #qts_devis
-			       qts_devis,
+			       s_qts_devis,
 			       #confirmation
 			       confirmation,
 			       #cmd
