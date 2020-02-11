@@ -149,6 +149,14 @@ frappe.query_reports["Rapport analyse devis fournisseur"] = {
 		return value
 	},
 	"filters": [
+		
+		{
+			"fieldname": "confirmation",
+			"label": "Confirmation",
+			"fieldtype": "Select",
+			"options": ["","En cours", "Approuve", "Annule"],
+			"default": ""
+		},
 		{
 			"fieldname": "item_code",
 			"label": "Code d'article",
