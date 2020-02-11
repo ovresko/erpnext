@@ -423,7 +423,7 @@ def execute(filters=None):
 				convertion_rate = frappe.db.get_value("Supplier Quotation",mri.parent,"conversion_rate") or 1
 				_taux_mb = frappe.db.get_value("Supplier",supplier_id,"taux_mb") or 0
 				taux_mb = 0.0
-				if _taux_mb and taux_mb > 0:
+				if _taux_mb and _taux_mb > 0:
 					taux_mb = float(_taux_mb / 100)
 				taux_approche = frappe.db.get_value("Supplier",supplier_id,"taux_approche") or 1
 				taux_approche = float(taux_approche) or 1.0
