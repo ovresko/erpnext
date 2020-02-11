@@ -97,11 +97,6 @@ def execute(filters=None):
 			"width": 150
 		})
 	columns.append({
-			"fieldname": "prix_target",
-			"label": "prix_target",
-			"width": 150
-		})
-	columns.append({
 			"fieldname": "base_rate",
 			"label": "base_rate",
 			"width": 150
@@ -200,7 +195,7 @@ def execute(filters=None):
 	columns.append({
 			"fieldname": "target_price",
 			"label": "Prix Target",
-			"width": 150
+			"width": 250
 		})
 	columns.append({
 			"fieldname": "target_price_dz",
@@ -210,12 +205,12 @@ def execute(filters=None):
 	columns.append({
 			"fieldname": "target_qts",
 			"label": "Qts Target",
-			"width": 150
+			"width": 250
 		})
 	columns.append({
 			"fieldname": "remarque",
 			"label": "Remarque",
-			"width": 150
+			"width": 250
 		})
 	columns.append({
 			"fieldname": "prix_devis",
@@ -491,7 +486,6 @@ def execute(filters=None):
 			       #base_amount,
 			       base_amount,
 			       #prix_target,
-			       """<input placeholder='Prix target' id='prix_target_%s' value='%s' style='color:black'>%s</input><button  onClick="prix_target_item('%s')" type='button'> OK </button>""" % (mri.name,prix_target,prix_target,mri.name),
 			       #base_rate,
 			       base_rate,
 			       #amount,
@@ -530,14 +524,14 @@ def execute(filters=None):
 			       prix_de_revient,
 			       #prix_fournisseur_dzd
 			       prix_fournisseur_dzd,
-			       #prix_target
-			       prix_target,
+			       #prix_target 
+			       """<input placeholder='Prix target' id='prix_target_%s' value='%s' style='color:black'></input><button  onClick="prix_target_item('%s')" type='button'> OK </button>""" % (mri.name,prix_target,mri.name),
 			       #prix_target_dzd
 			       prix_target_dzd,
 			       #qts_target
-			       qts_target,
+			       """<input placeholder='qts_target' id='qts_target_%s' value='%s' style='color:black'></input><button  onClick="qts_target_item('%s')" type='button'> OK </button>""" % (mri.name,qts_target,mri.name),
 			       #remarque
-			       remarque,
+			       """<input placeholder='remarque' id='remarque_%s' value='%s' style='color:black'></input><button  onClick="remarque_item('%s')" type='button'> OK </button>""" % (mri.name,remarque,mri.name),
 			       #prix_devis
 			       rate,
 			       #rate_dzd,
