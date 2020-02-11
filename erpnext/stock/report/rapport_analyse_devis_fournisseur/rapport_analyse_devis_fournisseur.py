@@ -606,7 +606,12 @@ def get_conditions(filters):
 	
 	#perfection
 	if filters.get('perfection'):
-		conditions.append("it.perfection=%(perfection)s")
+		add = ''
+		if filters.get('perfection') == "En cours":
+			add = "or it.perfection=''"
+		q = "it.perfection=%(perfection)s %s" % add
+		conditions.append(q)
+	
 	if filters.get('variant_of'):
 		conditions.append("(it.item_code=%(variant_of)s or it.variant_of=%(variant_of)s)")
 	if filters.get('is_purchase'):	
