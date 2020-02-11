@@ -153,11 +153,11 @@ frappe.query_reports["Rapport analyse devis fournisseur"] = {
 			if(data!= null && data["etat_confirmation"] == "Approuve"){
 				value = "<div style='color:green'>" + value + "</div>";
 			}else if(data!= null && data["etat_confirmation"] == "Annule"){
-				value = "<div style='color:red'>" + value + "</div>";
+				value = "<div style='color:#F21711'>" + value + "</div>";
 			}else if(data!= null && data["etat_confirmation"] == "En cours"){
 				value = "<div style='color:blue'>" + value + "</div>";
 			}else if(data!= null && data["etat_confirmation"] == "En negociation"){
-				value = "<div style='color:orange'>" + value + "</div>";
+				value = "<div style='color:#E97A13'>" + value + "</div>";
 			}else{
 				value = "<div style='color:black'>" + value + "</div>";
 			}
