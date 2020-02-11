@@ -414,7 +414,14 @@ def prix_target_item(item_code,qty):
 			item.prix_target = float(qty)
 			item.confirmation = "En negociation"
 			item.save()
-			return "prix target enregistree"
+			supplier_id = frappe.db.get_value("Supplier Quotation",item.parent,"supplier")
+			taux_approche = frappe.db.get_value("Supplier",supplier_id,"taux_approche") or 1
+			_taux_mb = frappe.db.get_value("Supplier",supplier_id,"taux_mb") or 0
+			taux_mb = 0.0
+			if _taux_mb and _taux_mb > 0:
+				taux_mb = float(_taux_mb / 100)
+			value = float(qty) * taux_approche * (1+taux_mb) * 1.19
+			return "Nouveau prix target enregistree ! %s" % value
 	
 @frappe.whitelist()
 def qts_target_item(item_code,qty):
