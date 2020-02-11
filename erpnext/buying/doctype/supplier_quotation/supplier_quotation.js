@@ -21,16 +21,14 @@ frappe.ui.form.on('Supplier Quotation', {
 
 			//data.push(["Date",frm.doc.transaction_date,"","","","",""]);
 			//data.push(["Fournisseur",frm.doc.supplier_name,"","","","",""]);
-			data.push(["#","Num Consultation","Fabricant","Code Article","Designation","Ref Article","Poids","Qts","Prix"]);
+			data.push(["#","Num Consultation","Fabricant","Code Article","Designation","Ref Article","Poids","Qts","Prix","Prix Target","Qts Target","Remarque","Offre Final","Qts Final","Confirmation "]);
 			$.each(frm.doc.items || [], (i, d) => {
 				var row = [];
 				 
 					var fabricant = d["fabricant"];
 					var ref_fabricant = d["ref_fabricant"];
-					var qty =  Math.floor( d["qty"] * 0.25);
-					  
-
-					row.push(['"'+i+'"','"'+frm.doc.name+'"','"'+fabricant+'"','"'+d["item_code"]+'"','"'+d["item_name"]+'"','"'+ref_fabricant+'"','"'+d["weight_per_unit"]+'"','"'+qty+'"']);
+					var qty =  Math.floor( d["qty"] * 0.25); 
+					row.push(['"'+i+'"','"'+frm.doc.name+'"','"'+fabricant+'"','"'+d["item_code"]+'"','"'+d["item_name"]+'"','"'+ref_fabricant+'"','"'+d["weight_per_unit"]+'"','"'+qty+'"','"'+d["prix_fournisseur"]+'"','"'+d["prix_target"]+'"','"'+d["qts_target"]+'"','"'+d["remarque"]+'"','"'+d["rate"]+'"','"'+qty+'"','"'+d["confirmation"]+'"']);
 				 
 				data.push(row);
 			});
@@ -50,16 +48,15 @@ frappe.ui.form.on('Supplier Quotation', {
 			var docfields = [];
 			//data.push(["Date",frm.doc.transaction_date,"","","","",""]);
 			//data.push(["Fournisseur",frm.doc.supplier_name,"","","","",""]);
-			data.push(["#","Num Consultation","Fabricant","Code Article","Designation","Ref Article","Poids","Qts","Prix"]);
+			data.push(["#","Num Consultation","Fabricant","Code Article","Designation","Ref Article","Poids","Qts","Prix","Prix Target","Qts Target","Remarque","Offre Final","Qts Final","Confirmation "]);
 			$.each(frm.doc.items || [], (i, d) => {
 				var row = [];
 				 
 					var fabricant = d["fabricant"];
 					var ref_fabricant = d["ref_fabricant"];
 					var qty =  d["qty"] ;// Math.floor( d["qty"] * 0.25);
-					  
-
-					row.push(['"'+i+'"','"'+frm.doc.name+'"','"'+fabricant+'"','"'+d["item_code"]+'"','"'+d["item_name"]+'"','"'+ref_fabricant+'"','"'+d["weight_per_unit"]+'"','"'+qty+'"']);
+				
+					row.push(['"'+i+'"','"'+frm.doc.name+'"','"'+fabricant+'"','"'+d["item_code"]+'"','"'+d["item_name"]+'"','"'+ref_fabricant+'"','"'+d["weight_per_unit"]+'"','"'+qty+'"','"'+d["prix_fournisseur"]+'"','"'+d["prix_target"]+'"','"'+d["qts_target"]+'"','"'+d["remarque"]+'"','"'+d["rate"]+'"','"'+qty+'"','"'+d["confirmation"]+'"']);
 				 
 				data.push(row);
 			});
