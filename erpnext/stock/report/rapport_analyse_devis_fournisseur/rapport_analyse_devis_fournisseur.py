@@ -491,7 +491,7 @@ def execute(filters=None):
 			       #base_amount,
 			       base_amount,
 			       #prix_target,
-			       prix_target,
+			       """<input placeholder='Prix target' id='prix_target_%s' value='%s' style='color:black'>%s</input><button  onClick="prix_target_item('%s')" type='button'> OK </button>""" % (mri.name,prix_target,prix_target,mri.name),
 			       #base_rate,
 			       base_rate,
 			       #amount,
