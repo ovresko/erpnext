@@ -2,6 +2,57 @@
 // For license information, please see license.txt
 /* eslint-disable */
 
+function prix_target_item(data) {
+	var qty_id = 'prix_target_'+data;
+	var qty = $('#'+qty_id).val();
+	frappe.call({
+			method: "erpnext.buying.doctype.supplier_quotation.supplier_quotation.prix_target_item",
+			args: {
+				item_code: data,
+				qty: qty
+			},
+			callback: function(r) {
+				if (r.message) {
+					alert(r.message);
+				}
+			}
+		});
+}
+//qts_target_item
+function qts_target_item(data) {
+	var qty_id = 'qts_target_'+data;
+	var qty = $('#'+qty_id).val();
+	frappe.call({
+			method: "erpnext.buying.doctype.supplier_quotation.supplier_quotation.qts_target_item",
+			args: {
+				item_code: data,
+				qty: qty
+			},
+			callback: function(r) {
+				if (r.message) {
+					alert(r.message);
+				}
+			}
+		});
+}
+//remarque_item
+function remarque_item(data) {
+	var qty_id = 'remarque_'+data;
+	var qty = $('#'+qty_id).val();
+	frappe.call({
+			method: "erpnext.buying.doctype.supplier_quotation.supplier_quotation.remarque_item",
+			args: {
+				item_code: data,
+				qty: qty
+			},
+			callback: function(r) {
+				if (r.message) {
+					alert(r.message);
+				}
+			}
+		});
+}
+
 function approuver(data){
 	frappe.call({
 			method: "erpnext.buying.doctype.supplier_quotation.supplier_quotation.approuver_item",
