@@ -364,6 +364,7 @@ def approuver_item(item_code):
 		item = frappe.get_doc("Supplier Quotation Item",item_code)
 		if item:
 			item.confirmation = "Approuve"
+			item.rate = item.prix_fournisseur
 			item.save()
 			return "Article Approuve"
 	
@@ -382,6 +383,7 @@ def annuler_item(item_code):
 		item = frappe.get_doc("Supplier Quotation Item",item_code)
 		if item:
 			item.confirmation = "Annule"
+			item.rate = item.prix_fournisseur
 			item.qty = 0
 			item.save()
 			return "Article Annule"
