@@ -418,7 +418,8 @@ def execute(filters=None):
 				qts_demande = frappe.db.get_value("Material Request Item",mri.material_request_item,"qty")
 				devis_status = frappe.db.get_value("Supplier Quotation",mri.parent,"etat_consultation_deux")
 				convertion_rate = frappe.db.get_value("Supplier Quotation",mri.parent,"conversion_rate") or 1
-				mb = frappe.db.get_value("Supplier Quotation",mri.parent,"taux_mb") or 1
+				_mb = frappe.db.get_value("Supplier Quotation",mri.parent,"taux_mb") or 1
+				mb = float(_mb) or 1
 				if not convertion_rate:
 					convertion_rate = 1
 				material_request = mri.material_request
