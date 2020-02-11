@@ -406,7 +406,7 @@ def execute(filters=None):
 			s_prix_target = ''
 			s_qts_target = '' 
 			s_remarque = ''
-			if hasattr(mri, 'material_request'):
+			if hasattr(mri, 'material_request') and mri.parent:
 				conf_cmd = """<button id='approuver_%s' onClick="approuver('%s')" type='button'>Approuver</button><button id='en_cours_%s' onClick="en_cours('%s')" type='button'>En Cours</button><button id='annuler_%s' onClick="annuler('%s')" type='button'>Annuler</button>""" % (mri.name,mri.name,mri.name,mri.name,mri.name,mri.name)
 				supplier = frappe.db.get_value("Supplier Quotation",mri.parent,"supplier_name")
 				qts_demande = frappe.db.get_value("Material Request Item",mri.material_request_item,"qty")
@@ -428,7 +428,7 @@ def execute(filters=None):
 				prix_fournisseur_dzd = mri.prix_fournisseur_dzd or 0
 				prix_target = mri.prix_target or 0
 				qts_target = mri.qts_target or 0
-				remarque = mri.remarque
+				remarque = mri.remarque or ''
 				prix_target_dzd = prix_target * convertion_rate * prix_de_revient * 1.19
 				rate_dzd = rate * convertion_rate * prix_de_revient * 1.19
 				confirmation = mri.confirmation
