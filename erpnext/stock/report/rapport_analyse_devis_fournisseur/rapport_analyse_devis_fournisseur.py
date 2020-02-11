@@ -427,7 +427,7 @@ def execute(filters=None):
 					taux_mb = _taux_mb / 100
 				taux_approche = frappe.db.get_value("Supplier",supplier_id,"taux_approche") or 1
 				taux_approche = float(taux_approche) or 1
-				taux_mb = float(taux_mb) or 1
+				#taux_mb = float(taux_mb) or 1
 				material_request = mri.material_request
 				supplier_quotation = mri.parent
 				qts_devis = mri.qty or 0
@@ -546,7 +546,7 @@ def execute(filters=None):
 			       prix_fournisseur_dzd,
 			       #s_prix_target 
 			       s_prix_target,
-			       (taux_mb or 1) *100,
+			       taux_mb,
 			       #prix_target_dzd
 			       prix_target_dzd,
 			       s_qts_target,
