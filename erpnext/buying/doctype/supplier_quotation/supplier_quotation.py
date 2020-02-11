@@ -3,7 +3,7 @@
 
 from __future__ import unicode_literals
 import frappe
-from frappe import _
+from frappe import throw, _
 from frappe.utils import flt, nowdate, add_days
 from frappe.model.mapper import get_mapped_doc
 
@@ -62,11 +62,15 @@ class SupplierQuotation(BuyingController):
 
 
 	def on_submit(self):
+		self.validate_approuve()
 		frappe.db.set(self, "status", "Submitted")
 		self.update_rfq_supplier_status(1)
 		frappe.enqueue("erpnext.buying.doctype.supplier_quotation.supplier_quotation.update_mr",doc=self,timeout=10000)
                 #self.update_mr()
-		
+	def validate_approuve(self):
+		encours = sum(1 for i in self.items if (i.confirmation =="En cours" or i.confirmation =="En negociation"))
+		if encours > 0:
+			throw("Il existe des articles avec confirmation 'En cours/En negociation', Veuillez modifier la valeur")
 	def on_trash(self):
 		dms = []
                 for item in self.items:
