@@ -29,6 +29,9 @@ frappe.ui.form.on('Supplier Quotation', {
 					var fabricant = d["fabricant"];
 					var ref_fabricant = d["ref_fabricant"];
 					var qty =  Math.floor( d["qty"] * 0.25); 
+					if(qty <= 0){
+						qty= 1;
+					}
 					var ptarget = '';
 					var qtarget = '';
 					var confirmation = '';
