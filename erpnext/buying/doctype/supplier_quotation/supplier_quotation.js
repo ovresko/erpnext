@@ -21,20 +21,7 @@ frappe.ui.form.on('Supplier Quotation', {
 
 			//data.push(["Date",frm.doc.transaction_date,"","","","",""]);
 			//data.push(["Fournisseur",frm.doc.supplier_name,"","","","",""]);
-			data.push(["#"
-				   ,"Num Consultation"
-				   ,"Fabricant"
-				   ,"Code Article"
-				   ,"Designation"
-				   ,"Ref Article"
-				   ,"Poids"
-				   ,"Qts"
-				   ,"Prix Offre"
-				   ,"Prix Target"
-				   ,"Qts Target"
-				   ,"Remarque"
-				   ,"Offre Final"
-				   ,"Confirmation "]);
+			data.push(["#" ,"Num Consultation","Fabricant","Code Article","Designation","Ref Article","Poids","Qts","Prix Offre","Prix Target","Qts Target","Remarque","Offre Final","Confirmation "]);
 			
 			$.each(frm.doc.items || [], (i, d) => {
 				var row = [];
@@ -85,7 +72,51 @@ frappe.ui.form.on('Supplier Quotation', {
 		
 		if(frm.doc.items != null)
 		{
-			
+			var data = [];
+			var docfields = [];
+			//data.push(["Date",frm.doc.transaction_date,"","","","",""]);
+			//data.push(["Fournisseur",frm.doc.supplier_name,"","","","",""]);
+			data.push(["#" ,"Num Consultation","Fabricant","Code Article","Designation","Ref Article","Poids","Qts","Prix Offre","Prix Target","Qts Target","Remarque","Offre Final","Confirmation "]);
+
+			$.each(frm.doc.items || [], (i, d) => {
+				var row = [];
+				 
+					var fabricant = d["fabricant"];
+					var ref_fabricant = d["ref_fabricant"];
+					var qty =  d["qty"] ;// Math.floor( d["qty"] * 0.25);
+					var ptarget = '';
+					var qtarget = '';
+					var confirmation = '';
+					if (d["confirmation"] != "En negociation"){
+						confirmation = d["confirmation"];
+					}
+					if( d["prix_target"] != null && d["prix_target"]>0)
+					{
+						ptarget=d["prix_target"];
+					}
+					if( d["qts_target"] != null && d["qts_target"]>0)
+					{
+						qtarget=d["qts_target"];
+					}
+					row.push(['"'+i+'"'
+						  ,'"'+frm.doc.name+'"'
+						  ,'"'+fabricant+'"'
+						  ,'"'+d["item_code"]+'"'
+						  ,'"'+d["item_name"]+'"'
+						  ,'"'+ref_fabricant+'"'
+						  ,'"'+d["weight_per_unit"]+'"'
+						  ,'"'+qty+'"'
+						  ,'"'+d["prix_fournisseur"]+'"'
+						  ,'"'+ptarget+'"'
+						  ,'"'+qtarget+'"'
+						  ,'"'+d["remarque"]+'"'
+						  ,'"''"'
+						  ,confirmation]);
+				 
+				data.push(row);
+			});
+
+			frappe.tools.downloadify(data, null, "FICHE CONSULTATION "+frm.doc.name+" "+frm.doc.supplier_name);
 		}
 	
 		
