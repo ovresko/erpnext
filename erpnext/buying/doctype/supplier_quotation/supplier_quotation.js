@@ -44,17 +44,17 @@ frappe.ui.form.on('Supplier Quotation', {
 					var qty =  Math.floor( d["qty"] * 0.25); 
 					var ptarget = '';
 					var qtarget = '';
-					var confirmation = ''
+					var confirmation = '';
 					if (d["confirmation"] != "En negociation"){
 						confirmation = d["confirmation"];
 					}
 					if( d["prix_target"] != null && d["prix_target"]>0)
 					{
-						ptarget=d["prix_target"]
+						ptarget=d["prix_target"];
 					}
 					if( d["qts_target"] != null && d["qts_target"]>0)
 					{
-						qtarget=d["qts_target"]
+						qtarget=d["qts_target"];
 					}
 					row.push(['"'+i+'"'
 						  ,'"'+frm.doc.name+'"'
@@ -111,17 +111,17 @@ frappe.ui.form.on('Supplier Quotation', {
 					var qty =  d["qty"] ;// Math.floor( d["qty"] * 0.25);
 					var ptarget = '';
 					var qtarget = '';
-					var confirmation = ''
+					var confirmation = '';
 					if (d["confirmation"] != "En negociation"){
 						confirmation = d["confirmation"];
 					}
 					if( d["prix_target"] != null && d["prix_target"]>0)
 					{
-						ptarget=d["prix_target"]
+						ptarget=d["prix_target"];
 					}
 					if( d["qts_target"] != null && d["qts_target"]>0)
 					{
-						qtarget=d["qts_target"]
+						qtarget=d["qts_target"];
 					}
 					row.push(['"'+i+'"'
 						  ,'"'+frm.doc.name+'"'
