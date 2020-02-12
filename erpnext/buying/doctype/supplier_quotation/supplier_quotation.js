@@ -34,7 +34,6 @@ frappe.ui.form.on('Supplier Quotation', {
 				   ,"Qts Target"
 				   ,"Remarque"
 				   ,"Offre Final"
-				   ,"Qts Final"
 				   ,"Confirmation "]);
 			
 			$.each(frm.doc.items || [], (i, d) => {
@@ -45,6 +44,10 @@ frappe.ui.form.on('Supplier Quotation', {
 					var qty =  Math.floor( d["qty"] * 0.25); 
 					var ptarget = '';
 					var qtarget = '';
+					var confirmation = ''
+					if (d["confirmation"] != "En negociation"){
+						confirmation = d["confirmation"];
+					}
 					if( d["prix_target"] != null && d["prix_target"]>0)
 					{
 						ptarget=d["prix_target"]
@@ -66,8 +69,7 @@ frappe.ui.form.on('Supplier Quotation', {
 						  ,'"'+qtarget+'"'
 						  ,'"'+d["remarque"]+'"'
 						  ,'"''"'
-						  ,'"'+qty+'"'
-						  ,'"'+d["confirmation"]+'"']);
+						  ,confirmation]);
 				 
 				data.push(row);
 			});
@@ -100,7 +102,6 @@ frappe.ui.form.on('Supplier Quotation', {
 				   ,"Qts Target"
 				   ,"Remarque"
 				   ,"Offre Final"
-				   ,"Qts Final"
 				   ,"Confirmation "]);
 			$.each(frm.doc.items || [], (i, d) => {
 				var row = [];
@@ -110,6 +111,10 @@ frappe.ui.form.on('Supplier Quotation', {
 					var qty =  d["qty"] ;// Math.floor( d["qty"] * 0.25);
 					var ptarget = '';
 					var qtarget = '';
+					var confirmation = ''
+					if (d["confirmation"] != "En negociation"){
+						confirmation = d["confirmation"];
+					}
 					if( d["prix_target"] != null && d["prix_target"]>0)
 					{
 						ptarget=d["prix_target"]
@@ -131,8 +136,7 @@ frappe.ui.form.on('Supplier Quotation', {
 						  ,'"'+qtarget+'"'
 						  ,'"'+d["remarque"]+'"'
 						  ,'"''"'
-						  ,'"'+qty+'"'
-						  ,'"'+d["confirmation"]+'"']);
+						  ,confirmation]);
 				 
 				data.push(row);
 			});
