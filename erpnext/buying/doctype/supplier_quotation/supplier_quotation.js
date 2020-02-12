@@ -15,19 +15,10 @@ frappe.ui.form.on('Supplier Quotation', {
 		
 		if(frm.doc.items != null)
 		{
-			
-		}
-	
-		
-		
-		
-	},
-	'download_fiche_all': function(frm){
-		
-		if(frm.doc.items != null)
-		{
 			var data = [];
 			var docfields = [];
+			//#	Num Consultation	Fabricant	Code Article	Designation	oem	Ref Article	Qts
+
 			//data.push(["Date",frm.doc.transaction_date,"","","","",""]);
 			//data.push(["Fournisseur",frm.doc.supplier_name,"","","","",""]);
 			data.push(["#"
@@ -44,12 +35,13 @@ frappe.ui.form.on('Supplier Quotation', {
 				   ,"Remarque"
 				   ,"Offre Final"
 				   ,"Confirmation "]);
+			
 			$.each(frm.doc.items || [], (i, d) => {
 				var row = [];
 				 
 					var fabricant = d["fabricant"];
 					var ref_fabricant = d["ref_fabricant"];
-					var qty =  d["qty"] ;// Math.floor( d["qty"] * 0.25);
+					var qty =  Math.floor( d["qty"] * 0.25); 
 					var ptarget = '';
 					var qtarget = '';
 					var confirmation = '';
@@ -83,6 +75,17 @@ frappe.ui.form.on('Supplier Quotation', {
 			});
 
 			frappe.tools.downloadify(data, null, "FICHE CONSULTATION "+frm.doc.name+" "+frm.doc.supplier_name);
+		}
+	
+		
+		
+		
+	},
+	'download_fiche_all': function(frm){
+		
+		if(frm.doc.items != null)
+		{
+			
 		}
 	
 		
