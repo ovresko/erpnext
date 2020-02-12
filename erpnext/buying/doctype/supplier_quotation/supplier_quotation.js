@@ -55,7 +55,7 @@ frappe.ui.form.on('Supplier Quotation', {
 						  ,'"'+ptarget+'"'
 						  ,'"'+qtarget+'"'
 						  ,'"'+d["remarque"]+'"'
-						  ,'"''"'
+						  ,'""'
 						  ,confirmation]);
 				 
 				data.push(row);
@@ -110,7 +110,7 @@ frappe.ui.form.on('Supplier Quotation', {
 						  ,'"'+ptarget+'"'
 						  ,'"'+qtarget+'"'
 						  ,'"'+d["remarque"]+'"'
-						  ,'"''"'
+						  ,'""'
 						  ,confirmation]);
 				 
 				data.push(row);
