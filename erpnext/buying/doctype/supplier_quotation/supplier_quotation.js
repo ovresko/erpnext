@@ -21,14 +21,53 @@ frappe.ui.form.on('Supplier Quotation', {
 
 			//data.push(["Date",frm.doc.transaction_date,"","","","",""]);
 			//data.push(["Fournisseur",frm.doc.supplier_name,"","","","",""]);
-			data.push(["#","Num Consultation","Fabricant","Code Article","Designation","Ref Article","Poids","Qts","Prix","Prix Target","Qts Target","Remarque","Offre Final","Qts Final","Confirmation "]);
+			data.push(["#"
+				   ,"Num Consultation"
+				   ,"Fabricant"
+				   ,"Code Article"
+				   ,"Designation"
+				   ,"Ref Article"
+				   ,"Poids"
+				   ,"Qts"
+				   ,"Prix"
+				   ,"Prix Target"
+				   ,"Qts Target"
+				   ,"Remarque"
+				   ,"Offre Final"
+				   ,"Qts Final"
+				   ,"Confirmation "]);
+			
 			$.each(frm.doc.items || [], (i, d) => {
 				var row = [];
 				 
 					var fabricant = d["fabricant"];
 					var ref_fabricant = d["ref_fabricant"];
 					var qty =  Math.floor( d["qty"] * 0.25); 
-					row.push(['"'+i+'"','"'+frm.doc.name+'"','"'+fabricant+'"','"'+d["item_code"]+'"','"'+d["item_name"]+'"','"'+ref_fabricant+'"','"'+d["weight_per_unit"]+'"','"'+qty+'"','"'+d["prix_fournisseur"]+'"','"'+d["prix_target"]+'"','"'+d["qts_target"]+'"','"'+d["remarque"]+'"','"'+d["rate"]+'"','"'+qty+'"','"'+d["confirmation"]+'"']);
+					var ptarget = '';
+					var qtarget = '';
+					if( d["prix_target"] != null && d["prix_target"]>0)
+					{
+						ptarget=d["prix_target"]
+					}
+					if( d["qts_target"] != null && d["qts_target"]>0)
+					{
+						qtarget=d["qts_target"]
+					}
+					row.push(['"'+i+'"'
+						  ,'"'+frm.doc.name+'"'
+						  ,'"'+fabricant+'"'
+						  ,'"'+d["item_code"]+'"'
+						  ,'"'+d["item_name"]+'"'
+						  ,'"'+ref_fabricant+'"'
+						  ,'"'+d["weight_per_unit"]+'"'
+						  ,'"'+qty+'"'
+						  ,'"'+d["prix_fournisseur"]+'"'
+						  ,'"'+ptarget+'"'
+						  ,'"'+qtarget+'"'
+						  ,'"'+d["remarque"]+'"'
+						  ,'"'+d["rate"]+'"'
+						  ,'"'+qty+'"'
+						  ,'"'+d["confirmation"]+'"']);
 				 
 				data.push(row);
 			});
@@ -48,15 +87,52 @@ frappe.ui.form.on('Supplier Quotation', {
 			var docfields = [];
 			//data.push(["Date",frm.doc.transaction_date,"","","","",""]);
 			//data.push(["Fournisseur",frm.doc.supplier_name,"","","","",""]);
-			data.push(["#","Num Consultation","Fabricant","Code Article","Designation","Ref Article","Poids","Qts","Prix","Prix Target","Qts Target","Remarque","Offre Final","Qts Final","Confirmation "]);
+			data.push(["#"
+				   ,"Num Consultation"
+				   ,"Fabricant"
+				   ,"Code Article"
+				   ,"Designation"
+				   ,"Ref Article"
+				   ,"Poids"
+				   ,"Qts"
+				   ,"Prix"
+				   ,"Prix Target"
+				   ,"Qts Target"
+				   ,"Remarque"
+				   ,"Offre Final"
+				   ,"Qts Final"
+				   ,"Confirmation "]);
 			$.each(frm.doc.items || [], (i, d) => {
 				var row = [];
 				 
 					var fabricant = d["fabricant"];
 					var ref_fabricant = d["ref_fabricant"];
 					var qty =  d["qty"] ;// Math.floor( d["qty"] * 0.25);
-				
-					row.push(['"'+i+'"','"'+frm.doc.name+'"','"'+fabricant+'"','"'+d["item_code"]+'"','"'+d["item_name"]+'"','"'+ref_fabricant+'"','"'+d["weight_per_unit"]+'"','"'+qty+'"','"'+d["prix_fournisseur"]+'"','"'+d["prix_target"]+'"','"'+d["qts_target"]+'"','"'+d["remarque"]+'"','"'+d["rate"]+'"','"'+qty+'"','"'+d["confirmation"]+'"']);
+					var ptarget = '';
+					var qtarget = '';
+					if( d["prix_target"] != null && d["prix_target"]>0)
+					{
+						ptarget=d["prix_target"]
+					}
+					if( d["qts_target"] != null && d["qts_target"]>0)
+					{
+						qtarget=d["qts_target"]
+					}
+					row.push(['"'+i+'"'
+						  ,'"'+frm.doc.name+'"'
+						  ,'"'+fabricant+'"'
+						  ,'"'+d["item_code"]+'"'
+						  ,'"'+d["item_name"]+'"'
+						  ,'"'+ref_fabricant+'"'
+						  ,'"'+d["weight_per_unit"]+'"'
+						  ,'"'+qty+'"'
+						  ,'"'+d["prix_fournisseur"]+'"'
+						  ,'"'+ptarget+'"'
+						  ,'"'+qtarget+'"'
+						  ,'"'+d["remarque"]+'"'
+						  ,'"'+d["rate"]+'"'
+						  ,'"'+qty+'"'
+						  ,'"'+d["confirmation"]+'"']);
 				 
 				data.push(row);
 			});
