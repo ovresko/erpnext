@@ -468,7 +468,7 @@ def execute(filters=None):
 					for h in hists:
 						version = frappe.get_doc("Version",h.name)
 						data = version.get_data()
-						ahist = ahist +' | '+data.changed
+						ahist = ahist +' | '+data
 				hist_offre_fournisseur = ahist
 				s_prix_target = """<input placeholder='Prix target' id='prix_target_%s' value='%s' style='color:black'></input><button  onClick="prix_target_item('%s')" type='button'> OK </button>""" % (mri.name,prix_target,mri.name)
 				s_qts_target = """<input placeholder='qts_target' id='qts_target_%s' value='%s' style='color:black'></input><button  onClick="qts_target_item('%s')" type='button'> OK </button>""" % (mri.name,qts_target,mri.name)
