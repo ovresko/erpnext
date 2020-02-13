@@ -316,7 +316,7 @@ def make_purchase_order(source_name, target_doc=None):
 		"Supplier Quotation Item": {
 			"doctype": "Purchase Order Item",
 			"validation": {
-				"handled" : ["=", 1],
+				"handled" : ["=", 0],
 				"qty" : [">", 0],
 				"confirmation" : ["=", "Approuve"],
 			},
