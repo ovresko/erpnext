@@ -296,7 +296,7 @@ def make_purchase_order(source_name, target_doc=None):
 		target.ignore_pricing_rule = 1
 		items = []
 		for i in target.items:
-			if not i.handled and i.qty > 0 and i.confirmation == "Approuve":
+			if not i.handled and i.qty > 0 :
 				items.append(i)
 		target.items = items
 		target.run_method("set_missing_values")
@@ -315,6 +315,9 @@ def make_purchase_order(source_name, target_doc=None):
 		},
 		"Supplier Quotation Item": {
 			"doctype": "Purchase Order Item",
+			"validation": {
+				"confirmation" : ["=", "Approuve"],
+			},
 			"field_map": [
 				["name", "supplier_quotation_item"],
 				["parent", "supplier_quotation"],
