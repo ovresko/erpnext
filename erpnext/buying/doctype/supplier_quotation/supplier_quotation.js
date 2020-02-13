@@ -21,8 +21,7 @@ frappe.ui.form.on('Supplier Quotation', {
 
 			//data.push(["Date",frm.doc.transaction_date,"","","","",""]);
 			//data.push(["Fournisseur",frm.doc.supplier_name,"","","","",""]);
-			data.push(["#" ,"Num Consultation","Fabricant","Code Article","Designation","Ref Article","Poids","Qts"
-				   ,"Prix Offre","Prix Target","Qts Target","Remarque","Offre Final","Qts Final","Confirmation "]);
+			data.push(["#" ,"Num Consultation","Fabricant","Code Article","Designation","Ref Article","Poids","Qts","Prix Offre","Prix Target","Qts Target","Remarque","Offre Final","Qts Final","Confirmation "]);
 			
 			$.each(frm.doc.items || [], (i, d) => {
 				var row = [];
@@ -83,7 +82,7 @@ frappe.ui.form.on('Supplier Quotation', {
 			var docfields = [];
 			//data.push(["Date",frm.doc.transaction_date,"","","","",""]);
 			//data.push(["Fournisseur",frm.doc.supplier_name,"","","","",""]);
-			data.push(["#" ,"Num Consultation","Fabricant","Code Article","Designation","Ref Article","Poids","Qts","Prix Offre","Prix Target","Qts Target","Remarque","Offre Final","Confirmation "]);
+			data.push(["#" ,"Num Consultation","Fabricant","Code Article","Designation","Ref Article","Poids","Qts","Prix Offre","Prix Target","Qts Target","Remarque","Offre Final","Qts Final","Confirmation "]);
 
 			$.each(frm.doc.items || [], (i, d) => {
 				var row = [];
@@ -91,6 +90,8 @@ frappe.ui.form.on('Supplier Quotation', {
 					var fabricant = d["fabricant"];
 					var ref_fabricant = d["ref_fabricant"];
 					var qty =  d["qty"] ;// Math.floor( d["qty"] * 0.25);
+					if(d["qts_original"] ==null || d["qts_original"] ==0)
+					{d["qts_original"] = qty;}
 					var ptarget = '';
 					var qtarget = '';
 					var confirmation = '';
@@ -112,12 +113,13 @@ frappe.ui.form.on('Supplier Quotation', {
 						  ,'"'+d["item_name"]+'"'
 						  ,'"'+ref_fabricant+'"'
 						  ,'"'+d["weight_per_unit"]+'"'
-						  ,'"'+qty+'"'
+						  ,'"'+d["qts_original"]+'"'
 						  ,'"'+d["prix_fournisseur"]+'"'
 						  ,'"'+ptarget+'"'
 						  ,'"'+qtarget+'"'
 						  ,'"'+d["remarque"]+'"'
 						  ,'""'
+						  ,'"'+qty+'"'
 						  ,confirmation]);
 				 
 				data.push(row);
