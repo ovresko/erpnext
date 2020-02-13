@@ -296,7 +296,7 @@ def make_purchase_order(source_name, target_doc=None):
 		target.ignore_pricing_rule = 1
 		items = []
 		for i in target.items:
-			if not i.handled and i.qty > 0:
+			if not i.handled and i.qty > 0 and i.confirmation == "Approuve":
 				items.append(i)
 		target.items = items
 		target.run_method("set_missing_values")
