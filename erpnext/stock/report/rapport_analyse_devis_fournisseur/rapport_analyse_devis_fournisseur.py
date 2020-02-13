@@ -431,7 +431,8 @@ def execute(filters=None):
 				material_request = mri.material_request
 				supplier_quotation = mri.parent
 				qts_devis = mri.qty or 0
-				rate = mri.rate or 0
+				if mri.confirmation == "Approuve" or  mri.confirmation == "Annule":
+					rate = mri.rate or 0
 				base_amount = mri.base_amount
 				prix_target = mri.prix_target or 0
 				base_rate = mri.base_rate
