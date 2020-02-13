@@ -466,7 +466,7 @@ def execute(filters=None):
 				vers = frappe.db.sql("""select docname,name,data from `tabVersion` 
 			where docname=%(docname)s and data like %(txt)s 
 			order by creation """, {'docname':mri.name,'txt': "%%prix_fournisseur%%" }, as_dict=1)
-				ahist = "A"
+				ahist = ""
 				if vers:
 					for h in vers:
 						#data = h.name
