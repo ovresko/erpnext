@@ -462,10 +462,13 @@ def execute(filters=None):
 				_datedm =frappe.db.get_value("Material Request Item",mri.material_request_item,"creation")
 				if _datedm:
 					datedm = frappe.utils.get_datetime(_datedm).strftime("%d/%m/%Y")
-				hists = frappe.get_all("Version",filters={"docname":mri.name,"data":("like", "%prix_fournisseur%")},fields=['data','name'])
+				#hists = frappe.get_all("Version",filters={"docname":mri.name,"data":("like", "%prix_fournisseur%")},fields=['data','name'])
+				vers = frappe.db.sql("""select docname,name,data from `tabVersion` 
+			where docname=%(docname)s and data like %(txt)s 
+			order by posting_date, posting_time """, {'docname':mri.name,'txt': "%%prix_fournisseur%%" }, as_dict=1)
 				ahist = ""
-				if hists:
-					for h in hists:
+				if vers:
+					for h in vers:
 						#data = h.name
 						ahist = "A"
 				hist_offre_fournisseur = ahist
