@@ -466,14 +466,14 @@ def execute(filters=None):
 				vers = frappe.db.sql("""select docname,name,data from `tabVersion` 
 			where docname=%(docname)s and data like %(txt)s 
 			order by creation """, {'docname':mri.name,'txt': "%%prix_fournisseur%%" }, as_dict=1)
-				ahist = ""
+				ahist = "A"
 				if vers:
 					for h in vers:
 						#data = h.name
 						if h.data:
 							changed =  json.loads(h.data)["changed"]
 							res = [item for sublist in changed for item in sublist]
-							ahist = " | ".join(res)
+							ahist += " | ".join(res)
 							
 							
 				hist_offre_fournisseur = ahist
