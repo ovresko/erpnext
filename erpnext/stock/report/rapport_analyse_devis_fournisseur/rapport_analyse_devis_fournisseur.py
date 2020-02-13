@@ -2,7 +2,7 @@
 # For license information, please see license.txt
 
 from __future__ import unicode_literals
-import frappe, erpnext
+import frappe, erpnext, json
 from frappe import _, _dict
 from erpnext.stock.get_item_details import get_item_details
 from frappe.utils import getdate, cstr, flt, fmt_money
@@ -472,8 +472,9 @@ def execute(filters=None):
 						#data = h.name
 						if h.data:
 							changed =  json.loads(h.data)["changed"]
-							res = [item for sublist in changed for item in sublist]
-							ahist += " | ".join(res)
+							if changed:
+								res = [item for sublist in changed for item in sublist]
+								ahist += " | ".join(res)
 							
 							
 				hist_offre_fournisseur = ahist
