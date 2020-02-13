@@ -140,7 +140,7 @@ frappe.ui.form.on('Supplier Quotation', {
 			});
 
 			frappe.tools.downloadify(data, null, "FICHE CONSULTATION "+frm.doc.name+" "+frm.doc.supplier_name);
-			frm.save();
+			//frm.save();
 		}
 	
 		
