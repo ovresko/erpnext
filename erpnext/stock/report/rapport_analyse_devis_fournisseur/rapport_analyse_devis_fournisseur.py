@@ -462,18 +462,14 @@ def execute(filters=None):
 				_datedm =frappe.db.get_value("Material Request Item",mri.material_request_item,"creation")
 				if _datedm:
 					datedm = frappe.utils.get_datetime(_datedm).strftime("%d/%m/%Y")
-				hists = frappe.get_all("Version",filters={"docname":mri.name,"data":("like", "%prix_fournisseur%")},fields=['name'])
+				hists = frappe.get_all("Version",filters={"docname":mri.name,"data":("like", "%prix_fournisseur%")},fields=['data','name'])
 				ahist = ''
 				if hists:
 					for h in hists:
-						version = frappe.get_doc("Version",h.name)
-						if version:
-							data = version.get_data()
-							changed = data["changed"]
-							for c in changed:
-								for r in c:
-									ahist = ahist + ' | '
-							#ahist = ahist +(' | %s ' % data["changed"])
+						#version = frappe.get_doc("Version",h.name)
+						if h:
+							data = h.data
+							ahist = ahist + data
 				hist_offre_fournisseur = ahist
 				s_prix_target = """<input placeholder='Prix target' id='prix_target_%s' value='%s' style='color:black'></input><button  onClick="prix_target_item('%s')" type='button'> OK </button>""" % (mri.name,prix_target,mri.name)
 				s_qts_target = """<input placeholder='qts_target' id='qts_target_%s' value='%s' style='color:black'></input><button  onClick="qts_target_item('%s')" type='button'> OK </button>""" % (mri.name,qts_target,mri.name)
