@@ -178,6 +178,11 @@ def execute(filters=None):
 			"width": 150
 		})
 	columns.append({
+			"fieldname": "hist_offre_fournisseur",
+			"label": "Historique Offre fournisseur",
+			"width": 150
+		})
+	columns.append({
 			"fieldname": "offre_fournisseur",
 			"label": "Offre fournisseur",
 			"width": 150
@@ -413,6 +418,7 @@ def execute(filters=None):
 			s_qts_target = '' 
 			s_remarque = ''
 			s_qts_devis= ''
+			hist_offre_fournisseur = ''
 			#mb=''
 			if hasattr(mri, 'material_request') and mri.parent:
 				conf_cmd = """<button id='negociation_%s' onClick="negociation('%s')" type='button'>Negociation</button><button id='approuver_%s' onClick="approuver('%s')" type='button'>Approuver</button><button id='en_cours_%s' onClick="en_cours('%s')" type='button'>En Cours</button><button id='annuler_%s' onClick="annuler('%s')" type='button'>Annuler</button>""" % (mri.name,mri.name,mri.name,mri.name,mri.name,mri.name,mri.name,mri.name)
@@ -433,6 +439,8 @@ def execute(filters=None):
 				qts_devis = mri.qty or 0
 				if mri.confirmation == "Approuve" or  mri.confirmation == "Annule":
 					rate = mri.rate or 0
+				#if mri.confirmation == "En negociation" and mri.prix_target > 0:
+				#	rate = mri.rate or 0
 				base_amount = mri.base_amount
 				prix_target = mri.prix_target or 0
 				base_rate = mri.base_rate
@@ -447,12 +455,21 @@ def execute(filters=None):
 				remarque = mri.remarque or ''
 				prix_target_dzd = prix_target * taux_approche * (1+taux_mb) * 1.19
 				prix_target_dzd = round(prix_target_dzd,2)
-				rate_dzd = rate * (1+taux_mb) * taux_approche * 1.19
-				rate_dzd = round(rate_dzd,2)
+				if rate > 0:
+					rate_dzd = rate * (1+taux_mb) * taux_approche * 1.19
+					rate_dzd = round(rate_dzd,2)
 				confirmation = mri.confirmation
 				_datedm =frappe.db.get_value("Material Request Item",mri.material_request_item,"creation")
 				if _datedm:
 					datedm = frappe.utils.get_datetime(_datedm).strftime("%d/%m/%Y")
+				hists = frappe.get_all("Version",filters={"docname":mri.name,"data":("like", "%prix_fournisseur%")},fields=['name'])
+				ahist = ''
+				if hists:
+					for h in hists:
+						version = frappe.get_doc("Version",h.name)
+						data = version.get_data()
+						ahist = ahist +' | '+data.changed
+				hist_offre_fournisseur = ahist
 				s_prix_target = """<input placeholder='Prix target' id='prix_target_%s' value='%s' style='color:black'></input><button  onClick="prix_target_item('%s')" type='button'> OK </button>""" % (mri.name,prix_target,mri.name)
 				s_qts_target = """<input placeholder='qts_target' id='qts_target_%s' value='%s' style='color:black'></input><button  onClick="qts_target_item('%s')" type='button'> OK </button>""" % (mri.name,qts_target,mri.name)
 				s_remarque = """<input placeholder='remarque' id='remarque_%s' value='%s' style='color:black'></input><button  onClick="remarque_item('%s')" type='button'> OK </button>""" % (mri.name,remarque,mri.name)
@@ -542,6 +559,7 @@ def execute(filters=None):
 			       mri.last_purchase_devise  or 0,
 			       #qts_devis
 			       qts_devis,
+			       hist_offre_fournisseur,
 			       #prix_fournisseur
 			       prix_fournisseur,
 			       #prix_de_revient
