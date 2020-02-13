@@ -418,7 +418,7 @@ def execute(filters=None):
 			s_qts_target = '' 
 			s_remarque = ''
 			s_qts_devis= ''
-			hist_offre_fournisseur = ''
+			hist_offre_fournisseur = ""
 			#mb=''
 			if hasattr(mri, 'material_request') and mri.parent:
 				conf_cmd = """<button id='negociation_%s' onClick="negociation('%s')" type='button'>Negociation</button><button id='approuver_%s' onClick="approuver('%s')" type='button'>Approuver</button><button id='en_cours_%s' onClick="en_cours('%s')" type='button'>En Cours</button><button id='annuler_%s' onClick="annuler('%s')" type='button'>Annuler</button>""" % (mri.name,mri.name,mri.name,mri.name,mri.name,mri.name,mri.name,mri.name)
@@ -468,7 +468,7 @@ def execute(filters=None):
 					for h in hists:
 						#version = frappe.get_doc("Version",h.name)
 						if h:
-							data = h.data
+							data = h["data"]
 							ahist = data
 				hist_offre_fournisseur = ahist
 				s_prix_target = """<input placeholder='Prix target' id='prix_target_%s' value='%s' style='color:black'></input><button  onClick="prix_target_item('%s')" type='button'> OK </button>""" % (mri.name,prix_target,mri.name)
