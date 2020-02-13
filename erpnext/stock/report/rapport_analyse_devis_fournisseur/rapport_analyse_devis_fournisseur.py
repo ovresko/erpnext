@@ -180,7 +180,7 @@ def execute(filters=None):
 	columns.append({
 			"fieldname": "hist_offre_fournisseur",
 			"label": "Historique Offre fournisseur",
-			"width": 150
+			"width": 250
 		})
 	columns.append({
 			"fieldname": "offre_fournisseur",
@@ -464,10 +464,10 @@ def execute(filters=None):
 					datedm = frappe.utils.get_datetime(_datedm).strftime("%d/%m/%Y")
 				hists = frappe.get_all("Version",filters={"docname":mri.name,"data":("like", "%prix_fournisseur%")},fields=['data','name'])
 				ahist = ""
-				#if hists:
-				#	for h in hists:
-				#		data = h.name
-				#		ahist = "%s" % data
+				if hists:
+					for h in hists:
+						#data = h.name
+						ahist = "A"
 				hist_offre_fournisseur = ahist
 				s_prix_target = """<input placeholder='Prix target' id='prix_target_%s' value='%s' style='color:black'></input><button  onClick="prix_target_item('%s')" type='button'> OK </button>""" % (mri.name,prix_target,mri.name)
 				s_qts_target = """<input placeholder='qts_target' id='qts_target_%s' value='%s' style='color:black'></input><button  onClick="qts_target_item('%s')" type='button'> OK </button>""" % (mri.name,qts_target,mri.name)
