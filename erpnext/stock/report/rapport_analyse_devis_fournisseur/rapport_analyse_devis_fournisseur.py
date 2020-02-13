@@ -470,7 +470,12 @@ def execute(filters=None):
 				if vers:
 					for h in vers:
 						#data = h.name
-						ahist = "A"
+						if h.data:
+							changed =  json.loads(h.data)["changed"]
+							res = [item for sublist in changed for item in sublist]
+							ahist = " | ".join(res)
+							
+							
 				hist_offre_fournisseur = ahist
 				s_prix_target = """<input placeholder='Prix target' id='prix_target_%s' value='%s' style='color:black'></input><button  onClick="prix_target_item('%s')" type='button'> OK </button>""" % (mri.name,prix_target,mri.name)
 				s_qts_target = """<input placeholder='qts_target' id='qts_target_%s' value='%s' style='color:black'></input><button  onClick="qts_target_item('%s')" type='button'> OK </button>""" % (mri.name,qts_target,mri.name)
