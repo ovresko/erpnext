@@ -294,11 +294,11 @@ def on_update_dv(items):
 def make_purchase_order(source_name, target_doc=None):
 	def set_missing_values(source, target):
 		target.ignore_pricing_rule = 1
-		items = []
-		for i in target.items:
-			if not i.handled and i.qty > 0 :
-				items.append(i)
-		target.items = items
+		#items = []
+		#for i in target.items:
+		#	if not i.handled and i.qty > 0 :
+		#		items.append(i)
+		#target.items = items
 		target.run_method("set_missing_values")
 		target.run_method("get_schedule_dates")
 		target.run_method("calculate_taxes_and_totals")
@@ -316,6 +316,8 @@ def make_purchase_order(source_name, target_doc=None):
 		"Supplier Quotation Item": {
 			"doctype": "Purchase Order Item",
 			"validation": {
+				"handled" : ["=", 1],
+				"qty" : [">", 0],
 				"confirmation" : ["=", "Approuve"],
 			},
 			"field_map": [
