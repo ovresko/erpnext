@@ -34,6 +34,10 @@ frappe.ui.form.on('Supplier Quotation', {
 					if(qty <= 0){
 						qty= 1;
 					}
+					var qts_final = '';
+					if (d["confirmation"] == "Approuve"){
+						qts_final = d["qty"];
+					}
 					var ptarget = '';
 					var qtarget = '';
 					var confirmation = '';
@@ -61,13 +65,14 @@ frappe.ui.form.on('Supplier Quotation', {
 						  ,'"'+qtarget+'"'
 						  ,'"'+d["remarque"]+'"'
 						  ,'""'
-						  ,'"'+qty+'"'
+						  ,'"'+qts_final+'"'
 						  ,confirmation]);
 				 
 				data.push(row);
 			});
 
 			frappe.tools.downloadify(data, null, "FICHE CONSULTATION "+frm.doc.name+" "+frm.doc.supplier_name);
+			frm.save();
 		}
 	
 		
@@ -80,18 +85,27 @@ frappe.ui.form.on('Supplier Quotation', {
 		{
 			var data = [];
 			var docfields = [];
+			//#	Num Consultation	Fabricant	Code Article	Designation	oem	Ref Article	Qts
+
 			//data.push(["Date",frm.doc.transaction_date,"","","","",""]);
 			//data.push(["Fournisseur",frm.doc.supplier_name,"","","","",""]);
 			data.push(["#" ,"Num Consultation","Fabricant","Code Article","Designation","Ref Article","Poids","Qts","Prix Offre","Prix Target","Qts Target","Remarque","Offre Final","Qts Final","Confirmation "]);
-
+			
 			$.each(frm.doc.items || [], (i, d) => {
 				var row = [];
 				 
 					var fabricant = d["fabricant"];
 					var ref_fabricant = d["ref_fabricant"];
-					var qty =  d["qty"] ;// Math.floor( d["qty"] * 0.25);
+					var qty =  Math.floor( d["qty"] * 1); 
 					if(d["qts_original"] ==null || d["qts_original"] ==0)
 					{d["qts_original"] = qty;}
+					if(qty <= 0){
+						qty= 1;
+					}
+					var qts_final = '';
+					if (d["confirmation"] == "Approuve"){
+						qts_final = d["qty"];
+					}
 					var ptarget = '';
 					var qtarget = '';
 					var confirmation = '';
@@ -119,13 +133,14 @@ frappe.ui.form.on('Supplier Quotation', {
 						  ,'"'+qtarget+'"'
 						  ,'"'+d["remarque"]+'"'
 						  ,'""'
-						  ,'"'+qty+'"'
+						  ,'"'+qts_final+'"'
 						  ,confirmation]);
 				 
 				data.push(row);
 			});
 
 			frappe.tools.downloadify(data, null, "FICHE CONSULTATION "+frm.doc.name+" "+frm.doc.supplier_name);
+			frm.save();
 		}
 	
 		
