@@ -63,7 +63,7 @@ frappe.ui.form.on('Supplier Quotation', {
 						  ,'"'+d["prix_fournisseur"]+'"'
 						  ,'"'+ptarget+'"'
 						  ,'"'+qtarget+'"'
-						  ,'"'+d["remarque"]+'"'
+						  ,'"'+d["remarque"] || ''+'"'
 						  ,'""'
 						  ,'"'+qts_final+'"'
 						  ,confirmation]);
@@ -131,7 +131,7 @@ frappe.ui.form.on('Supplier Quotation', {
 						  ,'"'+d["prix_fournisseur"]+'"'
 						  ,'"'+ptarget+'"'
 						  ,'"'+qtarget+'"'
-						  ,'"'+d["remarque"]+'"'
+						  ,'"'+d["remarque"] || ''+'"'
 						  ,'""'
 						  ,'"'+qts_final+'"'
 						  ,confirmation]);
