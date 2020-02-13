@@ -28,40 +28,23 @@ class SupplierQuotation(BuyingController):
 		validate_for_items(self)
 		self.validate_with_previous_doc()
 		self.validate_uom_is_integer("uom", "qty")
+		_items = []
 		for item in self.items:
 			if not item.confirmation:
 				item.confirmation = "En cours"
-		if self.manufacturer:
-			_items = []
-			for item in self.items:
+			if item.confirmation = "Annule":
+				item.qty = 0
+			if self.manufacturer:
 				if item.fabricant == self.manufacturer:
 					_items.append(item)
+		
+		if self.manufacturer:
 			self.items = _items
 
-		#nv_items = []
-                #for item in self.items:
-		#	is_purchase = frappe.db.get_value("Item", item.item_code, "is_purchase_item")
-		#	if is_purchase:
-		#		nv_items.push(item)
-		#	else:
-		#		frappe.msgprint("Article a ne pas acheter a ete detecte : %s" % item.item_code)
-		#self.items = nv_items
-		#    if item.material_request_item:
-		#	mr = frappe.get_doc("Material Request Item",item.material_request_item)
-		#	if mr:
-		#		mr.consultation = self.name
-		#		mr.flags.ignore_links = True
-		#		mr.flags.ignore_mandatory = True
-		#		mr.flags.ignore_validate = True
-		#		mr.save()
 
         def on_update(self):
 		frappe.enqueue("erpnext.buying.doctype.supplier_quotation.supplier_quotation.on_update_consultation",items=self.items,pname=self.name,timeout=10000)
 		frappe.enqueue("erpnext.buying.doctype.supplier_quotation.supplier_quotation.on_update_dv",items=self.items,timeout=10000)
-		#for i in self.items:
-		#	frappe.msgprint("i %s" % i.name)
-		#	i.ref_devis = i.name
-		#	i.save()
 
 
 	def on_submit(self):
@@ -294,11 +277,11 @@ def on_update_dv(items):
 def make_purchase_order(source_name, target_doc=None):
 	def set_missing_values(source, target):
 		target.ignore_pricing_rule = 1
-		#items = []
-		#for i in target.items:
-		#	if not i.handled and i.qty > 0 :
-		#		items.append(i)
-		#target.items = items
+		items = []
+		for i in target.items:
+			if not i.handled and i.qty > 0 :
+				items.append(i)
+		target.items = items
 		target.run_method("set_missing_values")
 		target.run_method("get_schedule_dates")
 		target.run_method("calculate_taxes_and_totals")
@@ -315,11 +298,6 @@ def make_purchase_order(source_name, target_doc=None):
 		},
 		"Supplier Quotation Item": {
 			"doctype": "Purchase Order Item",
-			"validation": {
-				"handled" : ["=", 0],
-				"qty" : [">", 0],
-				"confirmation" : ["=", "Approuve"],
-			},
 			"field_map": [
 				["name", "supplier_quotation_item"],
 				["parent", "supplier_quotation"],
