@@ -32,7 +32,7 @@ class SupplierQuotation(BuyingController):
 		for item in self.items:
 			if not item.confirmation:
 				item.confirmation = "En cours"
-			if item.confirmation = "Annule":
+			if item.confirmation == "Annule":
 				item.qty = 0
 			if self.manufacturer:
 				if item.fabricant == self.manufacturer:
