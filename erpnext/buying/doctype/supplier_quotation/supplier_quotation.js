@@ -29,25 +29,33 @@ frappe.ui.form.on('Supplier Quotation', {
 					var fabricant = d["fabricant"];
 					var ref_fabricant = d["ref_fabricant"];
 					var qty =  Math.floor( d["qty"] * 0.25); 
-					
+					var cur = frm.doc.currency;
 					if(qty <= 0){
 						qty= 2;
 					}
 					if(d["qts_original"] ==null || d["qts_original"] ==0)
 					{d["qts_original"] = qty;}
 					var qts_final = '';
+					var offre = '';
 					if (d["confirmation"] == "Approuve"){
 						qts_final = d["qty"];
+						offre = d["rate"] +" "+cur;
 					}
+					if (d["confirmation"] == "Annule"){
+						 
+						offre = d["rate"] +" "+cur;
+					}
+					
 					var ptarget = '';
 					var qtarget = '';
+					
 					var confirmation = '';
 					if (d["confirmation"] != "En negociation"){
 						confirmation = d["confirmation"];
 					}
 					if( d["prix_target"] != null && d["prix_target"]>0)
 					{
-						ptarget=d["prix_target"];
+						ptarget=d["prix_target"] +" "+cur;
 					}
 					if( d["qts_target"] != null && d["qts_target"]>0)
 					{
@@ -65,7 +73,7 @@ frappe.ui.form.on('Supplier Quotation', {
 						  ,'"'+ptarget+'"'
 						  ,'"'+qtarget+'"'
 						  ,'"'+d["remarque"]+'"'
-						  ,'""'
+						  ,'"'+offre+'"'
 						  ,'"'+qts_final+'"'
 						  ,confirmation]);
 				 
@@ -98,15 +106,21 @@ frappe.ui.form.on('Supplier Quotation', {
 					var fabricant = d["fabricant"];
 					var ref_fabricant = d["ref_fabricant"];
 					var qty =  Math.floor( d["qty"] * 1); 
-					
+					var cur = frm.doc.currency;
 					if(qty <= 0){
 						qty= 2;
 					}
 					if(d["qts_original"] ==null || d["qts_original"] ==0)
 					{d["qts_original"] = qty;}
 					var qts_final = '';
+					var offre = '';
 					if (d["confirmation"] == "Approuve"){
 						qts_final = d["qty"];
+						offre = d["rate"]+" "+cur;
+					} 
+					if (d["confirmation"] == "Annule"){
+						 
+						offre = d["rate"]+" "+cur;
 					}
 					var ptarget = '';
 					var qtarget = '';
@@ -116,7 +130,7 @@ frappe.ui.form.on('Supplier Quotation', {
 					}
 					if( d["prix_target"] != null && d["prix_target"]>0)
 					{
-						ptarget=d["prix_target"];
+						ptarget=d["prix_target"]+" "+cur;
 					}
 					if( d["qts_target"] != null && d["qts_target"]>0)
 					{
@@ -134,7 +148,7 @@ frappe.ui.form.on('Supplier Quotation', {
 						  ,'"'+ptarget+'"'
 						  ,'"'+qtarget+'"'
 						  ,'"'+d["remarque"]+'"'
-						  ,'""'
+						  ,'"'+offre+'"'
 						  ,'"'+qts_final+'"'
 						  ,confirmation]);
 				 
