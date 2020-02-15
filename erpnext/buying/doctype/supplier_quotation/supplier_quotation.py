@@ -30,6 +30,8 @@ class SupplierQuotation(BuyingController):
 		self.validate_uom_is_integer("uom", "qty")
 		_items = []
 		for item in self.items:
+			if item.prix_fournisseur and not item.offre_fournisseur_initial:
+				item.offre_fournisseur_initial = item.prix_fournisseur
 			if not item.confirmation:
 				item.confirmation = "En cours"
 			if item.confirmation == "Annule":
