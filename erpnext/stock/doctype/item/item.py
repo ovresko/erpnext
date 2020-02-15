@@ -833,7 +833,7 @@ class Item(WebsiteGenerator):
 			template_uom = frappe.db.get_value("Item", self.variant_of, "stock_uom")
 			#if template_uom != self.stock_uom:
 				#frappe.throw(_("Default Unit of Measure for Variant '{0}' must be same as in Template '{1}'")
-									.format(self.stock_uom, template_uom))
+				#					.format(self.stock_uom, template_uom))
 
 	def validate_uom_conversion_factor(self):
 		if self.uoms:
