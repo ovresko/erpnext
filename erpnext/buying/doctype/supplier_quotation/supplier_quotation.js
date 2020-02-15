@@ -31,7 +31,7 @@ frappe.ui.form.on('Supplier Quotation', {
 					var qty =  Math.floor( d["qty"] * 0.25); 
 					
 					if(qty <= 0){
-						qty= 1;
+						qty= 2;
 					}
 					if(d["qts_original"] ==null || d["qts_original"] ==0)
 					{d["qts_original"] = qty;}
@@ -100,7 +100,7 @@ frappe.ui.form.on('Supplier Quotation', {
 					var qty =  Math.floor( d["qty"] * 1); 
 					
 					if(qty <= 0){
-						qty= 1;
+						qty= 2;
 					}
 					if(d["qts_original"] ==null || d["qts_original"] ==0)
 					{d["qts_original"] = qty;}
