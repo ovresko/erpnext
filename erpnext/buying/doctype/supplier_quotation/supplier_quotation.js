@@ -21,7 +21,7 @@ frappe.ui.form.on('Supplier Quotation', {
 
 			//data.push(["Date",frm.doc.transaction_date,"","","","",""]);
 			//data.push(["Fournisseur",frm.doc.supplier_name,"","","","",""]);
-			data.push(["#" ,"Num Consultation","Fabricant","Code Article","Designation","Ref Article","Poids","Qts","Prix Offre","Prix Target","Qts Target","Remarque","Offre Final","Qts Final","Confirmation"]);
+			data.push(["#" ,"Num Consultation","Fabricant","Code Article","Designation","Ref Article","Poids","Devise","Qts","Prix Offre","Prix Target","Qts Target","Remarque","Offre Final","Qts Final","Confirmation "]);
 			
 			$.each(frm.doc.items || [], (i, d) => {
 				var row = [];
@@ -39,11 +39,11 @@ frappe.ui.form.on('Supplier Quotation', {
 					var offre = '';
 					if (d["confirmation"] == "Approuve"){
 						qts_final = d["qty"];
-						offre = d["rate"] +" "+cur;
+						offre = d["rate"] ;
 					}
 					if (d["confirmation"] == "Annule"){
 						 
-						offre = d["rate"] +" "+cur;
+						offre = d["rate"];
 					}
 					
 					var ptarget = '';
@@ -55,7 +55,7 @@ frappe.ui.form.on('Supplier Quotation', {
 					}
 					if( d["prix_target"] != null && d["prix_target"]>0)
 					{
-						ptarget=d["prix_target"] +" "+cur;
+						ptarget=d["prix_target"] ;
 					}
 					if( d["qts_target"] != null && d["qts_target"]>0)
 					{
@@ -68,8 +68,9 @@ frappe.ui.form.on('Supplier Quotation', {
 						  ,'"'+d["item_name"]+'"'
 						  ,'"'+ref_fabricant+'"'
 						  ,'"'+d["weight_per_unit"]+'"'
+						  ,'"'+cur+'"'
 						  ,'"'+d["qts_original"]+'"'
-						  ,'"'+d["prix_fournisseur"]+" "+cur+'"'
+						  ,'"'+d["prix_fournisseur"]+'"'
 						  ,'"'+ptarget+'"'
 						  ,'"'+qtarget+'"'
 						  ,'"'+d["remarque"]+'"'
@@ -98,7 +99,7 @@ frappe.ui.form.on('Supplier Quotation', {
 
 			//data.push(["Date",frm.doc.transaction_date,"","","","",""]);
 			//data.push(["Fournisseur",frm.doc.supplier_name,"","","","",""]);
-			data.push(["#" ,"Num Consultation","Fabricant","Code Article","Designation","Ref Article","Poids","Qts","Prix Offre","Prix Target","Qts Target","Remarque","Offre Final","Qts Final","Confirmation "]);
+			data.push(["#" ,"Num Consultation","Fabricant","Code Article","Designation","Ref Article","Poids","Devise","Qts","Prix Offre","Prix Target","Qts Target","Remarque","Offre Final","Qts Final","Confirmation "]);
 			
 			$.each(frm.doc.items || [], (i, d) => {
 				var row = [];
@@ -116,11 +117,11 @@ frappe.ui.form.on('Supplier Quotation', {
 					var offre = '';
 					if (d["confirmation"] == "Approuve"){
 						qts_final = d["qty"];
-						offre = d["rate"]+" "+cur;
+						offre = d["rate"];
 					} 
 					if (d["confirmation"] == "Annule"){
 						 
-						offre = d["rate"]+" "+cur;
+						offre = d["rate"];
 					}
 					var ptarget = '';
 					var qtarget = '';
@@ -130,7 +131,7 @@ frappe.ui.form.on('Supplier Quotation', {
 					}
 					if( d["prix_target"] != null && d["prix_target"]>0)
 					{
-						ptarget=d["prix_target"]+" "+cur;
+						ptarget=d["prix_target"];
 					}
 					if( d["qts_target"] != null && d["qts_target"]>0)
 					{
@@ -143,8 +144,9 @@ frappe.ui.form.on('Supplier Quotation', {
 						  ,'"'+d["item_name"]+'"'
 						  ,'"'+ref_fabricant+'"'
 						  ,'"'+d["weight_per_unit"]+'"'
+						  ,'"'+cur+'"'
 						  ,'"'+d["qts_original"]+'"'
-						  ,'"'+d["prix_fournisseur"]+" "+cur+'"'
+						  ,'"'+d["prix_fournisseur"]+'"'
 						  ,'"'+ptarget+'"'
 						  ,'"'+qtarget+'"'
 						  ,'"'+d["remarque"]+'"'
