@@ -21,7 +21,7 @@ frappe.ui.form.on('Supplier Quotation', {
 
 			//data.push(["Date",frm.doc.transaction_date,"","","","",""]);
 			//data.push(["Fournisseur",frm.doc.supplier_name,"","","","",""]);
-			data.push(["#" ,"Num Consultation","Fabricant","Code Article","Designation","Ref Article","Poids","Devise","Qts","Prix Offre","Prix Target","Qts Target","Remarque","Offre Final","Qts Final","Confirmation "]);
+			data.push(["#" ,"Num Consultation","Fabricant","Code Article","Designation","Ref Article","Poids","Devise","Qts","Prix Offre","Prix Target","Qts Target","Remarque","Offre Final","Prix Final","Qts Final","Confirmation "]);
 			
 			$.each(frm.doc.items || [], (i, d) => {
 				var row = [];
@@ -33,10 +33,19 @@ frappe.ui.form.on('Supplier Quotation', {
 					if(qty <= 0){
 						qty= 2;
 					}
-					if(d["qts_original"] ==null || d["qts_original"] ==0)
+					if(d["qts_original"] == null || d["qts_original"] == 0 )
 					{d["qts_original"] = qty;}
 					var qts_final = '';
 					var offre = '';
+					var offre_fournisseur_initial = d["prix_fournisseur"];
+					if(d["offre_fournisseur_initial"] != null && d["offre_fournisseur_initial"] > 0)
+					{
+						offre_fournisseur_initial = d["offre_fournisseur_initial"] 
+					}else{
+						d["offre_fournisseur_initial"] = d["prix_fournisseur"];
+					}
+				
+				
 					if (d["confirmation"] == "Approuve"){
 						qts_final = d["qty"];
 						offre = d["rate"] ;
@@ -70,10 +79,11 @@ frappe.ui.form.on('Supplier Quotation', {
 						  ,'"'+d["weight_per_unit"]+'"'
 						  ,'"'+cur+'"'
 						  ,'"'+d["qts_original"]+'"'
-						  ,'"'+d["prix_fournisseur"]+'"'
+						  ,'"'+offre_fournisseur_initial+'"'
 						  ,'"'+ptarget+'"'
 						  ,'"'+qtarget+'"'
 						  ,'"'+d["remarque"]+'"'
+						  ,'"'+d["prix_fournisseur"]+'"'
 						  ,'"'+offre+'"'
 						  ,'"'+qts_final+'"'
 						  ,confirmation]);
@@ -99,7 +109,7 @@ frappe.ui.form.on('Supplier Quotation', {
 
 			//data.push(["Date",frm.doc.transaction_date,"","","","",""]);
 			//data.push(["Fournisseur",frm.doc.supplier_name,"","","","",""]);
-			data.push(["#" ,"Num Consultation","Fabricant","Code Article","Designation","Ref Article","Poids","Devise","Qts","Prix Offre","Prix Target","Qts Target","Remarque","Offre Final","Qts Final","Confirmation "]);
+			data.push(["#" ,"Num Consultation","Fabricant","Code Article","Designation","Ref Article","Poids","Devise","Qts","Prix Offre","Prix Target","Qts Target","Remarque","Offre Final","Prix Final","Qts Final","Confirmation "]);
 			
 			$.each(frm.doc.items || [], (i, d) => {
 				var row = [];
@@ -115,6 +125,13 @@ frappe.ui.form.on('Supplier Quotation', {
 					{d["qts_original"] = qty;}
 					var qts_final = '';
 					var offre = '';
+					var offre_fournisseur_initial = d["prix_fournisseur"];
+					if(d["offre_fournisseur_initial"] != null && d["offre_fournisseur_initial"] > 0)
+					{
+						offre_fournisseur_initial = d["offre_fournisseur_initial"] 
+					}else{
+						d["offre_fournisseur_initial"] = d["prix_fournisseur"];
+					}
 					if (d["confirmation"] == "Approuve"){
 						qts_final = d["qty"];
 						offre = d["rate"];
@@ -146,10 +163,11 @@ frappe.ui.form.on('Supplier Quotation', {
 						  ,'"'+d["weight_per_unit"]+'"'
 						  ,'"'+cur+'"'
 						  ,'"'+d["qts_original"]+'"'
-						  ,'"'+d["prix_fournisseur"]+'"'
+						  ,'"'+offre_fournisseur_initial+'"'
 						  ,'"'+ptarget+'"'
 						  ,'"'+qtarget+'"'
 						  ,'"'+d["remarque"]+'"'
+						  ,'"'+d["prix_fournisseur"]+'"'
 						  ,'"'+offre+'"'
 						  ,'"'+qts_final+'"'
 						  ,confirmation]);
