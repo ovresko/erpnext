@@ -29,11 +29,12 @@ frappe.ui.form.on('Supplier Quotation', {
 					var fabricant = d["fabricant"];
 					var ref_fabricant = d["ref_fabricant"];
 					var qty =  Math.floor( d["qty"] * 0.25); 
-					if(d["qts_original"] ==null || d["qts_original"] ==0)
-					{d["qts_original"] = qty;}
+					
 					if(qty <= 0){
 						qty= 1;
 					}
+					if(d["qts_original"] ==null || d["qts_original"] ==0)
+					{d["qts_original"] = qty;}
 					var qts_final = '';
 					if (d["confirmation"] == "Approuve"){
 						qts_final = d["qty"];
@@ -97,11 +98,12 @@ frappe.ui.form.on('Supplier Quotation', {
 					var fabricant = d["fabricant"];
 					var ref_fabricant = d["ref_fabricant"];
 					var qty =  Math.floor( d["qty"] * 1); 
-					if(d["qts_original"] ==null || d["qts_original"] ==0)
-					{d["qts_original"] = qty;}
+					
 					if(qty <= 0){
 						qty= 1;
 					}
+					if(d["qts_original"] ==null || d["qts_original"] ==0)
+					{d["qts_original"] = qty;}
 					var qts_final = '';
 					if (d["confirmation"] == "Approuve"){
 						qts_final = d["qty"];
