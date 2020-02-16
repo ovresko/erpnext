@@ -473,6 +473,7 @@ def make_purchase_invoice(source_name, target_doc=None):
 				"purchase_order_item": "po_detail",
 				"purchase_order": "purchase_order",
 				"is_fixed_asset": "is_fixed_asset",
+				"pays": "pays",
 				"asset": "asset",
 			},
 			"postprocess": update_item,
