@@ -253,8 +253,8 @@ def execute(filters=None):
 		})
 	price_lists = []
 	if filters.show_price:
+		price_lists= frappe.get_all("Price List",filters={"buying":1},fields=["name","currency"])
 		if is_full:
-			price_lists= frappe.get_all("Price List",filters={"buying":1},fields=["name","currency"])
 			if price_lists:
 				for pl in price_lists:
 					columns.append({
