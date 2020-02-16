@@ -31,7 +31,7 @@ frappe.ui.form.on('Supplier Quotation', {
 					var qty =  Math.floor( d["qty"] * 0.25); 
 					var cur = frm.doc.currency;
 					var pays ='';
-					if(d["pays"] != null || d["pays"] != 'undefined'){
+					if(d["pays"] != null && d["pays"] != 'undefined' && d["pays"] != ''){
 						pays =d["pays"] ;
 					}
 					if(qty <= 0){
@@ -124,7 +124,7 @@ frappe.ui.form.on('Supplier Quotation', {
 					var qty =  Math.floor( d["qty"] * 1); 
 					var cur = frm.doc.currency;
 				var pays ='';
-					if(d["pays"] != null || d["pays"] != 'undefined'){
+					if(d["pays"] != null && d["pays"] != 'undefined' && d["pays"] != ''){
 						pays =d["pays"] ;
 					}
 					if(qty <= 0){
