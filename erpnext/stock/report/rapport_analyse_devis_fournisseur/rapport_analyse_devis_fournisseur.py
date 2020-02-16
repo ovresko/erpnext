@@ -251,7 +251,7 @@ def execute(filters=None):
 			"label": "Confirmation",
 			"width": 280
 		})
-	
+	price_lists = []
 	if filters.show_price:
 		if is_full:
 			price_lists= frappe.get_all("Price List",filters={"buying":1},fields=["name","currency"])
