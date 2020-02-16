@@ -418,9 +418,9 @@ def prix_target_item(item_code,qty):
 			if _taux_mb and _taux_mb > 0:
 				taux_mb = float(_taux_mb / 100)
 			value = float(qty) * taux_approche * (1+taux_mb) * 1.19
-			if nego ==1:
-				return "Nouveau prix target enregistree ! %s" % value
-			return "Il faut mettre le prix et qts target !"
+			#if nego ==1:
+			return "Nouveau prix target enregistree ! %s" % value
+			#return "Il faut mettre le prix et qts target !"
 	
 @frappe.whitelist()
 def qts_target_item(item_code,qty):
@@ -433,7 +433,7 @@ def qts_target_item(item_code,qty):
 				item.save()
 				return "qts target enregistree"
 			item.save()
-			return "Il faut mettre le prix et qts target !"
+			return "Qts target enregistree, Il faut mettre le prix et qts target !"
 			
 
 
