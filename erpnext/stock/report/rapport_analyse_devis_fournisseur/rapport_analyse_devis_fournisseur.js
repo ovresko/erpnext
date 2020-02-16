@@ -276,6 +276,11 @@ frappe.query_reports["Rapport analyse devis fournisseur"] = {
 			"label": "Article d'achat",
 			"fieldtype": "Check",
 			"default": 1
+		},{
+			"fieldname": "is_light",
+			"label": "Recherche Rapide",
+			"fieldtype": "Check",
+			"default": 0
 		},
 		{
 			"fieldname": "perfection",
