@@ -5,6 +5,7 @@
 function prix_target_item(data) {
 	var qty_id = 'prix_target_'+data;
 	var qty = $('#'+qty_id).val();
+	console.log("prix_target ",qty);
 	frappe.call({
 			method: "erpnext.buying.doctype.supplier_quotation.supplier_quotation.prix_target_item",
 			args: {
