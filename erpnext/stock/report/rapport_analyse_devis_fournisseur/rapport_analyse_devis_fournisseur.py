@@ -90,6 +90,11 @@ def execute(filters=None):
 			"width": 150
 		})
 	columns.append({
+			"fieldname": "pays",
+			"label": "Pays",
+			"width": 150
+		})
+	columns.append({
 			"fieldname": "qts_demande",
 			"label": _("Qte Demandee"),
 			"width": 150
@@ -299,6 +304,7 @@ def execute(filters=None):
 		sqi.qts_target,
 		sqi.remarque,
 		sqi.confirmation,
+		sqi.pays,
 		it.item_code,
 		it.item_name,
 		it.stock_uom,
@@ -354,6 +360,7 @@ def execute(filters=None):
 		sqi.prix_target,
 		sqi.qts_target,
 		sqi.remarque,
+		sqi.pays,
 		sqi.confirmation,
 		sqi.offre_fournisseur_initial,
 		it.item_code,
@@ -438,6 +445,7 @@ def execute(filters=None):
 			s_qts_devis= ''
 			hist_offre_fournisseur = ""
 			offre_init = ''
+			pays = ''
 			#mb=''
 			if hasattr(mri, 'material_request') and mri.parent:
 				conf_cmd = """<button id='negociation_%s' onClick="negociation('%s')" type='button'>Negociation</button><button id='approuver_%s' onClick="approuver('%s')" type='button'>Approuver</button><button id='en_cours_%s' onClick="en_cours('%s')" type='button'>En Cours</button><button id='annuler_%s' onClick="annuler('%s')" type='button'>Annuler</button>""" % (mri.name,mri.name,mri.name,mri.name,mri.name,mri.name,mri.name,mri.name)
@@ -471,6 +479,7 @@ def execute(filters=None):
 				prix_fournisseur_dzd = round(prix_fournisseur_dzd,2)
 				prix_target = mri.prix_target or 0
 				qts_target = mri.qts_target or 0
+				pays = mri.pays
 				remarque = mri.remarque or ''
 				offre_init = mri.offre_fournisseur_initial
 				prix_target_dzd = prix_target * taux_approche * (1+taux_mb) * 1.19
@@ -550,6 +559,7 @@ def execute(filters=None):
 				       supplier_quotation,
 				       #supplier
 				       supplier,
+				       pays,
 				       #qts_demande
 				       qts_demande,
 
@@ -633,6 +643,7 @@ def execute(filters=None):
 				       supplier_quotation,
 				       #supplier
 				       supplier,
+				       pays,
 				       #qts_demande
 				       qts_demande,
 				       #prix_target,
