@@ -21,7 +21,7 @@ frappe.ui.form.on('Supplier Quotation', {
 
 			//data.push(["Date",frm.doc.transaction_date,"","","","",""]);
 			//data.push(["Fournisseur",frm.doc.supplier_name,"","","","",""]);
-			data.push(["#" ,"Num Consultation","Fabricant","Code Article","Designation","Ref Article","Poids","Devise","Qts","Prix Offre","Prix Target","Qts Target","Remarque","Offre Final","Prix Final","Qts Final","Confirmation "]);
+			data.push(["#" ,"Num Consultation","Fabricant","Code Article","Designation","Ref Article","Poids","Pays d'origine","Devise","Qts","Prix Offre","Prix Target","Qts Target","Remarque","Offre Final","Prix Final","Qts Final","Confirmation "]);
 			
 			$.each(frm.doc.items || [], (i, d) => {
 				var row = [];
@@ -77,6 +77,7 @@ frappe.ui.form.on('Supplier Quotation', {
 						  ,'"'+d["item_name"]+'"'
 						  ,'"'+ref_fabricant+'"'
 						  ,'"'+d["weight_per_unit"]+'"'
+						   ,'"'+d["pays"]+'"' 
 						  ,'"'+cur+'"'
 						  ,'"'+d["qts_original"]+'"'
 						  ,'"'+offre_fournisseur_initial+'"'
@@ -109,7 +110,7 @@ frappe.ui.form.on('Supplier Quotation', {
 
 			//data.push(["Date",frm.doc.transaction_date,"","","","",""]);
 			//data.push(["Fournisseur",frm.doc.supplier_name,"","","","",""]);
-			data.push(["#" ,"Num Consultation","Fabricant","Code Article","Designation","Ref Article","Poids","Devise","Qts","Prix Offre","Prix Target","Qts Target","Remarque","Offre Final","Prix Final","Qts Final","Confirmation "]);
+			data.push(["#" ,"Num Consultation","Fabricant","Code Article","Designation","Ref Article","Poids","Pays d'origine","Devise","Qts","Prix Offre","Prix Target","Qts Target","Remarque","Offre Final","Prix Final","Qts Final","Confirmation "]);
 			
 			$.each(frm.doc.items || [], (i, d) => {
 				var row = [];
@@ -161,6 +162,7 @@ frappe.ui.form.on('Supplier Quotation', {
 						  ,'"'+d["item_name"]+'"'
 						  ,'"'+ref_fabricant+'"'
 						  ,'"'+d["weight_per_unit"]+'"'
+						  ,'"'+d["pays"]+'"' 
 						  ,'"'+cur+'"'
 						  ,'"'+d["qts_original"]+'"'
 						  ,'"'+offre_fournisseur_initial+'"'
