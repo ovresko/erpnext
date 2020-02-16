@@ -187,6 +187,11 @@ def execute(filters=None):
 			"width": 250
 		})
 	columns.append({
+			"fieldname": "offre_init",
+			"label": "Offre Initial",
+			"width": 150
+		})
+	columns.append({
 			"fieldname": "offre_fournisseur",
 			"label": "Offre fournisseur",
 			"width": 150
@@ -430,6 +435,7 @@ def execute(filters=None):
 			s_remarque = ''
 			s_qts_devis= ''
 			hist_offre_fournisseur = ""
+			offre_init = ''
 			#mb=''
 			if hasattr(mri, 'material_request') and mri.parent:
 				conf_cmd = """<button id='negociation_%s' onClick="negociation('%s')" type='button'>Negociation</button><button id='approuver_%s' onClick="approuver('%s')" type='button'>Approuver</button><button id='en_cours_%s' onClick="en_cours('%s')" type='button'>En Cours</button><button id='annuler_%s' onClick="annuler('%s')" type='button'>Annuler</button>""" % (mri.name,mri.name,mri.name,mri.name,mri.name,mri.name,mri.name,mri.name)
@@ -464,6 +470,7 @@ def execute(filters=None):
 				prix_target = mri.prix_target or 0
 				qts_target = mri.qts_target or 0
 				remarque = mri.remarque or ''
+				offre_init = mri.offre_fournisseur_initial
 				prix_target_dzd = prix_target * taux_approche * (1+taux_mb) * 1.19
 				prix_target_dzd = round(prix_target_dzd,2)
 				if rate > 0:
@@ -581,6 +588,7 @@ def execute(filters=None):
 				       qts_devis,
 				       hist_offre_fournisseur,
 				       #prix_fournisseur
+				       offre_init,
 				       prix_fournisseur,
 				       #prix_de_revient
 				       taux_approche,
