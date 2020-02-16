@@ -364,6 +364,7 @@ def make_purchase_receipt(source_name, target_doc=None):
 			"field_map": {
 				"name": "purchase_order_item",
 				"parent": "purchase_order",
+				"pays": "pays",
 				"bom": "bom"
 			},
 			"postprocess": update_item,
@@ -413,6 +414,7 @@ def make_purchase_invoice(source_name, target_doc=None):
 			"doctype": "Purchase Invoice Item",
 			"field_map": {
 				"name": "po_detail",
+				"pays": "pays",
 				"parent": "purchase_order",
 			},
 			"postprocess": update_item,
