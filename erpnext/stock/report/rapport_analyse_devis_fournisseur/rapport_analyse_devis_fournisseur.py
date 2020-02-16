@@ -294,6 +294,7 @@ def execute(filters=None):
 		sqi.prix_de_revient,
 		sqi.prix_fournisseur,
 		sqi.prix_fournisseur_dzd,
+		sqi.offre_fournisseur_initial,
 		sqi.prix_target,
 		sqi.qts_target,
 		sqi.remarque,
@@ -354,6 +355,7 @@ def execute(filters=None):
 		sqi.qts_target,
 		sqi.remarque,
 		sqi.confirmation,
+		sqi.offre_fournisseur_initial,
 		it.item_code,
 		it.item_name,
 		it.stock_uom,
@@ -660,6 +662,7 @@ def execute(filters=None):
 				       qts_devis,
 				       hist_offre_fournisseur,
 				       #prix_fournisseur
+				       offre_init,
 				       prix_fournisseur,
 				       #prix_de_revient
 				       taux_approche,
