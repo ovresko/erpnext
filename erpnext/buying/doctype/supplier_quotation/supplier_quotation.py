@@ -303,7 +303,7 @@ def make_purchase_order(source_name, target_doc=None):
 			"field_map": [
 				["name", "supplier_quotation_item"],
 				["parent", "supplier_quotation"],
-				["pays": "pays"],
+				["pays", "pays"],
 				["material_request", "material_request"],
 				["material_request_item", "material_request_item"],
 				["sales_order", "sales_order"]
