@@ -346,14 +346,17 @@ def set_item_achat(item_code):
 def set_item_demande(item_code,qty):
 	if item_code and qty:
 		item = frappe.get_doc("Supplier Quotation Item",item_code)
+		
 		if item:
+			supp = frappe.get_doc("Supplier Quotation",item.parent)
 			item.qty = float(qty)
 			if item.qty == 0:
 				item.confirmation = "Annule"
 			else:
 				item.rate = item.prix_fournisseur
 				item.confirmation = "Approuve"
-			item.etat_mail = "Email Non Envoye"
+			supp.etat_mail = "Email Non Envoye"
+			supp.save()
 			item.save()
 			return "Nouvelle Qts enregistree"
 			
@@ -362,8 +365,10 @@ def approuver_item(item_code):
 	if item_code:
 		item = frappe.get_doc("Supplier Quotation Item",item_code)
 		if item:
+			supp = frappe.get_doc("Supplier Quotation",item.parent)
+			supp.etat_mail = "Email Non Envoye"
+			supp.save()
 			item.confirmation = "Approuve"
-			item.etat_mail = "Email Non Envoye"
 			item.rate = item.prix_fournisseur
 			item.save()
 			return "Article Approuve"
@@ -373,6 +378,9 @@ def en_cours_item(item_code):
 	if item_code:
 		item = frappe.get_doc("Supplier Quotation Item",item_code)
 		if item:
+			supp = frappe.get_doc("Supplier Quotation",item.parent)
+			supp.etat_mail = "Email Non Envoye"
+			supp.save()
 			item.confirmation = "En cours"
 			item.save()
 			return "Article En cours"
@@ -382,6 +390,9 @@ def annuler_item(item_code):
 	if item_code:
 		item = frappe.get_doc("Supplier Quotation Item",item_code)
 		if item:
+			supp = frappe.get_doc("Supplier Quotation",item.parent)
+			supp.etat_mail = "Email Non Envoye"
+			supp.save()
 			item.confirmation = "Annule"
 			item.rate = item.prix_fournisseur
 			item.qty = 0
@@ -396,7 +407,10 @@ def negociation_item(item_code):
 			if not item.qts_target and not item.prix_target:
 				return "Il faut mettre le prix et qts target avant de modifier le status!"
 			item.confirmation = "En negociation"
-			item.etat_mail = "Email Non Envoye"
+			supp = frappe.get_doc("Supplier Quotation",item.parent)
+			supp.etat_mail = "Email Non Envoye"
+			supp.save()
+			#item.etat_mail = "Email Non Envoye"
 			#item.rate = item.prix_fournisseur
 			#item.qty = 0
 			item.save()
@@ -407,7 +421,9 @@ def prix_target_item(item_code,qty):
 		item = frappe.get_doc("Supplier Quotation Item",item_code)
 		if item:
 			item.prix_target = float(qty)
-			item.etat_mail = "Email Non Envoye"
+			supp = frappe.get_doc("Supplier Quotation",item.parent)
+			supp.etat_mail = "Email Non Envoye"
+			supp.save()
 			nego = 0
 			if item.qts_target > 0 and item.prix_target > 0:
 				nego = 1
@@ -432,7 +448,9 @@ def qts_target_item(item_code,qty):
 		item = frappe.get_doc("Supplier Quotation Item",item_code)
 		if item:
 			item.qts_target = float(qty)
-			item.etat_mail = "Email Non Envoye"
+			supp = frappe.get_doc("Supplier Quotation",item.parent)
+			supp.etat_mail = "Email Non Envoye"
+			supp.save()
 			if item.qts_target > 0 and item.prix_target > 0:
 				item.confirmation = "En negociation"
 				item.save()
