@@ -40,16 +40,19 @@ def get_notification_config():
 			"Material Request": {
 				"docstatus": ("<", 2),
 				"status": ("not in", ("Stopped",)),
-				"per_ordered": ("<", 100)
+				"per_ordered": ("=", 0)
 			},
 			"Request for Quotation": { "docstatus": 0 },
 			"Supplier Quotation": {"docstatus": 0},
 			"Purchase Order": {
 				"status": ("not in", ("Completed", "Closed")),
+				"per_received": ("=", 0),
+				"per_billed": ("=", 0),
 				"docstatus": ("<", 2)
 			},
 			"Purchase Receipt": {
 				"status": ("not in", ("Completed", "Closed")),
+				"per_billed": ("=", 0),
 				"docstatus": ("<", 2)
 			},
 			"Work Order": { "status": ("in", ("Draft", "Not Started", "In Process")) },
