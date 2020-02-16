@@ -350,6 +350,7 @@ def set_item_demande(item_code,qty):
 			if item.qty == 0:
 				item.confirmation = "Annule"
 			else:
+				item.rate = item.prix_fournisseur
 				item.confirmation = "Approuve"
 			item.save()
 			return "Nouvelle Qts enregistree"
@@ -389,6 +390,8 @@ def negociation_item(item_code):
 	if item_code:
 		item = frappe.get_doc("Supplier Quotation Item",item_code)
 		if item:
+			if not item.qts_target and not item.prix_target:
+				return "Il faut mettre le prix et qts target avant de modifier le status!"
 			item.confirmation = "En negociation"
 			#item.rate = item.prix_fournisseur
 			#item.qty = 0
@@ -400,8 +403,13 @@ def prix_target_item(item_code,qty):
 		item = frappe.get_doc("Supplier Quotation Item",item_code)
 		if item:
 			item.prix_target = float(qty)
-			item.confirmation = "En negociation"
-			item.save()
+			nego = 0
+			if item.qts_target > and item.prix_target > 0:
+				nego = 1
+				item.confirmation = "En negociation"
+				item.save()
+			else:
+				item.save()
 			supplier_id = frappe.db.get_value("Supplier Quotation",item.parent,"supplier")
 			taux_approche = frappe.db.get_value("Supplier",supplier_id,"taux_approche") or 1
 			_taux_mb = frappe.db.get_value("Supplier",supplier_id,"taux_mb") or 0
@@ -409,7 +417,9 @@ def prix_target_item(item_code,qty):
 			if _taux_mb and _taux_mb > 0:
 				taux_mb = float(_taux_mb / 100)
 			value = float(qty) * taux_approche * (1+taux_mb) * 1.19
-			return "Nouveau prix target enregistree ! %s" % value
+			if nego ==1:
+				return "Nouveau prix target enregistree ! %s" % value
+			return "Il faut mettre le prix et qts target !"
 	
 @frappe.whitelist()
 def qts_target_item(item_code,qty):
@@ -417,9 +427,13 @@ def qts_target_item(item_code,qty):
 		item = frappe.get_doc("Supplier Quotation Item",item_code)
 		if item:
 			item.qts_target = float(qty)
-			item.confirmation = "En negociation"
+			if item.qts_target > and item.prix_target > 0:
+				item.confirmation = "En negociation"
+				item.save()
+				return "qts target enregistree"
 			item.save()
-			return "qts target enregistree"
+			return "Il faut mettre le prix et qts target !"
+			
 
 
 @frappe.whitelist()
