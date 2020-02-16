@@ -30,6 +30,10 @@ frappe.ui.form.on('Supplier Quotation', {
 					var ref_fabricant = d["ref_fabricant"];
 					var qty =  Math.floor( d["qty"] * 0.25); 
 					var cur = frm.doc.currency;
+					var pays ='';
+					if(d["pays"] != null || d["pays"] != 'undefined'){
+						pays =d["pays"] ;
+					}
 					if(qty <= 0){
 						qty= 2;
 					}
@@ -77,7 +81,7 @@ frappe.ui.form.on('Supplier Quotation', {
 						  ,'"'+d["item_name"]+'"'
 						  ,'"'+ref_fabricant+'"'
 						  ,'"'+d["weight_per_unit"]+'"'
-						   ,'"'+d["pays"] || '_'+'"' 
+						   ,'"'+pays+'"' 
 						  ,'"'+cur+'"'
 						  ,'"'+d["qts_original"]+'"'
 						  ,'"'+offre_fournisseur_initial+'"'
@@ -119,6 +123,10 @@ frappe.ui.form.on('Supplier Quotation', {
 					var ref_fabricant = d["ref_fabricant"];
 					var qty =  Math.floor( d["qty"] * 1); 
 					var cur = frm.doc.currency;
+				var pays ='';
+					if(d["pays"] != null || d["pays"] != 'undefined'){
+						pays =d["pays"] ;
+					}
 					if(qty <= 0){
 						qty= 2;
 					}
@@ -162,7 +170,7 @@ frappe.ui.form.on('Supplier Quotation', {
 						  ,'"'+d["item_name"]+'"'
 						  ,'"'+ref_fabricant+'"'
 						  ,'"'+d["weight_per_unit"]+'"'
-						  ,'"'+d["pays"] || '_'+'"' 
+						  ,'"'+pays+'"' 
 						  ,'"'+cur+'"'
 						  ,'"'+d["qts_original"]+'"'
 						  ,'"'+offre_fournisseur_initial+'"'
