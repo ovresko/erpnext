@@ -902,6 +902,7 @@ def make_pr(source_name,target_doc=None):
                         "doctype": "Purchase Receipt Item",
                         "field_map": {
                             "qty":"received_qty",
+			    "pays": "pays",
                             "po_detail":"purchase_order_item",
                             "purchase_order":"purchase_order"
                         },
@@ -928,6 +929,7 @@ def make_stock_entry(source_name, target_doc=None):
 			"doctype": "Stock Entry Detail",
 			"field_map": {
 				"stock_qty": "transfer_qty",
+				"pays": "pays",
 				"batch_no": "batch_no"
 			},
 		}
