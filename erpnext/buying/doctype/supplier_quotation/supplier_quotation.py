@@ -404,7 +404,7 @@ def prix_target_item(item_code,qty):
 		if item:
 			item.prix_target = float(qty)
 			nego = 0
-			if item.qts_target > and item.prix_target > 0:
+			if item.qts_target > 0 and item.prix_target > 0:
 				nego = 1
 				item.confirmation = "En negociation"
 				item.save()
@@ -427,7 +427,7 @@ def qts_target_item(item_code,qty):
 		item = frappe.get_doc("Supplier Quotation Item",item_code)
 		if item:
 			item.qts_target = float(qty)
-			if item.qts_target > and item.prix_target > 0:
+			if item.qts_target > 0 and item.prix_target > 0:
 				item.confirmation = "En negociation"
 				item.save()
 				return "qts target enregistree"
