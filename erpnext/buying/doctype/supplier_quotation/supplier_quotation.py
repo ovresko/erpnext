@@ -354,9 +354,7 @@ def set_item_demande(item_code,qty):
 				item.rate = item.prix_fournisseur
 				item.confirmation = "Approuve"
 			item.save()
-			supp = frappe.get_doc("Supplier Quotation",item.parent)
-			supp.etat_mail = "Email Non Envoye"
-			supp.save()
+			frappe.db.set_value("Supplier Quotation", item.parent, "etat_mail", "Email Non Envoye")
 			return "Nouvelle Qts enregistree"
 			
 @frappe.whitelist()
@@ -368,9 +366,7 @@ def approuver_item(item_code):
 			item.confirmation = "Approuve"
 			item.rate = item.prix_fournisseur
 			item.save()
-			supp = frappe.get_doc("Supplier Quotation",item.parent)
-			supp.etat_mail = "Email Non Envoye"
-			supp.save()
+			frappe.db.set_value("Supplier Quotation", item.parent, "etat_mail", "Email Non Envoye")
 			return "Article Approuve"
 	
 @frappe.whitelist()
@@ -381,9 +377,7 @@ def en_cours_item(item_code):
 			
 			item.confirmation = "En cours"
 			item.save()
-			supp = frappe.get_doc("Supplier Quotation",item.parent)
-			supp.etat_mail = "Email Non Envoye"
-			supp.save()
+			frappe.db.set_value("Supplier Quotation", item.parent, "etat_mail", "Email Non Envoye")
 			return "Article En cours"
 		
 @frappe.whitelist()
@@ -396,9 +390,7 @@ def annuler_item(item_code):
 			item.rate = item.prix_fournisseur
 			item.qty = 0
 			item.save()
-			supp = frappe.get_doc("Supplier Quotation",item.parent)
-			supp.etat_mail = "Email Non Envoye"
-			supp.save()
+			frappe.db.set_value("Supplier Quotation", item.parent, "etat_mail", "Email Non Envoye")
 			return "Article Annule"
 #negociation_item
 @frappe.whitelist()
@@ -414,9 +406,7 @@ def negociation_item(item_code):
 			#item.rate = item.prix_fournisseur
 			#item.qty = 0
 			item.save()
-			supp = frappe.get_doc("Supplier Quotation",item.parent)
-			supp.etat_mail = "Email Non Envoye"
-			supp.save()
+			frappe.db.set_value("Supplier Quotation", item.parent, "etat_mail", "Email Non Envoye")
 			return "Article Annule"
 @frappe.whitelist()
 def prix_target_item(item_code,qty):
@@ -438,9 +428,7 @@ def prix_target_item(item_code,qty):
 			if _taux_mb and _taux_mb > 0:
 				taux_mb = float(_taux_mb / 100)
 			value = float(qty) * taux_approche * (1+taux_mb) * 1.19
-			supp = frappe.get_doc("Supplier Quotation",item.parent)
-			supp.etat_mail = "Email Non Envoye"
-			supp.save()
+			frappe.db.set_value("Supplier Quotation", item.parent, "etat_mail", "Email Non Envoye")
 			#if nego ==1:
 			return "Nouveau prix target enregistree ! %s" % value
 			#return "Il faut mettre le prix et qts target !"
@@ -456,9 +444,7 @@ def qts_target_item(item_code,qty):
 				item.save()
 				return "qts target enregistree"
 			item.save()
-			supp = frappe.get_doc("Supplier Quotation",item.parent)
-			supp.etat_mail = "Email Non Envoye"
-			supp.save()
+			frappe.db.set_value("Supplier Quotation", item.parent, "etat_mail", "Email Non Envoye")
 			return "Qts target enregistree, Il faut mettre le prix et qts target !"
 			
 
