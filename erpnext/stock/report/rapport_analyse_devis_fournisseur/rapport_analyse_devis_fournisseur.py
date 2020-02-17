@@ -126,16 +126,17 @@ def execute(filters=None):
 				"width": 180
 			})
 	##########
-	columns.append({
-			"fieldname": "last_qty",
-			"label": "Derniere Qts Achetee",
-			"width": 150
-		})
-	columns.append({
-			"fieldname": "last_valuation",
-			"label": "Derniere taux de valorisation",
-			"width": 150
-		})
+	if is_full:
+		columns.append({
+				"fieldname": "last_qty",
+				"label": "Derniere Qts Achetee",
+				"width": 150
+			})
+		columns.append({
+				"fieldname": "last_valuation",
+				"label": "Derniere taux de valorisation",
+				"width": 150
+			})
 	columns.append({
 			"fieldname": "consom",
 			"label": "Consommation 1 ans",
@@ -166,11 +167,12 @@ def execute(filters=None):
 			"label": "Qte Max d'achat",
 			"width": 150
 		})
-	columns.append({
-			"fieldname": "qts_recom",
-			"label": "Recommande auto",
-			"width": 150
-		})
+	if is_full:
+		columns.append({
+				"fieldname": "qts_recom",
+				"label": "Recommande auto",
+				"width": 150
+			})
 	columns.append({
 			"fieldname": "last_purchase_rate",
 			"label": "Dernier Prix d'achat (DZD)",
@@ -257,12 +259,11 @@ def execute(filters=None):
 			"label": "Status",
 			"width": 150
 		})
-	if is_full:
-		columns.append({
-				"fieldname": "confirmation",
-				"label": "Confirmation",
-				"width": 280
-			})
+	columns.append({
+			"fieldname": "confirmation",
+			"label": "Confirmation",
+			"width": 280
+		})
 	price_lists = []
 	if filters.show_price:
 		price_lists= frappe.get_all("Price List",filters={"buying":1},fields=["name","currency"])
@@ -523,23 +524,26 @@ def execute(filters=None):
 			elif mri.has_variants:
 				info = info_modele(mri.item_code)
 				qts_max_achat = mri.max_order_qty
-			sqllast_qty = frappe.db.sql("""select actual_qty,valuation_rate from `tabStock Ledger Entry` 
-			where item_code=%s and voucher_type=%s 
-			order by posting_date, posting_time limit 1""", (mri.item_code,"Purchase Receipt"), as_dict=1)
+			if is_full:
+				sqllast_qty = frappe.db.sql("""select actual_qty,valuation_rate from `tabStock Ledger Entry` 
+				where item_code=%s and voucher_type=%s 
+				order by posting_date, posting_time limit 1""", (mri.item_code,"Purchase Receipt"), as_dict=1)
+				if sqllast_qty:
+					last_qty = sqllast_qty[0].actual_qty
+					last_valuation = sqllast_qty[0].valuation_rate
 			last_qty = 0
 			last_valuation = 0
 			recom = 0
 			_date = ""
 			date =""
 			date = frappe.utils.get_datetime(mri.creation).strftime("%d/%m/%Y")
-			_recom = frappe.get_all("Item Reorder",fields=["warehouse_reorder_qty","modified"],filters=[{"parent":mri.item_code},{"warehouse":"GLOBAL - MV"}])
-			if _recom:
-				recom = _recom[0].warehouse_reorder_qty
-				_date = _recom[0].modified
-				#date = frappe.utils.get_datetime(date).strftime("%d/%m/%Y")
-			if sqllast_qty:
-				last_qty = sqllast_qty[0].actual_qty
-				last_valuation = sqllast_qty[0].valuation_rate
+			if is_full:
+				_recom = frappe.get_all("Item Reorder",fields=["warehouse_reorder_qty","modified"],filters=[{"parent":mri.item_code},{"warehouse":"GLOBAL - MV"}])
+				if _recom:
+					recom = _recom[0].warehouse_reorder_qty
+					_date = _recom[0].modified
+					#date = frappe.utils.get_datetime(date).strftime("%d/%m/%Y")
+			
 				
 			if is_full:
 				row = ["""<button   onClick="achat_item('%s')" type='button'> X </button>""" % (mri.name),
@@ -652,9 +656,9 @@ def execute(filters=None):
 				       qts_demande,
 				       #prix_target,
 				       #last_qty
-				       last_qty,
+				       #last_qty,
 				       #last_valuation
-				       last_valuation or 0,
+				       #last_valuation or 0,
 				       #consom,
 				       "_",
 				       #qts_reliquat
@@ -668,7 +672,7 @@ def execute(filters=None):
 				       #qts_max_achat
 				       qts_max_achat or 0,
 				       #recom
-				       recom,
+				       #recom,
 				       #last_purchase_rate
 				       mri.last_purchase_rate  or 0,
 				       #last_purchase_devise
@@ -697,9 +701,9 @@ def execute(filters=None):
 				       #qts_devis
 				       s_qts_devis,
 				       #confirmation
-				       confirmation
+				       confirmation,
 				       #cmd
-				       #conf_cmd
+				       conf_cmd
 				      ]
 
 			if filters.show_price:
