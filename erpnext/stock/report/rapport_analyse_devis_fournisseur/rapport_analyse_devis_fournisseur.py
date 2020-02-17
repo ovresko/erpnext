@@ -522,7 +522,7 @@ def execute(filters=None):
 				#variante
 				info = info_variante(mri.item_code)
 				qts_max_achat = mri.max_ordered_variante
-			elif mri.has_variants:
+			elif mri.has_variants and is_full:
 				info = info_modele(mri.item_code)
 				qts_max_achat = mri.max_order_qty
 			if is_full:
