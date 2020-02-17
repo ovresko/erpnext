@@ -748,11 +748,7 @@ def get_conditions(filters):
 	
 	#perfection
 	if filters.get('perfection'):
-		add = ''
-		if filters.get('perfection') == "En cours":
-			add = "or it.perfection=''"
-		q = "it.perfection=%(perfection)s %s" % add
-		conditions.append(q)
+		conditions.append("it.perfection=%(perfection)s")
 	
 	if filters.get('variant_of'):
 		conditions.append("(it.item_code=%(variant_of)s or it.variant_of=%(variant_of)s)")
@@ -763,7 +759,7 @@ def get_conditions(filters):
 		where vv.version_vehicule=%(version)s))"""  )
 	if filters.get('confirmation'):
 		if filters.get('confirmation') == "En cours":
-			conditions.append("""sqi.confirmation='' or sqi.confirmation=%(confirmation)s""")
+			conditions.append("""sqi.confirmation IS NULL or sqi.confirmation=%(confirmation)s""")
 		else:
 			conditions.append("""sqi.confirmation=%(confirmation)s""")
 	if filters.get('modele_v'):
