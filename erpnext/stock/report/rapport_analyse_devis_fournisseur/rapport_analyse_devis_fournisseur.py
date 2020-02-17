@@ -68,12 +68,11 @@ def execute(filters=None):
 				"label": "Perfection",
 				"width": 150
 			})
-	##########
-	columns.append({
-			"fieldname": "date_material_request",
-			"label": "Date Demande",
-			"width": 150
-		})
+		columns.append({
+				"fieldname": "date_material_request",
+				"label": "Date Demande",
+				"width": 150
+			})
 	columns.append({
 			"fieldname": "material_request",
 			"label": _("Material Request"),
@@ -389,25 +388,26 @@ def execute(filters=None):
 		(model), as_dict=1)
 		mitems.extend(other_sq)
 		oids = {o.item_code for o in mitems if item.item_code}
-		others = frappe.get_all("Item",filters={"variant_of":model,"item_code":("not in",oids)},fields=[
-		"variant_of",
-		"stock_uom", 
-		"perfection",
-		"is_purchase_item",
-		"weight_per_unit",
-		"variant_of",
-		"has_variants",
-		"item_name", 
-		"item_code", 
-		"manufacturer",
-		"last_purchase_rate" , 
-		"manufacturer_part_no", 
-		"item_group",
-		"last_purchase_devise",
-		"max_order_qty",
-		"max_ordered_variante"])
+		if is_full:
+			others = frappe.get_all("Item",filters={"variant_of":model,"item_code":("not in",oids)},fields=[
+			"variant_of",
+			"stock_uom", 
+			"perfection",
+			"is_purchase_item",
+			"weight_per_unit",
+			"variant_of",
+			"has_variants",
+			"item_name", 
+			"item_code", 
+			"manufacturer",
+			"last_purchase_rate" , 
+			"manufacturer_part_no", 
+			"item_group",
+			"last_purchase_devise",
+			"max_order_qty",
+			"max_ordered_variante"])
 		
-		mitems.extend(others)
+			mitems.extend(others)
 		
 		for mri in mitems:
 			global info
@@ -491,9 +491,10 @@ def execute(filters=None):
 					rate_dzd = rate * (1+taux_mb) * taux_approche * 1.19
 					rate_dzd = round(rate_dzd,2)
 				confirmation = mri.confirmation
-				_datedm =frappe.db.get_value("Material Request Item",mri.material_request_item,"creation")
-				if _datedm:
-					datedm = frappe.utils.get_datetime(_datedm).strftime("%d/%m/%Y")
+				if is_full:
+					_datedm =frappe.db.get_value("Material Request Item",mri.material_request_item,"creation")
+					if _datedm:
+						datedm = frappe.utils.get_datetime(_datedm).strftime("%d/%m/%Y")
 				#hists = frappe.get_all("Version",filters={"docname":mri.name,"data":("like", "%prix_fournisseur%")},fields=['data','name'])
 				#if is_full:
 					#vers = frappe.db.sql("""select docname,name,data from `tabVersion` 
@@ -644,7 +645,7 @@ def execute(filters=None):
 				       mri.manufacturer,
 				       mri.manufacturer_part_no,
 				       #datedm
-				       datedm,
+				       #datedm,
 				       #material_request
 				       material_request,
 				       #supplier_quotation
