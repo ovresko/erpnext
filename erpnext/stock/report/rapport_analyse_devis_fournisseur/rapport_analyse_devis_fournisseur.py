@@ -257,11 +257,12 @@ def execute(filters=None):
 			"label": "Status",
 			"width": 150
 		})
-	columns.append({
-			"fieldname": "confirmation",
-			"label": "Confirmation",
-			"width": 280
-		})
+	if is_full:
+		columns.append({
+				"fieldname": "confirmation",
+				"label": "Confirmation",
+				"width": 280
+			})
 	price_lists = []
 	if filters.show_price:
 		price_lists= frappe.get_all("Price List",filters={"buying":1},fields=["name","currency"])
@@ -696,9 +697,9 @@ def execute(filters=None):
 				       #qts_devis
 				       s_qts_devis,
 				       #confirmation
-				       confirmation,
+				       confirmation
 				       #cmd
-				       conf_cmd
+				       #conf_cmd
 				      ]
 
 			if filters.show_price:
