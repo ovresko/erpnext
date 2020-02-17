@@ -166,12 +166,11 @@ def execute(filters=None):
 			"label": "Qte Max d'achat",
 			"width": 150
 		})
-	if is_full:
-		columns.append({
-				"fieldname": "qts_recom",
-				"label": "Recommande auto",
-				"width": 150
-			})
+	columns.append({
+			"fieldname": "qts_recom",
+			"label": "Recommande auto",
+			"width": 150
+		})
 	columns.append({
 			"fieldname": "last_purchase_rate",
 			"label": "Dernier Prix d'achat (DZD)",
@@ -388,26 +387,25 @@ def execute(filters=None):
 		(model), as_dict=1)
 		mitems.extend(other_sq)
 		oids = {o.item_code for o in mitems if item.item_code}
-		if is_full:
-			others = frappe.get_all("Item",filters={"variant_of":model,"item_code":("not in",oids)},fields=[
-			"variant_of",
-			"stock_uom", 
-			"perfection",
-			"is_purchase_item",
-			"weight_per_unit",
-			"variant_of",
-			"has_variants",
-			"item_name", 
-			"item_code", 
-			"manufacturer",
-			"last_purchase_rate" , 
-			"manufacturer_part_no", 
-			"item_group",
-			"last_purchase_devise",
-			"max_order_qty",
-			"max_ordered_variante"])
-		
-			mitems.extend(others)
+		others = frappe.get_all("Item",filters={"variant_of":model,"item_code":("not in",oids)},fields=[
+		"variant_of",
+		"stock_uom", 
+		"perfection",
+		"is_purchase_item",
+		"weight_per_unit",
+		"variant_of",
+		"has_variants",
+		"item_name", 
+		"item_code", 
+		"manufacturer",
+		"last_purchase_rate" , 
+		"manufacturer_part_no", 
+		"item_group",
+		"last_purchase_devise",
+		"max_order_qty",
+		"max_ordered_variante"])
+
+		mitems.extend(others)
 		
 		for mri in mitems:
 			global info
@@ -538,11 +536,10 @@ def execute(filters=None):
 			_date = ""
 			date =""
 			date = frappe.utils.get_datetime(mri.creation).strftime("%d/%m/%Y")
-			if is_full:
-				_recom = frappe.get_all("Item Reorder",fields=["warehouse_reorder_qty","modified"],filters=[{"parent":mri.item_code},{"warehouse":"GLOBAL - MV"}])
-				if _recom:
-					recom = _recom[0].warehouse_reorder_qty
-					_date = _recom[0].modified
+			_recom = frappe.get_all("Item Reorder",fields=["warehouse_reorder_qty","modified"],filters=[{"parent":mri.item_code},{"warehouse":"GLOBAL - MV"}])
+			if _recom:
+				recom = _recom[0].warehouse_reorder_qty
+				_date = _recom[0].modified
 					#date = frappe.utils.get_datetime(date).strftime("%d/%m/%Y")
 			
 				
@@ -673,7 +670,7 @@ def execute(filters=None):
 				       #qts_max_achat
 				       qts_max_achat or 0,
 				       #recom
-				       #recom,
+				       recom,
 				       #last_purchase_rate
 				       mri.last_purchase_rate  or 0,
 				       #last_purchase_devise
