@@ -186,11 +186,12 @@ def execute(filters=None):
 			"label": "Qte En Devis",
 			"width": 150
 		})
-	columns.append({
-			"fieldname": "hist_offre_fournisseur",
-			"label": "Historique Offre fournisseur",
-			"width": 250
-		})
+	if is_full:
+		columns.append({
+				"fieldname": "hist_offre_fournisseur",
+				"label": "Historique Offre fournisseur",
+				"width": 250
+			})
 	columns.append({
 			"fieldname": "offre_init",
 			"label": "Offre Initial",
@@ -492,18 +493,20 @@ def execute(filters=None):
 				if _datedm:
 					datedm = frappe.utils.get_datetime(_datedm).strftime("%d/%m/%Y")
 				#hists = frappe.get_all("Version",filters={"docname":mri.name,"data":("like", "%prix_fournisseur%")},fields=['data','name'])
-				vers = frappe.db.sql("""select docname,name,data from `tabVersion` 
-			where docname=%(docname)s and data like %(txt)s 
-			order by creation """, {'docname':mri.name,'txt': "%%prix_fournisseur%%" }, as_dict=1)
+				if is_full:
+					#vers = frappe.db.sql("""select docname,name,data from `tabVersion` 
+					#where docname=%(docname)s and data like %(txt)s 
+					#order by creation """, {'docname':mri.name,'txt': "%%prix_fournisseur%%" }, as_dict=1)
 				ahist = ""
-				if vers:
-					for h in vers:
+				
+				#if if is_full and vers:
+				#	for h in vers:
 						#data = h.name
-						if h.data:
-							changed =  json.loads(h.data)["changed"]
-							if changed:
-								res = [item for sublist in changed for item in sublist]
-								ahist += " | ".join(res)
+				#		if h.data:
+				#			changed =  json.loads(h.data)["changed"]
+				#			if changed:
+				#				res = [item for sublist in changed for item in sublist]
+				#				ahist += " | ".join(res)
 							
 							
 				hist_offre_fournisseur = ahist
@@ -671,7 +674,6 @@ def execute(filters=None):
 				       mri.last_purchase_devise  or 0,
 				       #qts_devis
 				       qts_devis,
-				       hist_offre_fournisseur,
 				       #prix_fournisseur
 				       offre_init,
 				       prix_fournisseur,
