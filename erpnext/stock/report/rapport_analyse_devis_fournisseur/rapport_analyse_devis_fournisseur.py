@@ -493,7 +493,7 @@ def execute(filters=None):
 				if _datedm:
 					datedm = frappe.utils.get_datetime(_datedm).strftime("%d/%m/%Y")
 				#hists = frappe.get_all("Version",filters={"docname":mri.name,"data":("like", "%prix_fournisseur%")},fields=['data','name'])
-				if is_full:
+				#if is_full:
 					#vers = frappe.db.sql("""select docname,name,data from `tabVersion` 
 					#where docname=%(docname)s and data like %(txt)s 
 					#order by creation """, {'docname':mri.name,'txt': "%%prix_fournisseur%%" }, as_dict=1)
