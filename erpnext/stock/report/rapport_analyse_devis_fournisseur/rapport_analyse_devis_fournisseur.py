@@ -518,12 +518,11 @@ def execute(filters=None):
 				s_remarque = """<input placeholder='remarque' id='remarque_%s' value='%s' style='color:black'></input><button  onClick="remarque_item('%s')" type='button'> OK </button>""" % (mri.name,remarque,mri.name)
 				s_qts_devis = """ <input placeholder='Qts devis' id='input_%s' value='%s' style='color:black'></input> <button id='%s' onClick="demander_item('%s')" type='button'>OK</button>""" % (mri.name,qts_devis,mri.name,mri.name)
 			qts_max_achat = 0
-			info=None
 			if mri.variant_of:
 				#variante
 				info = info_variante(mri.item_code)
 				qts_max_achat = mri.max_ordered_variante
-			elif mri.has_variants and is_full:
+			elif mri.has_variants:
 				info = info_modele(mri.item_code)
 				qts_max_achat = mri.max_order_qty
 			if is_full:
@@ -664,13 +663,13 @@ def execute(filters=None):
 				       #consom,
 				       "_",
 				       #qts_reliquat
-				       info[3] if info else 0,
+				       info[3] or 0,
 				       #qts_dem
-				       info[1] if info else 0,
+				       info[1] or 0,
 				       #qts
-				       info[0] if info else 0,
+				       info[0] or 0,
 				       #qts_projete
-				       info[2] if info else 0,
+				       info[2] or 0,
 				       #qts_max_achat
 				       qts_max_achat or 0,
 				       #recom
