@@ -454,6 +454,7 @@ def execute(filters=None):
 		taux_approche = 1.0
 		remarque = ''
 		commentaire = ''
+		s_commentaire = ''
 		confirmation = ''
 		conf_cmd = ''
 		s_prix_target = ''
