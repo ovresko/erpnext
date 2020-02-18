@@ -415,11 +415,12 @@ def execute(filters=None):
 		"max_ordered_variante"])
 
 		mitems.extend(others)
-	data.append(["Article Total :",mitems.length or 0])
-	data.append(["En cours :",sum(1 for i in mitems if i.cnofirmation == "En cours") or 0])
-	data.append(["Approuve :",sum(1 for i in mitems if i.cnofirmation == "Approuve") or 0])
-	data.append(["Annule :",sum(1 for i in mitems if i.cnofirmation == "Annule") or 0])
-	data.append(["En negociation :",sum(1 for i in mitems if i.cnofirmation == "En negociation") or 0])
+		
+	data.append(["Article Total :",len(mitems) or 0])
+	data.append(["En cours :",sum(1 for i in mitems if i.confirmation == "En cours") or 0])
+	data.append(["Approuve :",sum(1 for i in mitems if i.confirmation == "Approuve") or 0])
+	data.append(["Annule :",sum(1 for i in mitems if i.confirmation == "Annule") or 0])
+	data.append(["En negociation :",sum(1 for i in mitems if i.confirmation == "En negociation") or 0])
 	
 	for mri in mitems:
 		global info
