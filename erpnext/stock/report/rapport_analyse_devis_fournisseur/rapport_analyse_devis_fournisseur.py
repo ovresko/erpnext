@@ -538,6 +538,13 @@ def execute(filters=None):
 				s_remarque = """<input placeholder='remarque' id='remarque_%s' value='%s' style='color:black'></input><button  onClick="remarque_item('%s')" type='button'> OK </button>""" % (mri.name,remarque,mri.name)
 				s_commentaire = """<input placeholder='commentaire' id='commentaire_%s' value='%s' style='color:black'></input><button  onClick="commentaire_item('%s')" type='button'> OK </button>""" % (mri.name,commentaire,mri.name)
 				s_qts_devis = """ <input placeholder='Qts devis' id='input_%s' value='%s' style='color:black'></input> <button id='%s' onClick="demander_item('%s')" type='button'>OK</button>""" % (mri.name,qts_devis,mri.name,mri.name)
+			else:
+				s_prix_target = prix_target
+				s_qts_target = qts_target
+				s_remarque = remarque
+				s_commentaire = commentaire
+				s_qts_devis = qts_devis
+				
 		qts_max_achat = 0
 		if mri.variant_of:
 			#variante
