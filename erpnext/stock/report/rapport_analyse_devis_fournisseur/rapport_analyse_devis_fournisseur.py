@@ -415,7 +415,9 @@ def execute(filters=None):
 		"max_ordered_variante"])
 
 		mitems.extend(others)
-		
+	if filters.get("consultation_interne"):
+		asupplier_name = frappe.db.get_value("Supplier Quotation",filters.get("consultation_interne"),"supplier_name")
+		data.append(["","Fournisseur :",asupplier_name or ''])
 	data.append(["","Article Total :",len(mitems) or 0])
 	data.append(["","En cours :",sum(1 for i in mitems if hasattr(i, 'material_request') and i.confirmation == "En cours") or 0])
 	data.append(["","Approuve :",sum(1 for i in mitems if hasattr(i, 'material_request') and i.confirmation == "Approuve") or 0])
