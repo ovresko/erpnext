@@ -345,7 +345,7 @@ def execute(filters=None):
 	for model in models:
 		_mitems = [item for item in items if item.variant_of == model]
 		origin_model = frappe.get_doc("Item",model)
-		mitems = [origin_model]
+		mitems.extend([origin_model])
 		mitems.extend(_mitems)
 		ids = {o.item_code for o in mitems if item.item_code}
 		lids = "','".join(ids)
