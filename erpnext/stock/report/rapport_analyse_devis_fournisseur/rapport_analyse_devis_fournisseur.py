@@ -233,6 +233,11 @@ def execute(filters=None):
 			"width": 250
 		})
 	columns.append({
+			"fieldname": "commentaire",
+			"label": "Commentaire",
+			"width": 250
+		})
+	columns.append({
 			"fieldname": "remarque",
 			"label": "Remarque",
 			"width": 250
@@ -304,6 +309,7 @@ def execute(filters=None):
 		sqi.prix_target,
 		sqi.qts_target,
 		sqi.remarque,
+		sqi.commentaire,
 		sqi.confirmation,
 		sqi.pays,
 		it.item_code,
@@ -333,6 +339,8 @@ def execute(filters=None):
 		filters, as_dict=1)
 	all_items = []
 	item_dc = {}
+	mitems=[]
+	
 	models = {item.variant_of for item in items if item.variant_of}
 	for model in models:
 		_mitems = [item for item in items if item.variant_of == model]
@@ -360,6 +368,7 @@ def execute(filters=None):
 		sqi.prix_fournisseur_dzd,
 		sqi.prix_target,
 		sqi.qts_target,
+		sqi.commentaire,
 		sqi.remarque,
 		sqi.pays,
 		sqi.confirmation,
@@ -406,328 +415,339 @@ def execute(filters=None):
 		"max_ordered_variante"])
 
 		mitems.extend(others)
-		
-		for mri in mitems:
-			global info
-			supplier = ''
-			qts_demande = 0
-			devis_status = ''
-			material_request = ''
-			supplier_quotation =  ''
-			qts_devis = 0
-			datedm = ''
-			#rate,
-			rate= 0
-			rate_dzd=0
-			#base_amount,
-			base_amount = 0
-			#prix_target,
-			prix_target = 0
-			#base_rate,
-			base_rate= 0
-			#amount,
-			amount = 0
-			#owner,
-			owner=  ''
-			prix_fournisseur = 0
-			prix_de_revient = 0
-			prix_fournisseur_dzd = 0
-			prix_target = 0
-			prix_target_dzd = 0
-			qts_target = 0
-			taux_mb = 0.0
-			taux_approche = 1.0
-			remarque = ''
-			confirmation = ''
-			conf_cmd = ''
-			s_prix_target = ''
-			s_qts_target = '' 
-			s_remarque = ''
-			s_qts_devis= ''
-			hist_offre_fournisseur = ""
-			offre_init = ''
-			pays = ''
-			#mb=''
-			if hasattr(mri, 'material_request') and mri.parent:
+	data.append(["Article Total :",mitems.length or 0])
+	data.append(["En cours :",sum(1 for i in mitems if i.cnofirmation == "En cours") or 0])
+	data.append(["Approuve :",sum(1 for i in mitems if i.cnofirmation == "Approuve") or 0])
+	data.append(["Annule :",sum(1 for i in mitems if i.cnofirmation == "Annule") or 0])
+	data.append(["En negociation :",sum(1 for i in mitems if i.cnofirmation == "En negociation") or 0])
+	
+	for mri in mitems:
+		global info
+		supplier = ''
+		qts_demande = 0
+		devis_status = ''
+		material_request = ''
+		supplier_quotation =  ''
+		qts_devis = 0
+		datedm = ''
+		#rate,
+		rate= 0
+		rate_dzd=0
+		#base_amount,
+		base_amount = 0
+		#prix_target,
+		prix_target = 0
+		#base_rate,
+		base_rate= 0
+		#amount,
+		amount = 0
+		#owner,
+		owner=  ''
+		prix_fournisseur = 0
+		prix_de_revient = 0
+		prix_fournisseur_dzd = 0
+		prix_target = 0
+		prix_target_dzd = 0
+		qts_target = 0
+		taux_mb = 0.0
+		taux_approche = 1.0
+		remarque = ''
+		commentaire = ''
+		confirmation = ''
+		conf_cmd = ''
+		s_prix_target = ''
+		s_qts_target = '' 
+		s_remarque = ''
+		s_qts_devis= ''
+		hist_offre_fournisseur = ""
+		offre_init = ''
+		pays = ''
+		#mb=''
+		if hasattr(mri, 'material_request') and mri.parent:
+			if mri.etat_mail != "Email Envoye":
 				conf_cmd = """<button id='negociation_%s' onClick="negociation('%s')" type='button'>Negociation</button><button id='approuver_%s' onClick="approuver('%s')" type='button'>Approuver</button><button id='en_cours_%s' onClick="en_cours('%s')" type='button'>En Cours</button><button id='annuler_%s' onClick="annuler('%s')" type='button'>Annuler</button>""" % (mri.name,mri.name,mri.name,mri.name,mri.name,mri.name,mri.name,mri.name)
-				supplier = frappe.db.get_value("Supplier Quotation",mri.parent,"supplier_name")
-				supplier_id = frappe.db.get_value("Supplier Quotation",mri.parent,"supplier")
-				qts_demande = frappe.db.get_value("Material Request Item",mri.material_request_item,"qty")
-				devis_status = frappe.db.get_value("Supplier Quotation",mri.parent,"etat_consultation_deux")
-				convertion_rate = frappe.db.get_value("Supplier Quotation",mri.parent,"conversion_rate") or 1
-				_taux_mb = frappe.db.get_value("Supplier",supplier_id,"taux_mb") or 0
-				taux_mb = 0.0
-				if _taux_mb and _taux_mb > 0:
-					taux_mb = float(_taux_mb / 100)
-				taux_approche = frappe.db.get_value("Supplier",supplier_id,"taux_approche") or 1
-				taux_approche = float(taux_approche) or 1.0
-				#taux_mb = float(taux_mb) or 1
-				material_request = mri.material_request
-				supplier_quotation = mri.parent
-				qts_devis = mri.qty or 0
-				if mri.confirmation == "Approuve" or  mri.confirmation == "Annule":
-					rate = mri.rate or 0
-				#if mri.confirmation == "En negociation" and mri.prix_target > 0:
-				#	rate = mri.rate or 0
-				base_amount = mri.base_amount
-				prix_target = mri.prix_target or 0
-				base_rate = mri.base_rate
-				amount = mri.amount
-				owner = mri.owner
-				prix_fournisseur = mri.prix_fournisseur or 0
-				prix_de_revient = mri.prix_de_revient or 1
-				prix_fournisseur_dzd = prix_fournisseur *  taux_approche * (1+taux_mb) * 1.19
-				prix_fournisseur_dzd = round(prix_fournisseur_dzd,2)
-				prix_target = mri.prix_target or 0
-				qts_target = mri.qts_target or 0
-				pays = mri.pays
-				remarque = mri.remarque or ''
-				offre_init = mri.offre_fournisseur_initial
-				prix_target_dzd = prix_target * taux_approche * (1+taux_mb) * 1.19
-				prix_target_dzd = round(prix_target_dzd,2)
-				if rate > 0:
-					rate_dzd = rate * (1+taux_mb) * taux_approche * 1.19
-					rate_dzd = round(rate_dzd,2)
-				confirmation = mri.confirmation
-				if is_full:
-					_datedm =frappe.db.get_value("Material Request Item",mri.material_request_item,"creation")
-					if _datedm:
-						datedm = frappe.utils.get_datetime(_datedm).strftime("%d/%m/%Y")
-				#hists = frappe.get_all("Version",filters={"docname":mri.name,"data":("like", "%prix_fournisseur%")},fields=['data','name'])
-				#if is_full:
-					#vers = frappe.db.sql("""select docname,name,data from `tabVersion` 
-					#where docname=%(docname)s and data like %(txt)s 
-					#order by creation """, {'docname':mri.name,'txt': "%%prix_fournisseur%%" }, as_dict=1)
-				ahist = ""
-				
-				#if if is_full and vers:
-				#	for h in vers:
-						#data = h.name
-				#		if h.data:
-				#			changed =  json.loads(h.data)["changed"]
-				#			if changed:
-				#				res = [item for sublist in changed for item in sublist]
-				#				ahist += " | ".join(res)
-							
-							
-				hist_offre_fournisseur = ahist
+			supplier = frappe.db.get_value("Supplier Quotation",mri.parent,"supplier_name")
+			supplier_id = frappe.db.get_value("Supplier Quotation",mri.parent,"supplier")
+			qts_demande = frappe.db.get_value("Material Request Item",mri.material_request_item,"qty")
+			devis_status = frappe.db.get_value("Supplier Quotation",mri.parent,"etat_consultation_deux")
+			convertion_rate = frappe.db.get_value("Supplier Quotation",mri.parent,"conversion_rate") or 1
+			_taux_mb = frappe.db.get_value("Supplier",supplier_id,"taux_mb") or 0
+			taux_mb = 0.0
+			if _taux_mb and _taux_mb > 0:
+				taux_mb = float(_taux_mb / 100)
+			taux_approche = frappe.db.get_value("Supplier",supplier_id,"taux_approche") or 1
+			taux_approche = float(taux_approche) or 1.0
+			#taux_mb = float(taux_mb) or 1
+			material_request = mri.material_request
+			supplier_quotation = mri.parent
+			qts_devis = mri.qty or 0
+			if mri.confirmation == "Approuve" or  mri.confirmation == "Annule":
+				rate = mri.rate or 0
+			#if mri.confirmation == "En negociation" and mri.prix_target > 0:
+			#	rate = mri.rate or 0
+			base_amount = mri.base_amount
+			prix_target = mri.prix_target or 0
+			base_rate = mri.base_rate
+			amount = mri.amount
+			owner = mri.owner
+			prix_fournisseur = mri.prix_fournisseur or 0
+			prix_de_revient = mri.prix_de_revient or 1
+			prix_fournisseur_dzd = prix_fournisseur *  taux_approche * (1+taux_mb) * 1.19
+			prix_fournisseur_dzd = round(prix_fournisseur_dzd,2)
+			prix_target = mri.prix_target or 0
+			qts_target = mri.qts_target or 0
+			pays = mri.pays
+			remarque = mri.remarque or ''
+			offre_init = mri.offre_fournisseur_initial
+			prix_target_dzd = prix_target * taux_approche * (1+taux_mb) * 1.19
+			prix_target_dzd = round(prix_target_dzd,2)
+			if rate > 0:
+				rate_dzd = rate * (1+taux_mb) * taux_approche * 1.19
+				rate_dzd = round(rate_dzd,2)
+			confirmation = mri.confirmation
+			if is_full:
+				_datedm =frappe.db.get_value("Material Request Item",mri.material_request_item,"creation")
+				if _datedm:
+					datedm = frappe.utils.get_datetime(_datedm).strftime("%d/%m/%Y")
+			#hists = frappe.get_all("Version",filters={"docname":mri.name,"data":("like", "%prix_fournisseur%")},fields=['data','name'])
+			#if is_full:
+				#vers = frappe.db.sql("""select docname,name,data from `tabVersion` 
+				#where docname=%(docname)s and data like %(txt)s 
+				#order by creation """, {'docname':mri.name,'txt': "%%prix_fournisseur%%" }, as_dict=1)
+			ahist = ""
+
+			#if if is_full and vers:
+			#	for h in vers:
+					#data = h.name
+			#		if h.data:
+			#			changed =  json.loads(h.data)["changed"]
+			#			if changed:
+			#				res = [item for sublist in changed for item in sublist]
+			#				ahist += " | ".join(res)
+
+
+			hist_offre_fournisseur = ahist
+			if mri.etat_mail != "Email Envoye":
 				s_prix_target = """<input placeholder='Prix target' id='prix_target_%s' value='%s' style='color:black'></input><button  onClick="prix_target_item('%s')" type='button'> OK </button>""" % (mri.name,prix_target,mri.name)
 				s_qts_target = """<input placeholder='qts_target' id='qts_target_%s' value='%s' style='color:black'></input><button  onClick="qts_target_item('%s')" type='button'> OK </button>""" % (mri.name,qts_target,mri.name)
 				s_remarque = """<input placeholder='remarque' id='remarque_%s' value='%s' style='color:black'></input><button  onClick="remarque_item('%s')" type='button'> OK </button>""" % (mri.name,remarque,mri.name)
+				s_commentaire = """<input placeholder='commentaire' id='commentaire_%s' value='%s' style='color:black'></input><button  onClick="commentaire_item('%s')" type='button'> OK </button>""" % (mri.name,commentaire,mri.name)
 				s_qts_devis = """ <input placeholder='Qts devis' id='input_%s' value='%s' style='color:black'></input> <button id='%s' onClick="demander_item('%s')" type='button'>OK</button>""" % (mri.name,qts_devis,mri.name,mri.name)
-			qts_max_achat = 0
-			if mri.variant_of:
-				#variante
-				info = info_variante(mri.item_code)
-				qts_max_achat = mri.max_ordered_variante
-			elif mri.has_variants:
-				info = info_modele(mri.item_code)
-				qts_max_achat = mri.max_order_qty
-			if is_full:
-				sqllast_qty = frappe.db.sql("""select actual_qty,valuation_rate from `tabStock Ledger Entry` 
-				where item_code=%s and voucher_type=%s 
-				order by posting_date, posting_time limit 1""", (mri.item_code,"Purchase Receipt"), as_dict=1)
-				if sqllast_qty:
-					last_qty = sqllast_qty[0].actual_qty
-					last_valuation = sqllast_qty[0].valuation_rate
-			last_qty = 0
-			last_valuation = 0
-			recom = 0
-			_date = ""
-			date =""
-			date = frappe.utils.get_datetime(mri.creation).strftime("%d/%m/%Y")
-			_recom = frappe.get_all("Item Reorder",fields=["warehouse_reorder_qty","modified"],filters=[{"parent":mri.item_code},{"warehouse":"GLOBAL - MV"}])
-			if _recom:
-				recom = _recom[0].warehouse_reorder_qty
-				_date = _recom[0].modified
-					#date = frappe.utils.get_datetime(date).strftime("%d/%m/%Y")
-			
-				
-			if is_full:
-				row = ["""<button   onClick="achat_item('%s')" type='button'> X </button>""" % (mri.name),
-				       mri.item_code,
-				       #date
-				       date,
-				       mri.item_name,
-				       #uom
-				       mri.stock_uom,
-				       mri.manufacturer,
-				       mri.manufacturer_part_no,
-				       #poids
-				       mri.weight_per_unit,
-				       #perfection
-				       mri.perfection,
-				       #datedm
-				       datedm,
-				       #material_request
-				       material_request,
-				       #supplier_quotation
-				       supplier_quotation,
-				       #supplier
-				       supplier,
-				       pays,
-				       #qts_demande
-				       qts_demande,
+		qts_max_achat = 0
+		if mri.variant_of:
+			#variante
+			info = info_variante(mri.item_code)
+			qts_max_achat = mri.max_ordered_variante
+		elif mri.has_variants:
+			info = info_modele(mri.item_code)
+			qts_max_achat = mri.max_order_qty
+		if is_full:
+			sqllast_qty = frappe.db.sql("""select actual_qty,valuation_rate from `tabStock Ledger Entry` 
+			where item_code=%s and voucher_type=%s 
+			order by posting_date, posting_time limit 1""", (mri.item_code,"Purchase Receipt"), as_dict=1)
+			if sqllast_qty:
+				last_qty = sqllast_qty[0].actual_qty
+				last_valuation = sqllast_qty[0].valuation_rate
+		last_qty = 0
+		last_valuation = 0
+		recom = 0
+		_date = ""
+		date =""
+		date = frappe.utils.get_datetime(mri.creation).strftime("%d/%m/%Y")
+		_recom = frappe.get_all("Item Reorder",fields=["warehouse_reorder_qty","modified"],filters=[{"parent":mri.item_code},{"warehouse":"GLOBAL - MV"}])
+		if _recom:
+			recom = _recom[0].warehouse_reorder_qty
+			_date = _recom[0].modified
+				#date = frappe.utils.get_datetime(date).strftime("%d/%m/%Y")
 
-				       #base_amount,
-				       base_amount,
-				       #prix_target,
-				       #base_rate,
-				       base_rate,
-				       #amount,
-				       amount,
-				       #owner,
-				       owner,
-				       #devis_status
-				       devis_status,
-				       #last_qty
-				       last_qty,
-				       #last_valuation
-				       last_valuation or 0,
-				       #consom,
-				       "_",
-				       #qts_reliquat
-				       info[3] or 0,
-				       #qts_dem
-				       info[1] or 0,
-				       #qts
-				       info[0] or 0,
-				       #qts_projete
-				       info[2] or 0,
-				       #qts_max_achat
-				       qts_max_achat or 0,
-				       #recom
-				       recom,
-				       #last_purchase_rate
-				       mri.last_purchase_rate  or 0,
-				       #last_purchase_devise
-				       mri.last_purchase_devise  or 0,
-				       #qts_devis
-				       qts_devis,
-				       hist_offre_fournisseur,
-				       #prix_fournisseur
-				       offre_init,
-				       prix_fournisseur,
-				       #prix_de_revient
-				       taux_approche,
-				       #prix_fournisseur_dzd
-				       prix_fournisseur_dzd,
-				       #s_prix_target 
-				       s_prix_target,
-				       taux_mb,
-				       #prix_target_dzd
-				       prix_target_dzd,
-				       s_qts_target,
-				       #s_remarque
-				       s_remarque,
-				       #prix_devis
-				       rate,
-				       #rate_dzd,
-				       rate_dzd,
-				       #qts_devis
-				       s_qts_devis,
-				       #confirmation
-				       confirmation,
-				       #cmd
-				       conf_cmd
-				      ]
-			else:
-				row = ["""<button   onClick="achat_item('%s')" type='button'> X </button>""" % (mri.name),
-				       mri.item_code,
-				       #date
-				       date,
-				       mri.item_name,
-				       #uom
-				       mri.stock_uom,
-				       mri.manufacturer,
-				       mri.manufacturer_part_no,
-				       #datedm
-				       #datedm,
-				       #material_request
-				       material_request,
-				       #supplier_quotation
-				       supplier_quotation,
-				       #supplier
-				       supplier,
-				       pays,
-				       #qts_demande
-				       qts_demande,
-				       #prix_target,
-				       #last_qty
-				       #last_qty,
-				       #last_valuation
-				       #last_valuation or 0,
-				       #consom,
-				       "_",
-				       #qts_reliquat
-				       info[3] or 0,
-				       #qts_dem
-				       info[1] or 0,
-				       #qts
-				       info[0] or 0,
-				       #qts_projete
-				       info[2] or 0,
-				       #qts_max_achat
-				       qts_max_achat or 0,
-				       #recom
-				       recom,
-				       #last_purchase_rate
-				       mri.last_purchase_rate  or 0,
-				       #last_purchase_devise
-				       mri.last_purchase_devise  or 0,
-				       #qts_devis
-				       qts_devis,
-				       #prix_fournisseur
-				       offre_init,
-				       prix_fournisseur,
-				       #prix_de_revient
-				       taux_approche,
-				       #prix_fournisseur_dzd
-				       prix_fournisseur_dzd,
-				       #s_prix_target 
-				       s_prix_target,
-				       taux_mb,
-				       #prix_target_dzd
-				       prix_target_dzd,
-				       s_qts_target,
-				       #s_remarque
-				       s_remarque,
-				       #prix_devis
-				       rate,
-				       #rate_dzd,
-				       rate_dzd,
-				       #qts_devis
-				       s_qts_devis,
-				       #confirmation
-				       confirmation,
-				       #cmd
-				       conf_cmd
-				      ]
 
-			if filters.show_price:
-			# get prices in each price list
-				if is_full:
-					if price_lists and not mri.has_variants:
-						for pl in price_lists:
-							if pl.name:
-								price = frappe.db.sql("""select price_list_rate from `tabItem Price` where buying=1 and price_list=%s and (  item_code=%s) ORDER BY creation DESC LIMIT 1;""",(pl.name,mri.item_code))
-								if price:
-									row.append(price[0][0])
-								else:
-									row.append("_")
+		if is_full:
+			row = ["""<button   onClick="achat_item('%s')" type='button'> X </button>""" % (mri.name),
+			       mri.item_code,
+			       #date
+			       date,
+			       mri.item_name,
+			       #uom
+			       mri.stock_uom,
+			       mri.manufacturer,
+			       mri.manufacturer_part_no,
+			       #poids
+			       mri.weight_per_unit,
+			       #perfection
+			       mri.perfection,
+			       #datedm
+			       datedm,
+			       #material_request
+			       material_request,
+			       #supplier_quotation
+			       supplier_quotation,
+			       #supplier
+			       supplier,
+			       pays,
+			       #qts_demande
+			       qts_demande,
+
+			       #base_amount,
+			       base_amount,
+			       #prix_target,
+			       #base_rate,
+			       base_rate,
+			       #amount,
+			       amount,
+			       #owner,
+			       owner,
+			       #devis_status
+			       devis_status,
+			       #last_qty
+			       last_qty,
+			       #last_valuation
+			       last_valuation or 0,
+			       #consom,
+			       "_",
+			       #qts_reliquat
+			       info[3] or 0,
+			       #qts_dem
+			       info[1] or 0,
+			       #qts
+			       info[0] or 0,
+			       #qts_projete
+			       info[2] or 0,
+			       #qts_max_achat
+			       qts_max_achat or 0,
+			       #recom
+			       recom,
+			       #last_purchase_rate
+			       mri.last_purchase_rate  or 0,
+			       #last_purchase_devise
+			       mri.last_purchase_devise  or 0,
+			       #qts_devis
+			       qts_devis,
+			       hist_offre_fournisseur,
+			       #prix_fournisseur
+			       offre_init,
+			       prix_fournisseur,
+			       #prix_de_revient
+			       taux_approche,
+			       #prix_fournisseur_dzd
+			       prix_fournisseur_dzd,
+			       #s_prix_target 
+			       s_prix_target,
+			       taux_mb,
+			       #prix_target_dzd
+			       prix_target_dzd,
+			       s_qts_target,
+			       s_commentaire,
+			       #s_remarque
+			       s_remarque,
+			       #prix_devis
+			       rate,
+			       #rate_dzd,
+			       rate_dzd,
+			       #qts_devis
+			       s_qts_devis,
+			       #confirmation
+			       confirmation,
+			       #cmd
+			       conf_cmd
+			      ]
+		else:
+			row = ["""<button   onClick="achat_item('%s')" type='button'> X </button>""" % (mri.name),
+			       mri.item_code,
+			       #date
+			       date,
+			       mri.item_name,
+			       #uom
+			       mri.stock_uom,
+			       mri.manufacturer,
+			       mri.manufacturer_part_no,
+			       #datedm
+			       #datedm,
+			       #material_request
+			       material_request,
+			       #supplier_quotation
+			       supplier_quotation,
+			       #supplier
+			       supplier,
+			       pays,
+			       #qts_demande
+			       qts_demande,
+			       #prix_target,
+			       #last_qty
+			       #last_qty,
+			       #last_valuation
+			       #last_valuation or 0,
+			       #consom,
+			       "_",
+			       #qts_reliquat
+			       info[3] or 0,
+			       #qts_dem
+			       info[1] or 0,
+			       #qts
+			       info[0] or 0,
+			       #qts_projete
+			       info[2] or 0,
+			       #qts_max_achat
+			       qts_max_achat or 0,
+			       #recom
+			       recom,
+			       #last_purchase_rate
+			       mri.last_purchase_rate  or 0,
+			       #last_purchase_devise
+			       mri.last_purchase_devise  or 0,
+			       #qts_devis
+			       qts_devis,
+			       #prix_fournisseur
+			       offre_init,
+			       prix_fournisseur,
+			       #prix_de_revient
+			       taux_approche,
+			       #prix_fournisseur_dzd
+			       prix_fournisseur_dzd,
+			       #s_prix_target 
+			       s_prix_target,
+			       taux_mb,
+			       #prix_target_dzd
+			       prix_target_dzd,
+			       s_qts_target,
+			       s_commentaire,
+			       #s_remarque
+			       s_remarque,
+			       #prix_devis
+			       rate,
+			       #rate_dzd,
+			       rate_dzd,
+			       #qts_devis
+			       s_qts_devis,
+			       #confirmation
+			       confirmation,
+			       #cmd
+			       conf_cmd
+			      ]
+
+		if filters.show_price:
+		# get prices in each price list
+			if is_full:
+				if price_lists and not mri.has_variants:
+					for pl in price_lists:
+						if pl.name:
+							price = frappe.db.sql("""select price_list_rate from `tabItem Price` where buying=1 and price_list=%s and (  item_code=%s) ORDER BY creation DESC LIMIT 1;""",(pl.name,mri.item_code))
+							if price:
+								row.append(price[0][0])
 							else:
 								row.append("_")
-				else:
-					if price_lists and not mri.has_variants:
-						all_prices = ""
-						for pl in price_lists:
-							if pl.name:
-								price = frappe.db.sql("""select price_list_rate from `tabItem Price` where buying=1 and price_list=%s and (  item_code=%s) ORDER BY creation DESC LIMIT 1;""",(pl.name,mri.item_code))
-								if price:
-									all_prices += "%s : %.2f %s - " % (pl.name ,price[0][0] or 0,pl.currency)
-						row.append(all_prices)
+						else:
+							row.append("_")
+			else:
+				if price_lists and not mri.has_variants:
+					all_prices = ""
+					for pl in price_lists:
+						if pl.name:
+							price = frappe.db.sql("""select price_list_rate from `tabItem Price` where buying=1 and price_list=%s and (  item_code=%s) ORDER BY creation DESC LIMIT 1;""",(pl.name,mri.item_code))
+							if price:
+								all_prices += "%s : %.2f %s - " % (pl.name ,price[0][0] or 0,pl.currency)
+					row.append(all_prices)
 
-			data.append(row)
+		data.append(row)
 		
 	return columns, data
 					       
