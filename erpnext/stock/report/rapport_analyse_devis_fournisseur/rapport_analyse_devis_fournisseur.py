@@ -468,7 +468,8 @@ def execute(filters=None):
 		pays = ''
 		#mb=''
 		if hasattr(mri, 'material_request') and mri.parent:
-			if mri.etat_mail != "Email Envoye":
+			etat_mail = frappe.db.get_value("Supplier Quotation",mri.parent,"etat_mail")
+			if etat_mail and etat_mail != "Email Envoye":
 				conf_cmd = """<button id='negociation_%s' onClick="negociation('%s')" type='button'>Negociation</button><button id='approuver_%s' onClick="approuver('%s')" type='button'>Approuver</button><button id='en_cours_%s' onClick="en_cours('%s')" type='button'>En Cours</button><button id='annuler_%s' onClick="annuler('%s')" type='button'>Annuler</button>""" % (mri.name,mri.name,mri.name,mri.name,mri.name,mri.name,mri.name,mri.name)
 			supplier = frappe.db.get_value("Supplier Quotation",mri.parent,"supplier_name")
 			supplier_id = frappe.db.get_value("Supplier Quotation",mri.parent,"supplier")
@@ -531,7 +532,7 @@ def execute(filters=None):
 
 
 			hist_offre_fournisseur = ahist
-			if mri.etat_mail != "Email Envoye":
+			if etat_mail and etat_mail != "Email Envoye":
 				s_prix_target = """<input placeholder='Prix target' id='prix_target_%s' value='%s' style='color:black'></input><button  onClick="prix_target_item('%s')" type='button'> OK </button>""" % (mri.name,prix_target,mri.name)
 				s_qts_target = """<input placeholder='qts_target' id='qts_target_%s' value='%s' style='color:black'></input><button  onClick="qts_target_item('%s')" type='button'> OK </button>""" % (mri.name,qts_target,mri.name)
 				s_remarque = """<input placeholder='remarque' id='remarque_%s' value='%s' style='color:black'></input><button  onClick="remarque_item('%s')" type='button'> OK </button>""" % (mri.name,remarque,mri.name)
