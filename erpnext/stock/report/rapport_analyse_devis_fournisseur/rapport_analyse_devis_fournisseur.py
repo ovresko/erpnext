@@ -788,7 +788,7 @@ def get_conditions(filters):
 		where vv.version_vehicule=%(version)s))"""  )
 	if filters.get('confirmation'):
 		if filters.get('confirmation') == "En cours":
-			conditions.append("""(sqi.confirmation IS NULL or sqi.confirmation=%(confirmation)s)""")
+			conditions.append("""(sqi.confirmation IS NULL or sqi.confirmation='' or sqi.confirmation=' ' or sqi.confirmation=%(confirmation)s)""")
 		else:
 			conditions.append("""sqi.confirmation=%(confirmation)s""")
 	if filters.get('modele_v'):
