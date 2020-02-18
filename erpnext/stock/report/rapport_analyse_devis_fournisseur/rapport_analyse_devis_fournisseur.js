@@ -384,6 +384,7 @@ frappe.query_reports["Rapport analyse devis fournisseur"] = {
 				"doctype": "Supplier Quotation",
 				"filters": {
 					"etat_consultation_deux": "Consultation Interne",
+					"etat_mail":"Email Non Envoye"
 				}
 			}
 		}
@@ -398,6 +399,7 @@ frappe.query_reports["Rapport analyse devis fournisseur"] = {
 				"doctype": "Supplier Quotation",
 				"filters": {
 					"etat_consultation_deux": "Consultation Externe",
+					"etat_mail":"Email Non Envoye"
 				}
 			}
 		}
