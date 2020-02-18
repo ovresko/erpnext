@@ -37,6 +37,23 @@ function qts_target_item(data) {
 		});
 }
 //remarque_item
+function commentaire_item(data) {
+	var qty_id = 'commentaire_'+data;
+	var qty = $('#'+qty_id).val();
+	frappe.call({
+			method: "erpnext.buying.doctype.supplier_quotation.supplier_quotation.commentaire_item",
+			args: {
+				item_code: data,
+				qty: qty
+			},
+			callback: function(r) {
+				if (r.message) {
+					alert(r.message);
+				}
+			}
+		});
+}
+//remarque_item
 function remarque_item(data) {
 	var qty_id = 'remarque_'+data;
 	var qty = $('#'+qty_id).val();
