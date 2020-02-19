@@ -42,13 +42,53 @@ class SupplierQuotation(BuyingController):
 		
 		if self.manufacturer:
 			self.items = _items
-
+			
+	def set_resultat(self):
+		resultat = 'NA'
+		if self.docstatus == 1:
+			resultat = "Termine P3"
+		else:
+			encours = sum(1 for item in self.items if item.confirmation == "En cours" or not item.confirmation or item.confirmation=='') or 0
+			offre = sum(1 for item in self.items if item.prix_fournisseur > 0) or 0
+			change =  sum(1 for item in self.items if item.prix_fournisseur != item.offre_fournisseur_initial and item.offre_fournisseur_initial > 0) or 0
+			total = len(self.items) or 0
+			en_negociation = sum(1 for item in self.items if item.confirmation == "En negociation") or 0
+			approuve = sum(1 for item in self.items if item.confirmation == "Approuve") or 0
+			annule = sum(1 for item in self.items if item.confirmation == "Annule") or 0
+			#((@en_cours = @total) and (@offre=0) and (mr.etat_mail !='Email Envoye')) THEN 'A Envoyer P1'
+			if encours == total and offre == 0 and self.etat_mail !='Email Envoye':
+				resultat = 'A Envoyer P1'
+			#WHEN ((@en_cours = @total) and (@offre=0) and (mr.etat_mail ='Email Envoye')) THEN 'En attente de repense P1'
+			elif encours == total and offre==0 and self.etat_mail =='Email Envoye':
+				resultat = 'En attente de repense P1'
+			#WHEN (@en_cours > 0 and @en_cours < @total and @offre>0 and (mr.etat_mail !='Email Envoye')) THEN 'A Traite P1'
+			elif encours >0 and encours < total and  offre>0 and self.etat_mail !='Email Envoye':
+				resultat = 'A Traite P1'
+			#WHEN ((@en_cours = 0) and @change=0 and (@offre>0) and (mr.etat_mail !='Email Envoye')) THEN 'A Envoyer P2'
+			elif encours==0 and change==0 and offre>0 and self.etat_mail !='Email Envoye':
+				resultat = 'A Envoyer P2'
+			#WHEN ((@en_cours = 0) and (@offre>0) and (mr.etat_mail ='Email Envoye')) THEN 'En attente de repense P2'
+			elif encours==0 and offre>0 and self.etat_mail =='Email Envoye':
+				resultat = 'En attente de repense P2'
+			#WHEN ((@en_cours = 0) and (@offre>0) and @change >0 and (@annule + @approuve < @total) and (mr.etat_mail !='Email Envoye')) THEN 'A Traite P2'
+			elif encours==0 and offre>0 and change>0 and (approuve+annule) < total and self.etat_mail !='Email Envoye':
+				resultat = 'A Traite P2'
+			#WHEN ((@en_cours = 0) and (@offre>0) and (@annule + @approuve = @total) and (mr.etat_mail !='Email Envoye')) THEN 'Envoyer la confirmation'
+			elif encours==0 and offre>0 and  (approuve+annule) == total and self.etat_mail !='Email Envoye':
+				resultat = 'Envoyer la confirmation'
+			#WHEN ((@en_cours = 0) and (@offre>0) and (@annule + @approuve = @total) and (mr.etat_mail ='Email Envoye')) THEN 'Termine P3'
+			elif encours==0 and offre>0 and  (approuve+annule) == total and self.etat_mail ='Email Envoye':
+				resultat = 'Termine P3'
+			else:
+				resultat = 'NA'
+		frappe.db.set_value("Supplier Quotation",self.name,"resultat",resultat)
 
         def on_update(self):
 		#if self.etat_mail == "Email Envoye":
 		#	throw("Impossible de modifier la consultation si l'email est envoye ! Veuillez marquer comme non envoye.")
 		frappe.enqueue("erpnext.buying.doctype.supplier_quotation.supplier_quotation.on_update_consultation",items=self.items,pname=self.name,timeout=10000)
 		frappe.enqueue("erpnext.buying.doctype.supplier_quotation.supplier_quotation.on_update_dv",items=self.items,timeout=10000)
+		self.set_resultat()
 
 
 	def on_submit(self):
@@ -357,6 +397,9 @@ def set_item_demande(item_code,qty):
 				item.confirmation = "Approuve"
 			item.save()
 			frappe.db.set_value("Supplier Quotation", item.parent, "etat_mail", "Email Non Envoye")
+			sq = frappe.get_doc("Supplier Quotation",item.parent)
+			if sq:
+				sq.set_resultat()
 			return "Nouvelle Qts enregistree"
 			
 @frappe.whitelist()
@@ -369,6 +412,9 @@ def approuver_item(item_code):
 			item.rate = item.prix_fournisseur
 			item.save()
 			frappe.db.set_value("Supplier Quotation", item.parent, "etat_mail", "Email Non Envoye")
+			sq = frappe.get_doc("Supplier Quotation",item.parent)
+			if sq:
+				sq.set_resultat()
 			return "Article Approuve"
 	
 @frappe.whitelist()
@@ -380,6 +426,9 @@ def en_cours_item(item_code):
 			item.confirmation = "En cours"
 			item.save()
 			frappe.db.set_value("Supplier Quotation", item.parent, "etat_mail", "Email Non Envoye")
+			sq = frappe.get_doc("Supplier Quotation",item.parent)
+			if sq:
+				sq.set_resultat()
 			return "Article En cours"
 		
 @frappe.whitelist()
@@ -393,6 +442,9 @@ def annuler_item(item_code):
 			item.qty = 0
 			item.save()
 			frappe.db.set_value("Supplier Quotation", item.parent, "etat_mail", "Email Non Envoye")
+			sq = frappe.get_doc("Supplier Quotation",item.parent)
+			if sq:
+				sq.set_resultat()
 			return "Article Annule"
 #negociation_item
 @frappe.whitelist()
@@ -409,6 +461,9 @@ def negociation_item(item_code):
 			#item.qty = 0
 			item.save()
 			frappe.db.set_value("Supplier Quotation", item.parent, "etat_mail", "Email Non Envoye")
+			sq = frappe.get_doc("Supplier Quotation",item.parent)
+			if sq:
+				sq.set_resultat()
 			return "Article Annule"
 @frappe.whitelist()
 def prix_target_item(item_code,qty):
@@ -431,6 +486,9 @@ def prix_target_item(item_code,qty):
 				taux_mb = float(_taux_mb / 100)
 			value = float(qty) * taux_approche * (1+taux_mb) * 1.19
 			frappe.db.set_value("Supplier Quotation", item.parent, "etat_mail", "Email Non Envoye")
+			sq = frappe.get_doc("Supplier Quotation",item.parent)
+			if sq:
+				sq.set_resultat()
 			#if nego ==1:
 			return "Nouveau prix target enregistree ! %s" % value
 			#return "Il faut mettre le prix et qts target !"
@@ -447,6 +505,9 @@ def qts_target_item(item_code,qty):
 				return "qts target enregistree"
 			item.save()
 			frappe.db.set_value("Supplier Quotation", item.parent, "etat_mail", "Email Non Envoye")
+			sq = frappe.get_doc("Supplier Quotation",item.parent)
+			if sq:
+				sq.set_resultat()
 			return "Qts target enregistree, Il faut mettre le prix et qts target !"
 			
 
