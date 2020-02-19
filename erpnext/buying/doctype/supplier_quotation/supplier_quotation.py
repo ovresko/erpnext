@@ -77,7 +77,7 @@ class SupplierQuotation(BuyingController):
 			elif encours==0 and offre>0 and  (approuve+annule) == total and self.etat_mail !='Email Envoye':
 				resultat = 'Envoyer la confirmation'
 			#WHEN ((@en_cours = 0) and (@offre>0) and (@annule + @approuve = @total) and (mr.etat_mail ='Email Envoye')) THEN 'Termine P3'
-			elif encours==0 and offre>0 and  (approuve+annule) == total and self.etat_mail ='Email Envoye':
+			elif encours==0 and offre>0 and  (approuve+annule) == total and self.etat_mail =='Email Envoye':
 				resultat = 'Termine P3'
 			else:
 				resultat = 'NA'
