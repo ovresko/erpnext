@@ -193,6 +193,11 @@ def execute(filters=None):
 				"width": 250
 			})
 	columns.append({
+			"fieldname": "resultat",
+			"label": "Resultat",
+			"width": 150
+		})
+	columns.append({
 			"fieldname": "offre_init",
 			"label": "Offre Initial",
 			"width": 150
@@ -234,7 +239,7 @@ def execute(filters=None):
 		})
 	columns.append({
 			"fieldname": "commentaire",
-			"label": "Commentaire",
+			"label": "Commentaire Interne",
 			"width": 250
 		})
 	columns.append({
@@ -476,9 +481,11 @@ def execute(filters=None):
 		hist_offre_fournisseur = ""
 		offre_init = ''
 		pays = ''
+		resultat = ''
 		#mb=''
 		if hasattr(mri, 'material_request') and mri.parent:
 			etat_mail = frappe.db.get_value("Supplier Quotation",mri.parent,"etat_mail")
+			resultat = frappe.db.get_value("Supplier Quotation",mri.parent,"resultat")
 			if etat_mail and etat_mail != "Email Envoye":
 				conf_cmd = """<button id='negociation_%s' onClick="negociation('%s')" type='button'>Negociation</button><button id='approuver_%s' onClick="approuver('%s')" type='button'>Approuver</button><button id='en_cours_%s' onClick="en_cours('%s')" type='button'>En Cours</button><button id='annuler_%s' onClick="annuler('%s')" type='button'>Annuler</button>""" % (mri.name,mri.name,mri.name,mri.name,mri.name,mri.name,mri.name,mri.name)
 			supplier = frappe.db.get_value("Supplier Quotation",mri.parent,"supplier_name")
@@ -646,6 +653,7 @@ def execute(filters=None):
 			       qts_devis,
 			       hist_offre_fournisseur,
 			       #prix_fournisseur
+			       resultat,
 			       offre_init,
 			       prix_fournisseur,
 			       #prix_de_revient
@@ -719,6 +727,7 @@ def execute(filters=None):
 			       #qts_devis
 			       qts_devis,
 			       #prix_fournisseur
+			       resultat,
 			       offre_init,
 			       prix_fournisseur,
 			       #prix_de_revient
