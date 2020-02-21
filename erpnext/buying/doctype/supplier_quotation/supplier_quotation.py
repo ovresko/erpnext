@@ -62,7 +62,7 @@ class SupplierQuotation(BuyingController):
 			elif encours == total and offre==0 and self.etat_mail =='Email Envoye':
 				resultat = 'En attente de repense P1'
 			#WHEN (@en_cours > 0 and @en_cours < @total and @offre>0 and (mr.etat_mail !='Email Envoye')) THEN 'A Traite P1'
-			elif encours >0 and encours < total and  offre>0 and self.etat_mail !='Email Envoye':
+			elif encours >0 and change==0 and  offre>0 and self.etat_mail !='Email Envoye':
 				resultat = 'A Traite P1'
 			#WHEN ((@en_cours = 0) and @change=0 and (@offre>0) and (mr.etat_mail !='Email Envoye')) THEN 'A Envoyer P2'
 			elif encours==0 and change==0 and offre>0 and self.etat_mail !='Email Envoye':
