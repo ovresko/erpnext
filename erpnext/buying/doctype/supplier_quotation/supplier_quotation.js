@@ -21,7 +21,7 @@ frappe.ui.form.on('Supplier Quotation', {
 
 			//data.push(["Date",frm.doc.transaction_date,"","","","",""]);
 			//data.push(["Fournisseur",frm.doc.supplier_name,"","","","",""]);
-			data.push(["#" ,"Num Consultation","Fabricant","Code Article","Designation","Ref Article","Poids","Pays d'origine","Devise","Qts","Prix Offre","Prix Target","Qts Target","Remarque","Offre Final","Prix Final","Qts Final","Confirmation "]);
+			data.push(["#" ,"Num Consultation","Fabricant","Code Article","Designation","Ref Article","Poids","Pays d'origine","Devise","Qts","Prix Offre","Prix Target","Qts Target","Remarque","Prix Final","Qts Final","Confirmation "]);
 			
 			$.each(frm.doc.items || [], (i, d) => {
 				var row = [];
@@ -88,7 +88,6 @@ frappe.ui.form.on('Supplier Quotation', {
 						  ,'"'+ptarget+'"'
 						  ,'"'+qtarget+'"'
 						  ,'"'+d["remarque"]+'"'
-						  ,'"'+d["prix_fournisseur"]+'"'
 						  ,'"'+offre+'"'
 						  ,'"'+qts_final+'"'
 						  ,confirmation]);
