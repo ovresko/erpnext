@@ -94,6 +94,11 @@ def execute(filters=None):
 			"width": 150
 		})
 	columns.append({
+			"fieldname": "poids",
+			"label": "Poids",
+			"width": 150
+		})
+	columns.append({
 			"fieldname": "qts_demande",
 			"label": _("Qte Demandee"),
 			"width": 150
@@ -307,6 +312,7 @@ def execute(filters=None):
 		sqi.amount,
 		sqi.base_rate,
 		sqi.name,
+		sqi.weight_per_unit,
 		sqi.prix_de_revient,
 		sqi.prix_fournisseur,
 		sqi.prix_fournisseur_dzd,
@@ -324,6 +330,7 @@ def execute(filters=None):
 		it.item_group,
 		it.variant_of,
 		it.perfection,
+		it.weight_per_unit,
 		it.is_purchase_item,
 		it.variant_of,
 		it.has_variants,
@@ -368,6 +375,7 @@ def execute(filters=None):
 		sqi.amount,
 		sqi.base_rate,
 		sqi.name,
+		sqi.weight_per_unit,
 		sqi.prix_de_revient,
 		sqi.prix_fournisseur,
 		sqi.prix_fournisseur_dzd,
@@ -388,6 +396,7 @@ def execute(filters=None):
 		it.is_purchase_item,
 		it.variant_of,
 		it.has_variants,
+		it.weight_per_unit,
 		it.manufacturer,
 		it.last_purchase_rate , 
 		it.manufacturer_part_no, 
@@ -482,6 +491,7 @@ def execute(filters=None):
 		offre_init = ''
 		pays = ''
 		resultat = ''
+		poids = mri.weight_per_unit
 		#mb=''
 		if hasattr(mri, 'material_request') and mri.parent:
 			etat_mail = frappe.db.get_value("Supplier Quotation",mri.parent,"etat_mail")
@@ -613,6 +623,7 @@ def execute(filters=None):
 			       #supplier
 			       supplier,
 			       pays,
+			       poids,
 			       #qts_demande
 			       qts_demande,
 
@@ -699,6 +710,7 @@ def execute(filters=None):
 			       #supplier
 			       supplier,
 			       pays,
+			       poids,
 			       #qts_demande
 			       qts_demande,
 			       #prix_target,
