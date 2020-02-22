@@ -367,7 +367,7 @@ def execute(filters=None):
 		_mitems = [item for item in items if item.variant_of == model]
 		origin_model = frappe.get_doc("Item",model)
 		if model not in _models:
-			origin_model.item_code = "%s COMP" % origin_model.item_code
+			origin_model.item_code = "COMPL %s" % origin_model.item_code
 		mitems.extend([origin_model])
 		mitems.extend(_mitems)
 		ids = {o.item_code for o in mitems if item.item_code}
