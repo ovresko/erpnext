@@ -353,10 +353,20 @@ def execute(filters=None):
 	item_dc = {}
 	mitems=[]
 	
-	models = {item.variant_of for item in items if item.variant_of}
+	models = []
+	_models= {item.variant_of for item in items if item.variant_of}
+	for m in _models:
+		models.append(m)
+		complements = frappe.get_all("Composant",filters={"parent":m},fields=["parent","item"])
+		if complements:
+			parents = {c.item for i in complements}
+			models.extend(parents)
+		
 	for model in models:
 		_mitems = [item for item in items if item.variant_of == model]
 		origin_model = frappe.get_doc("Item",model)
+		if model not in _models:
+			origin_model.item_code = "%s COMP" % origin_model.item_code
 		mitems.extend([origin_model])
 		mitems.extend(_mitems)
 		ids = {o.item_code for o in mitems if item.item_code}
@@ -429,6 +439,8 @@ def execute(filters=None):
 		"max_ordered_variante"])
 
 		mitems.extend(others)
+		
+		
 	if filters.get("consultation_interne"):
 		asupplier_name = frappe.db.get_value("Supplier Quotation",filters.get("consultation_interne"),"supplier_name")
 		data.append(["","Fournisseur :",asupplier_name or ''])
