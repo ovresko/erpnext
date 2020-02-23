@@ -38,7 +38,8 @@ class SupplierQuotation(BuyingController):
 				item.qty = 0
 			if self.manufacturer:
 				if item.fabricant == self.manufacturer:
-					_items.append(item)
+					if not any(x.name == item.name for x in _items):
+						_items.append(item)
 		
 		if self.manufacturer:
 			self.items = _items
