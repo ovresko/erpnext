@@ -362,7 +362,7 @@ def execute(filters=None):
 		models.append(m)
 		complements = frappe.get_all("Composant",filters={"parent":m},fields=["parent","item"])
 		if complements:
-			parents = {i.item for i in complements if i.item not in models}
+			parents = {i.item for i in complements}
 			if parents:
 				for t in parents:
 					if t in _models:
