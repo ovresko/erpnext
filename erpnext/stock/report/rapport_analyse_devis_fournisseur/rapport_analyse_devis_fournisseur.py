@@ -373,8 +373,7 @@ def execute(filters=None):
 	for model in models:
 		_mitems = [item for item in items if item.variant_of == model]
 		origin_model = frappe.get_doc("Item",model)
-		if model not in _models:
-			origin_model.name = "==> COMP %s" % origin_model.name
+
 		mitems.extend([origin_model])
 		mitems.extend(_mitems)
 		ids = {o.item_code for o in mitems if item.item_code}
@@ -621,10 +620,12 @@ def execute(filters=None):
 			_date = _recom[0].modified
 				#date = frappe.utils.get_datetime(date).strftime("%d/%m/%Y")
 
-
+		comp = ''
+		if model not in _models:
+			comp = "COMP"
 		if is_full:
-			row = ["""<button   onClick="achat_item('%s')" type='button'> X </button>""" % (mri.name),
-			       mri.name,
+			row = ["""<button   onClick="achat_item('%s')" type='button'> X </button> %s""" % (mri.name,comp),
+			       mri.item_code,
 			       #date
 			       date,
 			       mri.item_name,
@@ -714,8 +715,8 @@ def execute(filters=None):
 			       conf_cmd
 			      ]
 		else:
-			row = ["""<button   onClick="achat_item('%s')" type='button'> X </button>""" % (mri.name),
-			       mri.name,
+			row = ["""<button   onClick="achat_item('%s')" type='button'> X </button> %S""" % (mri.name,comp),
+			       mri.item_code,
 			       #date
 			       date,
 			       mri.item_name,
