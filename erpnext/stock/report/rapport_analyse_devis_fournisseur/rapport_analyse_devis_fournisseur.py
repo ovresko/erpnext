@@ -715,7 +715,7 @@ def execute(filters=None):
 			       conf_cmd
 			      ]
 		else:
-			row = ["""<button   onClick="achat_item('%s')" type='button'> X </button> %S""" % (mri.name,comp),
+			row = ["""<button   onClick="achat_item('%s')" type='button'> X </button> %s""" % (mri.name,comp),
 			       mri.item_code,
 			       #date
 			       date,
