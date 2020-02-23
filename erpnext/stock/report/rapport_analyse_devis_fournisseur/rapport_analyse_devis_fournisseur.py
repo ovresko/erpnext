@@ -362,8 +362,8 @@ def execute(filters=None):
 			parents = {i.item for i in complements if i.item not in models}
 			if parents:
 				for t in parents:
-					if t in models:
-						models.remove(t)
+					if t in _models:
+						_models.remove(t)
 					models.append(t)
 		
 	for model in models:
