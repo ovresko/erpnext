@@ -162,10 +162,10 @@ frappe.query_reports["Rapport analyse devis fournisseur"] = {
 		value = default_formatter(value, row, column, data);
 		
 		
-		if (row && row != null && row[2].content!=null && row[2] && row[2].content.length == 11) {
+		if (row && row != null && row[2].content!=null && row[2] && row[2].content.length == 11 && !row[1].content.includes("comp")) {
 			value = "<div style='color: white;background-color: #008081;padding: 5px;'>" + value + "</div>";
 		}
-		else if(row && row != null && row[2].content!=null && row[2] && row[2].content.length == 20)
+		else if(row && row != null && row[2].content!=null && row[2] && row[2].content.length == 11 && row[1].content.includes("comp"))
 			{
 				value = "<div style='color: white;background-color: #802B76;padding: 5px;'>" + value + "</div>";
 			}
