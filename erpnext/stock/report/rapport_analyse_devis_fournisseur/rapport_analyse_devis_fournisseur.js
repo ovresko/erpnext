@@ -389,7 +389,7 @@ frappe.query_reports["Rapport analyse devis fournisseur"] = {
 				"filters": {
 					"etat_consultation_deux": "Consultation Interne",
 					"etat_mail":"Email Non Envoye",
-					"resultat": ["!=", "A Traite P1"]
+					"resultat": ["!=", "A Envoyer P1"]
 				}
 			}
 		}
@@ -405,7 +405,7 @@ frappe.query_reports["Rapport analyse devis fournisseur"] = {
 				"filters": {
 					"etat_consultation_deux": "Consultation Externe",
 					"etat_mail":"Email Non Envoye",
-					"resultat": ["!=", "A Traite P1"]
+					"resultat": ["!=", "A Envoyer P1"]
 				}
 			}
 		}
