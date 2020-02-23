@@ -165,7 +165,7 @@ frappe.query_reports["Rapport analyse devis fournisseur"] = {
 		if (row && row != null && row[2].content!=null && row[2] && row[2].content.length == 11 && !row[1].content.includes("comp")) {
 			value = "<div style='color: white;background-color: #008081;padding: 5px;'>" + value + "</div>";
 		}
-		else if(row && row != null && row[2].content!=null && row[2] && row[2].content.length == 11 && row[1].content.includes("comp"))
+		else if(row && row != null && row[2].content!=null && row[2] && row[2].content.length == 11 && row[1].content.includes("COMP"))
 			{
 				value = "<div style='color: white;background-color: #802B76;padding: 5px;'>" + value + "</div>";
 			}
