@@ -359,9 +359,11 @@ def execute(filters=None):
 	models_copy = []
 	models_copy.extend(_models)
 	for m in models_copy:
-		if m not in models:
+		if m in models:
+			pass
+		else:
 			models.append(m)
-		complements = frappe.get_all("Composant",filters={"parent":m},fields=["parent","item"])
+		complements = frappe.get_all("Composant",filters={"parent":m,"parentfield":"articles"},fields=["parent","item"])
 		if complements:
 			parents = {i.item for i in complements}
 			if parents:
