@@ -356,7 +356,7 @@ def execute(filters=None):
 	models = []
 	_models= {item.variant_of for item in items if item.variant_of}
 	models_copy = []
-	models_copy.expend(_models)
+	models_copy.extend(_models)
 	for m in models_copy:
 		models.append(m)
 		complements = frappe.get_all("Composant",filters={"parent":m},fields=["parent","item"])
