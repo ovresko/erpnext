@@ -621,9 +621,9 @@ def execute(filters=None):
 			_date = _recom[0].modified
 				#date = frappe.utils.get_datetime(date).strftime("%d/%m/%Y")
 
-		comp = None
+		comp = """<button   onClick="achat_item('%s')" type='button'> X </button>""" % (mri.name)
 		if len(mri.item_code) == 11 and mri.item_code not in _models:
-			comp = """<button   onClick="achat_item('%s')" type='button'> X </button>""" % (mri.name)
+			comp = None
 		if is_full:
 			row = [comp,
 			       mri.item_code,
