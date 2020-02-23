@@ -363,15 +363,15 @@ def execute(filters=None):
 			pass
 		else:
 			models.append(m)
-		complements = frappe.get_all("Composant",filters={"parent":m,"parentfield":"articles"},fields=["parent","item"])
-		if complements:
-			parents = {i.item for i in complements}
-			if parents:
-				for t in parents:
-					_models.discard(t)
-					if t in models:
-						models.remove(t)
-					models.append(t)
+			complements = frappe.get_all("Composant",filters={"parent":m,"parentfield":"articles"},fields=["parent","item"])
+			if complements:
+				parents = {i.item for i in complements}
+				if parents:
+					for t in parents:
+						_models.discard(t)
+						#if t in models:
+						#	models.remove(t)
+						models.append(t)
 		
 	for model in models:
 		_mitems = [item for item in items if item.variant_of == model]
