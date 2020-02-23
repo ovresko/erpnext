@@ -194,6 +194,11 @@ frappe.ui.form.on('Supplier Quotation', {
 	},
 	'importer_articles': function(frm){
 	 var me = this;
+				if(!frm.doc.__islocal){
+					frappe.msgprint("Impossible de charger si document enregistre !");
+					return;
+
+				}
 		console.log("manufacturer : ",frm.doc.manufacturer)
 					frappe.call({
 					 method: 'erpnext.stock.doctype.material_request.material_request.get_supplier_quotation',
