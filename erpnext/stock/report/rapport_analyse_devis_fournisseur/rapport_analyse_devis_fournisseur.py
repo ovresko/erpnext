@@ -324,6 +324,7 @@ def execute(filters=None):
 		sqi.confirmation,
 		sqi.pays,
 		it.item_code,
+		it.name,
 		it.item_name,
 		it.stock_uom,
 		it.weight_per_unit,
@@ -366,13 +367,14 @@ def execute(filters=None):
 				for t in parents:
 					if t in _models:
 						_models.remove(t)
-					models.append(t)
+					if t not in models:
+						models.append(t)
 		
 	for model in models:
 		_mitems = [item for item in items if item.variant_of == model]
 		origin_model = frappe.get_doc("Item",model)
 		if model not in _models:
-			origin_model.item_code = "==> COMP %s" % origin_model.item_code
+			origin_model.name = "==> COMP %s" % origin_model.name
 		mitems.extend([origin_model])
 		mitems.extend(_mitems)
 		ids = {o.item_code for o in mitems if item.item_code}
@@ -403,6 +405,7 @@ def execute(filters=None):
 		sqi.confirmation,
 		sqi.offre_fournisseur_initial,
 		it.item_code,
+		it.name,
 		it.item_name,
 		it.stock_uom,
 		it.weight_per_unit,
@@ -428,6 +431,7 @@ def execute(filters=None):
 		oids = {o.item_code for o in mitems if item.item_code}
 		others = frappe.get_all("Item",filters={"variant_of":model,"item_code":("not in",oids)},fields=[
 		"variant_of",
+		"name",
 		"stock_uom", 
 		"perfection",
 		"is_purchase_item",
@@ -620,7 +624,7 @@ def execute(filters=None):
 
 		if is_full:
 			row = ["""<button   onClick="achat_item('%s')" type='button'> X </button>""" % (mri.name),
-			       mri.item_code,
+			       mri.name,
 			       #date
 			       date,
 			       mri.item_name,
@@ -711,7 +715,7 @@ def execute(filters=None):
 			      ]
 		else:
 			row = ["""<button   onClick="achat_item('%s')" type='button'> X </button>""" % (mri.name),
-			       mri.item_code,
+			       mri.name,
 			       #date
 			       date,
 			       mri.item_name,
