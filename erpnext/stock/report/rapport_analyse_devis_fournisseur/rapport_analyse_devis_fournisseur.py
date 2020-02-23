@@ -367,7 +367,9 @@ def execute(filters=None):
 				for t in parents:
 					if t in _models:
 						_models.remove(t)
-					if t not in models:
+					if t in models:
+						pass
+					else:
 						models.append(t)
 		
 	for model in models:
