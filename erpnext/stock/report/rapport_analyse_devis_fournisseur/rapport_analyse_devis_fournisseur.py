@@ -360,17 +360,17 @@ def execute(filters=None):
 	models_copy.extend(_models)
 	for m in models_copy:
 		models.append(m)
-		complements = frappe.get_all("Composant",filters={"parent":m},fields=["parent","item"])
-		if complements:
-			parents = {i.item for i in complements}
-			if parents:
-				for t in parents:
-					if t in _models:
-						_models.remove(t)
-					if t in models:
-						pass
-					else:
-						models.append(t)
+	#	complements = frappe.get_all("Composant",filters={"parent":m},fields=["parent","item"])
+	#	if complements:
+	#		parents = {i.item for i in complements}
+	#		if parents:
+	#			for t in parents:
+	#				if t in _models:
+	#					_models.remove(t)
+	#				if t in models:
+	#					pass
+	#				else:
+	#					models.append(t)
 		
 	for model in models:
 		_mitems = [item for item in items if item.variant_of == model]
