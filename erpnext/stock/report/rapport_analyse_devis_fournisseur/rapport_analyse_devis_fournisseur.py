@@ -746,7 +746,7 @@ def execute(filters=None):
 			       #qts_reliquat
 			       info[3] or 0,
 			       #qts_dem
-			       info[1] or 0,
+			       #info[1] or 0,
 			       #qts
 			       info[0] or 0,
 			       #qts_projete
