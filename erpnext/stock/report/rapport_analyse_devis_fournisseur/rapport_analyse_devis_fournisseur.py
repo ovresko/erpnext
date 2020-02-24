@@ -518,7 +518,7 @@ def execute(filters=None):
 			etat_mail = frappe.db.get_value("Supplier Quotation",mri.parent,"etat_mail")
 			resultat = frappe.db.get_value("Supplier Quotation",mri.parent,"resultat")
 			if etat_mail and etat_mail != "Email Envoye":
-				conf_cmd = """<a id='negociation_%s' onClick="negociation('%s')" type='a'>Negociation </a><a id='approuver_%s' onClick="approuver('%s')" type='a'>Approuver</a><a id='en_cours_%s' onClick="en_cours('%s')" type='a'>En Cours</a><a id='annuler_%s' onClick="annuler('%s')" type='a'>Annuler</a>""" % (mri.name,mri.name,mri.name,mri.name,mri.name,mri.name,mri.name,mri.name)
+				conf_cmd = """<a id='negociation_%s' onClick="negociation('%s')" type='a'>Negociation </a> | <a id='approuver_%s' onClick="approuver('%s')" type='a'>Approuver</a> | <a id='en_cours_%s' onClick="en_cours('%s')" type='a'>En Cours</a> | <a id='annuler_%s' onClick="annuler('%s')" type='a'>Annuler</a>""" % (mri.name,mri.name,mri.name,mri.name,mri.name,mri.name,mri.name,mri.name)
 			supplier = frappe.db.get_value("Supplier Quotation",mri.parent,"supplier_name")
 			supplier_id = frappe.db.get_value("Supplier Quotation",mri.parent,"supplier")
 			qts_demande = frappe.db.get_value("Material Request Item",mri.material_request_item,"qty")
