@@ -380,7 +380,7 @@ def execute(filters=None):
 	
 	models = list(set(models))
 	#models.sort()
-	size_models = 0
+	size_models = len(models)
 	if filters.get("paging"):
 		paging = filters.get("paging")
 		size_models = len(models)
@@ -473,26 +473,30 @@ def execute(filters=None):
 
 		mitems.extend(others)
 		
-		
+	data.append(["","Nombre Modele Total",size_models,"Dans Affichage",len(models) or 0])
+	data.append(["","Article Total :",sum(1 for i in mitems if hasattr(i, 'material_request') ) or 0])
+	data.append(["","En cours :",sum(1 for i in mitems if hasattr(i, 'material_request')  and (i.confirmation == "En cours" or not i.confirmation)) or 0])
+	data.append(["","Approuve :",sum(1 for i in mitems if hasattr(i, 'material_request') and i.confirmation == "Approuve") or 0])
+	data.append(["","Annule :",sum(1 for i in mitems if hasattr(i, 'material_request') and i.confirmation == "Annule") or 0])
+	data.append(["","En negociation :",sum(1 for i in mitems if hasattr(i, 'material_request') and i.confirmation == "En negociation") or 0])
+
 	if filters.get("consultation_interne"):
 		asupplier_name = frappe.db.get_value("Supplier Quotation",filters.get("consultation_interne"),"supplier_name")
 		data.append(["","Fournisseur :",asupplier_name or ''])
-	
-	data.append(["","Nombre Modele Total",size_models,"Dans Affichage",len(models) or 0])
-	data.append(["","Article Total :",sum(1 for i in mitems if hasattr(i, 'material_request') and i.parent==filters.get("consultation_interne")) or 0])
-	data.append(["","En cours :",sum(1 for i in mitems if hasattr(i, 'material_request') and i.parent==filters.get("consultation_interne") and (i.confirmation == "En cours" or not i.confirmation)) or 0])
-	data.append(["","Approuve :",sum(1 for i in mitems if hasattr(i, 'material_request') and i.parent==filters.get("consultation_interne") and i.confirmation == "Approuve") or 0])
-	data.append(["","Annule :",sum(1 for i in mitems if hasattr(i, 'material_request') and i.parent==filters.get("consultation_interne") and i.confirmation == "Annule") or 0])
-	data.append(["","En negociation :",sum(1 for i in mitems if hasattr(i, 'material_request') and i.parent==filters.get("consultation_interne") and i.confirmation == "En negociation") or 0])
+		data.append(["","Article Total :",sum(1 for i in mitems if hasattr(i, 'material_request') and i.parent==filters.get("consultation_interne")) or 0])
+		data.append(["","En cours :",sum(1 for i in mitems if hasattr(i, 'material_request') and i.parent==filters.get("consultation_interne") and (i.confirmation == "En cours" or not i.confirmation)) or 0])
+		data.append(["","Approuve :",sum(1 for i in mitems if hasattr(i, 'material_request') and i.parent==filters.get("consultation_interne") and i.confirmation == "Approuve") or 0])
+		data.append(["","Annule :",sum(1 for i in mitems if hasattr(i, 'material_request') and i.parent==filters.get("consultation_interne") and i.confirmation == "Annule") or 0])
+		data.append(["","En negociation :",sum(1 for i in mitems if hasattr(i, 'material_request') and i.parent==filters.get("consultation_interne") and i.confirmation == "En negociation") or 0])
 
 	if filters.get("consultation_externe"):
 		asupplier_name = frappe.db.get_value("Supplier Quotation",filters.get("consultation_externe"),"supplier_name")
 		data.append(["","Fournisseur :",asupplier_name or ''])
-	data.append(["","Article Total :",sum(1 for i in mitems if hasattr(i, 'material_request') and i.parent==filters.get("consultation_externe")) or 0])
-	data.append(["","En cours :",sum(1 for i in mitems if hasattr(i, 'material_request') and i.parent==filters.get("consultation_externe") and (i.confirmation == "En cours" or not i.confirmation)) or 0])
-	data.append(["","Approuve :",sum(1 for i in mitems if hasattr(i, 'material_request') and i.parent==filters.get("consultation_externe") and i.confirmation == "Approuve") or 0])
-	data.append(["","Annule :",sum(1 for i in mitems if hasattr(i, 'material_request') and i.parent==filters.get("consultation_externe") and i.confirmation == "Annule") or 0])
-	data.append(["","En negociation :",sum(1 for i in mitems if hasattr(i, 'material_request') and i.parent==filters.get("consultation_externe") and i.confirmation == "En negociation") or 0])
+		data.append(["","Article Total :",sum(1 for i in mitems if hasattr(i, 'material_request') and i.parent==filters.get("consultation_externe")) or 0])
+		data.append(["","En cours :",sum(1 for i in mitems if hasattr(i, 'material_request') and i.parent==filters.get("consultation_externe") and (i.confirmation == "En cours" or not i.confirmation)) or 0])
+		data.append(["","Approuve :",sum(1 for i in mitems if hasattr(i, 'material_request') and i.parent==filters.get("consultation_externe") and i.confirmation == "Approuve") or 0])
+		data.append(["","Annule :",sum(1 for i in mitems if hasattr(i, 'material_request') and i.parent==filters.get("consultation_externe") and i.confirmation == "Annule") or 0])
+		data.append(["","En negociation :",sum(1 for i in mitems if hasattr(i, 'material_request') and i.parent==filters.get("consultation_externe") and i.confirmation == "En negociation") or 0])
 
 		
 	for mri in mitems:
