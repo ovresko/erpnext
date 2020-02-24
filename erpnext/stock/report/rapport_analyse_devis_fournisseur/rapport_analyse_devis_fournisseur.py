@@ -73,11 +73,11 @@ def execute(filters=None):
 				"label": "Date Demande",
 				"width": 150
 			})
-	columns.append({
-			"fieldname": "material_request",
-			"label": _("Material Request"),
-			"width": 150
-		})
+		columns.append({
+				"fieldname": "material_request",
+				"label": _("Material Request"),
+				"width": 150
+			})
 	columns.append({
 			"fieldname": "supplier_quotation",
 			"label": "Consultation",
@@ -98,12 +98,12 @@ def execute(filters=None):
 			"label": "Poids",
 			"width": 150
 		})
-	columns.append({
-			"fieldname": "qts_demande",
-			"label": _("Qte Demandee"),
-			"width": 150
-		})
 	if is_full:
+		columns.append({
+				"fieldname": "qts_demande",
+				"label": _("Qte Demandee"),
+				"width": 150
+			})
 		columns.append({
 				"fieldname": "base_amount",
 				"label": "base_amount",
@@ -129,8 +129,6 @@ def execute(filters=None):
 				"label": "Etat d'article dans consultation",
 				"width": 180
 			})
-	##########
-	if is_full:
 		columns.append({
 				"fieldname": "last_qty",
 				"label": "Derniere Qts Achetee",
@@ -151,14 +149,15 @@ def execute(filters=None):
 			"label": "Qte reliquats",
 			"width": 160
 		})
-	columns.append({
-			"fieldname": "qts_dem",
-			"label": "Qte Demande non commande",
-			"width": 160
-		})
+	if is_full:
+		columns.append({
+				"fieldname": "qts_dem",
+				"label": "Qte Demande non commande",
+				"width": 160
+			})
 	columns.append({
 			"fieldname": "qts",
-			"label": "Qte",
+			"label": "Qte En stock",
 			"width": 150
 		})
 	columns.append({
@@ -171,11 +170,12 @@ def execute(filters=None):
 			"label": "Qte Max d'achat",
 			"width": 150
 		})
-	columns.append({
-			"fieldname": "qts_recom",
-			"label": "Recommande auto",
-			"width": 150
-		})
+	if is_full:
+		columns.append({
+				"fieldname": "qts_recom",
+				"label": "Recommande auto",
+				"width": 150
+			})
 	columns.append({
 			"fieldname": "last_purchase_rate",
 			"label": "Dernier Prix d'achat (DZD)",
@@ -518,7 +518,7 @@ def execute(filters=None):
 			etat_mail = frappe.db.get_value("Supplier Quotation",mri.parent,"etat_mail")
 			resultat = frappe.db.get_value("Supplier Quotation",mri.parent,"resultat")
 			if etat_mail and etat_mail != "Email Envoye":
-				conf_cmd = """<button id='negociation_%s' onClick="negociation('%s')" type='button'>Negociation</button><button id='approuver_%s' onClick="approuver('%s')" type='button'>Approuver</button><button id='en_cours_%s' onClick="en_cours('%s')" type='button'>En Cours</button><button id='annuler_%s' onClick="annuler('%s')" type='button'>Annuler</button>""" % (mri.name,mri.name,mri.name,mri.name,mri.name,mri.name,mri.name,mri.name)
+				conf_cmd = """<a id='negociation_%s' onClick="negociation('%s')" type='a'>Negociation </a><a id='approuver_%s' onClick="approuver('%s')" type='a'>Approuver</a><a id='en_cours_%s' onClick="en_cours('%s')" type='a'>En Cours</a><a id='annuler_%s' onClick="annuler('%s')" type='a'>Annuler</a>""" % (mri.name,mri.name,mri.name,mri.name,mri.name,mri.name,mri.name,mri.name)
 			supplier = frappe.db.get_value("Supplier Quotation",mri.parent,"supplier_name")
 			supplier_id = frappe.db.get_value("Supplier Quotation",mri.parent,"supplier")
 			qts_demande = frappe.db.get_value("Material Request Item",mri.material_request_item,"qty")
@@ -581,11 +581,11 @@ def execute(filters=None):
 
 			hist_offre_fournisseur = ahist
 			if etat_mail and etat_mail != "Email Envoye":
-				s_prix_target = """<input placeholder='Prix target' id='prix_target_%s' value='%s' style='color:black'></input><button  onClick="prix_target_item('%s')" type='button'> OK </button>""" % (mri.name,prix_target,mri.name)
-				s_qts_target = """<input placeholder='qts_target' id='qts_target_%s' value='%s' style='color:black'></input><button  onClick="qts_target_item('%s')" type='button'> OK </button>""" % (mri.name,qts_target,mri.name)
-				s_remarque = """<input placeholder='remarque' id='remarque_%s' value='%s' style='color:black'></input><button  onClick="remarque_item('%s')" type='button'> OK </button>""" % (mri.name,remarque,mri.name)
-				s_commentaire = """<input placeholder='commentaire' id='commentaire_%s' value='%s' style='color:black'></input><button  onClick="commentaire_item('%s')" type='button'> OK </button>""" % (mri.name,commentaire,mri.name)
-				s_qts_devis = """ <input placeholder='Qts devis' id='input_%s' value='%s' style='color:black'></input> <button id='%s' onClick="demander_item('%s')" type='button'>OK</button>""" % (mri.name,qts_devis,mri.name,mri.name)
+				s_prix_target = """<input placeholder='Prix target' id='prix_target_%s' value='%s' style='color:black'></input><a  onClick="prix_target_item('%s')" type='a'> OK </a>""" % (mri.name,prix_target,mri.name)
+				s_qts_target = """<input placeholder='qts_target' id='qts_target_%s' value='%s' style='color:black'></input><a  onClick="qts_target_item('%s')" type='a'> OK </a>""" % (mri.name,qts_target,mri.name)
+				s_remarque = """<input placeholder='remarque' id='remarque_%s' value='%s' style='color:black'></input><a  onClick="remarque_item('%s')" type='button'> OK </a>""" % (mri.name,remarque,mri.name)
+				s_commentaire = """<input placeholder='commentaire' id='commentaire_%s' value='%s' style='color:black'></input><a  onClick="commentaire_item('%s')" type='a'> OK </a>""" % (mri.name,commentaire,mri.name)
+				s_qts_devis = """ <input placeholder='Qts devis' id='input_%s' value='%s' style='color:black'></input> <a id='%s' onClick="demander_item('%s')" type='a'>OK</a>""" % (mri.name,qts_devis,mri.name,mri.name)
 			else:
 				s_prix_target = prix_target
 				s_qts_target = qts_target
@@ -620,7 +620,7 @@ def execute(filters=None):
 			_date = _recom[0].modified
 				#date = frappe.utils.get_datetime(date).strftime("%d/%m/%Y")
 
-		comp = """<button   onClick="achat_item('%s')" type='button'> X </button>""" % (mri.name)
+		comp = """<a   onClick="achat_item('%s')" type='a'> X </a>""" % (mri.name)
 		if len(mri.item_code) == 11 and mri.item_code not in _models:
 			comp = None
 		if is_full:
@@ -727,7 +727,7 @@ def execute(filters=None):
 			       #datedm
 			       #datedm,
 			       #material_request
-			       material_request,
+			       #material_request,
 			       #supplier_quotation
 			       supplier_quotation,
 			       #supplier
@@ -735,7 +735,7 @@ def execute(filters=None):
 			       pays,
 			       poids,
 			       #qts_demande
-			       qts_demande,
+			       #qts_demande,
 			       #prix_target,
 			       #last_qty
 			       #last_qty,
@@ -754,7 +754,7 @@ def execute(filters=None):
 			       #qts_max_achat
 			       qts_max_achat or 0,
 			       #recom
-			       recom,
+			       #recom,
 			       #last_purchase_rate
 			       mri.last_purchase_rate  or 0,
 			       #last_purchase_devise
