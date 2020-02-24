@@ -176,11 +176,11 @@ def execute(filters=None):
 				"label": "Recommande auto",
 				"width": 150
 			})
-	columns.append({
-			"fieldname": "last_purchase_rate",
-			"label": "Dernier Prix d'achat (DZD)",
-			"width": 150
-		})
+		columns.append({
+				"fieldname": "last_purchase_rate",
+				"label": "Dernier Prix d'achat (DZD)",
+				"width": 150
+			})
 	columns.append({
 			"fieldname": "last_purchase_devise",
 			"label": "Dernier Prix d'achat (Devise)",
@@ -757,7 +757,7 @@ def execute(filters=None):
 			       #recom
 			       #recom,
 			       #last_purchase_rate
-			       mri.last_purchase_rate  or 0,
+			       #mri.last_purchase_rate  or 0,
 			       #last_purchase_devise
 			       mri.last_purchase_devise  or 0,
 			       #qts_devis
