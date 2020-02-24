@@ -324,7 +324,6 @@ def execute(filters=None):
 		sqi.confirmation,
 		sqi.pays,
 		it.item_code,
-		it.name,
 		it.item_name,
 		it.stock_uom,
 		it.weight_per_unit,
@@ -407,7 +406,6 @@ def execute(filters=None):
 		sqi.confirmation,
 		sqi.offre_fournisseur_initial,
 		it.item_code,
-		it.name,
 		it.item_name,
 		it.stock_uom,
 		it.weight_per_unit,
@@ -433,7 +431,6 @@ def execute(filters=None):
 		oids = {o.item_code for o in mitems if item.item_code}
 		others = frappe.get_all("Item",filters={"variant_of":model,"item_code":("not in",oids)},fields=[
 		"variant_of",
-		"name",
 		"stock_uom", 
 		"perfection",
 		"is_purchase_item",
