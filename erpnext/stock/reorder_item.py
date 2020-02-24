@@ -16,10 +16,10 @@ def reorder_item():
 	if cint(frappe.db.get_value('Stock Settings', None, 'auto_indent')):
 		return _reorder_item()
 def refresh_items():
-        models = frappe.get_all("Item",filters={"has_variants":"1"},fields=["name"])
+        models = frappe.get_all("Item",filters={"has_variants":"1"},fields=["name","modified"],order_by='modified ASC',limit=50)
         print("found %d " % len(models))
         for model in models:
-            print("handeling %s" % model.name)
+            print("handeling %s" % model.modified)
             doc = frappe.get_doc("Item",model.name)
             #doc.update_variants()
             doc.save()
@@ -32,6 +32,7 @@ def refresh_items():
         for d in defaults:
             default = frappe.get_doc("Item Default", d.name)
             default.default_warehouse = wr
+	    default.save()
 
 def _reorder_item():
 	material_requests = {"Purchase": {}, "Transfer": {}, "Material Issue": {}, "Manufacture": {}}
