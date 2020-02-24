@@ -409,6 +409,13 @@ frappe.query_reports["Rapport analyse devis fournisseur"] = {
 				}
 			}
 		}
-	}
+	},
+		{
+			"fieldname":"paging",
+			"label": "Afficher",
+			"fieldtype": "Select",
+			"options": ["Afficher Tous","Page 1", "Page 2", "Page 3", "Page 4"],
+			"default": ""
+		}
 	]
 }
