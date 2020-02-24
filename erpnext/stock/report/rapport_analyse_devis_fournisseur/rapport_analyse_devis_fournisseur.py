@@ -361,7 +361,7 @@ def execute(filters=None):
 		if m in models:
 			pass
 		else:
-			models.append(m)
+			models.insert(len(models),m)
 			complements = frappe.get_all("Composant",filters={"parent":m,"parentfield":"articles"},fields=["parent","item"])
 			if complements:
 				parents = {i.item for i in complements}
@@ -370,7 +370,8 @@ def execute(filters=None):
 						_models.discard(t)
 						#if t in models:
 						#	models.remove(t)
-						models.append(t)
+						models.insert(len(models),t)
+						
 	if not models or len(models) <= 0:
 		frappe.msgprint("Aucune resultat")
 		return columns, data
