@@ -352,7 +352,7 @@ frappe.query_reports["Rapport analyse devis fournisseur"] = {
 			"fieldname": "show_price",
 			"label": "Afficher les prix",
 			"fieldtype": "Check",
-			"default": 0
+			"default": 1
 		},
 		{
 		"fieldname":"from_date",
