@@ -375,6 +375,11 @@ def execute(filters=None):
 		frappe.msgprint("Aucune resultat")
 		return columns, data
 	
+	
+	
+	models = list(set(models))
+	models.sort()
+	
 	if filters.get("paging"):
 		paging = filters.get("paging")
 		size_models = len(models)
@@ -389,9 +394,7 @@ def execute(filters=None):
 			models = models[2*sm:3*sm]
 		elif paging == "Page 4":
 			models = models[3*sm:]
-	
-	models = list(set(models))
-	models.sort()
+			
 	for model in models:
 		_mitems = [item for item in items if item.variant_of == model]
 		origin_model = frappe.get_doc("Item",model)
