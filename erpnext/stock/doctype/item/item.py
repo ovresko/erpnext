@@ -1123,6 +1123,17 @@ def set_item_achat(item_code):
 
 def update_variants(variants, template, publish_progress=True):
 	count=0
+	#Composant
+	if template.articles:
+		for comp in template.articles:
+			if comp.item:
+				other_comp = frappe.get_doc("Item",comp.item)
+				if other_comp.has_variants and template.name not in {a.item for a in other_comp.articles}:
+					row = other_comp.append('articles',{})
+					row.item = template.name
+					other_comp.save()
+					
+				
 	for d in variants:
 		variant = frappe.get_doc("Item", d)
 		copy_attributes_to_variant(template, variant)
