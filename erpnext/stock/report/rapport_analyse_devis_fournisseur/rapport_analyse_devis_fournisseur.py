@@ -371,6 +371,25 @@ def execute(filters=None):
 						#if t in models:
 						#	models.remove(t)
 						models.append(t)
+	if not models or len(models) <= 0:
+		frappe.msgprint("Aucune resultat")
+		return columns, data
+	
+	if filters.get("paging"):
+		paging = filters.get("paging")
+		size_models = len(models)
+		sm =  int(size_models * 0.25)
+		if sm <= 0:
+			sm = 1
+		if paging == "Page 1":
+			models = models[:sm]
+		elif paging == "Page 2":
+			models = models[sm:2*sm]
+		elif paging == "Page 3":
+			models = models[2*sm:3*sm]
+		elif paging == "Page 4":
+			models = models[3*sm:]
+	
 	models = list(set(models))
 	models.sort()
 	for model in models:
