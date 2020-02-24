@@ -368,8 +368,8 @@ def execute(filters=None):
 				if parents:
 					for t in parents:
 						_models.discard(t)
-						#if t in models:
-						#	models.remove(t)
+						if t in models:
+							models.remove(t)
 						models.insert(len(models),t)
 						
 	if not models or len(models) <= 0:
@@ -378,7 +378,7 @@ def execute(filters=None):
 	
 	
 	
-	models = list(set(models))
+	#models = list(set(models))
 	#models.sort()
 	size_models = len(models)
 	if filters.get("paging"):
@@ -400,7 +400,7 @@ def execute(filters=None):
 		_mitems = [item for item in items if item.variant_of == model]
 		origin_model = frappe.get_doc("Item",model)
 
-		mitems.extend([origin_model])
+		mitems.append(origin_model)
 		mitems.extend(_mitems)
 		ids = {o.item_code for o in mitems if item.item_code}
 		lids = "','".join(ids)
