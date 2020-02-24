@@ -371,7 +371,8 @@ def execute(filters=None):
 						#if t in models:
 						#	models.remove(t)
 						models.append(t)
-		
+	models = list(set(models))
+	models.sort()
 	for model in models:
 		_mitems = [item for item in items if item.variant_of == model]
 		origin_model = frappe.get_doc("Item",model)
