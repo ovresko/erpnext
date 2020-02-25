@@ -104,8 +104,16 @@ class PurchaseInvoice(BuyingController):
 		self.create_remarks()
 		self.set_status()
 		self.validate_purchase_receipt_if_update_stock()
+		self.check_country()
 		validate_inter_company_party(self.doctype, self.supplier, self.company, self.inter_company_invoice_reference)
 
+	def check_country(self):
+		for item in self.items:
+			if item.po_detail:
+				po = frappe.get_doc("Purchase Order Item",item.po_detail)
+				if po and po.pays:
+					if item.pays != po.pays:
+						frappe.msgprint("Attention, le pays d'origine d'article %s est different par rapport au bon de commande" % item.item_code)
 	def validate_release_date(self):
 		if self.release_date and getdate(nowdate()) >= getdate(self.release_date):
 			frappe.msgprint('Release date must be in the future', raise_exception=True)
