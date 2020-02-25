@@ -685,8 +685,8 @@ class BuyingController(StockController):
 
 		if self.schedule_date:
 			for d in self.get('items'):
-				if not d.schedule_date:
-					d.schedule_date = self.schedule_date
+				#if not d.schedule_date:
+				d.schedule_date = self.schedule_date
 
 				if (d.schedule_date and self.transaction_date and
 					getdate(d.schedule_date) < getdate(self.transaction_date)):
