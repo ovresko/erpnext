@@ -113,6 +113,7 @@ def get_indented_qty(item_code, warehouse):
 	indented_qty = frappe.db.sql("""select sum(mr_item.qty - mr_item.ordered_qty)
 		from `tabMaterial Request Item` mr_item, `tabMaterial Request` mr
 		where mr_item.item_code=%s and mr_item.warehouse=%s
+		and mr_item.consulted = 0
 		and mr_item.qty > mr_item.ordered_qty and mr_item.parent=mr.name
 		and mr.status!='Stopped' and mr.docstatus=1""", (item_code, warehouse))
 
