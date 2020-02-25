@@ -614,7 +614,7 @@ def execute(filters=None):
 				s_prix_target = """<input placeholder='Prix target' id='prix_target_%s' value='%s' style='color:black'></input><a  onClick="prix_target_item('%s')" type='a'> OK </a>""" % (mri.name,prix_target,mri.name)
 				s_qts_target = """<input placeholder='qts_target' id='qts_target_%s' value='%s' style='color:black'></input><a  onClick="qts_target_item('%s')" type='a'> OK </a>""" % (mri.name,qts_target,mri.name)
 				s_remarque = """<input placeholder='remarque' id='remarque_%s' value='%s' style='color:black'></input><a  onClick="remarque_item('%s')" type='button'> OK </a>""" % (mri.name,remarque,mri.name)
-				s_commentaire = """<input placeholder='commentaire' id='commentaire_%s' value='%s' style='color:black'></input><a  onClick="commentaire_item('%s')" type='a'> OK </a>""" % (mri.name,commentaire,mri.name)
+				s_commentaire = """<input placeholder='commentaire interne' id='commentaire_%s' value='%s' style='color:black'></input><a  onClick="commentaire_item('%s')" type='a'> OK </a>""" % (mri.name,commentaire,mri.name)
 				s_qts_devis = """ <input placeholder='Qts devis' id='input_%s' value='%s' style='color:black'></input> <a id='%s' onClick="demander_item('%s')" type='a'>OK</a>""" % (mri.name,qts_devis,mri.name,mri.name)
 			else:
 				s_prix_target = prix_target
