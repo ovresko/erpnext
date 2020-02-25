@@ -30,9 +30,10 @@ def refresh_items():
         if not wr:
             wr = "GLOBAL - MV"
         for d in defaults:
-            default = frappe.get_doc("Item Default", d.name)
-            default.default_warehouse = wr
-	    default.save()
+	    frappe.db.set_value("Item Default",d.name,"default_warehouse",wr)
+            #default = frappe.get_doc("Item Default", d.name)
+            #default.default_warehouse = wr
+	    #default.save()
 
 def _reorder_item():
 	material_requests = {"Purchase": {}, "Transfer": {}, "Material Issue": {}, "Manufacture": {}}
