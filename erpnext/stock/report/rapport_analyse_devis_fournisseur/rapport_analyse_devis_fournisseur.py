@@ -146,8 +146,8 @@ def execute(filters=None):
 		})
 	columns.append({
 			"fieldname": "qts_reliquat",
-			"label": "Qte reliquats",
-			"width": 160
+			"label": "Qte Cmd + reliquats",
+			"width": 220
 		})
 	if is_full:
 		columns.append({
