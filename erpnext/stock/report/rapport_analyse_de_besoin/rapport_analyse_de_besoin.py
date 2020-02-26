@@ -101,6 +101,16 @@ def execute(filters=None):
 			"width": 150
 		})
 	columns.append({
+			"fieldname": "qts_demande",
+			"label": "Qte en Demande",
+			"width": 150
+		})
+	columns.append({
+			"fieldname": "qts_consulte",
+			"label": "Qte en Consultation",
+			"width": 150
+		})
+	columns.append({
 			"fieldname": "qts_max_achat",
 			"label": "Qte Max d'achat",
 			"width": 150
@@ -167,6 +177,10 @@ def execute(filters=None):
 			where item_code=%s and voucher_type=%s 
 			order by posting_date, posting_time limit 1""", (mri.item_code,"Purchase Receipt"), as_dict=1)
 			last_qty = 0
+			qts_consulte = frappe.db.sql("""select sum(qty) from `tabSupplier Quotation Item` 
+			where item_code=%s and docstatus=0""", (mri.item_code))[0]
+			qts_demande = frappe.db.sql("""select sum(qty) from `tabMaterial Request Item` 
+			where item_code=%s and docstatus=1 and consulted=0""", (mri.item_code))[0]
 			last_valuation = 0
 			recom = 0
 			_date = ""
@@ -206,6 +220,8 @@ def execute(filters=None):
 			       info[0] or 0,
 			       #qts_projete
 			       info[2] or 0,
+			       qts_demande or 0,
+			       qts_consulte or 0,
 			       #qts_max_achat
 			       qts_max_achat or 0,
 			       #recom
