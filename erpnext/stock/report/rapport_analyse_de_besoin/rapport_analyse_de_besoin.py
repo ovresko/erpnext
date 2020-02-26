@@ -178,9 +178,9 @@ def execute(filters=None):
 			order by posting_date, posting_time limit 1""", (mri.item_code,"Purchase Receipt"), as_dict=1)
 			last_qty = 0
 			qts_consulte = frappe.db.sql("""select sum(qty) from `tabSupplier Quotation Item` 
-			where item_code=%s and docstatus=0""", (mri.item_code))[0]
+			where item_code=%s and docstatus=0""", (mri.item_code))[0][0]
 			qts_demande = frappe.db.sql("""select sum(qty) from `tabMaterial Request Item` 
-			where item_code=%s and docstatus=1 and consulted=0""", (mri.item_code))[0]
+			where item_code=%s and docstatus=1 and consulted=0""", (mri.item_code))[0][0]
 			last_valuation = 0
 			recom = 0
 			_date = ""
