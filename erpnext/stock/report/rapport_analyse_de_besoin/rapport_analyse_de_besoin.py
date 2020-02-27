@@ -131,13 +131,13 @@ def execute(filters=None):
 			"width": 150
 		})
 	if filters.show_price:
-		columns.append({
+		price_lists= frappe.get_all("Price List",filters={"buying":1},fields=["name","currency"])
+		if price_lists:
+			columns.append({
 						"fieldname": "all_prices",
 						"label": "Prix article",
 						"width": 450
 					})
-		#price_lists= frappe.get_all("Price List",filters={"buying":1},fields=["name","currency"])
-		#if price_lists:
 		#	for pl in price_lists:
 		#		columns.append({
 		#			"fieldname": pl.name,
