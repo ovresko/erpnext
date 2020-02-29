@@ -401,7 +401,10 @@ def get_material_requests_based_on_supplier(supplier):
 	return material_requests, supplier_items
 @frappe.whitelist()
 def get_supplier_quotation(manufacturer):
-	ids = frappe.db.sql("""select parent from `tabMaterial Request Item` where consulted=0 and fabricant=%s """,(manufacturer))
+	ids = []
+	_ids = frappe.db.sql("""select parent from `tabMaterial Request Item` where consulted=0 and fabricant=%s """,(manufacturer), as_dict=1)
+	for i in _ids:
+		ids.append(i.parent)
 	#frappe.msgprint("ids : %s" % ids)
 	if not ids:
 		ids = []
