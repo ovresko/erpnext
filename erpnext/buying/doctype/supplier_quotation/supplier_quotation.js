@@ -199,37 +199,23 @@ frappe.ui.form.on('Supplier Quotation', {
 					return;
 
 				}
-		console.log("manufacturer : ",frm.doc.manufacturer)
+				console.log("manufacturer : ",frm.doc.manufacturer)
 					frappe.call({
-					 method: 'erpnext.stock.doctype.material_request.material_request.get_supplier_quotation',
+					 method: 'erpnext.stock.doctype.material_request.material_request.get_mr_items',
 						args:{manufacturer: frm.doc.manufacturer},
 					callback: function(r){
-						//frappe.msgprint("Vous devez enregistrer pour filtrer les resultats");
-						let res = [];
+						  
 						r.message.map(w => {
-							//console.log("api returning :",w)
-							res.push(w.name);
+							
+					 var child = cur_frm.add_child("items");
+					frappe.model.set_value(child.doctype, child.name, "item_code", w.item_code)
+					frappe.model.set_value(child.doctype, child.name, "pays", w.pays)
+					cur_frm.refresh_field("items")
+							
+							
 						})
-						//console.log("get supp",res);
-						if(res){					
-					erpnext.utils.map_current_doc({
-						method: "erpnext.stock.doctype.material_request.material_request.make_supplier_quotation",
-						source_doctype: "Material Request",
-						predef: res,
-						target: frm,
-						setters: {
-							company: frm.doc.company
-						},
-						get_query_filters: {
-							material_request_type: "Purchase",
-							docstatus: 1,
-							status: ["!=", "Stopped"],
-							per_ordered: ["<", 99.99]
-						}
-					});
-						//frm.reload_doc();
-							//frm.refresh();
-							//frm.refresh_field("items");
+						 
+						if(res){ 
 							frappe.msgprint("Vous devez enregistrer pour filtrer les resultats  ")
 						}}});	
 	}
