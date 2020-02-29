@@ -221,14 +221,14 @@ frappe.ui.form.on('Supplier Quotation', {
 					frappe.model.set_value(child.doctype, child.name, "ref_fabricant", w.ref_fabricant)
 					frappe.model.set_value(child.doctype, child.name, "fabricant", w.fabricant)
 					  
-					cur_frm.refresh_field("items")
-							
-							
-						})
+					cur_frm.refresh_field("items"); 
+						});
 						 
-						if(res){ 
-							frappe.msgprint("Vous devez enregistrer pour filtrer les resultats  ")
-						}}});	
+						if(r.message){ 
+							frappe.msgprint("Operation terminee")
+							}
+					
+					}});	
 	}
 	//, 
 	//validate: function(frm){
