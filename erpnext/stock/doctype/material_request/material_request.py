@@ -401,17 +401,19 @@ def get_material_requests_based_on_supplier(supplier):
 	return material_requests, supplier_items
 @frappe.whitelist()
 def get_supplier_quotation(manufacturer):
-        doclist = frappe.get_all("Material Request",filters={'docstatus':['=',1],'Material_request_type':'Purchase','status': ['!=','Stopped']},fields=['name'])
+	ids = frappe.db.sql("""select parent from `tabMaterial Request Item` where consulted=0 and fabricant=%s """,(manufacturer), as_dict=1)
+        doclist = frappe.get_all("Material Request",filters={'name':('in', ids),'docstatus':['=',1],'Material_request_type':'Purchase','status': ['!=','Stopped']},fields=['name'])
         docresult = []
         for m in doclist:
-            origin = frappe.get_doc("Material Request",m)
-            items = []
-            for item in origin.items:
-                if (item.fabricant == manufacturer) and (item.consulted == 0):
-                    items.append(item)
-            if items:
-                origin.items = items
-                docresult.append(origin)
+		docresult.append(m)
+            #origin = frappe.get_doc("Material Request",m)
+            #items = []
+            #for item in origin.items:
+            #    if (item.fabricant == manufacturer) and (item.consulted == 0):
+            #        items.append(item)
+            #if items:
+            #    origin.items = items
+            #    docresult.append(origin)
                 #msgprint("make sup quot %d " % len(origin.items))
         return docresult
 
