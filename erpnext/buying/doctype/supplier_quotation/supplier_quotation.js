@@ -204,12 +204,23 @@ frappe.ui.form.on('Supplier Quotation', {
 					 method: 'erpnext.stock.doctype.material_request.material_request.get_mr_items',
 						args:{manufacturer: frm.doc.manufacturer},
 					callback: function(r){
-						  
+						  cur_frm.clear_table("items"); 
 						r.message.map(w => {
 							
 					 var child = cur_frm.add_child("items");
+					
 					frappe.model.set_value(child.doctype, child.name, "item_code", w.item_code)
 					frappe.model.set_value(child.doctype, child.name, "pays", w.pays)
+					frappe.model.set_value(child.doctype, child.name, "material_request_item", w.name)
+					frappe.model.set_value(child.doctype, child.name, "material_request", w.parent)
+					frappe.model.set_value(child.doctype, child.name, "model", w.model)
+					frappe.model.set_value(child.doctype, child.name, "consultation", w.consultation)
+					frappe.model.set_value(child.doctype, child.name, "consulted", w.consulted)
+					frappe.model.set_value(child.doctype, child.name, "item_name", w.item_name)
+					frappe.model.set_value(child.doctype, child.name, "qty", w.qty)
+					frappe.model.set_value(child.doctype, child.name, "ref_fabricant", w.ref_fabricant)
+					frappe.model.set_value(child.doctype, child.name, "fabricant", w.fabricant)
+					  
 					cur_frm.refresh_field("items")
 							
 							
