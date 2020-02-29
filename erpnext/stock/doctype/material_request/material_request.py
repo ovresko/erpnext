@@ -402,6 +402,9 @@ def get_material_requests_based_on_supplier(supplier):
 @frappe.whitelist()
 def get_supplier_quotation(manufacturer):
 	ids = frappe.db.sql("""select parent from `tabMaterial Request Item` where consulted=0 and fabricant=%s """,(manufacturer), as_dict=1)
+	frappe.msgprint("ids : %s" % ids)
+	if not ids:
+		ids = []
         doclist = frappe.get_all("Material Request",filters={'name':('in', ids),'docstatus':['=',1],'Material_request_type':'Purchase','status': ['!=','Stopped']},fields=['name'])
         docresult = []
         for m in doclist:
