@@ -81,7 +81,12 @@ def execute(filters=None):
 			"width": 150
 		})
 	columns.append({
-			"fieldname": "qts_reliquat",
+			"fieldname": "qts_comm",
+			"label": "Qte Commande",
+			"width": 160
+		})
+	columns.append({
+			"fieldname": "qts_non_recue",
 			"label": "Qte reliquats",
 			"width": 160
 		})
@@ -181,6 +186,8 @@ def execute(filters=None):
 			sqllast_qty = frappe.db.sql("""select actual_qty,valuation_rate from `tabStock Ledger Entry` 
 			where item_code=%s and voucher_type=%s 
 			order by posting_date, posting_time limit 1""", (mri.item_code,"Purchase Receipt"), as_dict=1)
+			relq = frappe.db.sql("""select sum(qty) - sum(received_qty) from `tabPurchase Invoice Item` 
+			where item_code=%s and docstatus=1""", (mri.item_code))[0][0]
 			last_qty = 0
 			qts_consulte = frappe.db.sql("""select sum(qty) from `tabSupplier Quotation Item` 
 			where item_code=%s and docstatus=0""", (mri.item_code))[0][0]
@@ -217,8 +224,10 @@ def execute(filters=None):
 			       last_valuation or 0,
 			       #consom,
 			       "_",
-			       #qts_reliquat
+			       #qts_comm
 			       info[3] or 0,
+			       #reliuat
+			       relq or 0,
 			       #qts_dem
 			       info[1] or 0,
 			       #qts
