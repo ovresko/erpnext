@@ -380,19 +380,19 @@ frappe.query_reports["Rapport analyse devis fournisseur"] = {
 	},
 	{
 		"fieldname": "consultation_interne",
-		"label": __("Consultation interne"),
+		"label": "Tous Consultation",
 		fieldtype: "Link",
 		options: "Supplier Quotation", 
-		"get_query": function() {
-			return {
-				"doctype": "Supplier Quotation",
-				"filters": {
-					"etat_consultation_deux": "Consultation Interne",
-					"etat_mail":"Email Non Envoye",
-					"resultat": ["!=", "A Envoyer P1"]
-				}
-			}
-		}
+		//"get_query": function() {
+		//	return {
+		//		"doctype": "Supplier Quotation",
+		//		"filters": {
+		//			"etat_consultation_deux": "Consultation Interne",
+		//			"etat_mail":"Email Non Envoye",
+		//			"resultat": ["!=", "A Envoyer P1"]
+		//		}
+		//	}
+		//}
 	},
 	{
 		"fieldname": "consultation_externe",
@@ -403,7 +403,7 @@ frappe.query_reports["Rapport analyse devis fournisseur"] = {
 			return {
 				"doctype": "Supplier Quotation",
 				"filters": {
-					"etat_consultation_deux": "Consultation Externe",
+					//"etat_consultation_deux": "Consultation Externe",
 					"etat_mail":"Email Non Envoye",
 					"resultat": ["!=", "A Envoyer P1"]
 				}
