@@ -44,13 +44,23 @@ frappe.query_reports["Rapport analyse de besoin"] = {
 		console.log("row",row);
 		console.log("column",column);
 		console.log("data",data);
+		if(data["qts_demande"] > 0){
+			value = "<div style='color: #2E7FF8;padding: 5px;'>" + value + "</div>";
+		}
+		if(data["qts_consulte"] > 0){
+			value = "<div style='color: #D75F00;padding: 5px;'>" + value + "</div>";
+		}
+		if(data["qts_non_recue"] + data["qts"] > 0){
+			value = "<div style='color: #11AF22;padding: 5px;'>" + value + "</div>";
+		}
+		
 		
 		if (row && row != null && row[2] && row[2].content.length == 11) {
 			value = "<div style='color: white;background-color: #43458e;padding: 5px;'>" + value + "</div>";
 		}
-		else {
-			value = "<div style='color:black'>" + value + "</div>";
-		}
+		//else {
+		//	value = "<div style='color:black'>" + value + "</div>";
+		//}
 		return value
 	},
 	"filters": [
