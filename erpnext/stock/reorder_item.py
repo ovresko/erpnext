@@ -116,10 +116,7 @@ def get_item_warehouse_projected_qty(items_to_consider):
 			projected_qty = projected_qty + cnl
 			
 		# add devis encours
-		qnl = frappe.db.sql("""select sum(qty) from `tabSupplier Quotation Item` 
-			where item_code=%s and docstatus=0 and (material_request_item IS NULL or material_request_item= '') """, (item_code))[0][0]
-		if qnl:
-			projected_qty = projected_qty + qnl
+		
 			
 		if item_code not in item_warehouse_projected_qty:
 			item_warehouse_projected_qty.setdefault(item_code, {})
