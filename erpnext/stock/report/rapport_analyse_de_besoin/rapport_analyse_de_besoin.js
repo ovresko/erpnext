@@ -40,8 +40,8 @@ frappe.query_reports["Rapport analyse de besoin"] = {
 	"formatter": function (value, row, column, data, default_formatter) {
 		value = default_formatter(value, row, column, data);
 		
-		 
-		if(data["qts_demande"] > 0){
+		 if(data != null && data != undefined){
+			 if(data["qts_demande"] > 0){
 			value = "<div style='color: #2E7FF8;padding: 5px;'>" + value + "</div>";
 		}
 		if(data["qts_consulte"] > 0){
@@ -50,6 +50,8 @@ frappe.query_reports["Rapport analyse de besoin"] = {
 		if(data["qts_non_recue"] + data["qts"] > 0){
 			value = "<div style='color: #11AF22;padding: 5px;'>" + value + "</div>";
 		}
+		 }
+		
 		
 		
 		if (row && row != null && row[2] && row[2].content.length == 11) {
