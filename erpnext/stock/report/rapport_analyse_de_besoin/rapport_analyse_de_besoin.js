@@ -40,10 +40,7 @@ frappe.query_reports["Rapport analyse de besoin"] = {
 	"formatter": function (value, row, column, data, default_formatter) {
 		value = default_formatter(value, row, column, data);
 		
-		console.log("value",value);
-		console.log("row",row);
-		console.log("column",column);
-		console.log("data",data);
+		 
 		if(data["qts_demande"] > 0){
 			value = "<div style='color: #2E7FF8;padding: 5px;'>" + value + "</div>";
 		}
