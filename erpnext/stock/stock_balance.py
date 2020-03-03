@@ -117,14 +117,15 @@ def get_indented_qty(item_code, warehouse):
 		and mr_item.qty > mr_item.ordered_qty and mr_item.parent=mr.name
 		and mr.status!='Stopped' and mr.docstatus=1""", (item_code, warehouse))
 	
+	_qty = indented_qty[0][0]
 	qnl = frappe.db.sql("""select sum(qty) from `tabSupplier Quotation Item` 
 	where item_code=%s 
 	and docstatus=0 and warehouse=%s""", (item_code, warehouse))[0][0]
 	if qnl:
-		indented_qty[0][0] = flt(indented_qty[0][0]) + flt(qnl)
-	print("indent %s %d" % (item_code,indented_qty[0][0]))
+		_qty = flt(_qty) + flt(qnl)
+	print("indent %s %d" % (item_code,_qty))
 
-	return flt(indented_qty[0][0]) if indented_qty else 0
+	return flt(_qty) if indented_qty else 0
 
 def get_ordered_qty(item_code, warehouse):
 	ordered_qty = frappe.db.sql("""
