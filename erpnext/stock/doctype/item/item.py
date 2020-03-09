@@ -183,7 +183,7 @@ class Item(WebsiteGenerator):
                 min_qts = self.recom_minimum
 		qts = self.recom_qts
 		if self.manufacturer_part_no:
-			self.clean_manufacturer_part_number = self.manufacturer_part_no.replace(" ","").replace("-","").replace("_","").replace("/","")
+			self.clean_manufacturer_part_number = self.manufacturer_part_no.replace(" ","").replace("-","").replace("_","").replace("/","").replace(".","")
 		if min_qts == -1 and qts == -1:
 		    self.reorder_levels = []
 		    self.recom_minimum = 0
