@@ -207,7 +207,7 @@ def execute(filters=None):
 	for model in models:
 		if filters.get('model_status') and filters.get('model_status') == "Modele en repture":
 			projected = info_modele(model)[2] or 0
-			if not projected or projected <= 0:
+			if projected or projected > 0:
 				continue
 		exitems = frappe.db.sql(
 		"""
