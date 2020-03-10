@@ -15,14 +15,23 @@ def reorder_item():
 
 	if cint(frappe.db.get_value('Stock Settings', None, 'auto_indent')):
 		return _reorder_item()
+	
+def refresh_refs():
+	frappe.db.sql("""
+	update tabItem set clean_manufacturer_part_number= REPLACE(REPLACE(REPLACE(REPLACE(manufacturer_part_number,' ',''),'-',''),'.',''),'/','') where (manufacturer_part_number != '' and manufacturer_part_number IS NOT NULL) 
+	""")
 def refresh_items():
         models = frappe.get_all("Item",filters={"has_variants":"1"},fields=["name","modified"],order_by='modified ASC',limit=250)
         print("found %d " % len(models))
         for model in models:
-            print("handeling %s" % model.modified)
-            doc = frappe.get_doc("Item",model.name)
-            #doc.update_variants()
-            doc.save()
+		try:
+			print("handeling %s" % model.modified)
+			doc = frappe.get_doc("Item",model.name)
+			#doc.update_variants()
+			doc.save()
+		except:
+			print("ERROR")
+	
         # default warehouse
         defaults = frappe.get_all("Item Default",fields=["name","modified"],order_by='modified ASC',limit=250)
         settings = frappe.get_doc("Stock Settings")
