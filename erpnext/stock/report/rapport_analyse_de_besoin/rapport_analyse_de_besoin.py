@@ -201,7 +201,19 @@ def execute(filters=None):
 	if not models or len(models) <= 0:
 		frappe.msgprint("Aucune resultat")
 		return columns, data
+	ids = {o.item_code for o in items if o.item_code}
+	lids = "','".join(ids)
 	for model in models:
+		exitems = frappe.db.sql(
+		"""
+		select
+			stock_uom, perfection,is_purchase_item,weight_per_unit,variant_of,has_variants,item_name, item_code, manufacturer,last_purchase_rate , manufacturer_part_no, item_group,last_purchase_devise,max_order_qty,max_ordered_variante
+		from `tabItem`
+		where disabled=0 and has_variants=0 and variant_of = %s and item_code not in ('{0}')
+		""".format(lids),
+		(model), as_dict=1)
+		items.extend(exitems)
+		
 		_mitems = [item for item in items if item.variant_of == model]
 		origin_model = frappe.get_doc("Item",model)
 		mitems = [origin_model]
