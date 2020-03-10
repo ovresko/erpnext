@@ -171,6 +171,8 @@ def execute(filters=None):
 	_models = {item.variant_of for item in items if item.variant_of}
 	models_copy = []
 	models_copy.extend(_models)
+	ids = {o.item_code for o in items if o.item_code}
+	lids = "','".join(ids)
 	for m in models_copy:
 		if m in models:
 			pass
@@ -185,6 +187,16 @@ def execute(filters=None):
 						if t in models:
 							models.remove(t)
 						models.insert(len(models),t)
+						comp_items = frappe.db.sql(
+								"""
+								select
+									stock_uom, perfection,is_purchase_item,weight_per_unit,variant_of,has_variants,item_name, item_code, manufacturer,last_purchase_rate , manufacturer_part_no, item_group,last_purchase_devise,max_order_qty,max_ordered_variante
+								from `tabItem`
+								where disabled=0 and has_variants=0  and variant_of=%s and  item_code not in ('{0}')
+								{order_by_statement}
+								""".format(lids),
+								(t), as_dict=1)
+						items.extend(comp_items)
 						
 	if not models or len(models) <= 0:
 		frappe.msgprint("Aucune resultat")
