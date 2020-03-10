@@ -203,7 +203,12 @@ def execute(filters=None):
 		return columns, data
 	ids = {o.item_code for o in items if o.item_code}
 	lids = "','".join(ids)
+	
 	for model in models:
+		if filters.get('model_status') and filters.get('model_status') == "Modele en repture":
+			projected = info_modele(model)[2] or 0
+			if not projected or projected <= 0:
+				continue
 		exitems = frappe.db.sql(
 		"""
 		select
@@ -251,6 +256,7 @@ def execute(filters=None):
 			if sqllast_qty:
 				last_qty = sqllast_qty[0].actual_qty
 				last_valuation = sqllast_qty[0].valuation_rate
+				
 			row = ["""<button id='%s' onClick="demander_item('%s')" type='button'>Demander</button><input placeholder='Qts' id='input_%s' style='color:black'></input><button   onClick="achat_item('%s')" type='button'>ACHAT %s</button>""" % (mri.item_code,mri.item_code,mri.item_code,mri.item_code,mri.is_purchase_item),
 			       mri.item_code,
 			       #date
@@ -359,6 +365,7 @@ def get_conditions(filters):
 	#if filters.get('modele'):
 	#	conditions.append("(variant_of=%(modele)s or item_code=%(modele)s)")
 	
+		
 	if filters.get('manufacturer'):
 		conditions.append("manufacturer in %(manufacturer)s")
 	
