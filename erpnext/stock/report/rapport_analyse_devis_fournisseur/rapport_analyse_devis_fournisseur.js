@@ -401,6 +401,7 @@ frappe.query_reports["Rapport analyse devis fournisseur"] = {
 			return {
 				"doctype": "Supplier Quotation",
 				"filters": {
+					"docstatus": 0,
 					//"etat_consultation_deux": "Consultation Externe",
 					"etat_mail":"Email Non Envoye",
 					"resultat": ["!=", "A Envoyer P1"]
