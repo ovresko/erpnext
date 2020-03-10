@@ -402,7 +402,7 @@ def execute(filters=None):
 
 		mitems.append(origin_model)
 		mitems.extend(_mitems)
-		ids = {o.item_code for o in mitems if item.item_code}
+		ids = {o.item_code for o in mitems if o.item_code}
 		lids = "','".join(ids)
 		other_sq =  frappe.db.sql(
 		"""
