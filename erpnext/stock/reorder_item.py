@@ -18,7 +18,7 @@ def reorder_item():
 	
 def refresh_refs():
 	frappe.db.sql("""
-	update tabItem set clean_manufacturer_part_number= REPLACE(REPLACE(REPLACE(REPLACE(manufacturer_part_number,' ',''),'-',''),'.',''),'/','') where (manufacturer_part_number != '' and manufacturer_part_number IS NOT NULL) 
+	update tabItem set clean_manufacturer_part_no= REPLACE(REPLACE(REPLACE(REPLACE(manufacturer_part_no,' ',''),'-',''),'.',''),'/','') where (manufacturer_part_no != '' and manufacturer_part_no IS NOT NULL) 
 	""")
 def refresh_items():
         models = frappe.get_all("Item",filters={"has_variants":"1"},fields=["name","modified"],order_by='modified ASC',limit=250)
