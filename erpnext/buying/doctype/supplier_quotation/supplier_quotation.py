@@ -30,6 +30,10 @@ class SupplierQuotation(BuyingController):
 		self.validate_uom_is_integer("uom", "qty")
 		_items = []
 		for item in self.items:
+			if not item.qts_original or item.qts_original == 0:
+				item.qts_original = int(item.qty * 0.25)
+				if item.qts_original <= 0:
+					item.qts_original = 2
 			if item.prix_fournisseur and not item.offre_fournisseur_initial:
 				item.offre_fournisseur_initial = item.prix_fournisseur
 			if not item.confirmation:
