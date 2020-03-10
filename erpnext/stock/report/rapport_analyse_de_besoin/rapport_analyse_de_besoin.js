@@ -47,7 +47,7 @@ frappe.query_reports["Rapport analyse de besoin"] = {
 		if(data["qts_consulte"] > 0){
 			value = "<div style='color: #D75F00;padding: 5px;'>" + value + "</div>";
 		}
-		if(data["qts_non_recue"] + data["qts"] > 0){
+		if(data["qts_comm"] +data["qts_non_recue"] + data["qts"] > 0){
 			value = "<div style='color: #11AF22;padding: 5px;'>" + value + "</div>";
 		}
 		 }
