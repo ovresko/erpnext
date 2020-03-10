@@ -166,7 +166,29 @@ def execute(filters=None):
 		filters, as_dict=1)
 	all_items = []
 	item_dc = {}
-	models = {item.variant_of for item in items if item.variant_of}
+	
+	models = []
+	_models = {item.variant_of for item in items if item.variant_of}
+	models_copy = []
+	models_copy.extend(_models)
+	for m in models_copy:
+		if m in models:
+			pass
+		else:
+			models.insert(len(models),m)
+			complements = frappe.get_all("Composant",filters={"parent":m,"parentfield":"articles"},fields=["parent","item"])
+			if complements:
+				parents = {i.item for i in complements}
+				if parents:
+					for t in parents:
+						_models.discard(t)
+						if t in models:
+							models.remove(t)
+						models.insert(len(models),t)
+						
+	if not models or len(models) <= 0:
+		frappe.msgprint("Aucune resultat")
+		return columns, data
 	for model in models:
 		_mitems = [item for item in items if item.variant_of == model]
 		origin_model = frappe.get_doc("Item",model)
