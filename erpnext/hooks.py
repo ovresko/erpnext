@@ -234,6 +234,7 @@ scheduler_events = {
 	"daily": [
 		"erpnext.stock.reorder_item.reorder_item",
 		"erpnext.stock.reorder_item.refresh_items",
+		"erpnext.stock.reorder_item.refresh_refs",
 		"erpnext.setup.doctype.email_digest.email_digest.send",
 		"erpnext.support.doctype.issue.issue.auto_close_tickets",
 		"erpnext.crm.doctype.opportunity.opportunity.auto_close_opportunity",
