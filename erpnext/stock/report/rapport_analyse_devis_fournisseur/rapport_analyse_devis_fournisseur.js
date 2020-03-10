@@ -387,7 +387,7 @@ frappe.query_reports["Rapport analyse devis fournisseur"] = {
 			return {
 				"doctype": "Supplier Quotation",
 				"filters": {
-					"doc_status": "0"
+					"doc_status": 0
 				}
 			}
 		}
