@@ -5,6 +5,10 @@
 function achat_item(data){
 //	
 	console.log("code:",data);
+	var confirme = confirm("Confirmer l'operation ?");
+	if(!confirme){
+		return;
+	}
 	frappe.call({
 			method: "erpnext.stock.doctype.item.item.set_item_achat",
 			args: {
@@ -22,6 +26,10 @@ function demander_item(data) {
 	var qty_id = 'input_'+data;
 	var qty = $('#'+qty_id).val();
 	console.log("qty:",qty);
+	var confirme = confirm("Confirmer l'operation ?");
+	if(!confirme){
+		return;
+	}
 	frappe.call({
 			method: "erpnext.stock.doctype.item.item.set_item_demande",
 			args: {
