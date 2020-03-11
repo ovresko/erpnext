@@ -505,20 +505,26 @@ def on_cancel_purchase_order(items,pname):
 	#print("doing update xxx consultation")
 	dvs = []
 	for item in items:
-		if item.supplier_quotation_item:
-			dvs.append(item.supplier_quotation)
-			print("item req : %s" % item.supplier_quotation_item)
-			mr = frappe.get_doc("Supplier Quotation Item",item.supplier_quotation_item)
-			if mr:
-				mr.handled_cmd = ""
-				mr.handled = 0
-				mr.flags.ignore_links = True
-				mr.flags.ignore_mandatory = True
-				mr.flags.ignore_validate = True
-				mr.save()
+		try:
+			if item.supplier_quotation_item:
+				dvs.append(item.supplier_quotation)
+				print("item req : %s" % item.supplier_quotation_item)
+				mr = frappe.get_doc("Supplier Quotation Item",item.supplier_quotation_item)
+				if mr:
+					mr.handled_cmd = ""
+					mr.handled = 0
+					mr.flags.ignore_links = True
+					mr.flags.ignore_mandatory = True
+					mr.flags.ignore_validate = True
+					mr.save()
+		except:
+			print("ERROR on_cancel_purchase_order")
 	for dv in dvs:
-		old = frappe.db.get_value("Supplier Quotation",dv,"bon_de_commande")
-		frappe.db.set_value("Supplier Quotation",dv,"bon_de_commande",old.replace("pname",""))
+		try:
+			old = frappe.db.get_value("Supplier Quotation",dv,"bon_de_commande")
+			frappe.db.set_value("Supplier Quotation",dv,"bon_de_commande",old.replace("pname",""))
+		except:
+			print("ERROR on_cancel_purchase_order")
 
 @frappe.whitelist()
 def on_update_purchase_order(items,pname):
@@ -526,18 +532,22 @@ def on_update_purchase_order(items,pname):
 	dvs = []
 	bc =[]
 	for item in items:
-		bc.append(pname)
-		if item.supplier_quotation_item:
-			dvs.append(item.supplier_quotation)
-			print("item req : %s" % item.supplier_quotation_item)
-			mr = frappe.get_doc("Supplier Quotation Item",item.supplier_quotation_item)
-			if mr:
-				mr.handled_cmd = pname
-				mr.handled = 1
-				mr.flags.ignore_links = True
-				mr.flags.ignore_mandatory = True
-				mr.flags.ignore_validate = True
-				mr.save()
+		try:
+			bc.append(pname)
+			if item.supplier_quotation_item:
+				dvs.append(item.supplier_quotation)
+				print("item req : %s" % item.supplier_quotation_item)
+				mr = frappe.get_doc("Supplier Quotation Item",item.supplier_quotation_item)
+				if mr:
+					mr.handled_cmd = pname
+					mr.handled = 1
+					mr.flags.ignore_links = True
+					mr.flags.ignore_mandatory = True
+					mr.flags.ignore_validate = True
+					mr.save()
+		except:
+			print("ERROR on_update_purchase_order")
+		
 	print("doing update")
 	setdvs = set(dvs)
 	dvs = list(setdvs)
@@ -546,7 +556,10 @@ def on_update_purchase_order(items,pname):
 	bcs = ' '.join(bc)
 	print(bcs)
 	for dv in dvs:
-		old = frappe.db.get_value("Supplier Quotation",dv,"bon_de_commande")
-		if not old:
-			old = ""
-		frappe.db.set_value("Supplier Quotation",dv,"bon_de_commande","%s %s" % (old,bcs))
+		try:
+			old = frappe.db.get_value("Supplier Quotation",dv,"bon_de_commande")
+			if not old:
+				old = ""
+			frappe.db.set_value("Supplier Quotation",dv,"bon_de_commande","%s %s" % (old,bcs))
+		except:
+			print("ERROR on_update_purchase_order")
