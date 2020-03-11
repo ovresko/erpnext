@@ -120,6 +120,7 @@ def get_indented_qty(item_code, warehouse):
 	_qty = flt(indented_qty[0][0]) if indented_qty else 0
 	qnl = frappe.db.sql("""select sum(qty) from `tabSupplier Quotation Item` 
 	where item_code=%s 
+	and docstatus<2
 	and handled=0 and warehouse=%s""", (item_code, warehouse))[0][0]
 	if qnl:
 		_qty = flt(_qty) + flt(qnl)
