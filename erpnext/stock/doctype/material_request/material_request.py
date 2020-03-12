@@ -145,6 +145,9 @@ class MaterialRequest(BuyingController):
 		self.set_status(update=True, status=status)
 		self.update_requested_qty()
 		self.handle_per_consulted()
+		if status == 'Stopped':
+			for item in self.items:
+				item.consulted = 1
 
 	def status_can_change(self, status):
 		"""
