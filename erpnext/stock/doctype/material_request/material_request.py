@@ -402,7 +402,7 @@ def get_material_requests_based_on_supplier(supplier):
 
 @frappe.whitelist()
 def get_mr_items(manufacturer):
-	_ids = frappe.db.sql("""select * from `tabMaterial Request Item` where consulted=0 and fabricant=%s """,(manufacturer), as_dict=1)
+	_ids = frappe.db.sql("""select * from `tabMaterial Request Item` where consulted=0 and docstatus=1 and fabricant=%s """,(manufacturer), as_dict=1)
 	if not _ids:
 		_ids = []
 	return _ids
