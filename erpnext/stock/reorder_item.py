@@ -18,6 +18,9 @@ def reorder_item():
 	
 def refresh_refs():
 	frappe.db.sql("""
+	update `tabSupplier Quotation Item` as sqi set sqi.handled=1 where exists (select name from `tabPurchase Order Item` as poi where poi.docstatus=1 and poi.supplier_quotation_item==sqi.name ) 
+	""")
+	frappe.db.sql("""
 	update tabItem set clean_manufacturer_part_number= REPLACE(REPLACE(REPLACE(REPLACE(manufacturer_part_no,' ',''),'-',''),'.',''),'/','') where ((clean_manufacturer_part_number =='' or clean_manufacturer_part_number IS NULL ) and manufacturer_part_no != '' and manufacturer_part_no IS NOT NULL) 
 	""")
 def refresh_items():
