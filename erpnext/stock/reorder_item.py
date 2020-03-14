@@ -23,7 +23,7 @@ def refresh_refs():
 	and poi.supplier_quotation_item=sqi.name) 
 	""")
 	frappe.db.sql("""
-	update tabItem set clean_manufacturer_part_number= REPLACE(REPLACE(REPLACE(REPLACE(manufacturer_part_no,' ',''),'-',''),'.',''),'/','') where ((clean_manufacturer_part_number =='' or clean_manufacturer_part_number IS NULL ) and manufacturer_part_no != '' and manufacturer_part_no IS NOT NULL) 
+	update tabItem set clean_manufacturer_part_number= REPLACE(REPLACE(REPLACE(REPLACE(manufacturer_part_no,' ',''),'-',''),'.',''),'/','') where ((clean_manufacturer_part_number ='' or clean_manufacturer_part_number IS NULL ) and manufacturer_part_no != '' and manufacturer_part_no IS NOT NULL) 
 	""")
 def refresh_items():
         models = frappe.get_all("Item",filters={"has_variants":"1"},fields=["name","modified"],order_by='modified ASC',limit=250)
