@@ -43,6 +43,18 @@ def get_data():
 			]
 		},
 		{
+			"label": _("Rapports"),
+			"items": [
+				{
+				"type": "report",
+				"is_query_report": True,
+				"name": "Articles Demandés Au Consultation",
+				"doctype": "Purchase Order"
+				},
+
+			]
+		},
+		{
 			"label": _("Supplier"),
 			"items": [
 				{
