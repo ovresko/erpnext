@@ -90,7 +90,7 @@ def get_data():
 				{
 				"type": "report",
 				"is_query_report": True,
-				"name": "Rapport Ecart Entre Achat Et Reçus",
+				"name": "Rapport Ecart Entre Achat Et Reception",
 				"doctype": "Purchase Receipt"
 				},
 				{
