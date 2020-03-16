@@ -48,10 +48,57 @@ def get_data():
 				{
 				"type": "report",
 				"is_query_report": True,
-				"name": "Articles Demandés Au Consultation",
+				"name": "Articles Demandes Sans Consultations",
 				"doctype": "Purchase Order"
 				},
-
+				{
+				"type": "report",
+				"is_query_report": True,
+				"name": "Requested Items To Be Ordered",
+				"doctype": "Purchase Order"
+				},
+				{
+				"type": "report",
+				"is_query_report": True,
+				"name": "Articles demandes non consultes par fabricants",
+				"doctype": "Supplier Quotation"
+				},
+				{
+				"type": "report",
+				"is_query_report": True,
+				"name": "CA Commandes Fournisseurs",
+				"doctype": "Purchase Order"
+				},
+				{
+				"type": "report",
+				"is_query_report": True,
+				"name": "Etat de confirmation des Fabricant",
+				"doctype": "Material Request"
+				},
+				{
+				"type": "report",
+				"is_query_report": True,
+				"name": "Etat de confirmation des devis",
+				"doctype": "Supplier Quotation"
+				},
+				{
+				"type": "report",
+				"is_query_report": True,
+				"name": "Modification des Prix et Qts Consultation",
+				"doctype": "Supplier Quotation Item"
+				},
+				{
+				"type": "report",
+				"is_query_report": True,
+				"name": "Rapport Ecart Entre Achat Et Reçus",
+				"doctype": "Purchase Receipt"
+				},
+				{
+				"type": "report",
+				"is_query_report": True,
+				"name": "Etat de Reception Consultation",
+				"doctype": "Supplier Quotation"
+				},
 			]
 		},
 		{
