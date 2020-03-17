@@ -36,6 +36,8 @@ class SupplierQuotation(BuyingController):
 					item.qts_original = 2
 			if item.prix_fournisseur and not item.offre_fournisseur_initial:
 				item.offre_fournisseur_initial = item.prix_fournisseur
+			if item.prix_fournisseur and item.prix_fournisseur != item.rate:
+				item.rate = item.prix_fournisseur
 			if not item.confirmation:
 				item.confirmation = "En cours"
 			if item.confirmation == "Annule":
