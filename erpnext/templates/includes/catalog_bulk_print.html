@@ -30,6 +30,9 @@ table.minimalistBlack thead th:first-child {
 table.minimalistBlack tfoot td {
   font-size: 11px !important;
 }
+   table, tr, td, th, tbody, thead, tfoot {
+    page-break-inside: avoid !important;
+}
 </style>
 
 <table class="minimalistBlack">
@@ -37,11 +40,11 @@ table.minimalistBlack tfoot td {
    
    {{ '<thead>' if sc.has_variants else '<tbody>' }}
    <tr>
-   <th></th>
-   <th style="font-size:9px">{{sc.manufacturer_part_no or ''}} | {{sc.item_name or ''}}</th>
+   <th>{{sc.manufacturer_part_no or ''}} </th>
+   <th style="font-size:9px">{{sc.item_name or ''}}</th>
    <th style="font-size:9px">{{sc.oem_text or ''}}</th>
    </tr>
-    {{ '<thead>' if sc.has_variants else '<tbody>' }}
+    {{ '</thead>' if sc.has_variants else '</tbody>' }}
    
    <tbody>
    <tr>
