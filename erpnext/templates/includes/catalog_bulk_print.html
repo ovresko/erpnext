@@ -39,7 +39,7 @@ table.minimalistBlack tfoot td {
 
 
 <tr>
-   <th><p style="font-size:9px">{{sc.name}}</p></th>
+   <th></th>
 <th style="font-size:9px">{{sc.manufacturer_part_no or ''}} | {{sc.item_name or ''}}</th>
 <th style="font-size:9px">{{sc.oem_text or ''}}</th>
 </tr>
@@ -47,9 +47,10 @@ table.minimalistBlack tfoot td {
 <tbody>
 <tr>
 <td>  {% if sc.image %}
-          <div class="value">   <img src="http://192.168.100.20{{sc.image}}" width="88mm"></div>
+          <div class="value">   
+             <img src="http://192.168.100.20{{sc.image}}" width="88mm"></div>
          {% endif %}</td>
-<td>{{sc.nom_generique_long or ''}}</td>
+<td><p style="font-size:9px">{{sc.name}}</p><br>{{sc.nom_generique_long or ''}}</td>
 <td>{{sc.manufacturer or ''}}</td>
 </tr> 
 </tbody>
