@@ -36,18 +36,18 @@ table.minimalistBlack tfoot td {
     {% for sc in sc_list %}
 <thead>
 <tr>
-   <th><p style="font-size:9px">{{sc.item_name}}</p></th>
-<th style="font-size:9px">{{sc.name}}</th>
+   <th><p style="font-size:9px">{{sc.name}}</p></th>
+<th style="font-size:9px">{{sc.manufacturer_part_no}} | {{sc.item_name}}</th>
 <th style="font-size:9px">{{sc.oem_text}}</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>  {% if sc.image %}
-          <div class="value">   <img src="{{sc.image}}"></div>
+          <div class="value">   <img src="http://192.168.100.20{{sc.image}}"></div>
          {% endif %}</td>
 <td>{{sc.nom_generique_long}}</td>
-<td>cell3_1</td>
+<td>{{sc.manufacturer}}</td>
 </tr> 
 </tbody>
    {% endfor %} 
