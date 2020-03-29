@@ -29,7 +29,8 @@ frappe.ui.form.on('Supplier Quotation', {
 					var oem = "";
 					if(oems != null)
 					{
-						oem = oems[0].oem;
+						console.log(oems);
+						oem = oems;
 					}
 					var fabricant = d["fabricant"];
 					var ref_fabricant = d["ref_fabricant"];
