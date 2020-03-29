@@ -3,7 +3,7 @@ frappe.listview_settings['Item'] = {
 		"has_variants", "end_of_life", "disabled"],
 	filters: [["disabled", "=", "0"]],
 	onload: function(listview) {
-		listview.page.add_menu_item(__("Print Bulk"), function() {
+		listview.page.add_menu_item("Creer Catalogue", function() {
 			var names=[];
 			const selected_docs = listview.get_checked_items(true);
 			for (let doc of selected_docs) {
