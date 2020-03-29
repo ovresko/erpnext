@@ -1152,10 +1152,10 @@ def bulk_print_memberships(names):
 	pdf_options = { 
 					"page-height" : "29.7cm",
 					"page-width" : "21.0cm",
-					"margin-top": "0mm",
-					"margin-bottom": "0mm",
-					"margin-left": "0mm",
-					"margin-right": "0mm",
+					"margin-top": "10mm",
+					"margin-bottom": "10mm",
+					"margin-left": "10mm",
+					"margin-right": "10mm",
 					"no-outline": None,
 					"encoding": "UTF-8",
 					"title": "Catalogue"
