@@ -1173,6 +1173,7 @@ def prepare_bulk_print_html(names):
 
 	html = ""
 	sc_list = []
+	names.sort()
 
 	for name in names:
 		sc_list.append(frappe.get_doc("Item", name))
