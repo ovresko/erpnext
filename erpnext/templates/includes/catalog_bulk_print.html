@@ -1,30 +1,54 @@
-<div class="print-format">
-   <div class="row section-break">
-   <table class="table table-bordered table-condensed" style="width:100%;border=1">
-   {% for sc in sc_list %}
-      <thead>
-      <tr>
-         <th style="width:35%"><div class="value"> <p style="font-size:9px">{{sc.item_name}}</p></div></th>
-         <th style="width:35%">  <div class="value"><p style="font-size:9px">{{sc.name}}</p></div></th>
-         <th style="width:30%"><p style="font-size:9px">{{sc.oem_text}}</p></th>
-      </tr>
-      </thead>
-      <tbody>
-  <tr>
-     <td>
-        {% if sc.image %}
+<style>
+   table.minimalistBlack {
+  border: 1px solid #D1D1D1;
+  width: 100%;
+  text-align: left;
+  border-collapse: collapse;
+}
+table.minimalistBlack td, table.minimalistBlack th {
+  border: 1px solid #D3D3D3;
+  padding: 5px 4px;
+}
+table.minimalistBlack tbody td {
+  font-size: 13px;
+}
+table.minimalistBlack thead {
+  background: #E7E7E7;
+  border-bottom: 1px solid #000000;
+}
+table.minimalistBlack thead th {
+  font-size: 15px;
+  font-weight: bold;
+  color: #000000;
+  text-align: left;
+  border-left: 1px solid #D0E4F5;
+}
+table.minimalistBlack thead th:first-child {
+  border-left: none;
+}
+
+table.minimalistBlack tfoot td {
+  font-size: 14px;
+}
+</style>
+
+<table class="minimalistBlack">
+    {% for sc in sc_list %}
+<thead>
+<tr>
+<th>{{sc.item_name}}</th>
+<th>{{sc.name}}</th>
+<th>{{sc.oem_text}}</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>  {% if sc.image %}
           <div class="value">   <img src="{{sc.image}}"></div>
-         {% endif %}
-     </td>
-    <td>  
-    </td>
-     <td>
-        <div class="value"> <p style="font-size:8px"> {{sc.nom_generique_long}}<p></div>
-     </td>
-    </tr>
-      </tbody>
+         {% endif %}</td>
+<td>{{sc.nom_generique_long}}</td>
+<td>cell3_1</td>
+</tr> 
+</tbody>
    {% endfor %} 
 </table>
-   
-</div>
-</div>
