@@ -21,11 +21,16 @@ frappe.ui.form.on('Supplier Quotation', {
 
 			//data.push(["Date",frm.doc.transaction_date,"","","","",""]);
 			//data.push(["Fournisseur",frm.doc.supplier_name,"","","","",""]);
-			data.push(["#" ,"Num Consultation","Fabricant","Code Article","Designation","Ref Article","Poids","Pays d'origine","Devise","Qts","Prix Offre","Prix Target","Qts Target","Remarque","Prix Final","Qts Final","Confirmation "]);
+			data.push(["#" ,"Num Consultation","Fabricant","Code Article","OEM","Designation","Ref Article","Poids","Pays d'origine","Devise","Qts","Prix Offre","Prix Target","Qts Target","Remarque","Prix Final","Qts Final","Confirmation "]);
 			
 			$.each(frm.doc.items || [], (i, d) => {
 				var row = [];
-				 
+				 	var oems = frappe.db.get_value("OEM", {"parent": d["item_name"],"important":1}, "oem");
+					var oem = "";
+					if(oems != null)
+					{
+						oem = oems[0].oem;
+					}
 					var fabricant = d["fabricant"];
 					var ref_fabricant = d["ref_fabricant"];
 					var qty =  Math.floor( d["qty"] * 0.25); 
@@ -78,6 +83,7 @@ frappe.ui.form.on('Supplier Quotation', {
 						  ,'"'+frm.doc.name+'"'
 						  ,'"'+fabricant+'"'
 						  ,'"'+d["item_code"]+'"'
+						  ,oem
 						  ,'"'+d["item_name"]+'"'
 						  ,'"'+ref_fabricant+'"'
 						  ,'"'+d["weight_per_unit"]+'"'
@@ -113,11 +119,16 @@ frappe.ui.form.on('Supplier Quotation', {
 
 			//data.push(["Date",frm.doc.transaction_date,"","","","",""]);
 			//data.push(["Fournisseur",frm.doc.supplier_name,"","","","",""]);
-			data.push(["#" ,"Num Consultation","Fabricant","Code Article","Designation","Ref Article","Poids","Pays d'origine","Devise","Qts","Prix Offre","Prix Target","Qts Target","Remarque","Offre Final","Prix Final","Qts Final","Confirmation "]);
+			data.push(["#" ,"Num Consultation","Fabricant","Code Article","OEM","Designation","Ref Article","Poids","Pays d'origine","Devise","Qts","Prix Offre","Prix Target","Qts Target","Remarque","Offre Final","Prix Final","Qts Final","Confirmation "]);
 			
 			$.each(frm.doc.items || [], (i, d) => {
 				var row = [];
-				 
+				 	var oems = frappe.db.get_value("OEM", {"parent": d["item_name"],"important":1}, "oem");
+					var oem = "";
+					if(oems != null)
+					{
+						oem = oems[0].oem;
+					}
 					var fabricant = d["fabricant"];
 					var ref_fabricant = d["ref_fabricant"];
 					var qty =  Math.floor( d["qty"] * 1); 
@@ -166,6 +177,7 @@ frappe.ui.form.on('Supplier Quotation', {
 						  ,'"'+frm.doc.name+'"'
 						  ,'"'+fabricant+'"'
 						  ,'"'+d["item_code"]+'"'
+						  ,oem
 						  ,'"'+d["item_name"]+'"'
 						  ,'"'+ref_fabricant+'"'
 						  ,'"'+d["weight_per_unit"]+'"'
