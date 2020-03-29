@@ -40,8 +40,8 @@ table.minimalistBlack tfoot td {
    
    {{ '<thead>' if sc.has_variants else '<tbody>' }}
    <tr>
-   <th style="font-size:9px">{{sc.manufacturer_part_no or ''}} <strong>{{sc.name}} </strong>  </th>
-   <th style="font-size:9px">{{sc.item_name or ''}}</th>
+   <th style="font-size:9px">{{sc.manufacturer_part_no or ''}}  </th>
+   <th style="font-size:9px">{{sc.item_name or ''}}  -  {{sc.name}}  </th>
    <th style="font-size:9px">{{sc.oem_text or ''}}</th>
    </tr>
     {{ '</thead>' if sc.has_variants else '</tbody>' }}
