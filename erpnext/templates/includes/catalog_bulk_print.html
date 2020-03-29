@@ -1,11 +1,14 @@
 <table>
    {% for sc in sc_list %}
   <tr>
-    <td>
-   
-      <h3>{{sc.name}}</h3>
-      
+     <td><img src="{{src.image}}"></td>
+    <td> 
+      <strong>{{sc.item_name}}</strong><br>
+       <p>{{sc..name}}</p> 
     </td>
+     <td>
+        {{sc.nom_generique_long}}
+     </td>
   </tr>
    {% endfor %} 
 </table>
