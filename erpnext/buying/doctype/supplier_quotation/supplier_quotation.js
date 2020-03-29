@@ -25,12 +25,11 @@ frappe.ui.form.on('Supplier Quotation', {
 			
 			$.each(frm.doc.items || [], (i, d) => {
 				var row = [];
-				 	var oems = frappe.db.get_value("OEM", {"parent": d["item_name"],"important":1}, "oem");
+				 	 
 					var oem = "";
-					if(oems != null)
-					{
-						console.log(oems);
-						oem = oems;
+					if(d["oem"] != null)
+					{ 
+						oem = d["oem"];
 					}
 					var fabricant = d["fabricant"];
 					var ref_fabricant = d["ref_fabricant"];
@@ -124,11 +123,10 @@ frappe.ui.form.on('Supplier Quotation', {
 			
 			$.each(frm.doc.items || [], (i, d) => {
 				var row = [];
-				 	var oems = frappe.db.get_value("OEM", {"parent": d["item_name"],"important":1}, "oem");
-					var oem = "";
-					if(oems != null)
-					{
-						oem = oems[0].oem;
+				 	var oem = "";
+					if(d["oem"] != null)
+					{ 
+						oem = d["oem"];
 					}
 					var fabricant = d["fabricant"];
 					var ref_fabricant = d["ref_fabricant"];
