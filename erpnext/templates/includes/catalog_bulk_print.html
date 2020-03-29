@@ -1,12 +1,12 @@
 <div class="print-format">
    <div class="row section-break">
-   <table class="table table-bordered table-condensed" style="width:100%">
+   <table class="table table-bordered table-condensed" style="width:100%;border=1">
    {% for sc in sc_list %}
       <thead>
       <tr>
-         <th style="width:50%"><div class="value"> <p style="font-size:9px">{{sc.item_name}}</p></div></th>
-         <th style="width:50%">  <div class="value"><p style="font-size:9px">{{sc.name}}</p></div></th>
-         <th></th>
+         <th style="width:35%"><div class="value"> <p style="font-size:9px">{{sc.item_name}}</p></div></th>
+         <th style="width:35%">  <div class="value"><p style="font-size:9px">{{sc.name}}</p></div></th>
+         <th style="width:30%"><p style="font-size:9px">{{sc.oem_text}}</p></th>
       </tr>
       </thead>
       <tbody>
