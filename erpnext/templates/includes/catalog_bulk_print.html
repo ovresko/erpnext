@@ -1,19 +1,27 @@
-<div style="margin:20mm;font-size:11px">
-   <table>
+<div style="margin:0mm;font-size:10px">
+   <table class="table table-bordered table-condensed">
    {% for sc in sc_list %}
+      <thead>
+      <tr>
+         <th><div class="value"> <strong>{{sc.item_name}}</strong></div></th>
+         <th>  <div class="value">{{sc.name}}</div></th>
+      </tr>
+      </thead>
+      <tbody>
   <tr>
      <td>
         {% if sc.image %}
-            <img src="{{sc.image}}">
+          <div class="value">   <img src="{{sc.image}}"></div>
          {% endif %}</td>
     <td> 
-      <strong>{{sc.item_name}}</strong><br>
-       <p>{{sc.name}}</p> 
+    
+       
     </td>
      <td>
-        {{sc.nom_generique_long}}
+        <div class="value">  {{sc.nom_generique_long}}</div>
      </td>
-  </tr>
+    </tr>
+      </tbody>
    {% endfor %} 
 </table>
    
