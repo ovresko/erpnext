@@ -36,23 +36,22 @@ table.minimalistBlack tfoot td {
     {% for sc in sc_list %}
    
    {{ '<thead>' if sc.has_variants else '<tbody>' }}
-
-
-<tr>
+   <tr>
    <th></th>
-<th style="font-size:9px">{{sc.manufacturer_part_no or ''}} | {{sc.item_name or ''}}</th>
-<th style="font-size:9px">{{sc.oem_text or ''}}</th>
-</tr>
+   <th style="font-size:9px">{{sc.manufacturer_part_no or ''}} | {{sc.item_name or ''}}</th>
+   <th style="font-size:9px">{{sc.oem_text or ''}}</th>
+   </tr>
     {{ '<thead>' if sc.has_variants else '<tbody>' }}
-<tbody>
-<tr>
-<td>  {% if sc.image %}
+   
+   <tbody>
+   <tr>
+   <td>  {% if sc.image %}
           <div class="value">   
              <img src="http://192.168.100.20{{sc.image}}" width="88mm"></div>
          {% endif %}</td>
-<td><p style="font-size:9px">{{sc.name}}</p><br>{{sc.nom_generique_long or ''}}</td>
-<td>{{sc.manufacturer or ''}}</td>
-</tr> 
-</tbody>
+   <td>Code d'article : {{sc.name}} <br>{{sc.nom_generique_long or ''}}</td>
+   <td>{{sc.manufacturer or ''}}</td>
+   </tr> 
+   </tbody>
    {% endfor %} 
 </table>
