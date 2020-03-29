@@ -1,7 +1,10 @@
 <table>
    {% for sc in sc_list %}
   <tr>
-     <td><img src="{{src.image}}"></td>
+     <td>
+        {% if src.image %}
+            <img src="{{src.image}}">
+         {% endif %}</td>
     <td> 
       <strong>{{sc.item_name}}</strong><br>
        <p>{{sc.name}}</p> 
