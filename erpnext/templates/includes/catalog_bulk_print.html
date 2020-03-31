@@ -56,15 +56,15 @@ table.minimalistBlack tfoot td {
    </tr>
      </thead> 
       <tbody>
-
+   
    {% for v in data[sc]["model"].versions %}
-      {% if v.important %}
-   <tr>
+      {% if v.important or versions_all == 0   %}
+      <tr>
           <td> {{v.nom_marque or ''}}  </td>
          <td> {{v.modele_vehicule or ''}}   </td>
         
          <td>  {{v.nom_version or ''}} </td>
-   </tr> 
+      </tr> 
    
    {% endif %}
    {% endfor %} 
@@ -79,7 +79,7 @@ table.minimalistBlack tfoot td {
       <tbody>
 
    {% for o in data[sc]["model"].oem %}
-      {% if o.important %}
+      {% if o.important or oem_all == 0 %}
    <tr>
           <td> {{o.oem or ''}}  </td>
    </tr> 
@@ -97,7 +97,7 @@ table.minimalistBlack tfoot td {
       <tbody>
 
    {% for c in data[sc]["model"].critere_piece %}
-      {% if c.important %}
+      {% if c.important or critere_piece_all == 0 %}
    <tr>
           <td> {{c.parametre or ''}}  </td>
           <td> {{c.valeur_p or ''}}  </td>
