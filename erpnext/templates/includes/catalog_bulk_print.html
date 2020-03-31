@@ -43,7 +43,7 @@ table.minimalistBlack tfoot td {
 </style>
  {% for sc in data %}
 <div style="  page-break-inside: avoid !important;">
-<div style="background-color: #DBF7FB;padding:10mm">
+<div style="background-color: #DBF7FB;padding:5mm,margin-top:10mm">
 <p style=" font-weight:600">Référence Modèle : {{ data[sc]["model"].name }}</p>
 <p style="font-size:15px;font-weight:600"> {{ data[sc]["model"].item_name }}</p>
 </div>
@@ -75,9 +75,10 @@ table.minimalistBlack tfoot td {
 
 
 <table class="minimalistBlack"> 
-  
+     <thead>  <tr><th>éférence OEM</th></tr></thead> 
+
       <tbody>
-       <tr><th>Référence OEM</th></tr>
+       
 
    {% for o in data[sc]["model"].oem %}
       {% if o.important or data[sc]["oem_all"]  == 0 %}
@@ -92,9 +93,8 @@ table.minimalistBlack tfoot td {
 
 
 <table class="minimalistBlack"> 
-  
+   <thead>  <tr><th>Critéres</th></tr></thead> 
       <tbody>
- <tr><th>Critéres</th></tr>
    {% for c in data[sc]["model"].critere_piece %}
       {% if c.important or data[sc]["critere_piece_all"]  == 0 %}
    <tr>
