@@ -43,8 +43,8 @@ table.minimalistBlack tfoot td {
 </style>
  {% for sc in data %}
 
-<p style="font-size:20px;font-weight:600">Référence Modèle : {{ data[sc]["model"].name }}</p>
-<p style="font-size:20px;font-weight:600">Article : {{ data[sc]["model"].item_name }}</p>
+<p style=" font-weight:600">Référence Modèle : {{ data[sc]["model"].name }}</p>
+<p style=" font-weight:600">Article : {{ data[sc]["model"].item_name }}</p>
 
 <p class="subtitle" >Véhicules : </p>
 <table class="minimalistBlack"> 
@@ -60,7 +60,7 @@ table.minimalistBlack tfoot td {
    {% for v in data[sc]["model"].versions %}
       {% if v.important %}
    <tr>
-          <td> {{v.marque_vehicule or ''}}  </td>
+          <td> {{v.nom_marque or ''}}  </td>
          <td> {{v.modele_vehicule or ''}}   </td>
         
          <td>  {{v.nom_version or ''}} </td>
@@ -123,7 +123,7 @@ table.minimalistBlack tfoot td {
      </thead> 
       <tbody>
 
-   {% for variant in data[sc]["model"].variants %}
+   {% for variant in data[sc]["variants"] %}
      
    <tr>
           <td> {{variant.manufacturer or ''}}  </td>
