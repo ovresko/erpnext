@@ -69,6 +69,16 @@ table.minimalistBlack tfoot td {
    
    {% endif %}
    {% endfor %} 
+          {% for g in data[sc]["model"].generation_vehicule_supporte %}
+      {% if g.important or data[sc]["gen_all"] == 0   %}
+      <tr>
+          <td>---  </td>
+         <td> {{g.nom_generation or ''}}   </td> 
+         <td>  --- </td>
+      </tr> 
+   
+   {% endif %}
+   {% endfor %} 
    </tbody>
    </table>
 </div>
