@@ -1,4 +1,7 @@
 <style>
+   p {
+      font-size:11px;
+   }
    table.minimalistBlack {
   border: 1px solid #D1D1D1 !important;
   width: 100% !important;
@@ -37,6 +40,33 @@ table.minimalistBlack tfoot td {
  {% for sc in data %}
 
 <p>Référence Modèle : {{ data[sc]["model"].name }}</p><br>
-<p>Référence Modèle : {{ data[sc]["model"].item_name }}</p><br>
+<p>Article : {{ data[sc]["model"].item_name }}</p><br>
+
+<table class="minimalistBlack"> 
+    <thead> 
+   <tr>
+   <th style="font-size:9px">Marque </th>
+   <th style="font-size:9px">Modele </th>
+   <th style="font-size:9px">Génération</th>
+   <th style="font-size:9px">Version</th>
+   </tr>
+     </thead> 
+      <tbody>
+
+   {% for v in data[sc]["model"].versions %}
+      {% if v.important %}
+   <tr>
+          <td> {{v.marque_vehicule or ''}}  </td>
+         <td> {{v.modele_vehicule or ''}}   </td>
+         <td> {{v.generation_vehicule or ''}} </td>
+         <td>  {{v.nom_version or ''}} </td>
+   </tr> 
+   
+   {% endif %}
+   {% endfor %} 
+   </tbody>
+   </table>
+
+
 
  {% endfor %} 
