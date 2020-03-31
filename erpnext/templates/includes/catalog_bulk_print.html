@@ -43,8 +43,8 @@ table.minimalistBlack tfoot td {
 </style>
  {% for sc in data %}
 <div style="  page-break-inside: avoid !important;">
-<div style="background-color: #DBF7FB;padding:2mm;margin-top:10mm">
-   <p style=" font-weight:600">Référence Modèle : {{ data[sc]["model"].name }} <span style="float: right;">{{sc["index"]}} / {{sc["total"]}}</span></p> 
+<div style="background-color: #26ADF2;padding-left:5mm;padding-right:5mm;padding-top:2mm;padding-bottom:2mm;margin-top:10mm">
+   <p style=" font-weight:600">Référence Modèle : {{ data[sc]["model"].name }} <span style="float: right;">{{data[sc]["index"]}} / {{data["total"]}}</span></p> 
 <p style="font-size:10px;font-weight:600"> {{ data[sc]["model"].item_name }}</p>
 </div>
 <table class="minimalistBlack"> 
@@ -141,7 +141,8 @@ table.minimalistBlack tfoot td {
                   <div class="value">   
                   <img src="http://192.168.100.20{{variant.fabricant_logo}}" width="68mm"></div>
                   {% endif %} 
-             {{variant.manufacturer or ''}}  </td>
+             
+             <p> {{variant.manufacturer or ''}}  </p></td>
           <td>    {% if variant.image %}
                   <div class="value">   
                   <img src="http://192.168.100.20{{variant.image}}" width="118mm"></div>
