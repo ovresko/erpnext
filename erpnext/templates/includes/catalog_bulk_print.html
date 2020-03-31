@@ -1,9 +1,9 @@
 <style>
    p {
-      font-size:11px;
+      font-size:8px;
    }
    strong {
-      font-size:11px;
+      font-size:8px;
       font-weight:500;
    }
    table.minimalistBlack {
@@ -17,14 +17,14 @@ table.minimalistBlack td, table.minimalistBlack th {
   padding: 5px 4px !important;
 }
 table.minimalistBlack tbody td {
-  font-size: 11px !important;
+  font-size: 8px !important;
 }
 table.minimalistBlack thead {
   background: #E7E7E7 !important;
   border-bottom: 1px solid #000000 !important;
 }
 table.minimalistBlack thead th {
-  font-size: 11px !important;
+  font-size: 8px !important;
   font-weight: bold !important;
   color: #000000 !important;
   text-align: left !important;
@@ -35,7 +35,7 @@ table.minimalistBlack thead th:first-child {
 }
 
 table.minimalistBlack tfoot td {
-  font-size: 11px !important;
+  font-size: 8px !important;
 }
    table, tr, td, th, tbody, thead, tfoot {
     page-break-inside: avoid !important;
@@ -43,17 +43,17 @@ table.minimalistBlack tfoot td {
 </style>
  {% for sc in data %}
 <div style="  page-break-inside: avoid !important;">
-<div style="background-color: #DBF7FB;padding:5mm;margin-top:10mm">
-<p style=" font-weight:600">Référence Modèle : {{ data[sc]["model"].name }}</p>
-<p style="font-size:15px;font-weight:600"> {{ data[sc]["model"].item_name }}</p>
+<div style="background-color: #DBF7FB;padding:2mm;margin-top:10mm">
+   <p style=" font-weight:600">Référence Modèle : {{ data[sc]["model"].name }} <span style="float: right;">{{sc["index"]}} / {{sc["total"]}}</span></p> 
+<p style="font-size:10px;font-weight:600"> {{ data[sc]["model"].item_name }}</p>
 </div>
 <table class="minimalistBlack"> 
     <thead> 
        <tr><th>Véhicules</th></tr>
    <tr>
-   <th style="font-size:9px">Marque </th>
-   <th style="font-size:9px">Modele </th>
-   <th style="font-size:9px">Version</th>
+   <th style="font-size:7px">Marque </th>
+   <th style="font-size:7px">Generation </th>
+   <th style="font-size:7px">Version</th>
    </tr>
      </thead> 
       <tbody>
@@ -62,7 +62,7 @@ table.minimalistBlack tfoot td {
       {% if v.important or data[sc]["versions_all"] == 0   %}
       <tr>
           <td> {{v.nom_marque or ''}}  </td>
-         <td> {{v.modele_vehicule or ''}}   </td>
+         <td> {{v.generation_vehicule or ''}}   </td>
         
          <td>  {{v.nom_version or ''}} </td>
       </tr> 
@@ -136,10 +136,15 @@ table.minimalistBlack tfoot td {
    {% for variant in data[sc]["variants"] %}
      
    <tr>
-          <td> {{variant.manufacturer or ''}}  </td>
+          <td>
+              {% if variant.fabricant_logo %}
+                  <div class="value">   
+                  <img src="http://192.168.100.20{{variant.fabricant_logo}}" width="68mm"></div>
+                  {% endif %} 
+             {{variant.manufacturer or ''}}  </td>
           <td>    {% if variant.image %}
                   <div class="value">   
-                  <img src="http://192.168.100.20{{variant.image}}" width="68mm"></div>
+                  <img src="http://192.168.100.20{{variant.image}}" width="118mm"></div>
                   {% endif %} 
           </td>
           <td> {{variant.manufacturer_part_no or ''}} </td>
