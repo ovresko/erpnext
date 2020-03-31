@@ -102,10 +102,10 @@ table.minimalistBlack tfoot td {
    {% for c in data[sc]["model"].critere_piece %}
       {% if c.important %}
    <tr>
-          <td> {{o.parametre or ''}}  </td>
-          <td> {{o.valeur_p or ''}}  </td>
-          <td> {{o.valeur or ''}}  </td>
-          <td> {{o.titre or ''}}  </td>
+          <td> {{c.parametre or ''}}  </td>
+          <td> {{c.valeur_p or ''}}  </td>
+          <td> {{c.valeur or ''}}  </td>
+          <td> {{c.titre or ''}}  </td>
    </tr> 
    
    {% endif %}
