@@ -1158,7 +1158,8 @@ def bulk_print_memberships(names):
 					"margin-right": "10mm",
 					"no-outline": None,
 					"encoding": "UTF-8",
-					"title": "Catalogue"
+					"title": "Catalogue",
+					"footer-right": '[page] - [topage]'
 				}
 		
 	frappe.local.response.filename = "{filename}.pdf".format(filename="catalogue".replace(" ", "-").replace("/", "-"))
@@ -1184,6 +1185,7 @@ def prepare_bulk_print_html(names):
 	fabricants = {o.manufacturer for o in items if not o.has_variants}
 	models = {item.variant_of for item in items if item.variant_of}
 	index = 1
+	data["total"] = len(models)
 	for model in models:
 		_model = frappe.get_doc("Item", model)
 		_variants = [item for item in items if item.variant_of == model]
@@ -1191,7 +1193,7 @@ def prepare_bulk_print_html(names):
 		gen_all = sum(x.important == True for x in _model.generation_vehicule_supporte)
 		oem_all = sum(x.important == True for x in _model.oem)
 		critere_piece_all = sum(x.important == True for x in _model.critere_piece)
-		data[model] = {"model":_model,"variants":_variants,"index":index,"total":len(models),"gen_all":gen_all,"versions_all":versions_all,"oem_all":oem_all,"critere_piece_all":critere_piece_all }
+		data[model] = {"model":_model,"variants":_variants,"index":index,"gen_all":gen_all,"versions_all":versions_all,"oem_all":oem_all,"critere_piece_all":critere_piece_all }
 		index= index+1
 	html_params = { "data": data }
 	final_html = frappe.render_template("erpnext/templates/includes/catalog_bulk_print.html", html_params)
