@@ -1174,11 +1174,22 @@ def prepare_bulk_print_html(names):
 	html = ""
 	sc_list = []
 	names.sort()
-
+	data = {}
+	items = []
+	
+	# get items
 	for name in names:
-		sc_list.append(frappe.get_doc("Item", name))
+		items.append(frappe.get_doc("Item", name))
+	
+	fabricants = {o.manufacturer for o in items if not o.has_variants}
+	models = {item.variant_of for item in items if item.variant_of}
+
+	for model in models:
+		_model = frappe.get_doc("Item", model)
+		_variants = [item for item in items if item.variant_of == model]
+		data[model] = {"model":_model,"variants":_variants}
 		
-	html_params = { "sc_list": sc_list }
+	html_params = { "data": data }
 	final_html = frappe.render_template("erpnext/templates/includes/catalog_bulk_print.html", html_params)
 
 	return final_html
