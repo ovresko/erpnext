@@ -1159,7 +1159,8 @@ def bulk_print_memberships(names):
 					"no-outline": None,
 					"encoding": "UTF-8",
 					"title": "Catalogue",
-					"footer-right": '[page] - [topage]'
+					"footer-right": '[page] / [topage]',
+					"footer-font-size" : 7
 				}
 		
 	frappe.local.response.filename = "{filename}.pdf".format(filename="catalogue".replace(" ", "-").replace("/", "-"))
