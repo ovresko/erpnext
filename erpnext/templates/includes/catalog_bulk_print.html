@@ -43,18 +43,15 @@ table.minimalistBlack tfoot td {
 </style>
  {% for sc in data %}
 
-<p>Référence Modèle : {{ data[sc]["model"].name }}</p>
-<p>Article : {{ data[sc]["model"].item_name }}</p>
+<p style="font-size:20px;font-weight:600">Référence Modèle : {{ data[sc]["model"].name }}</p>
+<p style="font-size:20px;font-weight:600">Article : {{ data[sc]["model"].item_name }}</p>
 
-<hr>
-
-<strong>Véhicules : </strong>
+<p class="subtitle" >Véhicules : </p>
 <table class="minimalistBlack"> 
     <thead> 
    <tr>
    <th style="font-size:9px">Marque </th>
    <th style="font-size:9px">Modele </th>
-   <th style="font-size:9px">Génération</th>
    <th style="font-size:9px">Version</th>
    </tr>
      </thead> 
@@ -65,7 +62,7 @@ table.minimalistBlack tfoot td {
    <tr>
           <td> {{v.marque_vehicule or ''}}  </td>
          <td> {{v.modele_vehicule or ''}}   </td>
-         <td> {{v.generation_vehicule or ''}} </td>
+        
          <td>  {{v.nom_version or ''}} </td>
    </tr> 
    
@@ -76,7 +73,7 @@ table.minimalistBlack tfoot td {
 
 
 
-<strong>Référence OEM </strong>
+<p class="subtitle">Référence OEM </p>
 <table class="minimalistBlack"> 
   
       <tbody>
@@ -94,7 +91,7 @@ table.minimalistBlack tfoot td {
 
 
 
-<strong>Critéres : </strong>
+<p class="subtitle">Critéres : </p>
 <table class="minimalistBlack"> 
   
       <tbody>
@@ -114,7 +111,7 @@ table.minimalistBlack tfoot td {
    </table>
 
 
-<strong>Fabricants : </strong>
+<p class="subtitle">Fabricants : </p>
 <table class="minimalistBlack"> 
      <thead> 
    <tr>
@@ -144,3 +141,6 @@ table.minimalistBlack tfoot td {
    </table>
 
  {% endfor %} 
+
+
+<hr>
