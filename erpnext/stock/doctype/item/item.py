@@ -1192,7 +1192,7 @@ def prepare_bulk_print_html(names):
 		oem_all = sum(x.important == True for x in _model.oem)
 		critere_piece_all = sum(x.important == True for x in _model.critere_piece)
 		data[model] = {"model":_model,"variants":_variants,"index":index,"total":len(models),"gen_all":gen_all,"versions_all":versions_all,"oem_all":oem_all,"critere_piece_all":critere_piece_all }
-		index++
+		index= index+1
 	html_params = { "data": data }
 	final_html = frappe.render_template("erpnext/templates/includes/catalog_bulk_print.html", html_params)
 
