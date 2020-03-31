@@ -39,9 +39,12 @@ table.minimalistBlack tfoot td {
 </style>
  {% for sc in data %}
 
-<p>Référence Modèle : {{ data[sc]["model"].name }}</p><br>
-<p>Article : {{ data[sc]["model"].item_name }}</p><br>
+<p>Référence Modèle : {{ data[sc]["model"].name }}</p>
+<p>Article : {{ data[sc]["model"].item_name }}</p>
 
+<hr>
+
+<strong>Véhicules : </strong>
 <table class="minimalistBlack"> 
     <thead> 
    <tr>
@@ -68,5 +71,72 @@ table.minimalistBlack tfoot td {
    </table>
 
 
+
+<strong>Référence OEM </strong>
+<table class="minimalistBlack"> 
+  
+      <tbody>
+
+   {% for o in data[sc]["model"].oem %}
+      {% if o.important %}
+   <tr>
+          <td> {{o.oem or ''}}  </td>
+   </tr> 
+   
+   {% endif %}
+   {% endfor %} 
+   </tbody>
+   </table>
+
+
+
+<strong>Critéres : </strong>
+<table class="minimalistBlack"> 
+  
+      <tbody>
+
+   {% for c in data[sc]["model"].critere_piece %}
+      {% if c.important %}
+   <tr>
+          <td> {{o.parametre or ''}}  </td>
+          <td> {{o.valeur_p or ''}}  </td>
+          <td> {{o.valeur or ''}}  </td>
+          <td> {{o.titre or ''}}  </td>
+   </tr> 
+   
+   {% endif %}
+   {% endfor %} 
+   </tbody>
+   </table>
+
+
+<strong>Fabricants : </strong>
+<table class="minimalistBlack"> 
+     <thead> 
+   <tr>
+   <th style="font-size:9px">Fabricant </th>
+   <th style="font-size:9px">Photo </th>
+   <th style="font-size:9px">Référence</th>
+   <th style="font-size:9px">Prix de vente</th>
+   </tr>
+     </thead> 
+      <tbody>
+
+   {% for variant in data[sc]["model"].variants %}
+     
+   <tr>
+          <td> {{variant.manufacturer or ''}}  </td>
+          <td>    {% if variant.image %}
+                  <div class="value">   
+                  <img src="http://192.168.100.20{{variant.image}}" width="68mm"></div>
+                  {% endif %} 
+          </td>
+          <td> {{variant.manufacturer_part_no or ''}} </td>
+          <td> NA  </td>
+   </tr> 
+    
+   {% endfor %} 
+   </tbody>
+   </table>
 
  {% endfor %} 
