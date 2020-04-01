@@ -106,9 +106,7 @@ table.minimalistBlack tfoot td {
       {% if c.important or data[sc]["critere_piece_all"]  == 0 %}
    <tr>
           <td> {{c.parametre or ''}}  </td>
-          <td> {{c.valeur_p or ''}}  </td>
-          <td> {{c.valeur or ''}}  </td>
-          <td> {{c.titre or ''}}  </td>
+          <td> {{c.valeur_p or ''}}  {{c.valeur or ''}} {{c.titre or ''}}   </td> 
    </tr> 
    
    {% endif %}
