@@ -74,7 +74,7 @@ table.minimalistBlack tfoot td {
           {% for g in data[sc]["model"].generation_vehicule_supporte %}
       {% if g.important or data[sc]["gen_all"] == 0   %}
       <tr>
-          <td>---  </td>
+          <td> {{g.nom_marque or ''}} </td>
          <td> {{g.nom_modele or ''}} {{g.nom_generation or ''}} {{g.date_debut or ''}} {{g.date_fin or ''}} </td> 
          <td>  --- </td>
       </tr> 
