@@ -64,7 +64,7 @@ table.minimalistBlack tfoot td {
       {% if v.important or data[sc]["versions_all"] == 0   %}
       <tr>
           <td> {{v.nom_marque or ''}}  </td>
-         <td>  {{v.modele_vehicule or ''}} {{v.generation_vehicule or ''}}  {{v.periode or ''}}  </td>
+         <td> {{v.modele_vehicule or ''}} {{v.generation_vehicule or ''}} {{v.periode or ''}} </td>
         
          <td>  {{v.nom_version or ''}} </td>
       </tr> 
@@ -75,7 +75,7 @@ table.minimalistBlack tfoot td {
       {% if g.important or data[sc]["gen_all"] == 0   %}
       <tr>
           <td>---  </td>
-         <td> {{g.nom_generation or ''}}   </td> 
+         <td> {{g.nom_modele or ''}} {{g.nom_generation or ''}} {{g.date_debut or ''}} {{g.date_fin or ''}} </td> 
          <td>  --- </td>
       </tr> 
    
@@ -85,25 +85,20 @@ table.minimalistBlack tfoot td {
    </table>
 </div>
 
-
+{% if data[sc]["model"].oem|length > 0 %}
 <table class="minimalistBlack"> 
      <thead>  <tr><th>Référence OEM</th></tr></thead> 
-
       <tbody>
-       
-
    {% for o in data[sc]["model"].oem %}
       {% if o.important or data[sc]["oem_all"]  == 0 %}
-   <tr>
-          <td> {{o.oem or ''}}  </td>
-   </tr> 
-   
+   <tr> <td> {{o.oem or ''}}  </td></tr> 
    {% endif %}
    {% endfor %} 
    </tbody>
    </table>
+{% endif %}
 
-
+{% if data[sc]["model"].critere_piece|length > 0 %}
 <table class="minimalistBlack"> 
    <thead>  <tr><th>Critéres</th></tr></thead> 
       <tbody>
@@ -120,8 +115,9 @@ table.minimalistBlack tfoot td {
    {% endfor %} 
    </tbody>
    </table>
+{% endif %}
 
-
+{% if data[sc]["variants"]|length > 0 %}
 <table class="minimalistBlack"> 
      <thead> 
          <tr><th>Fabricants</th></tr>
@@ -157,6 +153,8 @@ table.minimalistBlack tfoot td {
    {% endfor %} 
    </tbody>
    </table>
+{% endif %}
+
 
  {% endfor %} 
 
