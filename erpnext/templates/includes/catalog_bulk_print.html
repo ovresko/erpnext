@@ -44,8 +44,10 @@ table.minimalistBlack tfoot td {
  {% for sc in data %}
 <div style="  page-break-inside: avoid !important;">
 <div style="background-color: #8FA2B9;padding-left:5mm;padding-right:5mm;padding-top:2mm;padding-bottom:2mm;margin-top:10mm">
-   <p style=" font-weight:600">Référence Modèle : {{ data[sc]["model"].name }} <span style="float: right;">{{data[sc]["index"]}} / {{data[sc]["total"]}}</span></p> 
-<p style="font-size:10px;font-weight:600"> {{ data[sc]["model"].item_name }}</p>
+  <p style="font-size:13px;font-weight:600"> {{ data[sc]["model"].item_name }}</p>
+   <p style=" font-size:9px">Référence Modèle : {{ data[sc]["model"].name }} <span style="float: right;">{{data[sc]["index"]}} / {{data[sc]["total"]}}</span></p> 
+   
+   
 </div>
 <table class="minimalistBlack"> 
     <thead> 
@@ -62,7 +64,7 @@ table.minimalistBlack tfoot td {
       {% if v.important or data[sc]["versions_all"] == 0   %}
       <tr>
           <td> {{v.nom_marque or ''}}  </td>
-         <td> {{v.generation_vehicule or ''}}   </td>
+         <td>  {{v.modele_vehicule or ''}} {{v.generation_vehicule or ''}}  {{v.periode or ''}}  </td>
         
          <td>  {{v.nom_version or ''}} </td>
       </tr> 
@@ -148,8 +150,8 @@ table.minimalistBlack tfoot td {
                   <img src="http://192.168.100.20{{variant.image}}" width="118mm"></div>
                   {% endif %} 
           </td>
-          <td> {{variant.manufacturer_part_no or ''}} </td>
-          <td> NA  </td>
+      <td> <p style="font-size:13px"> {{variant.manufacturer_part_no or ''}}</p> </td>
+          <td><p style="font-size:13px"> NA</p>  </td>
    </tr> 
     
    {% endfor %} 
