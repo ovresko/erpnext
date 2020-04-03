@@ -414,6 +414,7 @@ def make_purchase_invoice(source_name, target_doc=None):
 			"doctype": "Purchase Invoice Item",
 			"field_map": {
 				"name": "po_detail",
+				"qty": "ordered_qty",
 				"pays": "pays",
 				"parent": "purchase_order",
 			},
