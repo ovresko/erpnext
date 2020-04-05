@@ -6,7 +6,7 @@ import frappe
 from frappe import throw, _
 from frappe.utils import flt, nowdate, add_days
 from frappe.model.mapper import get_mapped_doc
-
+from erpnext.stock.stock_balance import update_bin_qty, get_indented_qty
 from erpnext.controllers.buying_controller import BuyingController
 from erpnext.buying.utils import validate_for_items
 
@@ -105,8 +105,22 @@ class SupplierQuotation(BuyingController):
 		self.validate_approuve()
 		frappe.db.set(self, "status", "Submitted")
 		self.update_rfq_supplier_status(1)
+		self.update_requested_qty()
 		frappe.enqueue("erpnext.buying.doctype.supplier_quotation.supplier_quotation.update_mr",doc=self,timeout=10000)
                 #self.update_mr()
+	
+	def update_requested_qty(self, mr_item_rows=None):
+		"""update requested qty (before ordered_qty is updated)"""
+		item_wh_list = []
+		for d in self.get("items"):
+			if (not mr_item_rows or d.name in mr_item_rows) and [d.item_code, d.warehouse] not in item_wh_list \
+					and frappe.db.get_value("Item", d.item_code, "is_stock_item") == 1 and d.warehouse:
+				item_wh_list.append([d.item_code, d.warehouse])
+
+		for item_code, warehouse in item_wh_list:
+			update_bin_qty(item_code, warehouse, {
+				"indented_qty": get_indented_qty(item_code, warehouse)
+			})
 	def validate_approuve(self):
 		encours = sum(1 for i in self.items if (i.confirmation =="En cours" or i.confirmation =="En negociation"))
 		if encours > 0:
@@ -134,6 +148,7 @@ class SupplierQuotation(BuyingController):
 
 	def on_cancel(self):
 		frappe.db.set(self, "status", "Cancelled")
+		self.update_requested_qty()
 		dms = []
                 for item in self.items:
 		    if item.material_request:
