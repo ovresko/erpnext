@@ -97,7 +97,7 @@ def execute(filters=None):
 		})
 	columns.append({
 			"fieldname": "qts",
-			"label": "Qte",
+			"label": "Qte en stock",
 			"width": 150
 		})
 	columns.append({
