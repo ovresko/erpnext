@@ -415,6 +415,12 @@ frappe.query_reports["Rapport analyse devis fournisseur"] = {
 			"fieldtype": "Select",
 			"options": ["Afficher Tous","Page 1", "Page 2", "Page 3", "Page 4"],
 			"default": ""
+		},
+		{
+			"fieldname": "history",
+			"label": "Historique",
+			"fieldtype": "Check",
+			"default": 0
 		}
 	]
 }
