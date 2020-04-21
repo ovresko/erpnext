@@ -358,7 +358,7 @@ frappe.query_reports["Rapport analyse devis fournisseur"] = {
 		"fieldname":"from_date",
 		"label": __("From Date"),
 		"fieldtype": "Date",
-		"default": frappe.datetime.add_days(frappe.datetime.get_today(), -60),
+		"default": frappe.datetime.add_days(frappe.datetime.get_today(), -240),
 		"width": "80"
 	},
 	 
