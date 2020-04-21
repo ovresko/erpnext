@@ -342,7 +342,7 @@ def execute(filters=None):
 		it.max_ordered_variante
 		from `tabSupplier Quotation Item` sqi left join `tabItem` it
 		ON sqi.item_code = it.item_code
-		where sqi.docstatus=0 {conditions}
+		where {conditions}
 		{order_by_statement}
 		""".format(
 			conditions=get_conditions(filters),
@@ -448,8 +448,8 @@ def execute(filters=None):
 		it.max_ordered_variante
 		from `tabSupplier Quotation Item` sqi left join `tabItem` it
 		ON sqi.item_code = it.item_code
-		where sqi.docstatus=0 and it.variant_of = %s and sqi.item_code not in ('{0}')
-		""".format(lids),
+		where sqi.docstatus{1} and it.variant_of = %s and sqi.item_code not in ('{0}')
+		""".format(lids, '<=1' if filters.get('history') else '=0'),
 		(model), as_dict=1)
 		mitems.extend(other_sq)
 		oids = {o.item_code for o in mitems if item.item_code}
@@ -846,6 +846,7 @@ def execute(filters=None):
 		data.append(row)
 		
 	return columns, data
+
 					       
 def get_conditions(filters):
 	conditions = []
@@ -858,8 +859,14 @@ def get_conditions(filters):
 		conditions.append("""sqi.material_request=%(demande)s""")
 
 	#consultation_externe
-	if filters.get('from_date'):
+	if filters.get('from_date') and not filters.get('history'):
 		conditions.append("""sqi.creation >= %(from_date)s""")
+	#history
+	if not filters.get('history'):
+		conditions.append("""sqi.docstatus=0""")
+	if filters.get('history'):
+		conditions.append("""sqi.docstatus<=1""")
+		
 	#consultation_interne
 	if filters.get('consultation_interne'):
 		conditions.append("""sqi.parent=%(consultation_interne)s""")
