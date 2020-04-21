@@ -342,7 +342,7 @@ def execute(filters=None):
 		it.max_ordered_variante
 		from `tabSupplier Quotation Item` sqi left join `tabItem` it
 		ON sqi.item_code = it.item_code
-		where {conditions}
+		where sqi.parent not null {conditions}
 		{order_by_statement}
 		""".format(
 			conditions=get_conditions(filters),
