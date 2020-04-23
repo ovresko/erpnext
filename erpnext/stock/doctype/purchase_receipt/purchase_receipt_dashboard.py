@@ -14,7 +14,7 @@ def get_data():
 		'internal_links': {
 			'Purchase Order': ['items', 'purchase_order'],
 			'Project': ['items', 'project'],
-			'Purchase Invoice': ['items','against_purchase_invoice']
+			'Purchase Invoice': ['items','against_purchase_invoice'],
 			'Quality Inspection': ['items', 'quality_inspection'],
 		},
 		'transactions': [
