@@ -5,7 +5,7 @@ def get_data():
 	return {
 		'fieldname': 'purchase_receipt_no',
 		'non_standard_fieldnames': {
-			#'Purchase Invoice': 'purchase_receipt',
+			'Purchase Invoice': 'purchase_receipt',
 			'Asset': 'purchase_receipt',
 			'Landed Cost Voucher': 'receipt_document',
 			'Auto Repeat': 'reference_document',
@@ -14,7 +14,7 @@ def get_data():
 		'internal_links': {
 			'Purchase Order': ['items', 'purchase_order'],
 			'Project': ['items', 'project'],
-			'Purchase Invoice': ['items','against_purchase_invoice'],
+			'Purchase Invoice': ['items','against_puchase_invoice'],
 			'Quality Inspection': ['items', 'quality_inspection'],
 		},
 		'transactions': [
