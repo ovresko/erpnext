@@ -911,6 +911,7 @@ def make_pr(source_name,target_doc=None):
                         "field_map": {
                             "qty":"received_qty",
 			    "pays": "pays",
+			    "parent": "against_puchase_invoice",
                             "po_detail":"purchase_order_item",
                             "purchase_order":"purchase_order"
                         },
