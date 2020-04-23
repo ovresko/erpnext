@@ -14,8 +14,8 @@ def get_data():
 			'Auto Repeat': 'reference_document'
 		},
 		'internal_links': {
-			'Purchase Order': ['items', 'purchase_order'],
-			'Purchase Receipt': ['items', 'purchase_receipt'],
+			'Purchase Order': ['items', 'purchase_order']
+			#'Purchase Receipt': ['items', 'purchase_receipt'],
 		},
 		'transactions': [
 			{
