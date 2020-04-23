@@ -902,6 +902,9 @@ def make_pr(source_name,target_doc=None):
         doc = get_mapped_doc("Purchase Invoice",source_name, {
                 "Purchase Invoice": {
                         "doctype": "Purchase Receipt",
+			"field_map": {
+				"name": "ref_facture"
+			},
                         "validation": {
                                 "docstatus":["=",1]
                         }
