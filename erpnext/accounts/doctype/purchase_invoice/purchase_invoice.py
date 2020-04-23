@@ -912,6 +912,7 @@ def make_pr(source_name,target_doc=None):
                             "qty":"received_qty",
 			    "pays": "pays",
 			    "parent": "against_puchase_invoice",
+			    "name": "facture_item",
                             "po_detail":"purchase_order_item",
                             "purchase_order":"purchase_order"
                         },
