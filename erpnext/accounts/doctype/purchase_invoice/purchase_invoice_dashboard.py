@@ -5,6 +5,7 @@ def get_data():
 	return {
 		'fieldname': 'purchase_invoice',
 		'non_standard_fieldnames': {
+			'Purchase Receipt': 'against_puchase_invoice',
 			'Journal Entry': 'reference_name',
 			'Payment Entry': 'reference_name',
 			'Payment Request': 'reference_name',
