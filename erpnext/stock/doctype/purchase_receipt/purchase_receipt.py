@@ -153,6 +153,10 @@ class PurchaseReceipt(BuyingController):
 		update_serial_nos_after_submit(self, "items")
 
 		self.make_gl_entries()
+		for item in self.items:
+			if item.facture_item:
+				frappe.db.set_value("Purchase Invoice Item",item.facture_item,"pr_detail",item.name)
+				frappe.db.set_value("Purchase Invoice Item",item.facture_item,"purchase_receipt",item.parent)
 
 	def check_next_docstatus(self):
 		submit_rv = frappe.db.sql("""select t1.name
