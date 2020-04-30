@@ -185,6 +185,10 @@ class PurchaseReceipt(BuyingController):
 		# because updating ordered qty in bin depends upon updated ordered qty in PO
 		self.update_stock_ledger()
 		self.make_gl_entries_on_cancel()
+		for item in self.items:
+			if item.facture_item:
+				frappe.db.set_value("Purchase Invoice Item",item.facture_item,"pr_detail","")
+				frappe.db.set_value("Purchase Invoice Item",item.facture_item,"purchase_receipt","")
 
 	def get_current_stock(self):
 		for d in self.get('supplied_items'):
