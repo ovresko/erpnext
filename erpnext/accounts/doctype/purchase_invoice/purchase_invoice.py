@@ -339,6 +339,9 @@ class PurchaseInvoice(BuyingController):
 		super(PurchaseInvoice, self).on_submit()
 
 		for item in self.items:
+			if item.pr_detail:
+				frappe.db.set_value("Purchase Receipt Item",item.pr_detail,"against_puchase_invoice",item.parent)
+				frappe.db.set_value("Purchase Receipt Item",item.pr_detail,"facture_item",item.name)
 			wg = item.weight_per_unit
 			if wg and wg > 0:
 				frappe.db.sql(""" update `tabItem` set weight_per_unit = %s
