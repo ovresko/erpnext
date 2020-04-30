@@ -808,6 +808,10 @@ class PurchaseInvoice(BuyingController):
 		frappe.db.set(self, 'status', 'Cancelled')
 
 		unlink_inter_company_invoice(self.doctype, self.name, self.inter_company_invoice_reference)
+		for item in self.items:
+			if item.pr_detail:
+				frappe.db.set_value("Purchase Receipt Item",item.pr_detail,"against_puchase_invoice","")
+				frappe.db.set_value("Purchase Receipt Item",item.pr_detail,"facture_item","")
 
 	def update_project(self):
 		project_list = []
