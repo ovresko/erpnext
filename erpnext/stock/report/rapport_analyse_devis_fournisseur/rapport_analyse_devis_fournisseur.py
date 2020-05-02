@@ -542,6 +542,7 @@ def execute(filters=None):
 		s_prix_target = ''
 		s_qts_target = '' 
 		s_remarque = ''
+		s_reponse = ''
 		s_qts_devis= ''
 		hist_offre_fournisseur = ""
 		offre_init = ''
