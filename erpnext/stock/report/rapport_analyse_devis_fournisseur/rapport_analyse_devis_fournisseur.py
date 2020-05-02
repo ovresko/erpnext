@@ -253,6 +253,11 @@ def execute(filters=None):
 			"width": 250
 		})
 	columns.append({
+			"fieldname": "reponse",
+			"label": "Reponse",
+			"width": 250
+		})
+	columns.append({
 			"fieldname": "prix_devis",
 			"label": "Offre Final Fournisseur",
 			"width": 150
@@ -581,6 +586,7 @@ def execute(filters=None):
 			qts_target = mri.qts_target or 0
 			pays = mri.pays
 			remarque = mri.remarque or ''
+			reponse = mri.reponse_fournisseur or ''
 			offre_init = mri.offre_fournisseur_initial
 			prix_target_dzd = prix_target * taux_approche * (1+taux_mb) * 1.19
 			prix_target_dzd = round(prix_target_dzd,2)
@@ -614,12 +620,14 @@ def execute(filters=None):
 				s_prix_target = """<input placeholder='Prix target' id='prix_target_%s' value='%s' style='color:black'></input><a  onClick="prix_target_item('%s')" type='a'> OK </a>""" % (mri.name,prix_target,mri.name)
 				s_qts_target = """<input placeholder='qts_target' id='qts_target_%s' value='%s' style='color:black'></input><a  onClick="qts_target_item('%s')" type='a'> OK </a>""" % (mri.name,qts_target,mri.name)
 				s_remarque = """<input placeholder='remarque' id='remarque_%s' value='%s' style='color:black'></input><a  onClick="remarque_item('%s')" type='button'> OK </a>""" % (mri.name,remarque,mri.name)
+				s_reponse = """<input placeholder='reponse' id='reponse_%s' value='%s' style='color:black'></input><a  onClick="reponse_item('%s')" type='button'> OK </a>""" % (mri.name,reponse,mri.name)
 				s_commentaire = """<input placeholder='commentaire interne' id='commentaire_%s' value='%s' style='color:black'></input><a  onClick="commentaire_item('%s')" type='a'> OK </a>""" % (mri.name,commentaire,mri.name)
 				s_qts_devis = """ <input placeholder='Qts devis' id='input_%s' value='%s' style='color:black'></input> <a id='%s' onClick="demander_item('%s')" type='a'>OK</a>""" % (mri.name,qts_devis,mri.name,mri.name)
 			else:
 				s_prix_target = prix_target
 				s_qts_target = qts_target
 				s_remarque = remarque
+				s_reponse= reponse
 				s_commentaire = commentaire
 				s_qts_devis = qts_devis
 				
@@ -733,6 +741,7 @@ def execute(filters=None):
 			       s_commentaire,
 			       #s_remarque
 			       s_remarque,
+			       s_reponse,
 			       #prix_devis
 			       rate,
 			       #rate_dzd,
@@ -808,6 +817,7 @@ def execute(filters=None):
 			       s_commentaire,
 			       #s_remarque
 			       s_remarque,
+			       s_reponse,
 			       #prix_devis
 			       rate,
 			       #rate_dzd,
