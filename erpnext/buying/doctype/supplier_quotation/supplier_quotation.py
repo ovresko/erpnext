@@ -547,6 +547,15 @@ def remarque_item(item_code,qty):
 			return "remarque enregistree"
 
 @frappe.whitelist()
+def reponse_item(item_code,qty):
+	if item_code and qty:
+		item = frappe.get_doc("Supplier Quotation Item",item_code)
+		if item:
+			item.reponse_fournisseur = qty
+			item.save()
+			return "reponse enregistree"
+
+@frappe.whitelist()
 def commentaire_item(item_code,qty):
 	if item_code and qty:
 		item = frappe.get_doc("Supplier Quotation Item",item_code)
