@@ -210,14 +210,16 @@ frappe.ui.form.on('Supplier Quotation', {
 					return;
 
 				}
-				console.log("manufacturer : ",frm.doc.manufacturer)
+				        console.log("manufacturer : ",frm.doc.manufacturer);
 					frappe.call({
 					 method: 'erpnext.stock.doctype.material_request.material_request.get_mr_items',
 						args:{manufacturer: frm.doc.manufacturer},
 					callback: function(r){
+						
 						  cur_frm.clear_table("items"); 
-						r.message.map(w => {
-							
+						
+							r.message.map(w => {
+							console.log("new item : ",w.item_code);
 					 var child = cur_frm.add_child("items");
 					
 					frappe.model.set_value(child.doctype, child.name, "item_code", w.item_code)
@@ -232,9 +234,9 @@ frappe.ui.form.on('Supplier Quotation', {
 					frappe.model.set_value(child.doctype, child.name, "ref_fabricant", w.ref_fabricant)
 					frappe.model.set_value(child.doctype, child.name, "fabricant", w.fabricant)
 					  
-					cur_frm.refresh_field("items"); 
+					
 						});
-						 
+						 cur_frm.refresh_field("items"); 
 						if(r.message){ 
 							frappe.msgprint("Operation terminee")
 							}
