@@ -124,7 +124,7 @@ class Item(WebsiteGenerator):
 	def validate(self):
                 self.oem_text = ""
 		for o in self.oem:
-			o.oem_simplifie = o.oem.replace(" ","").replace("-","").replace(","").replace("/","").replace("'","").replace(":","")
+			o.oem_simplifie = o.oem.replace(" ","").replace("-","").replace(","").replace("/","").replace("_","").replace(":","")
 		if self.oem:
 			self.oem_text = ' - '.join(str(x.oem_simplifie or x.oem) for x in self.oem)
                 #for moem in self.oem:
