@@ -123,8 +123,10 @@ class Item(WebsiteGenerator):
 
 	def validate(self):
                 self.oem_text = ""
+		for o in self.oem:
+			o.oem_simplifie = o.oem.replace(" ","").replace("-","").replace(","").replace("/","").replace("'","").replace(":","")
 		if self.oem:
-			self.oem_text = ' - '.join(str(x.oem) for x in self.oem)
+			self.oem_text = ' - '.join(str(x.oem_simplifie or x.oem) for x in self.oem)
                 #for moem in self.oem:
                 #    self.oem_text += "%s - " % moem.oem
 		self.get_doc_before_save()
