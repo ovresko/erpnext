@@ -236,7 +236,10 @@ frappe.ui.form.on('Supplier Quotation', {
 					  
 					
 						});
+						
+						console.log("before refresh_field");
 						 cur_frm.refresh_field("items"); 
+						console.log("after refresh_field");
 						if(r.message){ 
 							frappe.msgprint("Operation terminee")
 							}
