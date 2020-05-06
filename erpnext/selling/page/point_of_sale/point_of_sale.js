@@ -1215,6 +1215,10 @@ class POSItems {
 
 	make_dom() {
 		this.wrapper.html(`
+			<div class="vehicule">
+			<div class="vehicule-marque-field">
+				</div>
+			</div>
 			<div class="fields">
 				<div class="search-field">
 				</div>
@@ -1237,6 +1241,24 @@ class POSItems {
 	make_fields() {
 		// Search field
 		const me = this;
+		
+		this.vehicule_marque_field = frappe.ui.form.make_control({
+			df: {
+				fieldtype: 'Link',
+				label: 'Marque',
+				options: 'Marque vehicule',
+				//default: me.parent_item_group,
+				onchange: () => {
+					const vehicule_marque = this.vehicule_marque_field.get_value();
+					if (vehicule_marque) {
+						this.filter_items({ vehicule_marque: vehicule_marque });
+					}
+				}, 
+			},
+			parent: this.wrapper.find('.vehicule-marque-field'),
+			render_input: true
+		});
+		
 		this.search_field = frappe.ui.form.make_control({
 			df: {
 				fieldtype: 'Data',
@@ -1320,7 +1342,7 @@ class POSItems {
 		this.clusterize.update(row_items);
 	}
 
-	filter_items({ search_term='', item_group=this.parent_item_group }={}) {
+	filter_items({ search_term='', item_group=this.parent_item_group, vehicule_marque }={}) {
 		if (search_term) {
 			search_term = search_term.toLowerCase();
 
