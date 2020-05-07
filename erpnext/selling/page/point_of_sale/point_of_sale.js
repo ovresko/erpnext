@@ -1462,6 +1462,7 @@ class POSItems {
 				onchange: () => {
 					const item_manufacturer = this.item_manufacturer_field.get_value();
 					if (item_manufacturer) {
+						console.log(item_manufacturer);
 						this.filter_items({ item_manufacturer: item_manufacturer });
 					}
 				},
@@ -1535,6 +1536,7 @@ class POSItems {
 	}
 
 	filter_items({ search_term='', item_group=this.parent_item_group,item_manufacturer, vehicule_marque, vehicule_modele, vehicule_generation, vehicule_version }={}) {
+		console.log(item_manufacturer);
 		if (search_term) {
 			search_term = search_term.toLowerCase();
 
@@ -1551,7 +1553,7 @@ class POSItems {
 			this.items = this.all_items;
 			return this.render_items(this.all_items);
 		}
-
+		console.log(item_manufacturer);
 		this.get_items({search_value: search_term, item_group,item_manufacturer, vehicule_marque, vehicule_modele, vehicule_generation, vehicule_version })
 			.then(({ items, serial_no, batch_no, barcode }) => {
 				if (search_term && !barcode) {
