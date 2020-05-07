@@ -1243,11 +1243,9 @@ class POSItems {
 			</div>
 		`);
 	}
-
-	make_fields() {
-		// Search field
-		const me = this;
-		
+	
+	make_marque(){ 
+		const me = this; 
 		this.vehicule_marque_field = frappe.ui.form.make_control({
 			df: {
 				fieldtype: 'Link',
@@ -1258,14 +1256,19 @@ class POSItems {
 					const vehicule_marque = this.vehicule_marque_field.get_value();
 					if (vehicule_marque) {
 						this.filter_items({ vehicule_marque: vehicule_marque });
-					}
+					 	
+					}make_modele();
 				}, 
 			},
 			parent: this.wrapper.find('.vehicule-marque-field'),
 			render_input: true
 		});
-		const _marque =this.vehicule_marque_field.get_value();
-		console.log("_marque",_marque);
+		
+	}
+	
+	make_modele(){
+		const me = this;
+		
 		this.vehicule_modele_field = frappe.ui.form.make_control({
 			df: {
 				fieldtype: 'Link',
@@ -1273,19 +1276,23 @@ class POSItems {
 				options: 'Modele de vehicule',
 				//default: me.parent_item_group,
 				filters: {
-					"marque_vehicule": _marque
+					"marque_vehicule": this.vehicule_marque_field.get_value()
 				},
 				onchange: () => {
 					const vehicule_modele = this.vehicule_modele_field.get_value();
 					if (vehicule_modele) {
 						this.filter_items({ vehicule_modele: vehicule_modele });
-					}
+						
+					}make_generation();
 				}, 
 			},
 			parent: this.wrapper.find('.vehicule-modele-field'),
 			render_input: true
 		});
-		
+	}
+
+	make_generation(){
+		const me = this;
 		this.vehicule_generation_field = frappe.ui.form.make_control({
 			df: {
 				fieldtype: 'Link',
@@ -1299,13 +1306,17 @@ class POSItems {
 					const vehicule_generation = this.vehicule_generation_field.get_value();
 					if (vehicule_generation) {
 						this.filter_items({ vehicule_generation: vehicule_generation });
-					}
+						
+					}make_version();
 				}, 
 			},
 			parent: this.wrapper.find('.vehicule-generation-field'),
 			render_input: true
 		});
-		
+	}
+	
+	make_version(){
+		const me = this;
 		this.vehicule_version_field = frappe.ui.form.make_control({
 			df: {
 				fieldtype: 'Link',
@@ -1325,7 +1336,17 @@ class POSItems {
 			parent: this.wrapper.find('.vehicule-generation-field'),
 			render_input: true
 		});
+	}
+	
+	make_fields() {
+		// Search field
+		const me = this;
 		
+		make_marque();
+		make_modele();
+		make_generation();
+		make_version();
+		  
 		
 		this.search_field = frappe.ui.form.make_control({
 			df: {
