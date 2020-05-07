@@ -1309,7 +1309,7 @@ class POSItems {
 		this.vehicule_modele_field = frappe.ui.form.make_control({
 			df: {
 				fieldtype: 'Link',
-				label: 'Modele de vehicule',
+				label: 'Modele',
 				options: 'Modele de vehicule',
 				//default: me.parent_item_group,
 				filters: filter,
@@ -1349,7 +1349,7 @@ class POSItems {
 		this.vehicule_generation_field = frappe.ui.form.make_control({
 			df: {
 				fieldtype: 'Link',
-				label: 'Generation vehicule',
+				label: 'Generation',
 				options: 'Generation vehicule',
 				//default: me.parent_item_group,
 				filters: filter,
@@ -1389,7 +1389,7 @@ class POSItems {
 		this.vehicule_version_field = frappe.ui.form.make_control({
 			df: {
 				fieldtype: 'Link',
-				label: 'Version vehicule',
+				label: 'Version',
 				options: 'Version vehicule',
 				//default: me.parent_item_group,
 				filters: filter,
@@ -1406,7 +1406,7 @@ class POSItems {
 						"callback": function(response) {
 							var sinv = response.message; 
 							if (sinv) {
-								wr.find('.vehicule-version-name').text(sinv.version);  
+								wr.find('.vehicule-version-name').text(sinv.commercial_name+" "+sinv.code_moteur+" "+sinv.puissance_fiscale);  
 							}  
 						}
 						}); 
