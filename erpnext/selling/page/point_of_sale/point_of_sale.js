@@ -1275,8 +1275,19 @@ class POSItems {
 					if (vehicule_marque) {
 						this.filter_items({ vehicule_marque: vehicule_marque });
 						console.log(vehicule_marque);
-						let _vehicule_marque = frappe.model.get_doc('Marque vehicule', vehicule_marque);
-					 	this.wrapper.find('.vehicule-marque-name').text(_vehicule_marque.marque);
+						frappe.call({
+							"method": "frappe.client.get",
+							"args": {
+								"doctype": "Marque vehicule",
+								"name": vehicule_marque
+							},
+							"callback": function(response) {
+								var sinv = response.message; 
+								if (sinv) {
+									this.wrapper.find('.vehicule-marque-name').text(sinv.marque);  
+								}  
+							}
+							}); 
 					} 
 					this.make_modele();
 				}, 
