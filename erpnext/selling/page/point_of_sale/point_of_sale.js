@@ -1593,7 +1593,7 @@ class POSItems {
 	}
 
 	get_item_html(item) {
-		const price_list_rate = format_currency(item.price_list_rate, this.currency);
+		const price_list_rate = format_currency(item.price_list_rate, this.currency,2);
 		const { item_code, item_name, item_image} = item;
 		const item_title =  item_name || item_code;
 		//image-view-item
@@ -1611,7 +1611,7 @@ class POSItems {
 								</span>` : '' }
 							${item_image ? `<img src="${item_image}" alt="${item_title}">` : '' }
 						</div>
-						<span class="price-info" style="margin:0px">
+						<span class="price-info" style="margin:0px;background-color: rgba(141, 153, 166, 0.8);border-radius: 0px;">
 							${price_list_rate}
 						</span>
 					</a>
@@ -1637,6 +1637,8 @@ class POSItems {
 						<button data-label="open" class="btn btn-default btn-xs btn-open" style="margin-right: 5px;"><i class="fa fa-eye"></i>
 						</button>
 						<button data-label="related" class="btn btn-default btn-xs btn-related" style="margin-right: 5px;"><i class="fa fa-link"></i>
+						</button>
+						<button data-label="info" class="btn btn-default btn-xs btn-info" style="margin-right: 5px;"><i class="fa fa-question"></i>
 						</button>
 					</div>
 				</div>
