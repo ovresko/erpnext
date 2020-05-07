@@ -1604,23 +1604,28 @@ class POSItems {
 						title="${item_title}"
 					>
 						<div class="image-field"
-							style="${!item_image ? 'background-color: #fafbfc;' : ''} border: 0px;"
+							style="${!item_image ? 'background-color: #fafbfc;' : ''} border: 0px ;padding:5px"
 						>
 							${!item_image ? `<span class="placeholder-text">
 									${frappe.get_abbr(item_title)}
 								</span>` : '' }
 							${item_image ? `<img src="${item_image}" alt="${item_title}">` : '' }
 						</div>
-						<span class="price-info">
+						<span class="price-info" style="margin:0px">
 							${price_list_rate}
 						</span>
 					</a>
 			</div>	
-			<div style="width:80%" >
-					<div>
+			<div style="width:80%;padding:5px;display:flex" >
+					<div style="width:60%;" >
 						<a class="grey list-id" data-name="${item_code}" title="${item_title}">
 							${item_title}
 						</a>
+					</div>
+					<div style="width:40%;" >
+						<span>
+							${item_code}
+						</span>
 					</div>
 				</div>
 				
