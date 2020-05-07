@@ -1598,15 +1598,8 @@ class POSItems {
 		const item_title = item_name || item_code;
 		//image-view-item
 		const template = `
-			<div class="pos-item-wrapper " data-item-code="${escape(item_code)}" style="width:100%">
-				<div class="image-view-header">
-					<div>
-						<a class="grey list-id" data-name="${item_code}" title="${item_title}">
-							${item_title}
-						</a>
-					</div>
-				</div>
-				<div class="image-view-body">
+			<div class="pos-item-wrapper " data-item-code="${escape(item_code)}" style="width:100%;display:flex;flex-direction: inherit;">
+			<div style="width:20%">
 					<a	data-item-code="${item_code}"
 						title="${item_title}"
 					>
@@ -1622,7 +1615,15 @@ class POSItems {
 							${price_list_rate}
 						</span>
 					</a>
+			</div>	
+			<div style="width:80%" >
+					<div>
+						<a class="grey list-id" data-name="${item_code}" title="${item_title}">
+							${item_title}
+						</a>
+					</div>
 				</div>
+				
 			</div>
 		`;
 
