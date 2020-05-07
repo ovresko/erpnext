@@ -40,17 +40,14 @@ def get_items(start, page_length, price_list, item_group, search_value="", pos_p
 
 	if display_items_in_stock == 0:
 		res = frappe.db.sql("""select i.name as item_code, i.item_name, i.image as item_image, i.idx as idx,
-			i.is_stock_item, item_det.price_list_rate, item_det.currency, i.oem_text,i.titre_article,i.manufacturer,i.manufacturer_part_no,i.fabricant_logo , item_fiche.parametre, item_fiche.valeur_p, item_fiche.valeur,item_fiche.parent 
+			i.is_stock_item, item_det.price_list_rate, item_det.currency, i.oem_text,i.titre_article,i.manufacturer,i.manufacturer_part_no,i.fabricant_logo ,i.critere_text  
 			from `tabItem` i 
 			LEFT JOIN
 				(select item_code, price_list_rate, currency from
 					`tabItem Price`	where price_list=%(price_list)s) item_det
 			ON
 				(item_det.item_code=i.name or item_det.item_code=i.variant_of)
-			LEFT JOIN (select parametre,valeur_p,valeur,parent from
-					`tabFiche technique item` where important=1) item_fiche
-			ON
-				(item_fiche.parent=i.name)
+			
 			where
 				i.disabled = 0 and i.has_variants = 0 and i.is_sales_item = 1
 				and i.item_group in (select name from `tabItem Group` where lft >= {lft} and rgt <= {rgt})
@@ -70,16 +67,13 @@ def get_items(start, page_length, price_list, item_group, search_value="", pos_p
 
 	elif display_items_in_stock == 1:
 		query = """select i.name as item_code, i.item_name, i.image as item_image, i.idx as idx,
-				i.is_stock_item, item_det.price_list_rate, item_det.currency, i.oem_text,i.titre_article,i.manufacturer,i.manufacturer_part_no,i.fabricant_logo , item_fiche.parametre, item_fiche.valeur_p, item_fiche.valeur,item_fiche.parent
+				i.is_stock_item, item_det.price_list_rate, item_det.currency, i.oem_text,i.titre_article,i.manufacturer,i.manufacturer_part_no,i.fabricant_logo , i.critere_text 
 				from `tabItem` i LEFT JOIN
 					(select item_code, price_list_rate, currency from
 						`tabItem Price`	where price_list=%(price_list)s) item_det
 				ON
 					(item_det.item_code=i.name or item_det.item_code=i.variant_of) INNER JOIN
-				LEFT JOIN (select parametre,valeur_p,valeur,parent from
-					`tabFiche technique item` where important=1) item_fiche
-					ON
-					(item_fiche.parent=i.name)  INNER JOIN
+				
 					"""
 
 		if warehouse is not None:
