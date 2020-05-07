@@ -1264,7 +1264,8 @@ class POSItems {
 			parent: this.wrapper.find('.vehicule-marque-field'),
 			render_input: true
 		});
-		
+		const _marque =this.vehicule_marque_field.get_value();
+		console.log("_marque",_marque);
 		this.vehicule_modele_field = frappe.ui.form.make_control({
 			df: {
 				fieldtype: 'Link',
@@ -1272,7 +1273,7 @@ class POSItems {
 				options: 'Modele de vehicule',
 				//default: me.parent_item_group,
 				filters: {
-					"marque_vehicule": this.vehicule_marque_field.get_value()
+					"marque_vehicule": _marque
 				},
 				onchange: () => {
 					const vehicule_modele = this.vehicule_modele_field.get_value();
