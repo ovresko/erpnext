@@ -10,7 +10,7 @@ from erpnext.accounts.doctype.pos_profile.pos_profile import get_item_groups
 from six import string_types
 
 @frappe.whitelist()
-def get_items(start, page_length, price_list, item_group, search_value="", pos_profile=None):
+def get_items(start, page_length, price_list, item_group, search_value="", pos_profile=None,item_manufacturer=None, vehicule_marque=None, vehicule_modele=None, vehicule_generation=None, vehicule_version=None):
 	data = dict()
 	warehouse = ""
 	display_items_in_stock = 0
@@ -28,11 +28,15 @@ def get_items(start, page_length, price_list, item_group, search_value="", pos_p
 	serial_no = data.get("serial_no") if data.get("serial_no") else ""
 	batch_no = data.get("batch_no") if data.get("batch_no") else ""
 	barcode = data.get("barcode") if data.get("barcode") else ""
+	item_manufacturer = data.get("item_manufacturer") if data.get("item_manufacturer") else ""
 
 	item_code, condition = get_conditions(item_code, serial_no, batch_no, barcode)
 
 	if pos_profile:
 		condition += get_item_group_condition(pos_profile)
+		
+	if item_manufacturer:
+		condition += get_item_manufacturer(item_manufacturer)
 
 	lft, rgt = frappe.db.get_value('Item Group', item_group, ['lft', 'rgt'])
 	# locate function is used to sort by closest match from the beginning of the value
@@ -147,6 +151,10 @@ def get_conditions(item_code, serial_no, batch_no, barcode):
 			or i.item_name like %(item_code)s)"""
 
 	return '%%%s%%'%(frappe.db.escape(item_code)), condition
+
+def get_item_manufacturer(item_manufacturer):
+	cond = "and i.manufacturer = %s".format(item_manufacturer)
+	return cond
 
 def get_item_group_condition(pos_profile):
 	cond = "and 1=1"
