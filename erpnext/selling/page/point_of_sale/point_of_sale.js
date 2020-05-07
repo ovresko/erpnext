@@ -1317,7 +1317,19 @@ class POSItems {
 					const vehicule_modele = this.vehicule_modele_field.get_value();
 					if (vehicule_modele) {
 						this.filter_items({ vehicule_modele: vehicule_modele });
-						
+						frappe.call({
+						"method": "frappe.client.get",
+						"args": {
+							"doctype": "Modele de vehicule",
+							"name": vehicule_modele
+						},
+						"callback": function(response) {
+							var sinv = response.message; 
+							if (sinv) {
+								wr.find('.vehicule-modele-name').text(sinv.modele);  
+							}  
+						}
+						}); 
 					}this.make_generation();
 				}, 
 			},
@@ -1345,6 +1357,19 @@ class POSItems {
 					const vehicule_generation = this.vehicule_generation_field.get_value();
 					if (vehicule_generation) {
 						this.filter_items({ vehicule_generation: vehicule_generation }); 
+						frappe.call({
+						"method": "frappe.client.get",
+						"args": {
+							"doctype": "Generation vehicule",
+							"name": vehicule_generation
+						},
+						"callback": function(response) {
+							var sinv = response.message; 
+							if (sinv) {
+								wr.find('.vehicule-generation-name').text(sinv.generation);  
+							}  
+						}
+						}); 
 					}this.make_version();
 				}, 
 			},
@@ -1372,6 +1397,19 @@ class POSItems {
 					const vehicule_version = this.vehicule_version_field.get_value();
 					if (vehicule_version) {
 						this.filter_items({ vehicule_version: vehicule_version });
+						frappe.call({
+						"method": "frappe.client.get",
+						"args": {
+							"doctype": "Version vehicule",
+							"name": vehicule_version
+						},
+						"callback": function(response) {
+							var sinv = response.message; 
+							if (sinv) {
+								wr.find('.vehicule-version-name').text(sinv.version);  
+							}  
+						}
+						}); 
 					}
 				}, 
 			},
