@@ -1348,7 +1348,7 @@ class POSItems {
 					}
 				}, 
 			},
-			parent: this.wrapper.find('.vehicule-generation-field'),
+			parent: this.wrapper.find('.vehicule-version-field'),
 			render_input: true
 		});
 	}
