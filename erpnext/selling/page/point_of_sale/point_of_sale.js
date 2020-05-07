@@ -1242,7 +1242,9 @@ class POSItems {
 			<div class="fields">
 				<div class="search-field">
 				</div>
-				<div class="item-group-field">
+				<div class="item-group-field" style="width: 20%;margin-left: 10px;">
+				</div>
+				<div class="item-manufacturer-field" style="width: 20%;margin-left: 10px;">
 				</div>
 			</div>
 			<div class="items-wrapper">
@@ -1450,6 +1452,27 @@ class POSItems {
 			}, 300);
 		});
 
+		// item-manufacturer-field
+		this.item_manufacturer_field = frappe.ui.form.make_control({
+			df: {
+				fieldtype: 'Link',
+				label: 'Manufacturer',
+				options: 'Manufacturer',
+				//default: me.parent_item_group,
+				onchange: () => {
+					const item_manufacturer = this.item_manufacturer_field.get_value();
+					if (item_manufacturer) {
+						this.filter_items({ item_manufacturer: item_manufacturer });
+					}
+				},
+				 
+			},
+			parent: this.wrapper.find('.item-manufacturer-field'),
+			render_input: true
+		});
+		
+		
+		
 		this.item_group_field = frappe.ui.form.make_control({
 			df: {
 				fieldtype: 'Link',
@@ -1511,7 +1534,7 @@ class POSItems {
 		this.clusterize.update(row_items);
 	}
 
-	filter_items({ search_term='', item_group=this.parent_item_group, vehicule_marque, vehicule_modele, vehicule_generation, vehicule_version }={}) {
+	filter_items({ search_term='', item_group=this.parent_item_group,item_manufacturer, vehicule_marque, vehicule_modele, vehicule_generation, vehicule_version }={}) {
 		if (search_term) {
 			search_term = search_term.toLowerCase();
 
@@ -1638,7 +1661,7 @@ class POSItems {
 						</button>
 						<button data-label="related" class="btn btn-default btn-xs btn-related" style="margin-right: 5px;"><i class="fa fa-link"></i>
 						</button>
-						<button data-label="info" class="btn btn-default btn-xs btn-info" style="margin-right: 5px;"><i class="fa fa-question"></i>
+						<button data-label="information" class="btn btn-default btn-xs btn-information" style="margin-right: 5px;"><i class="fa fa-question"></i>
 						</button>
 					</div>
 				</div>
