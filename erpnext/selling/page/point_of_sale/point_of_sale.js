@@ -1595,11 +1595,11 @@ class POSItems {
 	get_item_html(item) {
 		const price_list_rate = format_currency(item.price_list_rate, this.currency);
 		const { item_code, item_name, item_image} = item;
-		const item_title = item_name || item_code;
+		const item_title = item.titre_article || item_name || item_code;
 		//image-view-item
 		const template = `
 			<div class="pos-item-wrapper " data-item-code="${escape(item_code)}" style="width:100%;display:flex;flex-direction: inherit;">
-			<div style="width:200px">
+			<div style="width:150px">
 					<a	data-item-code="${item_code}"
 						title="${item_title}"
 					>
@@ -1618,20 +1618,25 @@ class POSItems {
 			</div>	
 			<div style="flex-grow:1;padding:5px;display:flex" >
 					<div  style="flex-grow:1" >
-						<a class="grey list-id" data-name="${item_code}" title="${item_title}">
-							${item_title}
+						<a class="grey list-id" data-name="${item_code}" title="${item_title}" style="font-size:17px;font-weight:700">
+							<span style="color:blue"> ${item.manufacturer_part_no} </span><br>${item_title}
 						</a>
 					</div>
 					<div style="width:160px;" >
+						<span>
+							${item.manufacturer}
+						</span>
+						<br>
+						 
 						<span>
 							${item_code}
 						</span>
 						<br>
 						OEM: <span style="font-weight:800">${item.oem_text}</span>
 						<br>
-						<button data-label="open" class="btn btn-default btn-xs btn-open" style="margin-left: 10px;"><i class="fa fa-eye"></i>
+						<button data-label="open" class="btn btn-default btn-xs btn-open" style="margin-right: 5px;"><i class="fa fa-eye"></i>
 						</button>
-						<button data-label="related" class="btn btn-default btn-xs btn-related" style="margin-left: 10px;"><i class="fa fa-link"></i>
+						<button data-label="related" class="btn btn-default btn-xs btn-related" style="margin-right: 5px;"><i class="fa fa-link"></i>
 						</button>
 					</div>
 				</div>
