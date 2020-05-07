@@ -1549,7 +1549,11 @@ class POSItems {
 				this.set_item_in_the_cart(items);
 				return;
 			}
-		} else if (item_group == this.parent_item_group) {
+		} else if (item_group == this.parent_item_group && item_manufacturer==''
+			   && vehicule_marque==''
+			   && vehicule_modele==''
+			   && vehicule_generation==''
+			   && vehicule_version=='') {
 			this.items = this.all_items;
 			return this.render_items(this.all_items);
 		}
@@ -1685,6 +1689,7 @@ class POSItems {
 
 	get_items({start = 0, page_length = 40, search_value='', item_group=this.parent_item_group,item_manufacturer='', vehicule_marque='', vehicule_modele='', vehicule_generation='', vehicule_version=''}={}) {
 		const price_list = this.frm.doc.selling_price_list;
+		console.log("get_items",item_manufacturer);
 		return new Promise(res => {
 			frappe.call({
 				method: "erpnext.selling.page.point_of_sale.point_of_sale.get_items",
