@@ -1647,7 +1647,7 @@ class POSItems {
 							<span style="font-size:19px;color:blue;font-weight:600"> ${item.manufacturer_part_no} </span><br>${item_title}
 						</a>
 	
-						<br><span style="font-size:13px;color:red">${critere_text}</span>
+						<hr><span style="font-size:13px;color:red">${critere_text}</span>
 					</div>
 					<div style="width:160px;" >
 						<span>
