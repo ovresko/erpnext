@@ -34,7 +34,7 @@ def get_items(start, page_length, price_list, item_group, search_value="", pos_p
 
 	if pos_profile:
 		condition += get_item_group_condition(pos_profile)
-	frappe.msgprint(item_manufacturer)
+	
 	if item_manufacturer:
 		condition += get_item_manufacturer(item_manufacturer)
 
@@ -153,7 +153,7 @@ def get_conditions(item_code, serial_no, batch_no, barcode):
 	return '%%%s%%'%(frappe.db.escape(item_code)), condition
 
 def get_item_manufacturer(item_manufacturer):
-	cond = "and i.manufacturer = %s".format(item_manufacturer)
+	cond = "and i.manufacturer = %s" % (item_manufacturer)
 	return cond
 
 def get_item_group_condition(pos_profile):
