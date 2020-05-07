@@ -730,9 +730,9 @@ class POSCart {
 
 		this.$discount_amount.find('input:text').val('');
 		this.wrapper.find('.grand-total-value').text(
-			format_currency(this.frm.doc.grand_total, this.frm.currency));
+			format_currency(this.frm.doc.grand_total, this.frm.currency,0));
 		this.wrapper.find('.rounded-total-value').text(
-			format_currency(this.frm.doc.rounded_total, this.frm.currency));
+			format_currency(this.frm.doc.rounded_total, this.frm.currency,0));
 		this.$qty_total.find(".quantity-total").text(total_item_qty);
 
 		const customer = this.frm.doc.customer;
@@ -826,7 +826,7 @@ class POSCart {
 
 		// Update totals
 		this.$taxes_and_totals.find('.net-total')
-			.html(format_currency(this.frm.doc.total, currency));
+			.html(format_currency(this.frm.doc.total, currency,0));
 
 		// Update taxes
 		const taxes_html = this.frm.doc.taxes.map(tax => {
@@ -834,7 +834,7 @@ class POSCart {
 				<div>
 					<span>${tax.description}</span>
 					<span class="text-right bold">
-						${format_currency(tax.tax_amount, currency)}
+						${format_currency(tax.tax_amount, currency,0)}
 					</span>
 				</div>
 			`;
@@ -844,11 +844,11 @@ class POSCart {
 
 	update_grand_total() {
 		this.$grand_total.find('.grand-total-value').text(
-			format_currency(this.frm.doc.grand_total, this.frm.currency)
+			format_currency(this.frm.doc.grand_total, this.frm.currency,0)
 		);
 
 		this.$grand_total.find('.rounded-total-value').text(
-			format_currency(this.frm.doc.rounded_total, this.frm.currency)
+			format_currency(this.frm.doc.rounded_total, this.frm.currency,0)
 		);
 	}
 
@@ -1018,7 +1018,7 @@ class POSCart {
 
 			$item.find('.quantity input').val(item.qty);
 			$item.find('.discount').text(item.discount_percentage + '%');
-			$item.find('.rate').text(format_currency(item.rate, this.frm.doc.currency));
+			$item.find('.rate').text(format_currency(item.rate, this.frm.doc.currency,0));
 			$item.addClass(indicator_class);
 			$item.removeClass(remove_class);
 		} else {
@@ -1028,7 +1028,7 @@ class POSCart {
 
 	get_item_html(item) {
 		const is_stock_item = this.get_item_details(item.item_code).is_stock_item;
-		const rate = format_currency(item.rate, this.frm.doc.currency);
+		const rate = format_currency(item.rate, this.frm.doc.currency,0);
 		const indicator_class = (!is_stock_item || item.actual_qty >= item.qty) ? 'green' : 'red';
 		const batch_no = item.batch_no || '';
 
@@ -1593,7 +1593,7 @@ class POSItems {
 	}
 
 	get_item_html(item) {
-		const price_list_rate = format_currency(item.price_list_rate, this.currency,2);
+		const price_list_rate = format_currency(item.price_list_rate, this.currency,0);
 		const { item_code, item_name, item_image} = item;
 		const item_title =  item_name || item_code;
 		//image-view-item
@@ -1840,7 +1840,7 @@ class Payment {
 	set_title() {
 		let title = __('Total Amount {0}',
 			[format_currency(this.frm.doc.rounded_total || this.frm.doc.grand_total,
-			this.frm.doc.currency)]);
+			this.frm.doc.currency,0)]);
 
 		this.dialog.set_title(title);
 	}
