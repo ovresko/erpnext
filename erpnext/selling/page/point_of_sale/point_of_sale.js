@@ -1537,26 +1537,32 @@ class POSItems {
 
 	filter_items({ search_term='', item_group=this.parent_item_group,item_manufacturer='', vehicule_marque='', vehicule_modele='', vehicule_generation='', vehicule_version='' }={}) {
 		console.log("filter_items",item_manufacturer);
-		if (search_term) {
+		 
+		   if (search_term) {
 			search_term = search_term.toLowerCase();
 
 			// memoize
 			this.search_index = this.search_index || {};
-			if (this.search_index[search_term]) {
+			if (this.search_index[search_term] && item_manufacturer==''
+			   && vehicule_marque==''
+			   && vehicule_modele==''
+			   && vehicule_generation==''
+			   && vehicule_version=='') {
 				const items = this.search_index[search_term];
 				this.items = items;
 				this.render_items(items);
 				this.set_item_in_the_cart(items);
 				return;
-			}
-		} else if (item_group == this.parent_item_group && item_manufacturer==''
+				}
+			} else if (item_group == this.parent_item_group  
 			   && vehicule_marque==''
 			   && vehicule_modele==''
 			   && vehicule_generation==''
 			   && vehicule_version=='') {
-			this.items = this.all_items;
-			return this.render_items(this.all_items);
-		}
+				this.items = this.all_items;
+				return this.render_items(this.all_items);
+			}
+		 
 		console.log("filter_items2",item_manufacturer);
 		this.get_items({search_value: search_term, item_group,item_manufacturer:item_manufacturer, vehicule_marque:vehicule_marque, vehicule_modele:vehicule_modele, vehicule_generation:vehicule_generation, vehicule_version:vehicule_version })
 			.then(({ items, serial_no, batch_no, barcode }) => {
@@ -1701,11 +1707,11 @@ class POSItems {
 					item_group,
 					search_value,
 					pos_profile: this.frm.doc.pos_profile,
-					item_manufacturer,
-					vehicule_marque, 
-					vehicule_modele, 
-					vehicule_generation, 
-					vehicule_version					
+					item_manufacturer:item_manufacturer,
+					vehicule_marque:vehicule_marque, 
+					vehicule_modele:vehicule_modele, 
+					vehicule_generation:vehicule_generation, 
+					vehicule_version:vehicule_version					
 				}
 			}).then(r => {
 				// const { items, serial_no, batch_no } = r.message;
