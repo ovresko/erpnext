@@ -1535,8 +1535,8 @@ class POSItems {
 		this.clusterize.update(row_items);
 	}
 
-	filter_items({ search_term='', item_group=this.parent_item_group,item_manufacturer, vehicule_marque, vehicule_modele, vehicule_generation, vehicule_version }={}) {
-		console.log(item_manufacturer);
+	filter_items({ search_term='', item_group=this.parent_item_group,item_manufacturer=None, vehicule_marque=None, vehicule_modele=None, vehicule_generation=None, vehicule_version=None }={}) {
+		console.log("filter_items",item_manufacturer);
 		if (search_term) {
 			search_term = search_term.toLowerCase();
 
@@ -1553,8 +1553,8 @@ class POSItems {
 			this.items = this.all_items;
 			return this.render_items(this.all_items);
 		}
-		console.log(item_manufacturer);
-		this.get_items({search_value: search_term, item_group,item_manufacturer, vehicule_marque, vehicule_modele, vehicule_generation, vehicule_version })
+		console.log("filter_items2",item_manufacturer);
+		this.get_items({search_value: search_term, item_group,item_manufacturer:item_manufacturer, vehicule_marque:vehicule_marque, vehicule_modele:vehicule_modele, vehicule_generation:vehicule_generation, vehicule_version:vehicule_version })
 			.then(({ items, serial_no, batch_no, barcode }) => {
 				if (search_term && !barcode) {
 					this.search_index[search_term] = items;
@@ -1683,7 +1683,7 @@ class POSItems {
 		return template;
 	}
 
-	get_items({start = 0, page_length = 40, search_value='', item_group=this.parent_item_group,item_manufacturer, vehicule_marque, vehicule_modele, vehicule_generation, vehicule_version}={}) {
+	get_items({start = 0, page_length = 40, search_value='', item_group=this.parent_item_group,item_manufacturer=None, vehicule_marque=None, vehicule_modele=None, vehicule_generation=None, vehicule_version=None}={}) {
 		const price_list = this.frm.doc.selling_price_list;
 		return new Promise(res => {
 			frappe.call({
