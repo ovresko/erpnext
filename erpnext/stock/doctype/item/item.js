@@ -347,7 +347,7 @@ $.extend(erpnext.item, {
 		if (frm.doc.is_stock_item) {
 			frappe.require('assets/js/item-dashboard.min.js', function() {
 				var section = frm.dashboard.add_section('<h5 style="margin-top: 0px;">\
-					<a href="#stock-balance">' + __("Stock Levels") + frm.doc.is_purchase_item ? '':' (A ne pas acheter) '  + '</a></h5>');
+					<a href="#stock-balance">' + __("Stock Levels") + (frm.doc.is_purchase_item==1 ? '':' "(A ne pas acheter)" ')  + '</a></h5>');
 				erpnext.item.item_dashboard = new erpnext.stock.ItemDashboard({
 					parent: section,
 					item_code: frm.doc.name
