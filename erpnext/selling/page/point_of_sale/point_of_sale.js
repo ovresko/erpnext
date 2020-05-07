@@ -1619,6 +1619,7 @@ class POSItems {
 		const price_list_rate = format_currency(item.price_list_rate, this.currency,0);
 		const { item_code, item_name, item_image} = item;
 		const item_title =  item_name || item_code;
+		console.log(item);
 		//image-view-item
 		const template = `
 			<div class="pos-item-wrapper " data-item-code="${escape(item_code)}" style="width:100%;display:flex;flex-direction: inherit;">
@@ -1644,6 +1645,8 @@ class POSItems {
 						<a class="grey list-id" data-name="${item_code}" title="${item_title}" >
 							<span style="font-size:19px;color:blue;font-weight:600"> ${item.manufacturer_part_no} </span><br>${item_title}
 						</a>
+
+						<p>${item.valeur_p}</p>
 					</div>
 					<div style="width:160px;" >
 						<span>
