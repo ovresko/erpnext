@@ -1263,7 +1263,7 @@ class POSItems {
 		var val = this.wrapper.find('.vehicule-marque-field');
 		if(val)
 			val.empty();
-	 
+	 	const wr = this.wrapper;
 		this.vehicule_marque_field = frappe.ui.form.make_control({
 			df: {
 				fieldtype: 'Link',
@@ -1284,7 +1284,7 @@ class POSItems {
 							"callback": function(response) {
 								var sinv = response.message; 
 								if (sinv) {
-									this.wrapper.find('.vehicule-marque-name').text(sinv.marque);  
+									wr.find('.vehicule-marque-name').text(sinv.marque);  
 								}  
 							}
 							}); 
