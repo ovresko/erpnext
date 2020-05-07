@@ -1305,7 +1305,7 @@ class POSItems {
 		var filter_v = this.vehicule_marque_field.get_value();
 		var filter = {}
 		if(filter_v) filter = {"marque_vehicule": filter_v}
-		
+		const wr = this.wrapper;
 		this.vehicule_modele_field = frappe.ui.form.make_control({
 			df: {
 				fieldtype: 'Link',
@@ -1345,7 +1345,7 @@ class POSItems {
 		var filter_v = this.vehicule_modele_field.get_value();
 		var filter = {}
 		if(filter_v) filter = {"modele_vehicule": filter_v}
-		 
+		 const wr = this.wrapper;
 		this.vehicule_generation_field = frappe.ui.form.make_control({
 			df: {
 				fieldtype: 'Link',
@@ -1385,7 +1385,7 @@ class POSItems {
 		var filter_v = this.vehicule_generation_field.get_value();
 		var filter = {}
 		if(filter_v) filter = {"generation_vehicule": filter_v}
-		 
+		 const wr = this.wrapper;
 		this.vehicule_version_field = frappe.ui.form.make_control({
 			df: {
 				fieldtype: 'Link',
