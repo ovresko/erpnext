@@ -1216,11 +1216,11 @@ class POSItems {
 	make_dom() {
 		this.wrapper.html(`
 			<div class="vehicule" style="display:flex">
-			<div class="vehicule-marque-field" style="width:25%">
+			<div class="vehicule-marque-field" style="width:20%;margin-right:10px">
 				</div>
-			<div class="vehicule-modele-field" style="width:25%">
+			<div class="vehicule-modele-field" style="width:25%;margin-right:10px">
 				</div>
-			<div class="vehicule-generation-field" style="width:25%">
+			<div class="vehicule-generation-field" style="width:25%;margin-right:10px">
 				</div>
 			<div class="vehicule-version-field" style="width:25%">
 				</div>
