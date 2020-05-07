@@ -1543,7 +1543,8 @@ class POSItems {
 
 			// memoize
 			this.search_index = this.search_index || {};
-			if (this.search_index[search_term] && item_manufacturer==''
+			if (this.search_index[search_term]
+			   && item_manufacturer==''
 			   && vehicule_marque==''
 			   && vehicule_modele==''
 			   && vehicule_generation==''
@@ -1555,6 +1556,7 @@ class POSItems {
 				return;
 				}
 			} else if (item_group == this.parent_item_group  
+			   && item_manufacturer==''
 			   && vehicule_marque==''
 			   && vehicule_modele==''
 			   && vehicule_generation==''
