@@ -1217,15 +1217,27 @@ class POSItems {
 		this.wrapper.html(`
 			<div class="vehicule" style="display:flex">
 				<div class="form-group">
-					<div class="vehicule-marque-field" style="width:20%;margin-right:10px">
+					<div class="vehicule-marque-field" style="width:90% ">
 					</div><span class="vehicule-marque-name clearfix"></span>
 				</div>
-			<div class="vehicule-modele-field" style="width:25%;margin-right:10px">
+
+
+				<div class="form-group">
+					<div class="vehicule-modele-field" style="width:90% ">
+					</div><span class="vehicule-modele-name clearfix"></span>
 				</div>
-			<div class="vehicule-generation-field" style="width:25%;margin-right:10px">
+
+
+				<div class="form-group">
+					<div class="vehicule-generation-field" style="width:90% ">
+					</div><span class="vehicule-generation-name clearfix"></span>
 				</div>
-			<div class="vehicule-version-field" style="width:25%">
+
+				<div class="form-group">
+					<div class="vehicule-version-field" style="width:100% ">
+					</div><span class="vehicule-version-name clearfix"></span>
 				</div>
+ 
 			</div>
 			<div class="fields">
 				<div class="search-field">
@@ -1263,7 +1275,8 @@ class POSItems {
 					if (vehicule_marque) {
 						this.filter_items({ vehicule_marque: vehicule_marque });
 						console.log(vehicule_marque);
-					 	this.wrapper.find('.vehicule-marque-name').text(vehicule_marque);
+						let _vehicule_marque = frappe.get_doc('Marque vehicule', vehicule_marque);
+					 	this.wrapper.find('.vehicule-marque-name').text(_vehicule_marque.marque);
 					} 
 					this.make_modele();
 				}, 
