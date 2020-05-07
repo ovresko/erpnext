@@ -1552,7 +1552,7 @@ class POSItems {
 			return this.render_items(this.all_items);
 		}
 
-		this.get_items({search_value: search_term, item_group })
+		this.get_items({search_value: search_term, item_group,item_manufacturer, vehicule_marque, vehicule_modele, vehicule_generation, vehicule_version })
 			.then(({ items, serial_no, batch_no, barcode }) => {
 				if (search_term && !barcode) {
 					this.search_index[search_term] = items;
@@ -1681,7 +1681,7 @@ class POSItems {
 		return template;
 	}
 
-	get_items({start = 0, page_length = 40, search_value='', item_group=this.parent_item_group}={}) {
+	get_items({start = 0, page_length = 40, search_value='', item_group=this.parent_item_group,item_manufacturer, vehicule_marque, vehicule_modele, vehicule_generation, vehicule_version}={}) {
 		const price_list = this.frm.doc.selling_price_list;
 		return new Promise(res => {
 			frappe.call({
@@ -1693,7 +1693,12 @@ class POSItems {
 					price_list,
 					item_group,
 					search_value,
-					pos_profile: this.frm.doc.pos_profile
+					pos_profile: this.frm.doc.pos_profile,
+					item_manufacturer,
+					vehicule_marque, 
+					vehicule_modele, 
+					vehicule_generation, 
+					vehicule_version					
 				}
 			}).then(r => {
 				// const { items, serial_no, batch_no } = r.message;
