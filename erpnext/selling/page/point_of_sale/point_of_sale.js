@@ -1496,7 +1496,7 @@ class POSItems {
 		for (let i=0; i < all_items.length; i++) {
 			// wrap 4 items in a div to emulate
 			// a row for clusterize
-			if(i % 4 === 0 && i !== 0) {
+			if(i % 1 === 0 && i !== 0) {
 				curr_row += '</div>';
 				row_items.push(curr_row);
 				curr_row = row_container;
@@ -1598,7 +1598,7 @@ class POSItems {
 		const item_title = item_name || item_code;
 
 		const template = `
-			<div class="pos-item-wrapper image-view-item" data-item-code="${escape(item_code)}">
+			<div class="pos-item-wrapper image-view-item" data-item-code="${escape(item_code)}" style="width:100%">
 				<div class="image-view-header">
 					<div>
 						<a class="grey list-id" data-name="${item_code}" title="${item_title}">
