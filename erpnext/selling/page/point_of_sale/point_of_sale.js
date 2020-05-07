@@ -1620,6 +1620,11 @@ class POSItems {
 		const { item_code, item_name, item_image} = item;
 		const item_title =  item_name || item_code;
 		const critere_text = (item.critere_text || '').replace("/","<br>");
+		let critere = '';
+		if(critere_text){
+			critere = '<hr style="margin:5px 0px 5px 0px"><span style="font-size:13px;color:red">'+critere_text +'</span>';
+		 
+		}
 		 
 		//image-view-item
 		const template = `
@@ -1646,10 +1651,10 @@ class POSItems {
 						<a class="grey list-id" data-name="${item_code}" title="${item_title}" >
 							<span style="font-size:19px;color:blue;font-weight:600"> ${item.manufacturer_part_no} </span><br>${item_title}
 						</a>
-	
-						<hr><span style="font-size:13px;color:red">${critere_text}</span>
+	 					${critere}
+						 
 					</div>
-					<div style="width:160px;" >
+					<div style="width:160px;padding-left:5px" >
 						<span>
 							${item.manufacturer}
 						</span>
