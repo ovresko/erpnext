@@ -1599,7 +1599,7 @@ class POSItems {
 		//image-view-item
 		const template = `
 			<div class="pos-item-wrapper " data-item-code="${escape(item_code)}" style="width:100%;display:flex;flex-direction: inherit;">
-			<div style="width:20%">
+			<div style="width:200px">
 					<a	data-item-code="${item_code}"
 						title="${item_title}"
 					>
@@ -1616,16 +1616,18 @@ class POSItems {
 						</span>
 					</a>
 			</div>	
-			<div style="width:80%;padding:5px;display:flex" >
-					<div style="width:60%;" >
+			<div style="flex-grow:1;padding:5px;display:flex" >
+					<div  style="flex-grow:1" >
 						<a class="grey list-id" data-name="${item_code}" title="${item_title}">
 							${item_title}
 						</a>
 					</div>
-					<div style="width:40%;" >
+					<div style="width:160px;" >
 						<span>
-							${item_code}<br>${item.oem_text}
+							${item_code}
 						</span>
+						<br>
+						OEM: <span style="font-weight:800">${item.oem_text}</span>
 					</div>
 				</div>
 				
