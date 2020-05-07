@@ -1260,8 +1260,8 @@ class POSItems {
 					const vehicule_marque = this.vehicule_marque_field.get_value();
 					if (vehicule_marque) {
 						this.filter_items({ vehicule_marque: vehicule_marque });
-					 	
-					}  this.make_modele();
+					 	 this.make_modele();
+					} 
 				}, 
 			},
 			parent: this.wrapper.find('.vehicule-marque-field'),
@@ -1289,8 +1289,8 @@ class POSItems {
 					const vehicule_modele = this.vehicule_modele_field.get_value();
 					if (vehicule_modele) {
 						this.filter_items({ vehicule_modele: vehicule_modele });
-						
-					}this.make_generation();
+						this.make_generation();
+					}
 				}, 
 			},
 			parent: this.wrapper.find('.vehicule-modele-field'),
@@ -1317,8 +1317,8 @@ class POSItems {
 					const vehicule_generation = this.vehicule_generation_field.get_value();
 					if (vehicule_generation) {
 						this.filter_items({ vehicule_generation: vehicule_generation });
-						
-					}this.make_version();
+						this.make_version();
+					}
 				}, 
 			},
 			parent: this.wrapper.find('.vehicule-generation-field'),
