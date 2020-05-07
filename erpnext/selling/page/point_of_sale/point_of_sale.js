@@ -1260,8 +1260,9 @@ class POSItems {
 					const vehicule_marque = this.vehicule_marque_field.get_value();
 					if (vehicule_marque) {
 						this.filter_items({ vehicule_marque: vehicule_marque });
-					 	 this.make_modele();
+					 	 
 					} 
+					this.make_modele();
 				}, 
 			},
 			parent: this.wrapper.find('.vehicule-marque-field'),
@@ -1273,24 +1274,24 @@ class POSItems {
 	make_modele(){
 		const me = this;
 		 var val = this.wrapper.find('.vehicule-modele-field');
-		if(val)
-			val.empty();
-		 
+		if(val) val.empty();
+		var filter_v = this.vehicule_marque_field.get_value();
+		var filter = {}
+		if(filter_v) filter = {"marque_vehicule": filter_v}
+		
 		this.vehicule_modele_field = frappe.ui.form.make_control({
 			df: {
 				fieldtype: 'Link',
 				label: 'Modele de vehicule',
 				options: 'Modele de vehicule',
 				//default: me.parent_item_group,
-				filters: {
-					"marque_vehicule": this.vehicule_marque_field.get_value()
-				},
+				filters: filter,
 				onchange: () => {
 					const vehicule_modele = this.vehicule_modele_field.get_value();
 					if (vehicule_modele) {
 						this.filter_items({ vehicule_modele: vehicule_modele });
-						this.make_generation();
-					}
+						
+					}this.make_generation();
 				}, 
 			},
 			parent: this.wrapper.find('.vehicule-modele-field'),
@@ -1301,8 +1302,10 @@ class POSItems {
 	make_generation(){
 		const me = this;
 		 var val = this.wrapper.find('.vehicule-generation-field');
-		if(val)
-			val.empty();
+		if(val) val.empty();
+		var filter_v = this.vehicule_modele_field.get_value();
+		var filter = {}
+		if(filter_v) filter = {"modele_vehicule": filter_v}
 		 
 		this.vehicule_generation_field = frappe.ui.form.make_control({
 			df: {
@@ -1310,15 +1313,12 @@ class POSItems {
 				label: 'Generation vehicule',
 				options: 'Generation vehicule',
 				//default: me.parent_item_group,
-				filters: {
-					"modele_vehicule": this.vehicule_modele_field.get_value()
-				},
+				filters: filter,
 				onchange: () => {
 					const vehicule_generation = this.vehicule_generation_field.get_value();
 					if (vehicule_generation) {
-						this.filter_items({ vehicule_generation: vehicule_generation });
-						this.make_version();
-					}
+						this.filter_items({ vehicule_generation: vehicule_generation }); 
+					}this.make_version();
 				}, 
 			},
 			parent: this.wrapper.find('.vehicule-generation-field'),
@@ -1329,8 +1329,10 @@ class POSItems {
 	make_version(){
 		const me = this;
 		 var val = this.wrapper.find('.vehicule-version-field');
-		if(val)
-			val.empty();
+		if(val) val.empty();
+		var filter_v = this.vehicule_generation_field.get_value();
+		var filter = {}
+		if(filter_v) filter = {"generation_vehicule": filter_v}
 		 
 		this.vehicule_version_field = frappe.ui.form.make_control({
 			df: {
@@ -1338,9 +1340,7 @@ class POSItems {
 				label: 'Version vehicule',
 				options: 'Version vehicule',
 				//default: me.parent_item_group,
-				filters: {
-					"generation_vehicule": this.vehicule_generation_field.get_value()
-				},
+				filters: filter,
 				onchange: () => {
 					const vehicule_version = this.vehicule_version_field.get_value();
 					if (vehicule_version) {
