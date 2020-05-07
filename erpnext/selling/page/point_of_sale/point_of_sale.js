@@ -1628,6 +1628,11 @@ class POSItems {
 						</span>
 						<br>
 						OEM: <span style="font-weight:800">${item.oem_text}</span>
+						<br>
+						<button data-label="open" class="btn btn-default btn-xs btn-open" style="margin-left: 10px;"><i class="fa fa-eye"></i>
+						</button>
+						<button data-label="related" class="btn btn-default btn-xs btn-related" style="margin-left: 10px;"><i class="fa fa-link"></i>
+						</button>
 					</div>
 				</div>
 				
