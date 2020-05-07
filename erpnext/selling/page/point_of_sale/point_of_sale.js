@@ -1257,7 +1257,7 @@ class POSItems {
 					if (vehicule_marque) {
 						this.filter_items({ vehicule_marque: vehicule_marque });
 					 	
-					}make_modele();
+					}  this.make_modele();
 				}, 
 			},
 			parent: this.wrapper.find('.vehicule-marque-field'),
@@ -1283,7 +1283,7 @@ class POSItems {
 					if (vehicule_modele) {
 						this.filter_items({ vehicule_modele: vehicule_modele });
 						
-					}make_generation();
+					}this.make_generation();
 				}, 
 			},
 			parent: this.wrapper.find('.vehicule-modele-field'),
@@ -1307,7 +1307,7 @@ class POSItems {
 					if (vehicule_generation) {
 						this.filter_items({ vehicule_generation: vehicule_generation });
 						
-					}make_version();
+					}this.make_version();
 				}, 
 			},
 			parent: this.wrapper.find('.vehicule-generation-field'),
@@ -1342,10 +1342,10 @@ class POSItems {
 		// Search field
 		const me = this;
 		
-		make_marque();
-		make_modele();
-		make_generation();
-		make_version();
+		this.make_marque();
+		this.make_modele();
+		this.make_generation();
+		this.make_version();
 		  
 		
 		this.search_field = frappe.ui.form.make_control({
