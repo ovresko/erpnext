@@ -127,8 +127,8 @@ class Item(WebsiteGenerator):
 			if critere.important:
 				cr.append("{0}: {1}".format(critere.parametre, critere.valeur_p or critere.valeur)
 		for critere in self.criteres_piece_variante:
-			if critere.important:
-				cr.append("{0}: {1}".format(critere.parametre, critere.valeur_p or critere.valeur)
+					  if critere.important:
+					  	cr.append("{0}: {1}".format(critere.parametre, critere.valeur_p or critere.valeur)
 		if cr:
 			self.critere_text = ' / '.join(str(x) for x in cr)
 		#critere_text
