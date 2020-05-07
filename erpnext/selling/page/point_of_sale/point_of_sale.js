@@ -1595,7 +1595,7 @@ class POSItems {
 	get_item_html(item) {
 		const price_list_rate = format_currency(item.price_list_rate, this.currency);
 		const { item_code, item_name, item_image} = item;
-		const item_title = item.titre_article || item_name || item_code;
+		const item_title =  item_name || item_code;
 		//image-view-item
 		const template = `
 			<div class="pos-item-wrapper " data-item-code="${escape(item_code)}" style="width:100%;display:flex;flex-direction: inherit;">
