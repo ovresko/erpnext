@@ -37,6 +37,7 @@ def get_items(start, page_length, price_list, item_group, search_value="", pos_p
 		
 	if item_manufacturer:
 		condition += get_item_manufacturer(item_manufacturer)
+		frappe.msgprint(condition)
 
 	lft, rgt = frappe.db.get_value('Item Group', item_group, ['lft', 'rgt'])
 	# locate function is used to sort by closest match from the beginning of the value
