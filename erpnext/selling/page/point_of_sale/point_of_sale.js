@@ -1624,7 +1624,7 @@ class POSItems {
 					</div>
 					<div style="width:40%;" >
 						<span>
-							${item_code}
+							${item_code}<br>${item.oem_text}
 						</span>
 					</div>
 				</div>
