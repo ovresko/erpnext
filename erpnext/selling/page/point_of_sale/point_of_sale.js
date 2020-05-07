@@ -1248,7 +1248,7 @@ class POSItems {
 		const me = this; 
 		var val = this.wrapper.find('.vehicule-marque-field');
 		if(val)
-			val.remove();
+			val.empty();
 	 
 		this.vehicule_marque_field = frappe.ui.form.make_control({
 			df: {
@@ -1274,7 +1274,7 @@ class POSItems {
 		const me = this;
 		 var val = this.wrapper.find('.vehicule-modele-field');
 		if(val)
-			val.remove();
+			val.empty();
 		 
 		this.vehicule_modele_field = frappe.ui.form.make_control({
 			df: {
@@ -1302,7 +1302,7 @@ class POSItems {
 		const me = this;
 		 var val = this.wrapper.find('.vehicule-generation-field');
 		if(val)
-			val.remove();
+			val.empty();
 		 
 		this.vehicule_generation_field = frappe.ui.form.make_control({
 			df: {
@@ -1330,7 +1330,7 @@ class POSItems {
 		const me = this;
 		 var val = this.wrapper.find('.vehicule-version-field');
 		if(val)
-			val.remove();
+			val.empty();
 		 
 		this.vehicule_version_field = frappe.ui.form.make_control({
 			df: {
@@ -1357,7 +1357,7 @@ class POSItems {
 		// Search field
 		const me = this;
 		
-		this.make_marque();
+		 this.make_marque(); 
 		this.make_modele();
 		this.make_generation();
 		this.make_version();
