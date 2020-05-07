@@ -1217,6 +1217,7 @@ class POSItems {
 		this.wrapper.html(`
 			<div class="vehicule" style="display:flex">
 			<div class="vehicule-marque-field" style="width:20%;margin-right:10px">
+			<span class="vehicule-marque-name"></span>
 				</div>
 			<div class="vehicule-modele-field" style="width:25%;margin-right:10px">
 				</div>
@@ -1260,7 +1261,8 @@ class POSItems {
 					const vehicule_marque = this.vehicule_marque_field.get_value();
 					if (vehicule_marque) {
 						this.filter_items({ vehicule_marque: vehicule_marque });
-					 	 
+						console.log(vehicule_marque);
+					 	this.wrapper.find('.vehicule-marque-name').text(vehicule_marque);
 					} 
 					this.make_modele();
 				}, 
