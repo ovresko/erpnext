@@ -1618,8 +1618,8 @@ class POSItems {
 			</div>	
 			<div style="flex-grow:1;padding:5px;display:flex" >
 					<div  style="flex-grow:1" >
-						<a class="grey list-id" data-name="${item_code}" title="${item_title}" style="font-size:17px;font-weight:700">
-							<span style="color:blue"> ${item.manufacturer_part_no} </span><br>${item_title}
+						<a class="grey list-id" data-name="${item_code}" title="${item_title}" >
+							<span style="font-size:19px;color:blue;font-weight:600"> ${item.manufacturer_part_no} </span><br>${item_title}
 						</a>
 					</div>
 					<div style="width:160px;" >
