@@ -1275,7 +1275,7 @@ class POSItems {
 					if (vehicule_marque) {
 						this.filter_items({ vehicule_marque: vehicule_marque });
 						console.log(vehicule_marque);
-						let _vehicule_marque = frappe.get_doc('Marque vehicule', vehicule_marque);
+						let _vehicule_marque = frappe.model.get_doc('Marque vehicule', vehicule_marque);
 					 	this.wrapper.find('.vehicule-marque-name').text(_vehicule_marque.marque);
 					} 
 					this.make_modele();
