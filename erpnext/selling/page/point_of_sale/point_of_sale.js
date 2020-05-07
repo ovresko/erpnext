@@ -1218,6 +1218,12 @@ class POSItems {
 			<div class="vehicule">
 			<div class="vehicule-marque-field">
 				</div>
+			<div class="vehicule-modele-field">
+				</div>
+			<div class="vehicule-generation-field">
+				</div>
+			<div class="vehicule-version-field">
+				</div>
 			</div>
 			<div class="fields">
 				<div class="search-field">
@@ -1258,6 +1264,67 @@ class POSItems {
 			parent: this.wrapper.find('.vehicule-marque-field'),
 			render_input: true
 		});
+		
+		this.vehicule_modele_field = frappe.ui.form.make_control({
+			df: {
+				fieldtype: 'Link',
+				label: 'Modele de vehicule',
+				options: 'Modele de vehicule',
+				//default: me.parent_item_group,
+				filters: {
+					"marque_vehicule": this.vehicule_marque_field.get_value()
+				},
+				onchange: () => {
+					const vehicule_modele = this.vehicule_modele_field.get_value();
+					if (vehicule_modele) {
+						this.filter_items({ vehicule_modele: vehicule_modele });
+					}
+				}, 
+			},
+			parent: this.wrapper.find('.vehicule-modele-field'),
+			render_input: true
+		});
+		
+		this.vehicule_generation_field = frappe.ui.form.make_control({
+			df: {
+				fieldtype: 'Link',
+				label: 'Generation vehicule',
+				options: 'Generation vehicule',
+				//default: me.parent_item_group,
+				filters: {
+					"modele_vehicule": this.vehicule_modele_field.get_value()
+				},
+				onchange: () => {
+					const vehicule_generation = this.vehicule_generation_field.get_value();
+					if (vehicule_generation) {
+						this.filter_items({ vehicule_generation: vehicule_generation });
+					}
+				}, 
+			},
+			parent: this.wrapper.find('.vehicule-generation-field'),
+			render_input: true
+		});
+		
+		this.vehicule_version_field = frappe.ui.form.make_control({
+			df: {
+				fieldtype: 'Link',
+				label: 'Version vehicule',
+				options: 'Version vehicule',
+				//default: me.parent_item_group,
+				filters: {
+					"generation_vehicule": this.vehicule_generation_field.get_value()
+				},
+				onchange: () => {
+					const vehicule_version = this.vehicule_version_field.get_value();
+					if (vehicule_version) {
+						this.filter_items({ vehicule_version: vehicule_version });
+					}
+				}, 
+			},
+			parent: this.wrapper.find('.vehicule-generation-field'),
+			render_input: true
+		});
+		
 		
 		this.search_field = frappe.ui.form.make_control({
 			df: {
@@ -1342,7 +1409,7 @@ class POSItems {
 		this.clusterize.update(row_items);
 	}
 
-	filter_items({ search_term='', item_group=this.parent_item_group, vehicule_marque }={}) {
+	filter_items({ search_term='', item_group=this.parent_item_group, vehicule_marque, vehicule_modele, vehicule_generation, vehicule_version }={}) {
 		if (search_term) {
 			search_term = search_term.toLowerCase();
 
