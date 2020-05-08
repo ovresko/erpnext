@@ -41,6 +41,16 @@ def get_items(start, page_length, price_list, item_group, search_value="", pos_p
 	if vehicule_version:
 		condition += get_item_version(vehicule_version)
 
+	if vehicule_generation:
+		condition += get_item_generation(vehicule_generation)
+	
+	if vehicule_modele:
+		condition += get_item_modele(vehicule_modele)
+	
+	if vehicule_marque:
+		condition += get_item_marque(vehicule_marque)
+	
+
 	lft, rgt = frappe.db.get_value('Item Group', item_group, ['lft', 'rgt'])
 	# locate function is used to sort by closest match from the beginning of the value
 
@@ -152,6 +162,19 @@ def get_item_manufacturer(item_manufacturer):
 def get_item_version(vehicule_version):
 	cond = """ and i.name in (select parent from `tabVersion vehicule item` where version_vehicule = '%s')""" % (vehicule_version)
 	return cond
+
+def get_item_generation(vehicule_generation):
+	cond = """ and i.name in (select parent from `tabVersion vehicule item` where generation_vehicule = '%s')""" % (vehicule_generation)
+	return cond
+
+def get_item_modele(vehicule_modele):
+	cond = """ and i.name in (select parent from `tabVersion vehicule item` where modele_vehicule = '%s')""" % (vehicule_modele)
+	return cond
+
+def get_item_marque(vehicule_marque):
+	cond = """ and i.name in (select parent from `tabVersion vehicule item` where code_marque = '%s')""" % (vehicule_marque)
+	return cond
+	
 	
 def get_item_group_condition(pos_profile):
 	cond = "and 1=1"
