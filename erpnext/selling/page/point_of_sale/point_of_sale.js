@@ -1662,10 +1662,11 @@ class POSItems {
 			event.stopPropagation();
 			const $item = $(this);
 			const item_code = unescape($item.attr('data-item-code'));
-			const modele = item_code.substring(0,10);
+			const modele = item_code.substring(0,11);
 			console.log("modele",modele);
 			me.item_modele  = modele;
 			me.frm.refresh_field('item_modele');
+			me.item_modele_field.set_value(modele);
 			//me.make_item_modele();
 			me.filter_items();
 			
