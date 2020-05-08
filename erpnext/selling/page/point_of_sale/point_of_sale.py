@@ -10,7 +10,7 @@ from erpnext.accounts.doctype.pos_profile.pos_profile import get_item_groups
 from six import string_types
 
 @frappe.whitelist()
-def get_items(start, page_length, price_list, item_group, search_value="", pos_profile=None,item_manufacturer=None, vehicule_marque=None, vehicule_modele=None, vehicule_generation=None, vehicule_version=None):
+def get_items(start, page_length, price_list, item_group, search_value="", pos_profile=None,item_manufacturer=None,item_modele=None, vehicule_marque=None, vehicule_modele=None, vehicule_generation=None, vehicule_version=None):
 	data = dict()
 	warehouse = ""
 	display_items_in_stock = 0
@@ -34,7 +34,9 @@ def get_items(start, page_length, price_list, item_group, search_value="", pos_p
 
 	if pos_profile:
 		condition += get_item_group_condition(pos_profile)
-	
+	if item_modele:
+		condition += get_item_modele(item_modele)
+
 	if item_manufacturer:
 		condition += get_item_manufacturer(item_manufacturer)
 
@@ -157,6 +159,9 @@ def get_conditions(item_code, serial_no, batch_no, barcode):
 
 	return '%%%s%%'%(frappe.db.escape(item_code)), condition
 
+def get_item_modele(item_modele):
+	cond = """ and i.variant_of = '%s'""" % (item_modele)
+	return cond
 def get_item_manufacturer(item_manufacturer):
 	cond = """ and i.manufacturer = '%s'""" % (item_manufacturer)
 	return cond
