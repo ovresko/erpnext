@@ -1682,12 +1682,21 @@ class POSItems {
 						var item = response.message; 
 						if (item) {
 							me.infobox = frappe.msgprint(
-								`
-									<h3>Code d'article: ${item.item_code}</h3>
-								<table>
+								`<table class="table table-bordered table-condensed">
 									<tr> 
 										<td>
-											OEM
+											<label>${item.item_code}</label>
+										</td>
+										<td>
+											<label>${item.manufacturer_part_no}</label>
+										</td>
+									</tr> 
+								</table>
+ 
+								<table class="table table-bordered table-condensed">
+									<tr> 
+										<td>
+											<label>OEM</label>
 										</td>
 										<td>
 											${item.oem_text}
@@ -1697,7 +1706,7 @@ class POSItems {
 
 									<tr> 
 										<td>
-											Fabricant
+											<label>Fabricant</label>
 										</td>
 										<td>
 											${item.manufacturer}
@@ -1708,7 +1717,7 @@ class POSItems {
 									</tr>
 									<tr> 
 										<td>
-											Critére
+											<label>Critére</label>
 										</td>
 										<td>
 											${item.critere_text}
