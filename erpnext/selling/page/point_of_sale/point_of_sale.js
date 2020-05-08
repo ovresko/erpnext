@@ -1237,6 +1237,11 @@ class POSItems {
 					<div class="vehicule-version-field" style="width:100% ">
 					</div><span class="vehicule-version-name clearfix"></span>
 				</div>
+
+				<div class="form-group">
+					<div class="item-modele-field" style="width:100% ">
+					</div> 
+				</div>
  
 			</div>
 			<div class="fields">
@@ -1258,6 +1263,30 @@ class POSItems {
 				</div>
 			</div>
 		`);
+	}
+	
+	make_item_modele(){ 
+		const me = this; 
+		var val = this.wrapper.find('.item-modele-field');
+		if(val)
+			val.empty();
+	 	const wr = this.wrapper;
+		this.item_modele_field = frappe.ui.form.make_control({
+			df: {
+				fieldtype: 'Link',
+				label: 'Modele Piece',
+				options: 'Item',
+				filters: {"has_variants": 1},
+				default: this.item_modele,
+				onchange: () => {
+					this.item_modele = this.item_modele_field.get_value();
+					this.filter_items();
+				}, 
+			},
+			parent: this.wrapper.find('.item-modele-field'),
+			render_input: true
+		});
+		
 	}
 	
 	make_marque(){ 
@@ -1442,7 +1471,7 @@ class POSItems {
 		this.make_modele();
 		this.make_generation();
 		this.make_version();
-		  
+		  this.make_item_modele();
 		
 		this.search_field = frappe.ui.form.make_control({
 			df: {
@@ -1561,6 +1590,7 @@ class POSItems {
 			   && !this.vehicule_marque
 			   && !this.vehicule_modele
 			   && !this.vehicule_generation
+			   && !this.item_modele
 			   && !this.vehicule_version) {
 				const items = this.search_index[search_term];
 				this.items = items;
@@ -1572,6 +1602,7 @@ class POSItems {
 			   && !this.item_manufacturer 
 			   && !this.vehicule_marque
 			   && !this.vehicule_modele
+			   && !this.item_modele
 			   && !this.vehicule_generation
 			   && !this.vehicule_version) {
 				this.items = this.all_items;
@@ -1625,6 +1656,16 @@ class POSItems {
 			const $item = $(this);
 			const item_code = unescape($item.attr('data-item-code'));
 			window.open('#Form/Item/'+item_code, '_blank'); 
+		});
+		this.wrapper.on('click', '.btn-relatd', function(event) {
+			event.stopPropagation();
+			const $item = $(this);
+			const item_code = unescape($item.attr('data-item-code'));
+			const modele = item_code.substring(0,10);
+			this.item_modele  = modele;
+			this.make_item_modele();
+			this.filter_items();
+			
 		});
 		this.wrapper.on('click', '.pos-item-wrapper', function() {
 			const $item = $(this);
@@ -1736,6 +1777,7 @@ class POSItems {
 					item_manufacturer:this.item_manufacturer ,
 					vehicule_marque:this.vehicule_marque, 
 					vehicule_modele:this.vehicule_modele, 
+					item_modele:this.item_modele,
 					vehicule_generation:this.vehicule_generation, 
 					vehicule_version:this.vehicule_version					
 				}
