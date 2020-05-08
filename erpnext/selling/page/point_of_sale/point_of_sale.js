@@ -1292,11 +1292,12 @@ class POSItems {
 	
 	make_marque(){ 
 		const me = this; 
-		wr.find('.vehicule-marque-name').text('');  	
+		
 		var val = this.wrapper.find('.vehicule-marque-field');
 		if(val)
 			val.empty();
 	 	const wr = this.wrapper;
+		wr.find('.vehicule-marque-name').text('');  	
 		this.vehicule_marque_field = frappe.ui.form.make_control({
 			df: {
 				fieldtype: 'Link',
@@ -1336,13 +1337,14 @@ class POSItems {
 	
 	make_modele(){
 		const me = this;
-		wr.find('.vehicule-modele-name').text('');  
+		
 		 var val = this.wrapper.find('.vehicule-modele-field');
 		if(val) val.empty();
 		var filter_v = this.vehicule_marque_field.get_value();
 		var filter = {}
 		if(filter_v) filter = {"marque_vehicule": filter_v}
 		const wr = this.wrapper;
+		wr.find('.vehicule-modele-name').text('');  
 		this.vehicule_modele_field = frappe.ui.form.make_control({
 			df: {
 				fieldtype: 'Link',
@@ -1382,13 +1384,14 @@ class POSItems {
 
 	make_generation(){
 		const me = this;
-		wr.find('.vehicule-generation-name').text('');  
+		
 		 var val = this.wrapper.find('.vehicule-generation-field');
 		if(val) val.empty();
 		var filter_v = this.vehicule_modele_field.get_value();
 		var filter = {}
 		if(filter_v) filter = {"modele_vehicule": filter_v}
 		 const wr = this.wrapper;
+		wr.find('.vehicule-generation-name').text('');  
 		this.vehicule_generation_field = frappe.ui.form.make_control({
 			df: {
 				fieldtype: 'Link',
@@ -1426,13 +1429,14 @@ class POSItems {
 	
 	make_version(){
 		const me = this;
-		wr.find('.vehicule-version-name').text('');  
+		
 		 var val = this.wrapper.find('.vehicule-version-field');
 		if(val) val.empty();
 		var filter_v = this.vehicule_generation_field.get_value();
 		var filter = {}
 		if(filter_v) filter = {"generation_vehicule": filter_v}
 		 const wr = this.wrapper;
+		wr.find('.vehicule-version-name').text('');  
 		this.vehicule_version_field = frappe.ui.form.make_control({
 			df: {
 				fieldtype: 'Link',
