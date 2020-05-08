@@ -1625,6 +1625,11 @@ class POSItems {
 			const item_code = unescape($item.attr('data-item-code'));
 			me.events.update_cart(item_code, 'qty', '+1');
 		});
+		this.wrapper.on('click', '.btn-open', function() {
+			const $item = $(this);
+			const item_code = unescape($item.attr('data-item-code'));
+			window.open('#Form/Item/'+item_code, '_blank'); 
+		});
 	}
 
 	get(item_code) {
@@ -1693,11 +1698,11 @@ class POSItems {
 						<br>
 						OEM: <span style="font-weight:800">${item.oem_text}</span>
 						<br>
-						<button data-label="open" class="btn btn-default btn-xs btn-open" style="margin-right: 5px;"><i class="fa fa-eye"></i>
+						<button data-item-code="${item_code}" data-label="open" class="btn btn-default btn-xs btn-open" style="margin-right: 5px;"><i class="fa fa-eye"></i>
 						</button>
-						<button data-label="related" class="btn btn-default btn-xs btn-related" style="margin-right: 5px;"><i class="fa fa-link"></i>
+						<button data-item-code="${item_code}" data-label="related" class="btn btn-default btn-xs btn-related" style="margin-right: 5px;"><i class="fa fa-link"></i>
 						</button>
-						<button data-label="information" class="btn btn-default btn-xs btn-information" style="margin-right: 5px;"><i class="fa fa-question"></i>
+						<button data-item-code="${item_code}" data-label="information" class="btn btn-default btn-xs btn-information" style="margin-right: 5px;"><i class="fa fa-question"></i>
 						</button>
 					</div>
 				</div>
