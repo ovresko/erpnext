@@ -1666,7 +1666,7 @@ class POSItems {
 			console.log("modele",modele);
 			me.item_modele  = modele;
 			me.frm.refresh_field('item_modele');
-			me.make_item_modele();
+			//me.make_item_modele();
 			me.filter_items();
 			
 		});
