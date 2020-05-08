@@ -1339,7 +1339,6 @@ class POSItems {
 					wr.find('.vehicule-modele-name').text('');  	
 					}
 					this.filter_items();
-					this.make_marque();
 					this.make_generation();
 					this.make_version();
 				}, 
@@ -1384,8 +1383,6 @@ class POSItems {
 					wr.find('.vehicule-generation-name').text('');  	
 					}
 					this.filter_items(); 
-					this.make_marque();
-					this.make_modele();
 					this.make_version();
 				}, 
 			},
@@ -1430,9 +1427,6 @@ class POSItems {
 					wr.find('.vehicule-version-name').text('');  	
 					}
 					this.filter_items();
-					this.make_marque();
-					this.make_modele();
-					this.make_generation();
 				}, 
 			},
 			parent: this.wrapper.find('.vehicule-version-field'),
