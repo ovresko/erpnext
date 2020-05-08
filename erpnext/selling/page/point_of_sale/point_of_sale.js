@@ -1657,7 +1657,7 @@ class POSItems {
 			const item_code = unescape($item.attr('data-item-code'));
 			window.open('#Form/Item/'+item_code, '_blank'); 
 		});
-		this.wrapper.on('click', '.btn-relatd', function(event) {
+		this.wrapper.on('click', '.btn-related', function(event) {
 			event.stopPropagation();
 			const $item = $(this);
 			const item_code = unescape($item.attr('data-item-code'));
