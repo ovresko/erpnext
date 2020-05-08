@@ -1711,6 +1711,7 @@ class POSItems {
 		this.item_group = this.parent_item_group;	
 		}
 		console.log("get_items",this.item_manufacturer );
+		const item_group = this.item_group ;
 		return new Promise(res => {
 			frappe.call({
 				method: "erpnext.selling.page.point_of_sale.point_of_sale.get_items",
@@ -1719,7 +1720,7 @@ class POSItems {
 					start,
 					page_length,
 					price_list,
-					this.item_group,
+					item_group,
 					search_value,
 					pos_profile: this.frm.doc.pos_profile,
 					item_manufacturer:this.item_manufacturer ,
