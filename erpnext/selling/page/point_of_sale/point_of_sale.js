@@ -626,11 +626,11 @@ erpnext.pos.PointOfSale = class PointOfSale {
 		if(this.frm.doc.items.length == 0){
 			this.page.clear_secondary_action();
 		}
-
-		if (this.frm.doc.docstatus == 1) {
-			this.page.set_primary_action(__("New"), () => {
+		this.page.set_primary_action(__("New"), () => {
 				this.make_new_invoice();
-			});
+		});
+		if (this.frm.doc.docstatus == 1) {
+			
 			this.page.add_menu_item(__("Email"), () => {
 				this.frm.email_doc();
 			});
