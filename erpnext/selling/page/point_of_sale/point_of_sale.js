@@ -1671,7 +1671,7 @@ class POSItems {
 			 event.stopPropagation();
 			const $item = $(this);
 			const item_code = unescape($item.attr('data-item-code'));
-			if (!this.frm.msgbox) {
+			if (!me.infobox) {
 				frappe.call({
 					"method": "frappe.client.get",
 					"args": {
@@ -1681,7 +1681,7 @@ class POSItems {
 					"callback": function(response) {
 						var item = response.message; 
 						if (item) {
-							let info = frappe.msgprint(
+							me.infobox = frappe.msgprint(
 								`
 									<h5>${item.item_code}</h5>
 								`
