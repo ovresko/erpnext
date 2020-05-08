@@ -1460,11 +1460,9 @@ class POSItems {
 				options: 'Manufacturer',
 				//default: me.parent_item_group,
 				onchange: () => {
-					const item_manufacturer = this.item_manufacturer_field.get_value();
-					if (item_manufacturer) {
-						console.log(item_manufacturer);
-						this.filter_items({ item_manufacturer: item_manufacturer });
-					}
+					this.item_manufacturer = this.item_manufacturer_field.get_value();
+					this.filter_items();
+					 
 				},
 				 
 			},
@@ -1535,8 +1533,8 @@ class POSItems {
 		this.clusterize.update(row_items);
 	}
 
-	filter_items({ search_term='', item_group=this.parent_item_group,item_manufacturer='', vehicule_marque='', vehicule_modele='', vehicule_generation='', vehicule_version='' }={}) {
-		console.log("filter_items",item_manufacturer);
+	filter_items({ search_term='', item_group=this.parent_item_group }={}) {
+		console.log("filter_items",this.item_manufacturer);
 		 
 		   if (search_term) {
 			search_term = search_term.toLowerCase();
@@ -1544,11 +1542,11 @@ class POSItems {
 			// memoize
 			this.search_index = this.search_index || {};
 			if (this.search_index[search_term]
-			   && item_manufacturer==''
-			   && vehicule_marque==''
-			   && vehicule_modele==''
-			   && vehicule_generation==''
-			   && vehicule_version=='') {
+			   && !this.item_manufacturer 
+			   && !this.vehicule_marque
+			   && !this.vehicule_modele
+			   && !this.vehicule_generation
+			   && !this.vehicule_version) {
 				const items = this.search_index[search_term];
 				this.items = items;
 				this.render_items(items);
@@ -1556,17 +1554,17 @@ class POSItems {
 				return;
 				}
 			} else if (item_group == this.parent_item_group  
-			   && item_manufacturer==''
-			   && vehicule_marque==''
-			   && vehicule_modele==''
-			   && vehicule_generation==''
-			   && vehicule_version=='') {
+			   && !this.item_manufacturer 
+			   && !this.vehicule_marque
+			   && !this.vehicule_modele
+			   && !this.vehicule_generation
+			   && !this.vehicule_version) {
 				this.items = this.all_items;
 				return this.render_items(this.all_items);
 			}
 		 
-		console.log("filter_items2",item_manufacturer);
-		this.get_items({search_value: search_term, item_group,item_manufacturer:item_manufacturer, vehicule_marque:vehicule_marque, vehicule_modele:vehicule_modele, vehicule_generation:vehicule_generation, vehicule_version:vehicule_version })
+		console.log("filter_items2",this.item_manufacturer);
+		this.get_items({search_value: search_term, item_group})
 			.then(({ items, serial_no, batch_no, barcode }) => {
 				if (search_term && !barcode) {
 					this.search_index[search_term] = items;
@@ -1695,9 +1693,9 @@ class POSItems {
 		return template;
 	}
 
-	get_items({start = 0, page_length = 40, search_value='', item_group=this.parent_item_group,item_manufacturer='', vehicule_marque='', vehicule_modele='', vehicule_generation='', vehicule_version=''}={}) {
+	get_items({start = 0, page_length = 40, search_value='', item_group=this.parent_item_group}={}) {
 		const price_list = this.frm.doc.selling_price_list;
-		console.log("get_items",item_manufacturer);
+		console.log("get_items",this.item_manufacturer );
 		return new Promise(res => {
 			frappe.call({
 				method: "erpnext.selling.page.point_of_sale.point_of_sale.get_items",
@@ -1709,11 +1707,11 @@ class POSItems {
 					item_group,
 					search_value,
 					pos_profile: this.frm.doc.pos_profile,
-					item_manufacturer:item_manufacturer,
-					vehicule_marque:vehicule_marque, 
-					vehicule_modele:vehicule_modele, 
-					vehicule_generation:vehicule_generation, 
-					vehicule_version:vehicule_version					
+					item_manufacturer:this.item_manufacturer ,
+					vehicule_marque:this.vehicule_marque, 
+					vehicule_modele:this.vehicule_modele, 
+					vehicule_generation:this.vehicule_generation, 
+					vehicule_version:this.vehicule_version					
 				}
 			}).then(r => {
 				// const { items, serial_no, batch_no } = r.message;
