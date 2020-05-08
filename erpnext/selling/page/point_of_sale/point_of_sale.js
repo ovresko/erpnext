@@ -1664,7 +1664,7 @@ class POSItems {
 			 event.stopPropagation();
 			const $item = $(this);
 			const item_code = unescape($item.attr('data-item-code'));
-			window.open('#Form/Item/'+item_code, '_blank'); 
+			window.open('#Form/Item/'+item_code, '_blank', 'toolbar=0,location=0,menubar=0'); 
 		});
 		
 		this.wrapper.on('click', '.btn-information', function(event) {
@@ -1683,7 +1683,46 @@ class POSItems {
 						if (item) {
 							me.infobox = frappe.msgprint(
 								`
-									<h5>${item.item_code}</h5>
+									<h3>Code d'article: ${item.item_code}</h3>
+								<table>
+									<tr> 
+										<td>
+											OEM
+										</td>
+										<td>
+											${item.oem_text}
+										</td>
+										<td></td>
+									</tr>
+
+									<tr> 
+										<td>
+											Fabricant
+										</td>
+										<td>
+											${item.manufacturer}
+										</td>
+										<td>
+											<img src="${item.fabricant_logo}">
+										</td>
+									</tr>
+									<tr> 
+										<td>
+											Critére
+										</td>
+										<td>
+											${item.critere_text}
+										</td>
+										<td>
+											
+										</td>
+									</tr>
+								</table>
+									
+
+<hr>
+									<p>${item.nom_generique_long} </p>
+									
 								`
 								);
 						}  
