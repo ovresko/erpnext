@@ -57,9 +57,7 @@ def get_items(start, page_length, price_list, item_group, search_value="", pos_p
 
 	if display_items_in_stock == 0:
 		res = frappe.db.sql("""select i.name as item_code, i.item_name, i.image as item_image, i.idx as idx,
-			i.is_stock_item, item_det.price_list_rate, item_det.currency, i.oem_text,i.titre_article,i.manufacturer,i.manufacturer_part_no,i.fabricant_logo,i.critere_text, MATCH(i.name,i.item_name,i.nom_generique_long,i.manufacturer_part_no) as relevance from `tabItem` i 
-			LEFT JOIN
-				(select item_code, price_list_rate, currency from
+			i.is_stock_item, item_det.price_list_rate, item_det.currency, i.oem_text,i.titre_article,i.manufacturer,i.manufacturer_part_no,i.fabricant_logo,i.critere_text, MATCH(i.name,i.item_name,i.nom_generique_long,i.manufacturer_part_no) as relevance from `tabItem` i LEFT JOIN (select item_code, price_list_rate, currency from
 					`tabItem Price`	where price_list=%(price_list)s) item_det
 			ON
 				(item_det.item_code=i.name or item_det.item_code=i.variant_of)
@@ -79,8 +77,7 @@ def get_items(start, page_length, price_list, item_group, search_value="", pos_p
 
 	elif display_items_in_stock == 1:
 		query = """select i.name as item_code, i.item_name, i.image as item_image, i.idx as idx,
-				i.is_stock_item, item_det.price_list_rate, item_det.currency, i.oem_text,i.titre_article,i.manufacturer,i.manufacturer_part_no,i.fabricant_logo , i.critere_text ,MATCH(i.name,i.item_name,i.nom_generique_long,i.manufacturer_part_no) as relevance 
-				from `tabItem` i LEFT JOIN
+				i.is_stock_item, item_det.price_list_rate, item_det.currency, i.oem_text,i.titre_article,i.manufacturer,i.manufacturer_part_no,i.fabricant_logo , i.critere_text ,MATCH(i.name,i.item_name,i.nom_generique_long,i.manufacturer_part_no) as relevance from `tabItem` i LEFT JOIN
 					(select item_code, price_list_rate, currency from
 						`tabItem Price`	where price_list=%(price_list)s) item_det
 				ON
