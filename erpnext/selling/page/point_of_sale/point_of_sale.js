@@ -1761,7 +1761,7 @@ class POSItems {
 		if(!this.item_group){
 		this.item_group = this.parent_item_group;	
 		}
-		console.log("get_items",this.item_manufacturer );
+		console.log("get_items",this.item_modele );
 		const item_group = this.item_group ;
 		return new Promise(res => {
 			frappe.call({
