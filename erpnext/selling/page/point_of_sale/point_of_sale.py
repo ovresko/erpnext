@@ -152,7 +152,7 @@ def get_conditions(item_code, serial_no, batch_no, barcode):
 		return frappe.db.escape(item_code), "i.name = %(item_code)s"
 
 	condition = """(i.name like %(item_code)s
-			or i.item_name like %(item_code)s)"""
+			or i.item_name like %(item_code)s) or  MATCH(i.nom_generique_long) AGAINST('%(item_code)s' IN NATURAL LANGUAGE MODE)"""
 
 	return '%%%s%%'%(frappe.db.escape(item_code)), condition
 
