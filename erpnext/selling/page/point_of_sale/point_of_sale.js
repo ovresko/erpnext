@@ -1292,6 +1292,7 @@ class POSItems {
 	
 	make_marque(){ 
 		const me = this; 
+		wr.find('.vehicule-marque-name').text('');  	
 		var val = this.wrapper.find('.vehicule-marque-field');
 		if(val)
 			val.empty();
@@ -1335,6 +1336,7 @@ class POSItems {
 	
 	make_modele(){
 		const me = this;
+		wr.find('.vehicule-modele-name').text('');  
 		 var val = this.wrapper.find('.vehicule-modele-field');
 		if(val) val.empty();
 		var filter_v = this.vehicule_marque_field.get_value();
@@ -1380,6 +1382,7 @@ class POSItems {
 
 	make_generation(){
 		const me = this;
+		wr.find('.vehicule-generation-name').text('');  
 		 var val = this.wrapper.find('.vehicule-generation-field');
 		if(val) val.empty();
 		var filter_v = this.vehicule_modele_field.get_value();
@@ -1423,6 +1426,7 @@ class POSItems {
 	
 	make_version(){
 		const me = this;
+		wr.find('.vehicule-version-name').text('');  
 		 var val = this.wrapper.find('.vehicule-version-field');
 		if(val) val.empty();
 		var filter_v = this.vehicule_generation_field.get_value();
