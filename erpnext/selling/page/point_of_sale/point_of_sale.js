@@ -1671,7 +1671,7 @@ class POSItems {
 			 event.stopPropagation();
 			const $item = $(this);
 			const item_code = unescape($item.attr('data-item-code'));
-			if (!me.infobox) {
+			
 				frappe.call({
 					"method": "frappe.client.get",
 					"args": {
@@ -1681,7 +1681,7 @@ class POSItems {
 					"callback": function(response) {
 						var item = response.message; 
 						if (item) {
-							me.infobox = frappe.msgprint(
+							frappe.msgprint(
 								`<table class="table table-bordered table-condensed">
 									<tr><td>${item.item_name}</td><td><img src="${item.image}"></td></tr>
 									<tr> 
@@ -1730,16 +1730,15 @@ class POSItems {
 								</table>
 									
 
-<hr>
-<label>Chercher dans designation avec (Ctr + F)</label><br>
-									<p>${item.nom_generique_long} </p>
+								<hr>
+								<label>Chercher dans designation avec (Ctr + F)</label><br>
+								<p>${item.nom_generique_long} </p>
 									
 								`
 								);
 						}  
 					}
 				}); 
-			}
 		});
 		
 		
