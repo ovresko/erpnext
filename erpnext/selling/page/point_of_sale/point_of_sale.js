@@ -1662,9 +1662,9 @@ class POSItems {
 			const $item = $(this);
 			const item_code = unescape($item.attr('data-item-code'));
 			const modele = item_code.substring(0,10);
-			this.item_modele  = modele;
-			this.make_item_modele();
-			this.filter_items();
+			me.item_modele  = modele;
+			me.make_item_modele();
+			me.filter_items();
 			
 		});
 		this.wrapper.on('click', '.pos-item-wrapper', function() {
