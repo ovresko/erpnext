@@ -1731,6 +1731,7 @@ class POSItems {
 									
 
 <hr>
+<label>Chercher dans designation avec (Ctr + F)</label><br>
 									<p>${item.nom_generique_long} </p>
 									
 								`
