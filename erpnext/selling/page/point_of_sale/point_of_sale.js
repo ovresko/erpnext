@@ -1666,6 +1666,36 @@ class POSItems {
 			const item_code = unescape($item.attr('data-item-code'));
 			window.open('#Form/Item/'+item_code, '_blank'); 
 		});
+		
+		this.wrapper.on('click', '.btn-information', function(event) {
+			 event.stopPropagation();
+			const $item = $(this);
+			const item_code = unescape($item.attr('data-item-code'));
+			if (!this.frm.msgbox) {
+				frappe.call({
+					"method": "frappe.client.get",
+					"args": {
+						"doctype": "Item",
+						"name": item_code
+					},
+					"callback": function(response) {
+						var item = response.message; 
+						if (item) {
+							this.frm.msgbox = frappe.msgprint(
+								`
+									<h5>${item.item_code}</h5>
+								`
+								);
+						}  
+					}
+				}); 
+			}
+		});
+		
+		
+		
+		
+		
 		this.wrapper.on('click', '.btn-related', function(event) {
 			event.stopPropagation();
 			const $item = $(this);
@@ -1673,7 +1703,6 @@ class POSItems {
 			const modele = item_code.substring(0,11);
 			console.log("modele",modele);
 			me.item_modele  = modele;
-			//me.frm.refresh_field('item_modele');
 			me.vehicule_modele = '';
 			me.vehicule_generation = '';
 			me.vehicule_marque = '';
@@ -1683,12 +1712,6 @@ class POSItems {
 			me.make_modele();
 			me.make_generation();
 			me.make_version();
-			
-			 
-			//me.vehicule_modele_field.set_value('');
-			//me.vehicule_generation_field.set_value('');
-			//me.vehicule_version_field.set_value('');
-			//me.vehicule_marque_field.set_value('');
 			me.item_modele_field.set_value(modele);
 			me.item_manufacturer_field.set_value(''); 
 			me.search_field.set_value('');
