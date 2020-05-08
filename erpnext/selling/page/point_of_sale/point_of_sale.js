@@ -1271,7 +1271,7 @@ class POSItems {
 				fieldtype: 'Link',
 				label: 'Marque',
 				options: 'Marque vehicule',
-				//default: me.parent_item_group,
+				default: this.vehicule_marque,
 				onchange: () => {
 					this.vehicule_marque = this.vehicule_marque_field.get_value();
 					if (this.vehicule_marque) { 
@@ -1293,6 +1293,8 @@ class POSItems {
 					}
 					this.filter_items();
 					this.make_modele();
+					this.make_generation();
+					this.make_version();
 				}, 
 			},
 			parent: this.wrapper.find('.vehicule-marque-field'),
@@ -1314,7 +1316,7 @@ class POSItems {
 				fieldtype: 'Link',
 				label: 'Modele',
 				options: 'Modele de vehicule',
-				//default: me.parent_item_group,
+				default: this.vehicule_modele,
 				filters: filter,
 				onchange: () => {
 					this.vehicule_modele = this.vehicule_modele_field.get_value();
@@ -1337,7 +1339,9 @@ class POSItems {
 					wr.find('.vehicule-modele-name').text('');  	
 					}
 					this.filter_items();
+					this.make_marque();
 					this.make_generation();
+					this.make_version();
 				}, 
 			},
 			parent: this.wrapper.find('.vehicule-modele-field'),
@@ -1358,7 +1362,7 @@ class POSItems {
 				fieldtype: 'Link',
 				label: 'Generation',
 				options: 'Generation vehicule',
-				//default: me.parent_item_group,
+				default: this.vehicule_generation,
 				filters: filter,
 				onchange: () => {
 					this.vehicule_generation = this.vehicule_generation_field.get_value();
@@ -1380,6 +1384,8 @@ class POSItems {
 					wr.find('.vehicule-generation-name').text('');  	
 					}
 					this.filter_items(); 
+					this.make_marque();
+					this.make_modele();
 					this.make_version();
 				}, 
 			},
@@ -1401,7 +1407,7 @@ class POSItems {
 				fieldtype: 'Link',
 				label: 'Version',
 				options: 'Version vehicule',
-				//default: me.parent_item_group,
+				default: this.vehicule_version,
 				filters: filter,
 				onchange: () => {
 					this.vehicule_version = this.vehicule_version_field.get_value();
@@ -1423,7 +1429,10 @@ class POSItems {
 					}else{
 					wr.find('.vehicule-version-name').text('');  	
 					}
-					this.filter_items( );
+					this.filter_items();
+					this.make_marque();
+					this.make_modele();
+					this.make_generation();
 				}, 
 			},
 			parent: this.wrapper.find('.vehicule-version-field'),
