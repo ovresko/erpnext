@@ -164,15 +164,15 @@ def get_item_version(vehicule_version):
 	return cond
 
 def get_item_generation(vehicule_generation):
-	cond = """ and i.name in (select parent from `tabVersion vehicule item` where generation_vehicule = '%s')""" % (vehicule_generation)
+	cond = """ and i.name in (select parent from `tabVersion vehicule item` where version_vehicule LIKE '%s%')""" % (vehicule_generation)
 	return cond
 
 def get_item_modele(vehicule_modele):
-	cond = """ and i.name in (select parent from `tabVersion vehicule item` where modele_vehicule = '%s')""" % (vehicule_modele)
+	cond = """ and i.name in (select parent from `tabVersion vehicule item` where version_vehicule LIKE '%s%')""" % (vehicule_modele)
 	return cond
 
 def get_item_marque(vehicule_marque):
-	cond = """ and i.name in (select parent from `tabVersion vehicule item` where code_marque = '%s')""" % (vehicule_marque)
+	cond = """ and i.name in (select parent from `tabVersion vehicule item` where version_vehicule LIKE '%s%')""" % (vehicule_marque)
 	return cond
 	
 	
