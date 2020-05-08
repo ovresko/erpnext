@@ -1681,7 +1681,7 @@ class POSItems {
 					"callback": function(response) {
 						var item = response.message; 
 						if (item) {
-							this.frm.msgbox = frappe.msgprint(
+							me.frm.msgbox = frappe.msgprint(
 								`
 									<h5>${item.item_code}</h5>
 								`
