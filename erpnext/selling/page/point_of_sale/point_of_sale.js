@@ -1683,6 +1683,7 @@ class POSItems {
 						if (item) {
 							me.infobox = frappe.msgprint(
 								`<table class="table table-bordered table-condensed">
+									<tr><td>${item.item_name}</td><td><img src="${item.image}"></td></tr>
 									<tr> 
 										<td>
 											<label>${item.item_code}</label>
