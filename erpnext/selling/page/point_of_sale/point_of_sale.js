@@ -1665,17 +1665,26 @@ class POSItems {
 			const modele = item_code.substring(0,11);
 			console.log("modele",modele);
 			me.item_modele  = modele;
-			me.frm.refresh_field('item_modele');
-			me.item_modele_field.set_value(modele);
-			 
-			me.vehicule_modele_field.set_value('');
-			me.vehicule_generation_field.set_value('');
-			me.vehicule_version_field.set_value('');
-			me.vehicule_marque_field.set_value('');
-			me.item_manufacturer_field.set_value('');
-			me.search_field.set_value('');
+			//me.frm.refresh_field('item_modele');
+			me.vehicule_modele = '';
+			me.vehicule_generation = '';
+			me.vehicule_marque = '';
+			me.vehicule_version = '';
 			
-			me.filter_items();
+			me.make_marque(); 
+			me.make_modele();
+			me.make_generation();
+			me.make_version();
+			
+			 
+			//me.vehicule_modele_field.set_value('');
+			//me.vehicule_generation_field.set_value('');
+			//me.vehicule_version_field.set_value('');
+			//me.vehicule_marque_field.set_value('');
+			me.item_modele_field.set_value(modele);
+			me.item_manufacturer_field.set_value(''); 
+			me.search_field.set_value('');
+			//me.filter_items();
 			
 		});
 		this.wrapper.on('click', '.pos-item-wrapper', function() {
