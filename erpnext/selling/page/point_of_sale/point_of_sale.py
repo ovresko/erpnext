@@ -38,6 +38,9 @@ def get_items(start, page_length, price_list, item_group, search_value="", pos_p
 	if item_manufacturer:
 		condition += get_item_manufacturer(item_manufacturer)
 
+	if vehicule_version:
+		condition += get_item_version(vehicule_version)
+
 	lft, rgt = frappe.db.get_value('Item Group', item_group, ['lft', 'rgt'])
 	# locate function is used to sort by closest match from the beginning of the value
 
@@ -146,7 +149,10 @@ def get_conditions(item_code, serial_no, batch_no, barcode):
 def get_item_manufacturer(item_manufacturer):
 	cond = """ and i.manufacturer = '%s'""" % (item_manufacturer)
 	return cond
-
+def get_item_version(vehicule_version):
+	cond = """ and i.name in (select parent from `tabVersion vehicule item` where version_vehicule = '%s')""" % (vehicule_version)
+	return cond
+	
 def get_item_group_condition(pos_profile):
 	cond = "and 1=1"
 	item_groups = get_item_groups(pos_profile)
