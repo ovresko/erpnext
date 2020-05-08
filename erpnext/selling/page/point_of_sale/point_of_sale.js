@@ -1490,10 +1490,9 @@ class POSItems {
 				options: 'Item Group',
 				default: me.parent_item_group,
 				onchange: () => {
-					const item_group = this.item_group_field.get_value();
-					if (item_group) {
-						this.filter_items({ item_group: item_group });
-					}
+					this.item_group = this.item_group_field.get_value();
+					 
+					this.filter_items();
 				},
 				get_query: () => {
 					return {
@@ -1544,8 +1543,11 @@ class POSItems {
 		this.clusterize.update(row_items);
 	}
 
-	filter_items({ search_term='', item_group=this.parent_item_group }={}) {
+	filter_items({ search_term='' }={}) {
 		 
+		if(!this.item_group){
+			this.item_group = this.parent_item_group;
+		}
 		   if (search_term) {
 			search_term = search_term.toLowerCase();
 
@@ -1563,7 +1565,7 @@ class POSItems {
 				this.set_item_in_the_cart(items);
 				return;
 				}
-			} else if (item_group == this.parent_item_group  
+			} else if (this.item_group == this.parent_item_group  
 			   && !this.item_manufacturer 
 			   && !this.vehicule_marque
 			   && !this.vehicule_modele
@@ -1574,7 +1576,7 @@ class POSItems {
 			}
 		 
 		console.log("filter_items2",this.item_manufacturer);
-		this.get_items({search_value: search_term, item_group})
+		this.get_items({search_value: search_term})
 			.then(({ items, serial_no, batch_no, barcode }) => {
 				if (search_term && !barcode) {
 					this.search_index[search_term] = items;
@@ -1703,8 +1705,11 @@ class POSItems {
 		return template;
 	}
 
-	get_items({start = 0, page_length = 40, search_value='', item_group=this.parent_item_group}={}) {
+	get_items({start = 0, page_length = 40, search_value=''}={}) {
 		const price_list = this.frm.doc.selling_price_list;
+		if(!this.item_group){
+		this.item_group = this.parent_item_group;	
+		}
 		console.log("get_items",this.item_manufacturer );
 		return new Promise(res => {
 			frappe.call({
@@ -1714,7 +1719,7 @@ class POSItems {
 					start,
 					page_length,
 					price_list,
-					item_group,
+					this.item_group,
 					search_value,
 					pos_profile: this.frm.doc.pos_profile,
 					item_manufacturer:this.item_manufacturer ,
