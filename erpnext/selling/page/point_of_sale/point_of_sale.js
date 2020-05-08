@@ -1620,16 +1620,18 @@ class POSItems {
 
 	bind_events() {
 		var me = this;
+		this.wrapper.on('click', '.btn-open', function(event) {
+			 event.stopPropagation();
+			const $item = $(this);
+			const item_code = unescape($item.attr('data-item-code'));
+			window.open('#Form/Item/'+item_code, '_blank'); 
+		});
 		this.wrapper.on('click', '.pos-item-wrapper', function() {
 			const $item = $(this);
 			const item_code = unescape($item.attr('data-item-code'));
 			me.events.update_cart(item_code, 'qty', '+1');
 		});
-		this.wrapper.on('click', '.btn-open', function() {
-			const $item = $(this);
-			const item_code = unescape($item.attr('data-item-code'));
-			window.open('#Form/Item/'+item_code, '_blank'); 
-		});
+		
 	}
 
 	get(item_code) {
