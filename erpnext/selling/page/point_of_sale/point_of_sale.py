@@ -144,7 +144,7 @@ def get_conditions(item_code, serial_no, batch_no, barcode):
 	return '%%%s%%'%(frappe.db.escape(item_code)), condition
 
 def get_item_manufacturer(item_manufacturer):
-	cond = "and i.manufacturer = '%s'" % (item_manufacturer)
+	cond = """ and i.manufacturer = '%s'""" % (item_manufacturer)
 	return cond
 
 def get_item_group_condition(pos_profile):
