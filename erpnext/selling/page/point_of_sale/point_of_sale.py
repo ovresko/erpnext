@@ -148,7 +148,8 @@ def search_serial_or_batch_or_barcode_number(search_value):
 def get_conditions(item_code, serial_no, batch_no, barcode):
 	if serial_no or batch_no or barcode:
 		return frappe.db.escape(item_code), "i.name = %(item_code)s"
-	
+	if not item_code:
+		return "","1=1"
 	words = item_code.split()
 	keyword = '* '.join(w for w in words)
 
