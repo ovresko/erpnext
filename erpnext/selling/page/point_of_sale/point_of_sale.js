@@ -1273,15 +1273,13 @@ class POSItems {
 				options: 'Marque vehicule',
 				//default: me.parent_item_group,
 				onchange: () => {
-					const vehicule_marque = this.vehicule_marque_field.get_value();
-					if (vehicule_marque) {
-						this.filter_items({ vehicule_marque: vehicule_marque });
-						console.log(vehicule_marque);
+					this.vehicule_marque = this.vehicule_marque_field.get_value();
+					if (this.vehicule_marque) { 
 						frappe.call({
 							"method": "frappe.client.get",
 							"args": {
 								"doctype": "Marque vehicule",
-								"name": vehicule_marque
+								"name": this.vehicule_marque
 							},
 							"callback": function(response) {
 								var sinv = response.message; 
@@ -1290,7 +1288,10 @@ class POSItems {
 								}  
 							}
 							}); 
-					} 
+					} else{
+					wr.find('.vehicule-marque-name').text('');  	
+					}
+					this.filter_items();
 					this.make_modele();
 				}, 
 			},
@@ -1316,14 +1317,14 @@ class POSItems {
 				//default: me.parent_item_group,
 				filters: filter,
 				onchange: () => {
-					const vehicule_modele = this.vehicule_modele_field.get_value();
-					if (vehicule_modele) {
-						this.filter_items({ vehicule_modele: vehicule_modele });
+					this.vehicule_modele = this.vehicule_modele_field.get_value();
+					if (this.vehicule_modele) {
+						
 						frappe.call({
 						"method": "frappe.client.get",
 						"args": {
 							"doctype": "Modele de vehicule",
-							"name": vehicule_modele
+							"name": this.vehicule_modele
 						},
 						"callback": function(response) {
 							var sinv = response.message; 
@@ -1332,7 +1333,11 @@ class POSItems {
 							}  
 						}
 						}); 
-					}this.make_generation();
+					}else{
+					wr.find('.vehicule-modele-name').text('');  	
+					}
+					this.filter_items();
+					this.make_generation();
 				}, 
 			},
 			parent: this.wrapper.find('.vehicule-modele-field'),
@@ -1356,14 +1361,13 @@ class POSItems {
 				//default: me.parent_item_group,
 				filters: filter,
 				onchange: () => {
-					const vehicule_generation = this.vehicule_generation_field.get_value();
-					if (vehicule_generation) {
-						this.filter_items({ vehicule_generation: vehicule_generation }); 
+					this.vehicule_generation = this.vehicule_generation_field.get_value();
+					if (this.vehicule_generation) {
 						frappe.call({
 						"method": "frappe.client.get",
 						"args": {
 							"doctype": "Generation vehicule",
-							"name": vehicule_generation
+							"name": this.vehicule_generation
 						},
 						"callback": function(response) {
 							var sinv = response.message; 
@@ -1372,7 +1376,11 @@ class POSItems {
 							}  
 						}
 						}); 
-					}this.make_version();
+					}else{
+					wr.find('.vehicule-generation-name').text('');  	
+					}
+					this.filter_items(); 
+					this.make_version();
 				}, 
 			},
 			parent: this.wrapper.find('.vehicule-generation-field'),
@@ -1396,14 +1404,14 @@ class POSItems {
 				//default: me.parent_item_group,
 				filters: filter,
 				onchange: () => {
-					const vehicule_version = this.vehicule_version_field.get_value();
-					if (vehicule_version) {
-						this.filter_items({ vehicule_version: vehicule_version });
+					this.vehicule_version = this.vehicule_version_field.get_value();
+					if (this.vehicule_version) {
+						
 						frappe.call({
 						"method": "frappe.client.get",
 						"args": {
 							"doctype": "Version vehicule",
-							"name": vehicule_version
+							"name": this.vehicule_version
 						},
 						"callback": function(response) {
 							var sinv = response.message; 
@@ -1412,7 +1420,10 @@ class POSItems {
 							}  
 						}
 						}); 
+					}else{
+					wr.find('.vehicule-version-name').text('');  	
 					}
+					this.filter_items( );
 				}, 
 			},
 			parent: this.wrapper.find('.vehicule-version-field'),
@@ -1534,7 +1545,6 @@ class POSItems {
 	}
 
 	filter_items({ search_term='', item_group=this.parent_item_group }={}) {
-		console.log("filter_items",this.item_manufacturer);
 		 
 		   if (search_term) {
 			search_term = search_term.toLowerCase();
