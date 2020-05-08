@@ -1667,7 +1667,14 @@ class POSItems {
 			me.item_modele  = modele;
 			me.frm.refresh_field('item_modele');
 			me.item_modele_field.set_value(modele);
-			//me.make_item_modele();
+			 
+			me.vehicule_modele_field.set_value('');
+			me.vehicule_generation_field.set_value('');
+			me.vehicule_version_field.set_value('');
+			me.vehicule_marque_field.set_value('');
+			me.item_manufacturer_field.set_value('');
+			me.search_field.set_value('');
+			
 			me.filter_items();
 			
 		});
