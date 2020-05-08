@@ -68,7 +68,7 @@ def get_items(start, page_length, price_list, item_group, search_value="", pos_p
 			where
 				i.disabled = 0 and i.has_variants = 0 and i.is_sales_item = 1
 				and i.item_group in (select name from `tabItem Group` where lft >= {lft} and rgt <= {rgt})
-		        	and {condition} order by idx desc limit {start}, {page_length}""".format(start=start,page_length=page_length,lft=lft, rgt=rgt,condition=condition),
+		        	and {condition} order by i.score desc limit {start}, {page_length}""".format(start=start,page_length=page_length,lft=lft, rgt=rgt,condition=condition),
 			{
 				'item_code': item_code,
 				'price_list': price_list
@@ -100,7 +100,7 @@ def get_items(start, page_length, price_list, item_group, search_value="", pos_p
 			where
 				i.disabled = 0 and i.has_variants = 0 and i.is_sales_item = 1
 				and i.item_group in (select name from `tabItem Group` where lft >= {lft} and rgt <= {rgt})
-				and {condition} order by idx desc limit {start}, {page_length}""".format(start=start,page_length=page_length,lft=lft, 	rgt=rgt, condition=condition),
+				and {condition} order by i.score desc limit {start}, {page_length}""".format(start=start,page_length=page_length,lft=lft, 	rgt=rgt, condition=condition),
 			{
 				'item_code': item_code,
 				'price_list': price_list,
@@ -151,8 +151,7 @@ def get_conditions(item_code, serial_no, batch_no, barcode):
 	if serial_no or batch_no or barcode:
 		return frappe.db.escape(item_code), "i.name = %(item_code)s"
 
-	condition = """(i.name like %(item_code)s
-			or i.item_name like %(item_code)s) or  MATCH(i.nom_generique_long) AGAINST(%(item_code)s IN NATURAL LANGUAGE MODE)"""
+	condition = """(MATCH(i.name,i.item_name,i.nom_generique_long,i.manufacturer_part_no) AGAINST(%(item_code)s IN NATURAL LANGUAGE MODE) AS score"""
 
 	return '%%%s%%'%(frappe.db.escape(item_code)), condition
 
