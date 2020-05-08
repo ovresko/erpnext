@@ -151,7 +151,7 @@ def get_conditions(item_code, serial_no, batch_no, barcode):
 	if serial_no or batch_no or barcode:
 		return frappe.db.escape(item_code), "i.name = %(item_code)s"
 
-	condition = """(MATCH(i.name,i.item_name,i.nom_generique_long,i.manufacturer_part_no) AGAINST(%(item_code)s IN NATURAL LANGUAGE MODE) AS score"""
+	condition = """ (MATCH(i.name,i.item_name,i.nom_generique_long,i.manufacturer_part_no) AGAINST(%(item_code)s IN NATURAL LANGUAGE MODE) AS score """
 
 	return '%%%s%%'%(frappe.db.escape(item_code)), condition
 
