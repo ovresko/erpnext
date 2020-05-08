@@ -34,6 +34,7 @@ def get_items(start, page_length, price_list, item_group, search_value="", pos_p
 
 	if pos_profile:
 		condition += get_item_group_condition(pos_profile)
+
 	if item_modele:
 		condition += get_item_modele(item_modele)
 
@@ -47,7 +48,7 @@ def get_items(start, page_length, price_list, item_group, search_value="", pos_p
 		condition += get_item_generation(vehicule_generation)
 	
 	if vehicule_modele:
-		condition += get_item_modele(vehicule_modele)
+		condition += get_vehicule_modele(vehicule_modele)
 	
 	if vehicule_marque:
 		condition += get_item_marque(vehicule_marque)
@@ -174,7 +175,7 @@ def get_item_generation(vehicule_generation):
 	cond = """ and i.name in (select parent from `tabVersion vehicule item` where version_vehicule LIKE '{0}%%')""".format(vehicule_generation)
 	return cond
 
-def get_item_modele(vehicule_modele):
+def get_vehicule_modele(vehicule_modele):
 	cond = """ and i.name in (select parent from `tabVersion vehicule item` where version_vehicule LIKE '{0}%%')""".format(vehicule_modele)
 	return cond
 
