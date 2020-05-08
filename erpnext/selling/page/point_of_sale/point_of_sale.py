@@ -162,6 +162,7 @@ def get_conditions(item_code, serial_no, batch_no, barcode):
 def get_item_modele(item_modele):
 	cond = """ and i.variant_of = '%s'""" % (item_modele)
 	return cond
+
 def get_item_manufacturer(item_manufacturer):
 	cond = """ and i.manufacturer = '%s'""" % (item_manufacturer)
 	return cond
