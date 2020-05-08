@@ -1275,6 +1275,7 @@ class POSItems {
 			df: {
 				fieldtype: 'Link',
 				label: 'Modele Piece',
+				fieldname: 'item_modele',
 				options: 'Item',
 				filters: {"has_variants": 1},
 				default: this.item_modele,
@@ -1662,7 +1663,9 @@ class POSItems {
 			const $item = $(this);
 			const item_code = unescape($item.attr('data-item-code'));
 			const modele = item_code.substring(0,10);
+			console.log("modele",modele);
 			me.item_modele  = modele;
+			me.frm.refresh_field('item_modele');
 			me.make_item_modele();
 			me.filter_items();
 			
