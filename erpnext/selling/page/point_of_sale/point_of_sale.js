@@ -1752,15 +1752,15 @@ class POSItems {
 			const modele = item_code.substring(0,11);
 			console.log("modele",modele);
 			me.item_modele  = modele;
-			me.vehicule_modele = '';
-			me.vehicule_generation = '';
-			me.vehicule_marque = '';
-			me.vehicule_version = '';
+			//me.vehicule_modele = '';
+			//me.vehicule_generation = '';
+			//me.vehicule_marque = '';
+			//me.vehicule_version = '';
 			
-			me.make_marque(); 
-			me.make_modele();
-			me.make_generation();
-			me.make_version();
+			//me.make_marque(); 
+			//me.make_modele();
+			//me.make_generation();
+			//me.make_version();
 			me.item_modele_field.set_value(modele);
 			me.item_manufacturer_field.set_value(''); 
 			me.search_field.set_value('');
