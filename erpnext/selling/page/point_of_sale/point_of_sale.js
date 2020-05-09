@@ -1777,6 +1777,14 @@ class POSItems {
 			const item_code = unescape($item.attr('data-item-code'));
 			me.events.update_cart(item_code, 'qty', '+1');
 		});
+		this.wrapper.on('click', '.oem-text', function() {
+			event.stopPropagation();
+			const $item = $(this);
+			const oem = $item.text();
+			const item_code = unescape($item.attr('data-item-code'));
+			me.search_field.set_value(oem);
+		});
+		
 		
 	}
 
@@ -1845,7 +1853,7 @@ class POSItems {
 							${item_code}
 						</span>
 						<br>
-						OEM: <span style="font-weight:800">${oem}</span>
+						OEM: <span style="font-weight:800"><a data-item-code="${item_code}" class="oem-text">${oem}</a></span>
 						<br>
 						<button data-item-code="${item_code}" data-label="open" class="btn btn-default btn-xs btn-open" style="margin-right: 5px;"><i class="fa fa-eye"></i>
 						</button>
