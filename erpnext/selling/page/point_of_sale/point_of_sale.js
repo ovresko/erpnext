@@ -1794,7 +1794,7 @@ class POSItems {
 		const price_list_rate = format_currency(item.price_list_rate, this.currency,0);
 		const { item_code, item_name, item_image} = item;
 		const item_title =  item_name || item_code;
-		const critere_text = (item.critere_text || '').replace("/","<br>");
+		const critere_text = (item.critere_text || '').split("/").join("<br>");
 		let critere = '';
 		if(critere_text){
 			critere = '<hr style="margin:5px 0px 5px 0px"><span style="font-size:13px;color:red">'+critere_text +'</span>';
