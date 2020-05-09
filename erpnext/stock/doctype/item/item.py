@@ -158,16 +158,7 @@ class Item(WebsiteGenerator):
 
 		if not self.description:
 			self.description = self.titre_article
-		nom_g = ''
-		if self.variant_of and self.manufacturer_part_no and self.manufacturer:
-			nom_g = self.manufacturer +' '+self.manufacturer_part_no +' '+ self.item_name + ' '
-		if self.has_variants:
-			nom_g = self.item_name + ' '
-		for v in self.versions:
-			nom_g += v.nom_version+' '
-		for g in self.generation_vehicule_supporte:
-			nom_g += g.nom_generation+' '
-		self.nom_generique_long = nom_g
+		
 		self.validate_uom()
 		self.validate_description()
 		self.add_default_uom_in_conversion_factor_table()
@@ -224,7 +215,24 @@ class Item(WebsiteGenerator):
                     #level.warehouse_reorder_qty=qts
                     #level.save()
                 #original = list(filter(lambda(x: x.warehouse != "GLOBAL - MV",self.reorder_levels))
-
+		nom_g = ''
+		if self.variant_of and self.manufacturer_part_no and self.manufacturer:
+			nom_g +=nom_g+ self.manufacturer +' '+self.manufacturer_part_no +' '+ self.item_name + ' '
+		if self.has_variants:
+			nom_g += self.item_name + ' '
+		if self.oem_text:
+			nom_g += self.oem_text + ' '
+		if self.critere_text:
+			nom_g += self.critere_text + ' '
+		if self.clean_manufacturer_part_number:
+			nom_g += self.clean_manufacturer_part_number + ' '
+		for v in self.versions:
+			nom_g += v.nom_marque+' '+v.modele_vehicule+' '+v.nom_version+' '
+		for g in self.generation_vehicule_supporte:
+			nom_g += g.nom_marque+' '+g.nom_generation+' '
+		for g in self.marque_vehicule_supporte:
+			nom_g += g.marque+' '
+		self.nom_generique_long = nom_g
 		if not self.get("__islocal"):
 			self.old_item_group = frappe.db.get_value(self.doctype, self.name, "item_group")
 			self.old_website_item_groups = frappe.db.sql_list("""select item_group
