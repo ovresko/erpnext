@@ -1795,6 +1795,7 @@ class POSItems {
 		const { item_code, item_name, item_image} = item;
 		const item_title =  item_name || item_code;
 		const critere_text = (item.critere_text || '').split("/").join("<br>");
+		const oem = item.oem_text.slice(0, str.indexOf('-'));
 		let critere = '';
 		if(critere_text){
 			critere = '<hr style="margin:5px 0px 5px 0px"><span style="font-size:13px;color:red">'+critere_text +'</span>';
@@ -1839,7 +1840,7 @@ class POSItems {
 							${item_code}
 						</span>
 						<br>
-						OEM: <span style="font-weight:800">${item.oem_text}</span>
+						OEM: <span style="font-weight:800">${oem}</span>
 						<br>
 						<button data-item-code="${item_code}" data-label="open" class="btn btn-default btn-xs btn-open" style="margin-right: 5px;"><i class="fa fa-eye"></i>
 						</button>
