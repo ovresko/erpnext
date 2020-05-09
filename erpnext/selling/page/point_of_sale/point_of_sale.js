@@ -1783,7 +1783,12 @@ class POSItems {
 			const oem = $item.text();
 			const item_code = unescape($item.attr('data-item-code'));
 			me.search_field.set_value(oem);
-			me.filter_items();
+			//me.filter_items();
+			clearTimeout(me.last_search);
+			me.last_search = setTimeout(() => {
+				const search_term = oem;
+				me.filter_items({ search_term });
+			}, 300);
 		});
 		
 		
