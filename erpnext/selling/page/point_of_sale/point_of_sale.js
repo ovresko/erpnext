@@ -1532,7 +1532,12 @@ class POSItems {
 				default: me.parent_item_group,
 				onchange: () => {
 					this.item_group = this.item_group_field.get_value();
-					 
+					 if(this.item_group)
+					 {
+						 this.item_modele = '';
+						 this.make_item_modele();
+					 }
+						 
 					this.filter_items();
 				},
 				get_query: () => {
