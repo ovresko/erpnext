@@ -157,7 +157,7 @@ def get_conditions(item_code, serial_no, batch_no, barcode):
 	keyword = '* '.join(w for w in words)
 
 	#condition = """ ( i.clean_manufacturer_part_number LIKE '%%{}%%' or i.oem_text LIKE '%%{}%%' or  MATCH(i.name,i.item_name,i.nom_generique_long,i.manufacturer_part_no,i.clean_manufacturer_part_number,i.oem_text) AGAINST('({})' IN NATURAL LANGUAGE MODE)  )""".format(item_code,item_code,item_code)
-	condition = """ (  MATCH(i.nom_generique_long) AGAINST('{}' IN NATURAL LANGUAGE MODE)  )""".format(keyword)
+	condition = """ (  MATCH(i.nom_generique_long) AGAINST('({}) ({})' IN NATURAL LANGUAGE MODE)  )""".format(keyword,item_code)
 
 	return '%%%s%%'%(frappe.db.escape(item_code)), condition
 
