@@ -1772,7 +1772,7 @@ class POSItems {
 			//me.filter_items();
 			
 		});
-		this.wrapper.on('click', '.pos-item-wrapper', function() {
+		this.wrapper.on('click', '.btn-add', function() {
 			const $item = $(this);
 			const item_code = unescape($item.attr('data-item-code'));
 			me.events.update_cart(item_code, 'qty', '+1');
@@ -1852,6 +1852,8 @@ class POSItems {
 						<button data-item-code="${item_code}" data-label="related" class="btn btn-default btn-xs btn-related" style="margin-right: 5px;"><i class="fa fa-link"></i>
 						</button>
 						<button data-item-code="${item_code}" data-label="information" class="btn btn-default btn-xs btn-information" style="margin-right: 5px;"><i class="fa fa-question"></i>
+						</button>
+						<button data-item-code="${item_code}" data-label="add" class="btn btn-success btn-xs btn-add" style="margin-right: 5px;"><i class="fa fa-shopping-cart"></i> ajouter
 						</button>
 					</div>
 				</div>
