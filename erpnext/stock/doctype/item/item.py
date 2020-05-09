@@ -232,7 +232,7 @@ class Item(WebsiteGenerator):
 			nom_g += g.nom_marque+' '+g.nom_generation+' '
 		for g in self.marque_vehicule_supporte:
 			nom_g += g.marque+' '
-		self.nom_generique_long = nom_g
+		self.nom_generique_long = nom_g.lower()
 		if not self.get("__islocal"):
 			self.old_item_group = frappe.db.get_value(self.doctype, self.name, "item_group")
 			self.old_website_item_groups = frappe.db.sql_list("""select item_group
