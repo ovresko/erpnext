@@ -726,8 +726,8 @@ class POSCart {
 			frappe.call({
 							method: "erpnext.selling.page.point_of_sale.point_of_sale.make_sales_order",
 							args: {
-								"customer": me.frm.doc.customer,
-								"items": me.frm.doc.items,
+								"customer": this.frm.doc.customer,
+								"items": this.frm.doc.items,
 							},
 							callback: function(r) {
 								if (r.message) {
