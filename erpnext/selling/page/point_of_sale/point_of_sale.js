@@ -1822,6 +1822,21 @@ class POSItems {
 			critere = '<hr style="margin:5px 0px 5px 0px"><span style="font-size:13px;color:red">'+critere_text +'</span>';
 		 
 		}
+		let complements = '';
+		if(composant_text || articles_text)
+		   {
+			   let coml = '';
+			   if(articles_text)
+			   {
+				   coml = '<span>Compléments : <br>${articles_text}</span><br>';
+			   }
+			    let comp = '';
+			   if(composant_text)
+			   {
+				   comp = '<span>Composants : <br>${composant_text}</span><br>';
+			   }
+		   	complements = '<div style="width:160px;padding-left:5px" >'+coml+comp+'</div>';
+		   }
 		 
 		//image-view-item
 		const template = `
@@ -1851,11 +1866,7 @@ class POSItems {
 	 					${critere}
 						 
 					</div>
-
-					<div style="width:160px;padding-left:5px" >
-						<span>Composants : <br>${composant_text}</span><br>
- 						<span>Compléments : <br>${articles_text}</span><br>
-					</div>
+					${complements}
 					<div style="width:160px;padding-left:5px" >
 						<span>
 							${item.manufacturer}
