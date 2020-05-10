@@ -18,11 +18,7 @@ def make_sales_order(customer,items):
 	so.customer = customer
 	for item in items:
 		item = frappe._dict(item)
-		so.append('items', {
-		'item_code': item.item_code,
-		"item_name":item.item_name,
-		'qty': item.qty
-		})
+		so.append('items', item)
 	
 	so.save()
 	return so
