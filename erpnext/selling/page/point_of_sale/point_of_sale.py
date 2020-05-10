@@ -10,7 +10,8 @@ from erpnext.accounts.doctype.pos_profile.pos_profile import get_item_groups
 from six import string_types
 
 @frappe.whitelist()
-def make_sales_order(customer,items=[]):
+def make_sales_order({customer,items}):
+	items = frappe._dict(items)
 	so = frappe.new_doc("Sales Order")
 	so.customer = customer
 	for item in items:
