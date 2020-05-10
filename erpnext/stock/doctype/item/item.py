@@ -230,8 +230,10 @@ class Item(WebsiteGenerator):
 			nom_g += self.oem_text + ' '
 		if self.critere_text:
 			nom_g += self.critere_text + ' '
-		if self.self.composant_text:
-			nom_g += self.composant_text+ ' '
+		if self.composant_text:
+			nom_g += 'Composant : ' + self.composant_text+ ' '
+		if self.articles_text:
+			nom_g += 'Complements : ' + self.articles_text+ ' '
 		if self.clean_manufacturer_part_number:
 			nom_g += self.clean_manufacturer_part_number + ' '
 		for v in self.versions:
