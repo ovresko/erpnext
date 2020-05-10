@@ -1264,10 +1264,12 @@ class POSItems {
 	make_dom() {
 		this.wrapper.html(`
 			<div class="vehicule-name-wrapper" style="display:flex">
+				<h2>
+				<i class="fa fa-car" style="margin-left:20px" ></i>
 				<span class="vehicule-marque-name clearfix"></span> 
 				<span class="vehicule-modele-name clearfix"></span>
 				<span class="vehicule-generation-name clearfix"></span>
-				<span class="vehicule-version-name clearfix"></span>
+				<span class="vehicule-version-name clearfix"></span></h2>
 			</div>
 			<div class="vehicule" style="display:flex">
 
