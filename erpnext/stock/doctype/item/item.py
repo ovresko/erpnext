@@ -134,10 +134,10 @@ class Item(WebsiteGenerator):
 			self.critere_text = ' / '.join(str(x) for x in cr)
 		self.composant_text = ""
 		for cmp in self.composant:
-			self.composant_text +=  (cmp.manufacturer_part_no or '') +' '+ (cmp.item_name or '') +' / '
+			self.composant_text +=  (cmp.manufacturer_part_no or '') +' / '
 		self.articles_text= ""
 		for art in self.articles:
-			self.articles_text +=  (art.manufacturer_part_no or '') +' '+ (art.item_name or '') +' / '
+			self.articles_text +=  (art.manufacturer_part_no or '') +' / '
 		#critere_text
                 self.oem_text = ""
 		for o in self.oem:
