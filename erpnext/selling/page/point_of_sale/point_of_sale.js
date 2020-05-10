@@ -1269,12 +1269,17 @@ class POSItems {
 				<img class="vehicule-image" src="" width="100%">
 				</div>
 
-				
-				<div style="width:50% ">					
-				<span class="strong">Marque</span> : <span class="vehicule-marque-name clearfix"></span> 
-				<span class="strong">Modele</span> : <span class="vehicule-modele-name clearfix"></span>
-				<span class="strong">Generation</span> : <span class="vehicule-generation-name clearfix"></span> 
-				<span class="strong">Version</span> : <span class="vehicule-version-name clearfix"></span> 
+				<div style="width:10% ;padding:10px">	
+				<span class="strong">Marque</span> :
+				<span class="strong">Modele</span> : 
+				<span class="strong">Generation</span> :
+				<span class="strong">Version</span> :
+				</div>
+				<div style="width:50% ;padding:10px">					
+				 <span class="vehicule-marque-name "></span> 
+				<span class="vehicule-modele-name "></span>
+				 <span class="vehicule-generation-name "></span> 
+				 <span class="vehicule-version-name "></span> 
 				</div>
 
 			</div>
