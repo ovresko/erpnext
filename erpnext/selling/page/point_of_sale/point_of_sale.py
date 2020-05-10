@@ -11,7 +11,7 @@ from six import string_types
 
 @frappe.whitelist()
 def make_sales_order(customer,items):
-	frappe.msgprint(items)
+	#frappe.msgprint(items)
 	items = json.loads(items)
 	
 	so = frappe.new_doc("Sales Order")
