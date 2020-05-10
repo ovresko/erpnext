@@ -691,8 +691,13 @@ class POSCart {
 				</div>
 				<div class="row">
 					<div class="number-pad-container col-sm-6"></div>
-					<div class="col-sm-6 loyalty-program-section">
-						<div class="loyalty-program-field"> </div>
+					<div class="col-sm-6">
+						<div class="loyalty-program-section">
+							<div class="loyalty-program-field"> </div>
+						</div>
+						<button  data-label="commander" class="btn btn-default btn btn-commander" style="margin-right: 5px;">Créer Commande</button>
+
+						
 					</div>
 				</div>
 			</div>
