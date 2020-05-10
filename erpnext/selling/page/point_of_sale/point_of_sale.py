@@ -18,9 +18,9 @@ def make_sales_order(customer,items):
 	so.customer = customer
 	for item in items:
 		item = frappe._dict(item)
-		item.doctype=""
-		item.parent=""
-		item.parenttype = ""
+		item.doctype="Sales Order Item"
+		item.parent=so.name
+		item.parenttype = "Sales Order"
 		
 		so.append('items', item)
 	
