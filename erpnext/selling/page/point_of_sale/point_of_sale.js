@@ -1519,6 +1519,7 @@ class POSItems {
 						"callback": function(response) {
 							var sinv = response.message; 
 							if (sinv) {
+								console.log(sinv);
 								wr.find('.vehicule-version-name').text(sinv.commercial_name+" "+sinv.code_moteur+" "+sinv.puissance_fiscale);  
 								wr.find('.vehicule-generation-name').text(sinv.nom_generation);  
 								wr.find('.vehicule-modele-name').text(sinv.nom_modele);  
