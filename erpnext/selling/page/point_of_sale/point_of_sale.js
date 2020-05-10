@@ -124,21 +124,7 @@ erpnext.pos.PointOfSale = class PointOfSale {
 			frm: this.frm,
 			wrapper: this.wrapper.find('.cart-container'),
 			events: {
-				on_commander: () => {
-					frappe.call({
-							method: "erpnext.selling.page.point_of_sale.point_of_sale.make_sales_order",
-							args: {
-								"customer": me.frm.doc.customer,
-								"items": me.frm.doc.items,
-							},
-							callback: function(r) {
-								if (r.message) {
-									let cmd = r.message;
-									 frappe.set_route('Form', "Sales Order", cmd.name);
-								} 
-							}
-						});
-				},
+				 
 				on_customer_change: (customer) => {
 					this.frm.set_value('customer', customer);
 				},
@@ -737,7 +723,19 @@ class POSCart {
 			this.toggle_taxes_and_totals();
 		});
 		this.$btn_commander.on('click', () => {
-			this.cart.events.on_commander();
+			frappe.call({
+							method: "erpnext.selling.page.point_of_sale.point_of_sale.make_sales_order",
+							args: {
+								"customer": me.frm.doc.customer,
+								"items": me.frm.doc.items,
+							},
+							callback: function(r) {
+								if (r.message) {
+									let cmd = r.message;
+									 frappe.set_route('Form', "Sales Order", cmd.name);
+								} 
+							}
+						});
 		});
 		
 		
