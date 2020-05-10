@@ -13,7 +13,13 @@ from six import string_types
 def make_sales_order(customer,items=[]):
 	so = frappe.new_doc("Sales Order")
 	so.customer = customer
-	so.items = items
+	for item in items:
+		so.append('items', {
+		'item_code': item.item_code,
+		"item_name":item.item_name,
+		'qty': item.qty
+		})
+	
 	so.save()
 	return so
 
