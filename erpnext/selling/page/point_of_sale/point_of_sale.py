@@ -14,6 +14,7 @@ def make_sales_order(customer,items=[]):
 	so = frappe.new_doc("Sales Order")
 	so.customer = customer
 	so.items = []
+	so.save()
 	return so
 
 @frappe.whitelist()
