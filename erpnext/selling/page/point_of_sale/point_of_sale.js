@@ -1270,10 +1270,10 @@ class POSItems {
 				</div>
 
 				<div style="width:10% ;padding:10px">	
-				<span class="strong">Marque</span> :
-				<span class="strong">Modele</span> : 
-				<span class="strong">Generation</span> :
-				<span class="strong">Version</span> :
+				<span class="strong">Marque :</span>
+				<span class="strong">Modele :</span>
+				<span class="strong">Generation :</span>
+				<span class="strong">Version :</span>
 				</div>
 				<div style="width:50% ;padding:10px">					
 				 <span class="vehicule-marque-name "></span> 
