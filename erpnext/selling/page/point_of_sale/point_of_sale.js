@@ -697,6 +697,7 @@ class POSCart {
 							<div class="loyalty-program-field"> </div>
 						</div>
 						<button  data-label="commander" class="btn btn-default btn btn-commander" style="margin-right: 5px;">Créer Commande</button>
+						<button  data-label="devis" class="btn btn-default btn btn-devis" style="margin-right: 5px;">Créer Devis</button>
 
 						
 					</div>
@@ -712,6 +713,7 @@ class POSCart {
 		this.$grand_total = this.wrapper.find('.grand-total');
 		this.$qty_total = this.wrapper.find('.quantity-total');
 		this.$btn_commander = this.wrapper.find('.btn-commander');
+		this.$btn_devis = this.wrapper.find('.btn-devis');
 		// this.$loyalty_button = this.wrapper.find('.loyalty-button');
 
 		// this.$loyalty_button.on('click', () => {
@@ -722,6 +724,26 @@ class POSCart {
 		this.$grand_total.on('click', () => {
 			this.toggle_taxes_and_totals();
 		});
+		
+		this.$btn_devis.on('click', () => {
+			console.log(this.frm.doc.items);
+			frappe.call({
+							method: "erpnext.selling.page.point_of_sale.point_of_sale.make_devis",
+							args: {
+								"customer": this.frm.doc.customer,
+								"items": this.frm.doc.items,
+							},
+							callback: function(r) {
+								if (r.message) {
+									let cmd = r.message;
+									window.open('#Form/Quotation/'+cmd.name, '_blank', 'toolbar=0,location=0,menubar=0'); 
+									 //frappe.set_route('Form', "Sales Order", cmd.name);
+								} 
+							}
+						});
+		});
+		
+		
 		this.$btn_commander.on('click', () => {
 			console.log(this.frm.doc.items);
 			frappe.call({
