@@ -132,6 +132,9 @@ class Item(WebsiteGenerator):
 				cr.append("{0}: {1}".format(vcritere.parametre, (vcritere.valeur_p or '') +' '+ (vcritere.valeur or '')))
 		if cr:
 			self.critere_text = ' / '.join(str(x) for x in cr)
+		self.composant_text = ""
+		for cmp in self.composant:
+			self.composant_text +=  cmp.manufacturer_part_no +' '+ cmp.item_name +' / '
 		#critere_text
                 self.oem_text = ""
 		for o in self.oem:
@@ -224,6 +227,8 @@ class Item(WebsiteGenerator):
 			nom_g += self.oem_text + ' '
 		if self.critere_text:
 			nom_g += self.critere_text + ' '
+		if self.self.composant_text:
+			nom_g += self.composant_text+ ' '
 		if self.clean_manufacturer_part_number:
 			nom_g += self.clean_manufacturer_part_number + ' '
 		for v in self.versions:
