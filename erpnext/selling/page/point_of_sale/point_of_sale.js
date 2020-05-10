@@ -1269,7 +1269,8 @@ class POSItems {
 				<img class="vehicule-image" src="" width="100%">
 				</div>
 
-				<div class="vehicule-marque-field" style="width:50% ">					
+				
+				<div style="width:50% ">					
 				<label>Marque</label> : <span class="vehicule-marque-name clearfix"></span> <br>
 				<label>Modele</label> : <span class="vehicule-modele-name clearfix"></span><br>
 				<label>Generation</label> : <span class="vehicule-generation-name clearfix"></span> <br>
