@@ -138,7 +138,7 @@ class Item(WebsiteGenerator):
 				self.composant_text +=  (cmp.manufacturer_part_no or '') +' / '
 		self.articles_text= ""
 		for art in self.articles:
-			if cmp.manufacturer_part_no:
+			if art.manufacturer_part_no:
 				self.articles_text +=  (art.manufacturer_part_no or '') +' / '
 		#critere_text
                 self.oem_text = ""
