@@ -1266,7 +1266,7 @@ class POSItems {
 			<div class="vehicule-name-wrapper" style="display:flex;background-color:#F0FBFA;border-radius:20px">
 				 
 				<div style="width:20% ">
-				<img class="vehicule-image" src="" width="100%">
+				<img class="vehicule-image" src="" style="position: relative;top: 50%;transform: translateY(-50%);">
 				</div>
 
 				<div style="width:20% ;padding:10px">	
@@ -1275,11 +1275,14 @@ class POSItems {
 				<span class="strong">Generation </span>:
 				<span class="strong">Version </span>:
 				</div>
-				<div style="width:50% ;padding:10px">					
+				<div style="width:45% ;padding:10px">					
 				 <span class="vehicule-marque-name"></span> <br>
 				 <span class="vehicule-modele-name"></span> <br>
 				 <span class="vehicule-generation-name"></span>  <br>
 				 <span class="vehicule-version-name"></span> 
+				</div>
+				<div style="width:15% ;padding:10px">					
+				Date: <span class="vehicule-date"></span>  
 				</div>
 
 			</div>
@@ -1372,7 +1375,8 @@ class POSItems {
 								var sinv = response.message; 
 								if (sinv) {
 									wr.find('.vehicule-marque-name').text(sinv.marque);  
-									wr.find('.vehicule-image').attr("src",sinv.image);  
+									wr.find('.vehicule-image').attr("src",sinv.image); 
+									wr.find('.vehicule-date').text(''); 
 									
 								}  
 							}
@@ -1425,6 +1429,7 @@ class POSItems {
 								wr.find('.vehicule-modele-name').text(sinv.modele);  
 								wr.find('.vehicule-marque-name').text(sinv.nom_marque);  
 								wr.find('.vehicule-image').attr("src",sinv.logo);  
+								wr.find('.vehicule-date').text(''); 
 							}  
 						}
 						}); 
@@ -1474,6 +1479,7 @@ class POSItems {
 								wr.find('.vehicule-modele-name').text(sinv.modele_vehicule);  
 								wr.find('.vehicule-marque-name').text(sinv.nom_marque);  
 								wr.find('.vehicule-image').attr("src",sinv.image);  
+								wr.find('.vehicule-date').text(sinv.date_debut +' - '+sinv.date_fin); 
 							}  
 						}
 						}); 
@@ -1525,6 +1531,7 @@ class POSItems {
 								wr.find('.vehicule-modele-name').text(sinv.nom_modele);  
 								wr.find('.vehicule-marque-name').text(sinv.marque_vehicule);  
 								wr.find('.vehicule-image').attr("src",sinv.image);  
+								wr.find('.vehicule-date').text(sinv.periode); 
 
 							}  
 						}
