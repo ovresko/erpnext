@@ -723,6 +723,7 @@ class POSCart {
 			this.toggle_taxes_and_totals();
 		});
 		this.$btn_commander.on('click', () => {
+			console.log(this.frm.doc.items);
 			frappe.call({
 							method: "erpnext.selling.page.point_of_sale.point_of_sale.make_sales_order",
 							args: {
