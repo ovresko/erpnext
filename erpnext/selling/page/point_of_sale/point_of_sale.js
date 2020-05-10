@@ -732,7 +732,8 @@ class POSCart {
 							callback: function(r) {
 								if (r.message) {
 									let cmd = r.message;
-									 frappe.set_route('Form', "Sales Order", cmd.name);
+									window.open('#Form/Sales Order/'+cmd.name, '_blank', 'toolbar=0,location=0,menubar=0'); 
+									 //frappe.set_route('Form', "Sales Order", cmd.name);
 								} 
 							}
 						});
