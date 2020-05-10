@@ -1276,9 +1276,9 @@ class POSItems {
 				<span class="strong">Version </span>:
 				</div>
 				<div style="width:50% ;padding:10px">					
-				 <span class="vehicule-marque-name"></span> 
-				<span class="vehicule-modele-name"></span>
-				 <span class="vehicule-generation-name"></span> 
+				 <span class="vehicule-marque-name"></span> <br>
+				 <span class="vehicule-modele-name"></span> <br>
+				 <span class="vehicule-generation-name"></span>  <br>
 				 <span class="vehicule-version-name"></span> 
 				</div>
 
