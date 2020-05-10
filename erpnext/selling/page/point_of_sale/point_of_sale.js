@@ -1828,14 +1828,16 @@ class POSItems {
 			   let coml = '';
 			   if(articles_text)
 			   {
-				   coml = '<span>Compléments : <br>${articles_text}</span><br>';
+				   coml = '<span>Compléments : <br>'+articles_text +'</span><br>';
 			   }
-			    let comp = '';
+			   
+			   let comp = '';
 			   if(composant_text)
 			   {
-				   comp = '<span>Composants : <br>${composant_text}</span><br>';
+				   comp = '<span>Composants : <br>'+ composant_text +'</span><br>';
 			   }
-		   	complements = '<div style="width:160px;padding-left:5px" >'+coml+comp+'</div>';
+			   
+		   	   complements = '<div style="width:160px;padding-left:5px" >'+coml+comp+'</div>';
 		   }
 		 
 		//image-view-item
