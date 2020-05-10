@@ -1271,33 +1271,18 @@ class POSItems {
 			</div>
 			<div class="vehicule" style="display:flex">
 
-				
-				<div class="form-group">
-					<div class="vehicule-marque-field" style="width:90% ">
+				<div class="vehicule-marque-field" style="width:90% ">
 					</div>
-				</div>
 
-
-				<div class="form-group">
-					<div class="vehicule-modele-field" style="width:90% ">
+				<div class="vehicule-modele-field" style="width:90% ">
 					</div>
-				</div>
 
-
-				<div class="form-group">
-					<div class="vehicule-generation-field" style="width:90% ">
+				<div class="vehicule-generation-field" style="width:90% ">
 					</div>
-				</div>
-
-				<div class="form-group">
-					<div class="vehicule-version-field" style="width:100% ">
+				<div class="vehicule-version-field" style="width:100% ">
 					</div>
-				</div>
-
-				<div class="form-group">
-					<div class="item-modele-field" style="width:100% ">
+				<div class="item-modele-field" style="width:100% ">
 					</div> 
-				</div>
  
 			</div>
 			<div class="fields">
