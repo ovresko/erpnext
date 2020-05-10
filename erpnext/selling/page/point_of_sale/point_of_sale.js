@@ -725,6 +725,7 @@ class POSCart {
 		this.$discount_amount = this.wrapper.find('.discount-amount');
 		this.$grand_total = this.wrapper.find('.grand-total');
 		this.$qty_total = this.wrapper.find('.quantity-total');
+		this.$btn_commander = this.wrapper.find('.btn-commander');
 		// this.$loyalty_button = this.wrapper.find('.loyalty-button');
 
 		// this.$loyalty_button.on('click', () => {
@@ -735,6 +736,11 @@ class POSCart {
 		this.$grand_total.on('click', () => {
 			this.toggle_taxes_and_totals();
 		});
+		this.$btn_commander.on('click', () => {
+			this.cart.events.on_commander();
+		});
+		
+		
 	}
 
 	reset() {
