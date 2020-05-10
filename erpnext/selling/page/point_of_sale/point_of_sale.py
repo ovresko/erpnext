@@ -216,11 +216,11 @@ def get_item_generation(vehicule_generation):
 	return cond
 
 def get_vehicule_modele(vehicule_modele):
-	cond = """ and (i.name in (select parent from `tabVersion vehicule item` where version_vehicule LIKE '{0}%%')  or i.name in (select parent from `tabModele vehicule item` where modele_vehicule = '{}') )""".format(vehicule_modele,vehicule_modele)
+	cond = """ and (i.name in (select parent from `tabVersion vehicule item` where version_vehicule LIKE '{}%%')  or i.name in (select parent from `tabModele vehicule item` where modele_vehicule = '{}') )""".format(vehicule_modele,vehicule_modele)
 	return cond
 
 def get_item_marque(vehicule_marque):
-	cond = """ and (i.name in (select parent from `tabVersion vehicule item` where version_vehicule LIKE '{0}%%') or i.name in (select parent from `tabMarque vehicule item` where marque_vehicule = '{}') )""".format(vehicule_marque,vehicule_marque)
+	cond = """ and (i.name in (select parent from `tabVersion vehicule item` where version_vehicule LIKE '{}%%') or i.name in (select parent from `tabMarque vehicule item` where marque_vehicule = '{}') )""".format(vehicule_marque,vehicule_marque)
 	return cond
 	
 	
