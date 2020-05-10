@@ -18,6 +18,7 @@ def make_devis(customer,items):
 	
 	so = frappe.new_doc("Quotation")
 	so.customer = customer
+	so.party_name = customer
 	for item in items:
 		item = frappe._dict(item)
 		item.doctype="Quotation Item"
