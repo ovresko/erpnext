@@ -1263,27 +1263,35 @@ class POSItems {
 
 	make_dom() {
 		this.wrapper.html(`
+			<div class="vehicule-name-wrapper" style="display:flex">
+				<span class="vehicule-marque-name clearfix"></span> 
+				<span class="vehicule-modele-name clearfix"></span>
+				<span class="vehicule-generation-name clearfix"></span>
+				<span class="vehicule-version-name clearfix"></span>
+			</div>
 			<div class="vehicule" style="display:flex">
+
+				
 				<div class="form-group">
 					<div class="vehicule-marque-field" style="width:90% ">
-					</div><span class="vehicule-marque-name clearfix"></span>
+					</div>
 				</div>
 
 
 				<div class="form-group">
 					<div class="vehicule-modele-field" style="width:90% ">
-					</div><span class="vehicule-modele-name clearfix"></span>
+					</div>
 				</div>
 
 
 				<div class="form-group">
 					<div class="vehicule-generation-field" style="width:90% ">
-					</div><span class="vehicule-generation-name clearfix"></span>
+					</div>
 				</div>
 
 				<div class="form-group">
 					<div class="vehicule-version-field" style="width:100% ">
-					</div><span class="vehicule-version-name clearfix"></span>
+					</div>
 				</div>
 
 				<div class="form-group">
