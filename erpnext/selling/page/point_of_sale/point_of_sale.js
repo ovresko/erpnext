@@ -1265,11 +1265,16 @@ class POSItems {
 		this.wrapper.html(`
 			<div class="vehicule-name-wrapper" style="display:flex;background-color:#F0FBFA;border-radius:20px">
 				 
-				<img class="vehicule-image" src="" width="100px">
-				Marque : <span class="vehicule-marque-name clearfix"></span> 
-				Modele : <span class="vehicule-modele-name clearfix"></span>
-				Generation : <span class="vehicule-generation-name clearfix"></span> 
-				Version : <span class="vehicule-version-name clearfix"></span> 
+				<div style="width:20% ">
+				<img class="vehicule-image" src="" width="100%">
+				</div>
+
+				<div class="vehicule-marque-field" style="width:50% ">					
+				<label>Marque</label> : <span class="vehicule-marque-name clearfix"></span> <br>
+				<label>Modele</label> : <span class="vehicule-modele-name clearfix"></span><br>
+				<label>Generation</label> : <span class="vehicule-generation-name clearfix"></span> <br>
+				<label>Version</label> : <span class="vehicule-version-name clearfix"></span> <br>
+				</div>
 
 			</div>
 			<div class="vehicule" style="display:flex">
