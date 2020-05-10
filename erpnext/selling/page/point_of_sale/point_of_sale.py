@@ -13,10 +13,11 @@ from six import string_types
 def make_sales_order(customer,items):
 	frappe.msgprint(items)
 	items = json.loads(items)
-	items = frappe._dict(items)
+	
 	so = frappe.new_doc("Sales Order")
 	so.customer = customer
 	for item in items:
+		item = frappe._dict(item)
 		so.append('items', {
 		'item_code': item.item_code,
 		"item_name":item.item_name,
