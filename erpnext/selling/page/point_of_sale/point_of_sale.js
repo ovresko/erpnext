@@ -1814,6 +1814,7 @@ class POSItems {
 		const { item_code, item_name, item_image} = item;
 		const item_title =  item_name || item_code;
 		const critere_text = (item.critere_text || '').split("/").join("<br>");
+		const composant_text =  (item.composant_text || '').split("/").join("<br>");
 		const oem = item.oem_text.slice(0, item.oem_text.indexOf('-'));
 		let critere = '';
 		if(critere_text){
@@ -1848,6 +1849,11 @@ class POSItems {
 						</a>
 	 					${critere}
 						 
+					</div>
+
+					<div style="width:160px;padding-left:5px" >
+						<span>${composant_text}</span>
+
 					</div>
 					<div style="width:160px;padding-left:5px" >
 						<span>
