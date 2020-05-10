@@ -1271,10 +1271,10 @@ class POSItems {
 
 				
 				<div style="width:50% ">					
-				<label>Marque</label> : <span class="vehicule-marque-name clearfix"></span> <br>
-				<label>Modele</label> : <span class="vehicule-modele-name clearfix"></span><br>
-				<label>Generation</label> : <span class="vehicule-generation-name clearfix"></span> <br>
-				<label>Version</label> : <span class="vehicule-version-name clearfix"></span> <br>
+				<span class="strong">Marque</span> : <span class="vehicule-marque-name clearfix"></span> <br>
+				<span class="strong">Modele</span> : <span class="vehicule-modele-name clearfix"></span><br>
+				<span class="strong">Generation</span> : <span class="vehicule-generation-name clearfix"></span> <br>
+				<span class="strong">Version</span> : <span class="vehicule-version-name clearfix"></span> <br>
 				</div>
 
 			</div>
