@@ -1263,13 +1263,10 @@ class POSItems {
 
 	make_dom() {
 		this.wrapper.html(`
-			<div class="vehicule-name-wrapper" style="display:flex">
-				<h2>
-				<i class="fa fa-car" style="margin-left:20px" ></i>
-				<span class="vehicule-marque-name clearfix"></span> 
-				<span class="vehicule-modele-name clearfix"></span>
-				<span class="vehicule-generation-name clearfix"></span>
-				<span class="vehicule-version-name clearfix"></span></h2>
+			<div class="vehicule-name-wrapper" style="display:flex;background-color:#F0FBFA;border-radius:20px">
+				 
+				<img class="vehicule-image" src="" width="100px">
+				<span class="vehicule-marque-name clearfix"></span>; <span class="vehicule-modele-name clearfix"></span>; <span class="vehicule-generation-name clearfix"></span>; <span class="vehicule-version-name clearfix"></span> 
 			</div>
 			<div class="vehicule" style="display:flex">
 
@@ -1360,6 +1357,8 @@ class POSItems {
 								var sinv = response.message; 
 								if (sinv) {
 									wr.find('.vehicule-marque-name').text(sinv.marque);  
+									wr.find('.vehicule-image').attr("src",sinv.image);  
+									
 								}  
 							}
 							}); 
@@ -1409,6 +1408,7 @@ class POSItems {
 							var sinv = response.message; 
 							if (sinv) {
 								wr.find('.vehicule-modele-name').text(sinv.modele);  
+								wr.find('.vehicule-image').attr("src",sinv.logo);  
 							}  
 						}
 						}); 
@@ -1455,6 +1455,7 @@ class POSItems {
 							var sinv = response.message; 
 							if (sinv) {
 								wr.find('.vehicule-generation-name').text(sinv.generation);  
+								wr.find('.vehicule-image').attr("src",sinv.image);  
 							}  
 						}
 						}); 
@@ -1501,6 +1502,8 @@ class POSItems {
 							var sinv = response.message; 
 							if (sinv) {
 								wr.find('.vehicule-version-name').text(sinv.commercial_name+" "+sinv.code_moteur+" "+sinv.puissance_fiscale);  
+								wr.find('.vehicule-image').attr("src",sinv.image);  
+
 							}  
 						}
 						}); 
