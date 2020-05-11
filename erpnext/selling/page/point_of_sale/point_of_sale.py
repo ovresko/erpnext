@@ -212,19 +212,25 @@ def get_item_manufacturer(item_manufacturer):
 	cond = """ and i.manufacturer = '%s'""" % (item_manufacturer)
 	return cond
 def get_item_version(vehicule_version):
-	cond = """ and i.name in (select parent from `tabVersion vehicule item` where version_vehicule = '%s')""" % (vehicule_version)
+	generation = vehicule_version[:-2]
+	modele =generation[:-2]
+	marque = modele[:-2]
+	cond = """ and (i.name in (select parent from `tabVersion vehicule item` where version_vehicule = '%s')  or i.name in (select parent from `tabGeneration vehicule item` where generation_vehicule = '%s' or i.name in (select parent from `tabModele vehicule item` where modele_vehicule = '%s' or i.name in (select parent from `tabMarque vehicule item` where marque_vehicule = '%s') )""" % (vehicule_version,generation,modele,marque)
 	return cond
 
 def get_item_generation(vehicule_generation):
-	cond = """ and (i.name in (select parent from `tabVersion vehicule item` where version_vehicule LIKE '{}%%') or i.name in (select parent from `tabGeneration vehicule item` where generation_vehicule = '{}') )""".format(vehicule_generation,vehicule_generation)
+	modele =vehicule_generation[:-2]
+	marque = modele[:-2]
+	cond = """ and (i.name in (select parent from `tabVersion vehicule item` where version_vehicule LIKE '{}%%') or i.name in (select parent from `tabGeneration vehicule item` where generation_vehicule = '{}' or i.name in (select parent from `tabModele vehicule item` where modele_vehicule = '%s' or i.name in (select parent from `tabMarque vehicule item` where marque_vehicule= '%s') )""".format(vehicule_generation,vehicule_generation,modele,marque)
 	return cond
 
 def get_vehicule_modele(vehicule_modele):
-	cond = """ and (i.name in (select parent from `tabVersion vehicule item` where version_vehicule LIKE '{}%%')  or i.name in (select parent from `tabModele vehicule item` where modele_vehicule = '{}') )""".format(vehicule_modele,vehicule_modele)
+	marque = vehicule_modele[:-2]
+	cond = """ and (i.name in (select parent from `tabVersion vehicule item` where version_vehicule LIKE '{}%%')  or i.name in (select parent from `tabModele vehicule item` where modele_vehicule = '{}' or i.name in (select parent from `tabMarque vehicule item` where marque_vehicule= '%s') )""".format(vehicule_modele,vehicule_modele,marque)
 	return cond
 
 def get_item_marque(vehicule_marque):
-	cond = """ and (i.name in (select parent from `tabVersion vehicule item` where version_vehicule LIKE '{}%%') or i.name in (select parent from `tabMarque vehicule item` where marque_vehicule = '{}') )""".format(vehicule_marque,vehicule_marque)
+	cond = """ and (i.name in (select parent from `tabVersion vehicule item` where version_vehicule LIKE '{}%%') or i.name in (select parent from `tabModele vehicule item` where modele_vehicule LIKE '{}%%') or i.name in (select parent from `tabGeneration vehicule item` where generation_vehicule LIKE '{}%%') or i.name in (select parent from `tabMarque vehicule item` where marque_vehicule = '{}') )""".format(vehicule_marque,vehicule_marque,vehicule_marque,vehicule_marque)
 	return cond
 	
 	
