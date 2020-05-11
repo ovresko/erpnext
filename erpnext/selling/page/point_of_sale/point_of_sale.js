@@ -1502,7 +1502,7 @@ class POSItems {
 							var sinv = response.message; 
 							if (sinv) {
 								wr.find('.vehicule-generation-name').text(sinv.generation);  
-								wr.find('.vehicule-modele-name').text(sinv.modele_vehicule);  
+								wr.find('.vehicule-modele-name').text(sinv.nom_modele);  
 								wr.find('.vehicule-marque-name').text(sinv.nom_marque);  
 								wr.find('.vehicule-image').attr("src",sinv.image);  
 								wr.find('.vehicule-date').text(sinv.date_debut +' - '+sinv.date_fin); 
