@@ -107,7 +107,7 @@ def get_items(start, page_length, price_list, item_group, search_value="", pos_p
 			LEFT JOIN (select item_code, actual_qty, warehouse from
 					`tabBin` where warehouse=%(warehouse)s) item_bin
 			ON
-				(item_bin.item_code=i.name or item_bin.item_code=i.variant_of) GROUP BY i.name
+				(item_bin.item_code=i.name or item_bin.item_code=i.variant_of) 
 			where 
 				i.disabled = 0 and i.has_variants = 0 and i.is_sales_item = 1
 				and i.item_group in (select name from `tabItem Group` where lft >= {lft} and rgt <= {rgt})
