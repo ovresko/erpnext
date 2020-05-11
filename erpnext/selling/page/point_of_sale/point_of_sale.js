@@ -1918,7 +1918,7 @@ class POSItems {
 		const composant_text =  (item.composant_text || '').split("/").join("<br>");
 		const articles_text = (item.articles_text || '').split("/").join("<br>");
 		const oem = item.oem_text.slice(0, item.oem_text.indexOf('-'));
-		console.log(item);
+		
 		const actual_qty =  item.actual_qty ||  ''
 		let critere = '';
 		if(critere_text){
