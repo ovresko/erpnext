@@ -30,7 +30,7 @@ def refresh_items():
         print("found %d " % len(models))
         for model in models:
 		try:
-			print("handeling %s" % model.modified)
+			print("handeling %s" % model.name)
 			doc = frappe.get_doc("Item",model.name)
 			#doc.update_variants()
 			doc.save()
