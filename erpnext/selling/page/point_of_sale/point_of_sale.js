@@ -1515,7 +1515,7 @@ class POSItems {
 								{
 									fin=sinv.date_fin.substring(5,7)+'-'+sinv.date_fin.substring(2,4)
 								}
-								wr.find('.vehicule-date').text(debut +' - '+fin); 
+								wr.find('.vehicule-date').text(debut +' / '+fin); 
 							}  
 						}
 						}); 
