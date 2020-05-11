@@ -661,7 +661,7 @@ class POSCart {
 	make_dom() {
 		this.wrapper.append(`
 			<div class="pos-cart">
-				<div class="customer-info">
+				<div class="customer-info" style="display:flex;background-color:#F0FBFA;border-radius:20px;padding:10px">
 				</div>
 				<div class="customer-field">
 				</div>
@@ -942,7 +942,7 @@ class POSCart {
 							"callback": function(response) {
 								var sinv = response.message; 
 								if (sinv) {
-									wr.find('.customer-info').html('Nom : '+sinv.customer_name+'<br>'+sinv.contact_html+'<br>'+sinv.mobile_no); 
+									wr.find('.customer-info').html('Nom : '+sinv.customer_name || ''+'<br>'+sinv.contact_html || ''+'<br>'+sinv.mobile_no || ''); 
 								}  else{
 									   wr.find('.customer-info').html('');
 								   }
