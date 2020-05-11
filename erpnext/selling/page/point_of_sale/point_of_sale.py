@@ -82,14 +82,11 @@ def get_items(start, page_length, price_list, item_group, search_value="", pos_p
 
 	if vehicule_version:
 		condition += get_item_version(vehicule_version)
-
-	if vehicule_generation:
+	elif vehicule_generation:
 		condition += get_item_generation(vehicule_generation)
-	
-	if vehicule_modele:
+	elif vehicule_modele:
 		condition += get_vehicule_modele(vehicule_modele)
-	
-	if vehicule_marque:
+	elif vehicule_marque:
 		condition += get_item_marque(vehicule_marque)
 	
 
@@ -226,7 +223,7 @@ def get_item_generation(vehicule_generation):
 
 def get_vehicule_modele(vehicule_modele):
 	marque = vehicule_modele[:-2]
-	cond = """ and (i.name in (select parent from `tabVersion vehicule item` where modele_vehicule = '{}')  or i.name in (select parent from `tabModele vehicule item` where modele_vehicule = '{}') or i.name in (select parent from `tabMarque vehicule item` where marque_vehicule= '{}') )""".format(vehicule_modele,vehicule_modele,marque)
+	cond = """ and (i.name in (select parent from `tabVersion vehicule item` where modele_vehicule = '{}') or i.name in (select parent from `tabGeneration vehicule item` where modele_vehicule = '{}') or i.name in (select parent from `tabModele vehicule item` where modele_vehicule = '{}') or i.name in (select parent from `tabMarque vehicule item` where marque_vehicule= '{}') )""".format(vehicule_modele,vehicule_modele,vehicule_modele,marque)
 	return cond
 
 def get_item_marque(vehicule_marque):
