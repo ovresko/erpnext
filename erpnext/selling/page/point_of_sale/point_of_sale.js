@@ -1508,12 +1508,12 @@ class POSItems {
 								let debut = sinv.date_debut;
 								if(sinv.date_debut)
 								{
-									debut=sinv.date_debut.substring(5,6)+'-'+sinv.date_debut.substring(2,3)
+									debut=sinv.date_debut.substring(5,7)+'-'+sinv.date_debut.substring(2,4)
 								}
 								let fin = sinv.date_fin;
 								if(sinv.date_fin)
 								{
-									fin=sinv.date_fin.substring(5,6)+'-'+sinv.date_fin.substring(2,3)
+									fin=sinv.date_fin.substring(5,7)+'-'+sinv.date_fin.substring(2,4)
 								}
 								wr.find('.vehicule-date').text(debut +' - '+fin); 
 							}  
