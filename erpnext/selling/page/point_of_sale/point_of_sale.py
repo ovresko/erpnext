@@ -108,7 +108,7 @@ def get_items(start, page_length, price_list, item_group, search_value="", pos_p
 					`tabBin` where warehouse=%(warehouse)s) item_bin
 			ON
 				(item_bin.item_code=i.name or item_bin.item_code=i.variant_of)
-			
+			GROUP BY i.item_code
 			where
 				i.disabled = 0 and i.has_variants = 0 and i.is_sales_item = 1
 				and i.item_group in (select name from `tabItem Group` where lft >= {lft} and rgt <= {rgt})
