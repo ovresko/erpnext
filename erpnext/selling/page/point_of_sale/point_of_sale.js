@@ -1296,9 +1296,9 @@ class POSItems {
 				</div>
 
 				<div style="width:20% ;padding:10px">	
-				<span class="strong">Marque </span>:
-				<span class="strong">Modele </span>:
-				<span class="strong">Generation </span>:
+				<span class="strong">Marque </span>:<br>
+				<span class="strong">Modele </span>:<br>
+				<span class="strong">Generation </span>:<br>
 				<span class="strong">Version </span>:
 				</div>
 				<div style="width:45% ;padding:10px">					
@@ -1308,7 +1308,7 @@ class POSItems {
 				 <span class="vehicule-version-name"></span> 
 				</div>
 				<div style="width:15% ;padding:10px">					
-				<span class="strong">Date </span>:  <span class="vehicule-date"></span>  
+				<span class="strong">Date </span>: <br> <span class="vehicule-date"></span>  
 				</div>
 
 			</div>
