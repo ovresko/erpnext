@@ -1919,7 +1919,11 @@ class POSItems {
 		const articles_text = (item.articles_text || '').split("/").join("<br>");
 		const oem = item.oem_text.slice(0, item.oem_text.indexOf('-'));
 		
-		const actual_qty =  item.actual_qty ||  ''
+		const actual_qty = '';
+		if(item.actual_qty){
+			actual_qty = '<span class="strong" style="color:#02AF22">Qts disp: '+item.actual_qty+'</span>';
+		
+		}
 		let critere = '';
 		if(critere_text){
 			critere = '<hr style="margin:5px 0px 5px 0px"><span style="font-size:13px;color:red">'+critere_text +'</span>';
