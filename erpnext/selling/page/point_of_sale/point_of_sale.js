@@ -1505,7 +1505,17 @@ class POSItems {
 								wr.find('.vehicule-modele-name').text(sinv.nom_modele);  
 								wr.find('.vehicule-marque-name').text(sinv.nom_marque);  
 								wr.find('.vehicule-image').attr("src",sinv.image);  
-								wr.find('.vehicule-date').text(sinv.date_debut +' - '+sinv.date_fin); 
+								let debut = sinv.date_debut;
+								if(sinv.date_debut)
+								{
+									debut=sinv.date_debut.substring(5,6)+'-'+sinv.date_debut.substring(2,3)
+								}
+								let fin = sinv.date_fin;
+								if(sinv.date_fin)
+								{
+									fin=sinv.date_fin.substring(5,6)+'-'+sinv.date_fin.substring(2,3)
+								}
+								wr.find('.vehicule-date').text(debut +' - '+fin); 
 							}  
 						}
 						}); 
