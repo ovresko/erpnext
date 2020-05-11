@@ -1921,7 +1921,7 @@ class POSItems {
 		
 		let actual_qty = '';
 		if(item.actual_qty){
-			actual_qty = '<span class="strong" style="color:#02AF22">Qts disp: '+item.actual_qty+'</span>';
+			actual_qty = '<span class="strong" style="color:#02AF22">Qts disp: '+item.actual_qty+'</span><br>';
 		
 		}
 		let critere = '';
