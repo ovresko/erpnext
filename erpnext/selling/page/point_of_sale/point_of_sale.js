@@ -661,6 +661,8 @@ class POSCart {
 	make_dom() {
 		this.wrapper.append(`
 			<div class="pos-cart">
+				<div class="customer-info">
+				</div>
 				<div class="customer-field">
 				</div>
 				<div class="cart-wrapper">
@@ -912,6 +914,7 @@ class POSCart {
 	}
 
 	make_customer_field() {
+		const wr = this.wrapper;
 		this.customer_field = frappe.ui.form.make_control({
 			df: {
 				fieldtype: 'Link',
@@ -925,8 +928,31 @@ class POSCart {
 					}
 				},
 				onchange: () => {
-					this.events.on_customer_change(this.customer_field.get_value());
+					let customer = this.customer_field.get_value();
+					this.events.on_customer_change(customer);
 					this.events.get_loyalty_details();
+					if(customer){
+						
+						frappe.call({
+							"method": "frappe.client.get",
+							"args": {
+								"doctype": "Customer",
+								"name": customer
+							},
+							"callback": function(response) {
+								var sinv = response.message; 
+								if (sinv) {
+									wr.find('.customer-info').html('Nom : '+sinv.customer_name+'<br>'+sinv.contact_html+'<br>'+sinv.mobile_no); 
+								}  else{
+									   wr.find('.customer-info').html('');
+								   }
+							}
+							}); 
+						
+						
+					   }else{
+						   wr.find('.customer-info').html('');
+					   }
 				}
 			},
 			parent: this.wrapper.find('.customer-field'),
@@ -1282,7 +1308,7 @@ class POSItems {
 				 <span class="vehicule-version-name"></span> 
 				</div>
 				<div style="width:15% ;padding:10px">					
-				Date: <span class="vehicule-date"></span>  
+				<span class="strong">Date </span>:  <span class="vehicule-date"></span>  
 				</div>
 
 			</div>
