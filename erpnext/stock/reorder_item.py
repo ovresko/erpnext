@@ -26,7 +26,7 @@ def refresh_refs():
 	update tabItem set clean_manufacturer_part_number= REPLACE(REPLACE(REPLACE(REPLACE(manufacturer_part_no,' ',''),'-',''),'.',''),'/','') where ((clean_manufacturer_part_number ='' or clean_manufacturer_part_number IS NULL ) and manufacturer_part_no != '' and manufacturer_part_no IS NOT NULL) 
 	""")
 def refresh_items():
-        models = frappe.get_all("Item",filters={"has_variants":"1"},fields=["name","modified"],order_by='modified DESC',limit=10)
+        models = frappe.get_all("Item",filters={"has_variants":"1"},fields=["name","modified"],order_by='modified asc',limit=10)
         print("found %d " % len(models))
         for model in models:
 		try:
