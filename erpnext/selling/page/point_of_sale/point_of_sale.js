@@ -1918,6 +1918,7 @@ class POSItems {
 		const composant_text =  (item.composant_text || '').split("/").join("<br>");
 		const articles_text = (item.articles_text || '').split("/").join("<br>");
 		const oem = item.oem_text.slice(0, item.oem_text.indexOf('-'));
+		const actual_qty = item.actual_qty or ''
 		let critere = '';
 		if(critere_text){
 			critere = '<hr style="margin:5px 0px 5px 0px"><span style="font-size:13px;color:red">'+critere_text +'</span>';
@@ -1971,6 +1972,10 @@ class POSItems {
 					</div>
 					${complements}
 					<div style="width:160px;padding-left:5px" >
+						
+						<span>
+							${actual_qty}
+						</span>
 						<span>
 							${item.manufacturer}
 						</span>
