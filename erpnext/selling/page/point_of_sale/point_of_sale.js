@@ -942,7 +942,8 @@ class POSCart {
 							"callback": function(response) {
 								var sinv = response.message; 
 								if (sinv) {
-									wr.find('.customer-info').html('Nom : '+sinv.customer_name || ''+'<br>'+sinv.contact_html || ''+'<br>'+sinv.mobile_no || ''); 
+									console.log(sinv);
+									wr.find('.customer-info').html('Nom : '+(sinv.customer_name || '')+'<br>'+(sinv.contact_html || '')+'<br>'+(sinv.mobile_no || '')); 
 								}  else{
 									   wr.find('.customer-info').html('');
 								   }
