@@ -586,7 +586,9 @@ erpnext.pos.PointOfSale = class PointOfSale {
 		// this.page.add_menu_item(__("Pay"), function () {
 		//
 		// }).addClass('visible-xs');
-
+		this.page.add_menu_item("Effacer tous", function () {
+			me.make_new_invoice();
+		});	
 		this.page.add_menu_item(__("Form View"), function () {
 			frappe.model.sync(me.frm.doc);
 			frappe.set_route("Form", me.frm.doc.doctype, me.frm.doc.name);
