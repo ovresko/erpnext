@@ -1932,7 +1932,7 @@ class POSItems {
 		const composant_text =  (item.composant_text || '').split("/").join("<br>");
 		const articles_text = (item.articles_text || '').split("/").join("<br>");
 		const oem = item.oem_text.slice(0, item.oem_text.indexOf('-'));
-		const designation_commerciale = '';
+		let designation_commerciale = '';
 		if(item.designation_commerciale){
 			designation_commerciale = '<br>'+item.designation_commerciale+	 '<br>';
 		}
@@ -2005,6 +2005,7 @@ class POSItems {
 						</span>
 						<br>
 						 <span>${item.adresse}</span>
+						<br>
 						<span>
 							${item_code}
 						</span>
