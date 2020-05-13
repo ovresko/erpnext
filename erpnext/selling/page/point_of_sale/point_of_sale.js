@@ -2004,7 +2004,7 @@ class POSItems {
 							${item.manufacturer}
 						</span>
 						<br>
-						 
+						 <span>${item.adresse}</span>
 						<span>
 							${item_code}
 						</span>
