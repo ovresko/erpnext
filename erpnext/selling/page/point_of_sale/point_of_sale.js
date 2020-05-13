@@ -1997,20 +1997,19 @@ class POSItems {
 					${complements}
 					<div style="width:160px;padding-left:5px" >
 						<div style="margin-bottom:10px"><img src="${item.fabricant_logo ||'#'}" width="80px" ></div>
-						<span>
+						<div>
 							${item.manufacturer ||''}
-						</span>
-						<span>
+						</div>
+						<div>
 							${actual_qty}
-						</span>
-						
-						<br>
-						 <span>${item.adresse ||''}</span>
-						<br>
-						<span>
+						</div>
+						 
+						 <div>${item.adresse ||''}</div>
+						 
+						<div>
 							${item_code}
-						</span>
-						<br>
+						</div>
+						 
 						OEM: <span style="font-weight:800"><a data-item-code="${item_code}" class="oem-text">${oem}</a></span>
 						<br>
 						<button data-item-code="${item_code}" data-label="open" class="btn btn-default btn-xs btn-open" style="margin-right: 5px;"><i class="fa fa-eye"></i>
