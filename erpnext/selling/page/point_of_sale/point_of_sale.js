@@ -1937,10 +1937,13 @@ class POSItems {
 			designation_commerciale = '<br>'+item.designation_commerciale+	 '<br>';
 		}
 		
-		let actual_qty = '';
+		let actual_qty = '0';
 		if(item.actual_qty){
-			actual_qty = '<span class="strong" style="color:#02AF22">Qts disp: '+item.actual_qty+'</span><br>';
+			actual_qty = '<span class="strong" style="color:#02AF22">Qts: '+item.actual_qty+'</span><br>';
 		
+		}else{
+			actual_qty = '<span class="strong" style="color:1810E6">Qts: '+item.actual_qty+'</span>   <button data-item-code="${item_code}" data-label="stock" class="btn btn-success btn-xs btn-stock" style="margin-right: 5px;"><i class="fa fa-cubes"></i></button>
+				 <br>';
 		}
 		let critere = '';
 		if(critere_text){
