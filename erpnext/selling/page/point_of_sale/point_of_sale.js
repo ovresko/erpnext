@@ -943,7 +943,7 @@ class POSCart {
 								var sinv = response.message; 
 								if (sinv) {
 									 
-									wr.find('.customer-info').html('Nom : '+(sinv.customer_group || '')+'<br>'+(sinv.contact_html || '')+'<br>'+(sinv.territory || '')+'<br>'+(sinv.mobile_no || '')); 
+									wr.find('.customer-info').html('Nom : '+(sinv.customer_name || '')+'<br>'+(sinv.customer_group || '')+'<br>'+(sinv.territory || '')+'<br>'+(sinv.mobile_no || '')); 
 								}  else{
 									   wr.find('.customer-info').html('');
 								   }
@@ -1929,6 +1929,10 @@ class POSItems {
 		const composant_text =  (item.composant_text || '').split("/").join("<br>");
 		const articles_text = (item.articles_text || '').split("/").join("<br>");
 		const oem = item.oem_text.slice(0, item.oem_text.indexOf('-'));
+		const designation_commerciale = '';
+		if(item.designation_commerciale){
+			designation_commerciale = '<br>'+item.designation_commerciale+	 '<br>';
+		}
 		
 		let actual_qty = '';
 		if(item.actual_qty){
@@ -1983,6 +1987,7 @@ class POSItems {
 						<a class="grey list-id" data-name="${item_code}" title="${item_title}" >
 							<span style="font-size:19px;color:blue;font-weight:600"> ${item.manufacturer_part_no} </span><br>${item_title}
 						</a>
+						${designation_commerciale}
 	 					${critere}
 						 
 					</div>
