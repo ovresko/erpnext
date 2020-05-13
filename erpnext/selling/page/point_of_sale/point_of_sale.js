@@ -946,7 +946,7 @@ class POSCart {
 								var sinv = response.message; 
 								if (sinv) {
 									 
-									wr.find('.customer-info').html('Nom : '+(sinv.customer_name || '')+'<br>'+(sinv.customer_group || '')+'<br>'+(sinv.territory || '')+'<br>'+(sinv.mobile_no || '')); 
+									wr.find('.customer-info').html('Nom : '+(sinv.customer_name || '')+'<br>'+(sinv.customer_group || '')+'<br>'+(sinv.territory || '')+'<br>'+(sinv.mobile_no || '')+ ' -  '+(sinv.email_id || '')); 
 								}  else{
 									   wr.find('.customer-info').html('');
 								   }
