@@ -1996,13 +1996,14 @@ class POSItems {
 					</div>
 					${complements}
 					<div style="width:160px;padding-left:5px" >
-						<div><img src="${item.fabricant_logo ||'#'}" width="80px"></div>
-						<span>
-							${actual_qty}
-						</span>
+						<div style="margin-bottom:10px"><img src="${item.fabricant_logo ||'#'}" width="80px" ></div>
 						<span>
 							${item.manufacturer ||''}
 						</span>
+						<span>
+							${actual_qty}
+						</span>
+						
 						<br>
 						 <span>${item.adresse ||''}</span>
 						<br>
