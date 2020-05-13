@@ -1996,7 +1996,7 @@ class POSItems {
 					</div>
 					${complements}
 					<div style="width:160px;padding-left:5px" >
-						
+						<img src="${item.fabricant_logo ||'#'}" width="80px">
 						<span>
 							${actual_qty}
 						</span>
