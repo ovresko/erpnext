@@ -2001,10 +2001,10 @@ class POSItems {
 							${actual_qty}
 						</span>
 						<span>
-							${item.manufacturer}
+							${item.manufacturer ||''}
 						</span>
 						<br>
-						 <span>${item.adresse}</span>
+						 <span>${item.adresse ||''}</span>
 						<br>
 						<span>
 							${item_code}
