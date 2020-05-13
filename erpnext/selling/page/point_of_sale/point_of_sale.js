@@ -1942,7 +1942,7 @@ class POSItems {
 			actual_qty = '<span class="strong" style="color:#02AF22">Qts: '+item.actual_qty+'</span><br>';
 		
 		}else{
-			actual_qty = '<span class="strong" style="color:1810E6">Qts: '+item.actual_qty+'</span>   <button data-item-code="'+item.item_code+'" data-label="stock" class="btn btn-success btn-xs btn-stock" style="margin-right: 5px;"><i class="fa fa-cubes"></i></button>';
+			actual_qty = '<span class="strong" style="color:#1810E6">Qts: 0 </span>   <button data-item-code="'+item.item_code+'" data-label="stock" class="btn btn-default btn-xs btn-stock" style="margin-right: 5px;"><i class="fa fa-cubes"></i></button>';
 				
 		}
 		let critere = '';
