@@ -269,7 +269,8 @@ class Item(WebsiteGenerator):
 				elif cmp.item:
 					var_comp = frappe.db.sql(""" select name,manufacturer_part_no,manufacturer from  `tabItem` where variant_of= '{}' and manufacturer='{}' limit 1""".format(cmp.item,self.manufacturer),as_dict=True)
 					if var_comp:
-						self.composant_text +=  (var_comp.manufacturer_part_no or '') +' / '
+						_comp=var_comp[0]
+						self.composant_text +=  (_comp.manufacturer_part_no or '') +' / '
 		
 			self.articles_text= ""
 			for art in self.articles:
@@ -278,7 +279,9 @@ class Item(WebsiteGenerator):
 				elif art.item:
 					var_comp = frappe.db.sql(""" select name,manufacturer_part_no,manufacturer from  `tabItem` where variant_of= '{}' and manufacturer='{}' limit 1""".format(art.item,self.manufacturer),as_dict=True)
 					if var_comp:
-						self.articles_text +=  (var_comp.manufacturer_part_no or '') +' / '
+						_comp=var_comp[0]
+						self.articles_text +=  (_comp.manufacturer_part_no or '') +' / '
+			self.
 
 
 	def validate_description(self):
