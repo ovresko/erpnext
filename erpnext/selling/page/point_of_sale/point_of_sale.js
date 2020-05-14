@@ -1931,7 +1931,7 @@ class POSItems {
 		const critere_text = (item.critere_text || '').split("/").join("<br>");
 		const composant_text =  (item.composant_text || '').split("/").join("<br>");
 		const articles_text = (item.articles_text || '').split("/").join("<br>");
-		console.log("articles_text",articles_text);
+		
 		const oem = item.oem_text.slice(0, item.oem_text.indexOf('-'));
 		let designation_commerciale = '';
 		if(item.designation_commerciale){
@@ -1952,8 +1952,7 @@ class POSItems {
 		 
 		}
 		let complements = '';
-		if(composant_text || articles_text)
-		   {
+		
 			   let coml = '';
 			   if(articles_text)
 			   {
@@ -1965,10 +1964,11 @@ class POSItems {
 			   {
 				   comp = '<span>Composants : <br>'+ composant_text +'</span><br>';
 			   }
-			   
+		   if(coml || comp)
+		   {   
 		   	   complements = '<div style="width:160px;padding-left:5px" >'+coml+comp+'</div>';
 		   }
-		 
+		 console.log("complements",complements);
 		//image-view-item
 		const template = `
 			<div class="pos-item-wrapper " data-item-code="${escape(item_code)}" style="width:100%;display:flex;flex-direction: inherit;">
@@ -1998,7 +1998,7 @@ class POSItems {
 	 					${critere}
 						 
 					</div>
-					${complements}
+					<div>${complements}<div>
 					<div style="width:160px;padding-left:5px" >
 						<div style="margin-bottom:10px"><img src="${item.fabricant_logo ||'#'}" width="80px" ></div>
 						<div>
