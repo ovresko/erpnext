@@ -1931,6 +1931,7 @@ class POSItems {
 		const critere_text = (item.critere_text || '').split("/").join("<br>");
 		const composant_text =  (item.composant_text || '').split("/").join("<br>");
 		const articles_text = (item.articles_text || '').split("/").join("<br>");
+		console.log("articles_text",articles_text);
 		const oem = item.oem_text.slice(0, item.oem_text.indexOf('-'));
 		let designation_commerciale = '';
 		if(item.designation_commerciale){
