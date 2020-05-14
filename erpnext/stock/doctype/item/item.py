@@ -281,7 +281,6 @@ class Item(WebsiteGenerator):
 					if var_comp:
 						_comp=var_comp[0]
 						self.articles_text +=  (_comp.manufacturer_part_no or '') +' / '
-			self.
 
 
 	def validate_description(self):
