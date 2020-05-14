@@ -141,10 +141,10 @@ class Item(WebsiteGenerator):
 			if art.manufacturer_part_no:
 				self.articles_text +=  (art.manufacturer_part_no or '') +' / '
 			elif art.item:
-				variantes = frappe.get_all("Item", fields = ["name,manufacturer_part_no,variant_of"],filters = {'variant_of': art.item})
-				if variantes:
-					for vari in variantes:
-						self.articles_text +=  (vari.manufacturer_part_no or '') +' / '
+				_variantes = frappe.db.sql(""" select name,manufacturer_part_no,manufacturer from  `tabItem` where variant_of= '{}'""".format(art.item),as_dict=True)
+				if _variantes:
+					for vari in _variantes:
+						self.articles_text +=  (vari.manufacturer or '')+' : '+ (vari.manufacturer_part_no or '') +' / '
 		#critere_text
                 self.oem_text = ""
 		for o in self.oem:
