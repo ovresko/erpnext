@@ -1107,6 +1107,8 @@ class POSCart {
 	get_item_html(item) {
 		const is_stock_item = this.get_item_details(item.item_code).is_stock_item;
 		const rate = format_currency(item.rate, this.frm.doc.currency,0);
+		const amount = format_currency(item.amount, this.frm.doc.currency,0);
+		
 		const indicator_class = (!is_stock_item || item.actual_qty >= item.qty) ? 'green' : 'red';
 		const batch_no = item.batch_no || '';
 
@@ -1116,15 +1118,15 @@ class POSCart {
 				<div class="item-name list-item__content list-item__content--flex-1.5 ellipsis">
 					${item.item_name}
 				</div>
+				<div class=" text-right" style="margin:10px">
 				<div class="quantity list-item__content text-right">
-					<div class="quantity list-item__content text-right">
 					${get_quantity_html(item.qty)}
 				</div>
 				<div class="discount list-item__content text-right">
-					${item.discount_percentage}%
+					Remise : ${item.discount_percentage}%
 				</div>
 				<div class="rate list-item__content text-right">
-					${rate}
+					${rate}  <span style='text-size:14px;text-weight:600'> ${amount} </span>
 				</div>
 				</div>	
 				
