@@ -122,6 +122,15 @@ class Item(WebsiteGenerator):
                             #self.prices += "/ \n"
 
 	def validate(self):
+		if self.versions and self.generation_vehicule_supporte:
+			frappe.msgprint("Attention vous avez mis des valeurs dans table Version vehicule et Generation vehicule au meme temps!")
+		if self.versions and self.modele_vehicule_supporte:
+			frappe.msgprint("Attention vous avez mis des valeurs dans table Version vehicule et Modeles vehicule au meme temps!")
+		if self.versions and self.marque_vehicule_supporte:
+			frappe.msgprint("Attention vous avez mis des valeurs dans table Version vehicule et marque vehicule au meme temps!")
+		if self.generation_vehicule_supporte and self.modele_vehicule_supporte:
+			frappe.msgprint("Attention vous avez mis des valeurs dans table Generation vehicule et Modeles vehicule au meme temps!")
+		
 		cr = []
 		if self.has_variants:
 			for critere in self.critere_piece:
@@ -134,27 +143,7 @@ class Item(WebsiteGenerator):
 		if cr:
 			self.critere_text = ' / '.join(str(x) for x in cr)
 		
-		if self.has_variants:
-			self.composant_text = ""
-			for cmp in self.composant:
-				if cmp.manufacturer_part_no:
-					self.composant_text +=  (cmp.manufacturer_part_no or '') +' / '
-				elif cmp.item:
-					_variantes = frappe.db.sql(""" select name,manufacturer_part_no,manufacturer from  `tabItem` where variant_of= '{}'""".format(art.item),as_dict=True)
-					if _variantes:
-						for vari in _variantes:
-							self.composant_text +=  (vari.manufacturer or '')+' : '+ (vari.manufacturer_part_no or '') +' / '
-
-			self.articles_text= ""
-			for art in self.articles:
-				if art.manufacturer_part_no:
-					self.articles_text +=  (art.manufacturer_part_no or '') +' / '
-				elif art.item:
-					_variantes = frappe.db.sql(""" select name,manufacturer_part_no,manufacturer from  `tabItem` where variant_of= '{}'""".format(art.item),as_dict=True)
-					if _variantes:
-						for vari in _variantes:
-							self.articles_text +=  (vari.manufacturer or '')+' : '+ (vari.manufacturer_part_no or '') +' / '
-		#critere_text
+				#critere_text
                 self.oem_text = ""
 		for o in self.oem:
 			o.oem_simplifie = o.oem.replace(" ","").replace("-","").replace(".","").replace("/","").replace("_","").replace(":","")
@@ -271,6 +260,28 @@ class Item(WebsiteGenerator):
 		self.update_variants()
 		self.update_item_price()
 		self.update_template_item()
+		#if self.has_variants:
+		#	self.composant_text = ""
+		#	_variantes = frappe.db.sql(""" select name,manufacturer_part_no,manufacturer from  `tabItem` where variant_of= '{}'""".format(self.name),as_dict=True)
+		#	for cmp in self.composant:
+		#		if cmp.manufacturer_part_no:
+		#			self.composant_text +=  (cmp.manufacturer_part_no or '') +' / '
+		#		elif cmp.item:
+		#			for vari in _variantes:
+		#				var_comp = frappe.db.sql(""" select name,manufacturer_part_no,manufacturer from  `tabItem` where variant_of= '{}' and manufacturer='{}' limit 1""".format(cmp.item,vari.manufacturer),as_dict=True)
+		#				if var_comp:
+		#					self.composant_text +=  (vari.manufacturer or '')+' : '+ (vari.manufacturer_part_no or '') +' / '
+		#
+		#	self.articles_text= ""
+		#	for art in self.articles:
+		#		if art.manufacturer_part_no:
+		#			self.articles_text +=  (art.manufacturer_part_no or '') +' / '
+		#		elif art.item:
+		#			_variantes = frappe.db.sql(""" select name,manufacturer_part_no,manufacturer from  `tabItem` where variant_of= '{}'""".format(art.item),as_dict=True)
+		#			if _variantes:
+		#				for vari in _variantes:
+		#					self.articles_text +=  (vari.manufacturer or '')+' : '+ (vari.manufacturer_part_no or '') +' / '
+
 
 	def validate_description(self):
 		'''Clean HTML description if set'''
