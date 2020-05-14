@@ -560,7 +560,8 @@ frappe.ui.form.on('Sales Invoice', {
 		frm.add_fetch('customer', 'tax_id', 'tax_id');
 		frm.add_fetch('payment_term', 'invoice_portion', 'invoice_portion');
 		frm.add_fetch('payment_term', 'description', 'description');
-
+		frm.add_fetch('item_code', 'manufacturer', 'fabricant');
+		frm.add_fetch('item_code', 'manufacturer_part_no', 'ref_fabricant');
 		frm.set_query("account_for_change_amount", function() {
 			return {
 				filters: {
