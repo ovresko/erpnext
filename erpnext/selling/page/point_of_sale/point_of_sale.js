@@ -1998,7 +1998,7 @@ class POSItems {
 	 					${critere}
 						 
 					</div>
-					<div>${complements}<div>
+					<div>${complements}</div>
 					<div style="width:160px;padding-left:5px" >
 						<div style="margin-bottom:10px"><img src="${item.fabricant_logo ||'#'}" width="80px" ></div>
 						<div>
