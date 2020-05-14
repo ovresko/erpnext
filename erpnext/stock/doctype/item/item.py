@@ -268,8 +268,8 @@ class Item(WebsiteGenerator):
 					self.composant_text +=  (cmp.manufacturer_part_no or '') +' / '
 				elif cmp.item:
 					var_comp = frappe.db.sql(""" select name,manufacturer_part_no,manufacturer from  `tabItem` where variant_of= '{}' and manufacturer='{}' limit 1""".format(cmp.item,self.manufacturer),as_dict=True)
-						if var_comp:
-							self.composant_text +=  (var_comp.manufacturer_part_no or '') +' / '
+					if var_comp:
+						self.composant_text +=  (var_comp.manufacturer_part_no or '') +' / '
 		
 			self.articles_text= ""
 			for art in self.articles:
