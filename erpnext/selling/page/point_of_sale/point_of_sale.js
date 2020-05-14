@@ -1117,6 +1117,7 @@ class POSCart {
 					${item.item_name}
 				</div>
 				<div class="quantity list-item__content text-right">
+					<div class="quantity list-item__content text-right">
 					${get_quantity_html(item.qty)}
 				</div>
 				<div class="discount list-item__content text-right">
@@ -1125,6 +1126,8 @@ class POSCart {
 				<div class="rate list-item__content text-right">
 					${rate}
 				</div>
+				</div>	
+				
 			</div>
 		`;
 
