@@ -277,11 +277,15 @@ erpnext.pos.PointOfSale = class PointOfSale {
 		}
 
 		// add to cur_frm
-		const item = this.frm.add_child('items', args);
+		//const item = this.frm.add_child('items', args);
+		let item = this.frm.add_child('items');
+		item['item_code']=item_code;
+		this.frm.refresh_field("items");
 		frappe.flags.hide_serial_batch_dialog = true;
 
 		frappe.run_serially([
 			() => this.frm.script_manager.trigger('item_code', item.doctype, item.name),
+			() => this.frm.script_manager.trigger('validate'),
 			() => {
 				const show_dialog = item.has_serial_no || item.has_batch_no;
 
