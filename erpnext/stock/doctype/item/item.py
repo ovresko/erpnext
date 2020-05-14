@@ -140,6 +140,11 @@ class Item(WebsiteGenerator):
 		for art in self.articles:
 			if art.manufacturer_part_no:
 				self.articles_text +=  (art.manufacturer_part_no or '') +' / '
+			elif art.item:
+				variantes = frappe.get_all("Item", fields = ["name,manufacturer_part_no,variant_of"],filters = {'variant_of': art.item})
+				if variantes:
+					for vari in variantes:
+						self.articles_text +=  (vari.manufacturer_part_no or '') +' / '
 		#critere_text
                 self.oem_text = ""
 		for o in self.oem:
