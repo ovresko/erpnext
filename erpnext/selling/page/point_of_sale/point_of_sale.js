@@ -280,12 +280,13 @@ erpnext.pos.PointOfSale = class PointOfSale {
 		//const item = this.frm.add_child('items', args);
 		let item = this.frm.add_child('items');
 		item['item_code']=item_code;
+		frappe.model.set_value("Sales Invoice Item", item.name, "item_code", item_code);
 		this.frm.refresh_field("items");
 		frappe.flags.hide_serial_batch_dialog = true;
-
+		console.log("updateing",this.frm.doc.items);
 		frappe.run_serially([
 			() => this.frm.script_manager.trigger('item_code', item.doctype, item.name),
-			() => this.frm.script_manager.trigger('validate'),
+			() => this.frm.validate(),
 			() => {
 				const show_dialog = item.has_serial_no || item.has_batch_no;
 
