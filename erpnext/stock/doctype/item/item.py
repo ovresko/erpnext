@@ -123,28 +123,37 @@ class Item(WebsiteGenerator):
 
 	def validate(self):
 		cr = []
-		for critere in self.critere_piece:
-			if critere.important:
-				cr.append("{0}: {1}".format(critere.parametre, (critere.valeur_p or '') +' '+ (critere.valeur or '')))
+		if self.has_variants:
+			for critere in self.critere_piece:
+				if critere.important:
+					cr.append("{0}: {1}".format(critere.parametre, (critere.valeur_p or '') +' '+ (critere.valeur or '')))
 		
 		for vcritere in self.criteres_piece_variante:
 			if vcritere.important:
 				cr.append("{0}: {1}".format(vcritere.parametre, (vcritere.valeur_p or '') +' '+ (vcritere.valeur or '')))
 		if cr:
 			self.critere_text = ' / '.join(str(x) for x in cr)
-		self.composant_text = ""
-		for cmp in self.composant:
-			if cmp.manufacturer_part_no:
-				self.composant_text +=  (cmp.manufacturer_part_no or '') +' / '
-		self.articles_text= ""
-		for art in self.articles:
-			if art.manufacturer_part_no:
-				self.articles_text +=  (art.manufacturer_part_no or '') +' / '
-			elif art.item:
-				_variantes = frappe.db.sql(""" select name,manufacturer_part_no,manufacturer from  `tabItem` where variant_of= '{}'""".format(art.item),as_dict=True)
-				if _variantes:
-					for vari in _variantes:
-						self.articles_text +=  (vari.manufacturer or '')+' : '+ (vari.manufacturer_part_no or '') +' / '
+		
+		if self.has_variants:
+			self.composant_text = ""
+			for cmp in self.composant:
+				if cmp.manufacturer_part_no:
+					self.composant_text +=  (cmp.manufacturer_part_no or '') +' / '
+				elif cmp.item:
+					_variantes = frappe.db.sql(""" select name,manufacturer_part_no,manufacturer from  `tabItem` where variant_of= '{}'""".format(art.item),as_dict=True)
+					if _variantes:
+						for vari in _variantes:
+							self.composant_text +=  (vari.manufacturer or '')+' : '+ (vari.manufacturer_part_no or '') +' / '
+
+			self.articles_text= ""
+			for art in self.articles:
+				if art.manufacturer_part_no:
+					self.articles_text +=  (art.manufacturer_part_no or '') +' / '
+				elif art.item:
+					_variantes = frappe.db.sql(""" select name,manufacturer_part_no,manufacturer from  `tabItem` where variant_of= '{}'""".format(art.item),as_dict=True)
+					if _variantes:
+						for vari in _variantes:
+							self.articles_text +=  (vari.manufacturer or '')+' : '+ (vari.manufacturer_part_no or '') +' / '
 		#critere_text
                 self.oem_text = ""
 		for o in self.oem:
