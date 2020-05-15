@@ -1134,11 +1134,10 @@ class POSCart {
 				<div class="item-name   " style="flex-grow:1">
 					<div>${item.item_name}</div>
 					<div>${fabricant} ${ref_fabricant}</div>
-					<div>
+					<div style="margin-top:5px">
 						<button data-item-code="${escape(item.item_code)}" data-label="open" class="btn btn-default btn-xs btn-open" style="margin-right: 5px;"><i class="fa fa-eye"></i>
 						</button>
-						<button data-item-code="${escape(item.item_code)}" data-label="related" class="btn btn-default btn-xs btn-related" style="margin-right: 5px;"><i class="fa fa-link"></i>
-						</button>
+						
 						<button data-item-code="${escape(item.item_code)}" data-label="information" class="btn btn-default btn-xs btn-information" style="margin-right: 5px;"><i class="fa fa-question"></i>
 						</button>
 						<button data-item-code="${escape(item.item_code)}" data-label="cart-delete" class="btn btn-danger btn-xs btn-cart-delete" style="margin-left: 5px;"><i class="fa fa-close"></i></button>
@@ -1328,17 +1327,6 @@ class POSCart {
 		
 		
 		
-		this.$cart_items.on('click', '.btn-related', function(event) {
-			event.stopPropagation();
-			const $item = $(me);
-			const item_code = unescape($item.attr('data-item-code'));
-			const modele = item_code.substring(0,11);
-			 
-			me.items.item_modele  = modele; 
-			me.items.item_modele_field.set_value(modele);
-			me.items.item_manufacturer_field.set_value(''); 
-			me.items.search_field.set_value(''); 
-		});
 
 		// current item
 		this.$cart_items.on('click', '.list-item', function() {
