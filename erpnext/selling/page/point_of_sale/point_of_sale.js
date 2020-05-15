@@ -2035,8 +2035,8 @@ class POSItems {
 						if (item) {
 							console.log(item);
 							frappe.msgprint(
-								`Qts Magasins : ${item[0].actual_qty} <br>
-								Qts Depots : ${item[1].actual_qty} <br>
+								`Qts Magasins : ${item[0] || 0} <br>
+								Qts Depots : ${item[1] || 0} <br>
 								`
 								);
 						}  
