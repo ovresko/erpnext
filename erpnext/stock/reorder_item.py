@@ -26,7 +26,7 @@ def refresh_refs():
 	update tabItem set clean_manufacturer_part_number= REPLACE(REPLACE(REPLACE(REPLACE(manufacturer_part_no,' ',''),'-',''),'.',''),'/','') where ((clean_manufacturer_part_number ='' or clean_manufacturer_part_number IS NULL ) and manufacturer_part_no != '' and manufacturer_part_no IS NOT NULL) 
 	""")
 def refresh_items():
-        models = frappe.get_all("Item",filters={"has_variants":"1"},fields=["name","modified"],order_by='modified asc',limit=500)
+        models = frappe.get_all("Item",filters={"has_variants":"1"},fields=["name","modified"],order_by='modified asc',limit=5)
         print("found %d " % len(models))
         for model in models:
 		try:
@@ -38,11 +38,12 @@ def refresh_items():
 			print("ERROR")
 	
         # default warehouse
-        defaults = frappe.get_all("Item Default",fields=["name","modified"],order_by='modified ASC',limit=250)
-        settings = frappe.get_doc("Stock Settings")
+	settings = frappe.get_doc("Stock Settings")
         wr = settings.default_warehouse
         if not wr:
             wr = "GLOBAL - MV"
+        defaults = frappe.get_all("Item Default",filters={"default_warehouse":("!=":wr)},fields=["name","modified"],order_by='modified ASC',limit=250)
+       
         for d in defaults:
 	    frappe.db.set_value("Item Default",d.name,"default_warehouse",wr)
             #default = frappe.get_doc("Item Default", d.name)
