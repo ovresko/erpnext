@@ -285,11 +285,12 @@ erpnext.pos.PointOfSale = class PointOfSale {
 		frappe.flags.hide_serial_batch_dialog = true;
 		this.frm.trigger("validate");
 		this.frm.refresh_fields();
-		console.log("updateing",this.frm.doc.items);
+		
 		frappe.run_serially([
 			() => this.frm.script_manager.trigger('item_code', item.doctype, item.name),
 			//() => this.frm.validate(),
 			() => {
+				console.log("updateing",this.frm.doc.items);
 				const show_dialog = item.has_serial_no || item.has_batch_no;
 
 				// if actual_batch_qty and actual_qty if then there is only one batch. In such
