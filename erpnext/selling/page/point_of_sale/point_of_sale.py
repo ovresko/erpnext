@@ -16,11 +16,11 @@ def get_stock_details(item_code):
 	depot = frappe.db.get_single_value("Stock Settings", "entrepot_depot")
 	magasins = frappe.get_all("Warehouse",filters={"parent_warehouse":magasin},fields=["name"])
 	depots = frappe.get_all("Warehouse",filters={"parent_warehouse":depot},fields=["name"])
-	magasins_names = ','.join((x.name for x in magasins))
-	depots_names = ','.join((x.name for x in depots))
-	res_magasins = frappe.db.sql(""" select sum(actual_qty) from `tabBin` where item_code='{}' and warehouse in ('{}') """.format(item_code,magasins_names), as_dict=1)
-	res_depots = frappe.db.sql(""" select sum(actual_qty) from `tabBin` where item_code='{}' and warehouse in ('{}') """.format(item_code,depots_names), as_dict=1)
-	return (res_magasins,res_depots)
+	magasins_names =  (x.name for x in magasins)
+	depots_names =   (x.name for x in depots) 
+	res_magasins = frappe.db.sql(""" select sum(actual_qty) from `tabBin` where item_code=%s and warehouse in (%s) """,(item_code,magasins_names))
+	res_depots = frappe.db.sql(""" select sum(actual_qty) from `tabBin` where item_code=%s and warehouse in (%s) """,(item_code,depots_names))
+	return (res_magasins[0],res_depots[0])
 
 @frappe.whitelist()
 def make_devis(customer,items):
