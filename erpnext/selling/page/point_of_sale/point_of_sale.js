@@ -1238,9 +1238,10 @@ class POSCart {
 			const $vitem = $(this);
 			const item_code = unescape($vitem.attr('data-item-code'));
 			const item_selector = `[data-item-code="${item_code}"]`;
-
+			
 			const $item = me.$cart_items.find(item_selector);
 			$item.remove();
+			events.on_field_change(item_code, 'qty', '0');
 			
 		});
 		this.$cart_items.on('click', '.btn-open', function(event) {
