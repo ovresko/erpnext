@@ -42,7 +42,7 @@ def refresh_items():
         wr = settings.default_warehouse
         if not wr:
             wr = "GLOBAL - MV"
-        defaults = frappe.get_all("Item Default",filters={"default_warehouse":("!=":wr)},fields=["name","modified"],order_by='modified ASC',limit=250)
+        defaults = frappe.get_all("Item Default",filters={"default_warehouse":("!=",wr)},fields=["name","modified"],order_by='modified ASC',limit=250)
        
         for d in defaults:
 	    frappe.db.set_value("Item Default",d.name,"default_warehouse",wr)
