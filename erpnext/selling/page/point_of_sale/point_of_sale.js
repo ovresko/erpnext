@@ -1113,19 +1113,24 @@ class POSCart {
 	}
 
 	get_item_html(item) {
-		const is_stock_item = this.get_item_details(item.item_code).is_stock_item;
+		
+		let  == this.get_item_details(item.item_code);
+
+		const is_stock_item =origin_item.is_stock_item;
 		const rate = format_currency(item.rate, this.frm.doc.currency,0);
 		const amount = format_currency(item.amount, this.frm.doc.currency,0);
 		console.log("item",item);
 		const indicator_class = (!is_stock_item || item.actual_qty >= item.qty) ? 'green' : 'red';
 		const batch_no = item.batch_no || '';
-
+		let fabricant = origin_item.manufacturer || '';
+		let ref_fabricant = origin_item.manufacturer_part_no || '';
+		
 		return `
 			<div class="list-item indicator ${indicator_class}" data-item-code="${escape(item.item_code)}"
 				data-batch-no="${batch_no}" title="Item: ${item.item_name}  Available Qty: ${item.actual_qty}">
-				<div class="item-name list-item__content list-item__content--flex-1.5 ellipsis">
+				<div class="item-name   ">
 					<div>${item.item_name}</div>
-					<div>${item.fabricant} : ${item.ref_rfabricant}</div>
+					<div>${fabricant} ${ref_fabricant}</div>
 				</div>
 				<div class=" text-right" style="margin:10px">
 				<div class="quantity list-item__content text-right">
