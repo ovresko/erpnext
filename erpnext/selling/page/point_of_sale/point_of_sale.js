@@ -2034,7 +2034,9 @@ class POSItems {
 						var item = response.message; 
 						if (item) {
 							frappe.msgprint(
-								`${item} `
+								`Qts Magasins : ${item[0]} <br>
+								Qts Depots : ${item[1]} <br>
+								`
 								);
 						}  
 					}
