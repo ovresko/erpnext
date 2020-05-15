@@ -1233,9 +1233,9 @@ class POSCart {
 		});
 		
 		
-		this.$cart_items.on('click', '.btn-cart-delete', function(event) {
-			event.stopPropagation();
-			const $vitem = $(me);
+		this.$cart_items.on('click', '.btn-cart-delete', function() {
+			
+			const $vitem = $(this);
 			const item_code = unescape($vitem.attr('data-item-code'));
 			const item_selector = `[data-item-code="${item_code}"]`;
 
