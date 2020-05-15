@@ -1232,6 +1232,113 @@ class POSCart {
 			const item_code = unescape($item.attr('data-item-code'));
 			events.on_field_change(item_code, 'qty', flt($input.val()));
 		});
+		
+		
+		this.$cart_items.on('click', '.btn-cart-delete', function(event) {
+			event.stopPropagation();
+			const $vitem = $(this);
+			const item_code = unescape($vitem.attr('data-item-code'));
+			const item_selector = `[data-item-code="${item_code}"]`;
+
+			const $item = this.$cart_items.find(item_selector);
+			$item.remove();
+			
+		});
+		this.$cart_items.on('click', '.btn-open', function(event) {
+			 event.stopPropagation();
+			const $item = $(this);
+			const item_code = unescape($item.attr('data-item-code'));
+			window.open('#Form/Item/'+item_code, '_blank', 'toolbar=0,location=0,menubar=0'); 
+		});
+		
+		this.$cart_items.on('click', '.btn-information', function(event) {
+			 event.stopPropagation();
+			const $item = $(this);
+			const item_code = unescape($item.attr('data-item-code'));
+			
+				frappe.call({
+					"method": "frappe.client.get",
+					"args": {
+						"doctype": "Item",
+						"name": item_code
+					},
+					"callback": function(response) {
+						var item = response.message; 
+						if (item) {
+							frappe.msgprint(
+								`<table class="table table-bordered table-condensed">
+									<tr><td>${item.item_name}</td><td><img src="${item.image}"></td></tr>
+									<tr> 
+										<td>
+											<label>${item.item_code}</label>
+										</td>
+										<td>
+											<label>${item.manufacturer_part_no}</label>
+										</td>
+									</tr> 
+								</table>
+ 
+								<table class="table table-bordered table-condensed">
+									<tr> 
+										<td>
+											<label>OEM</label>
+										</td>
+										<td>
+											${item.oem_text}
+										</td>
+										<td></td>
+									</tr>
+
+									<tr> 
+										<td>
+											<label>Fabricant</label>
+										</td>
+										<td>
+											${item.manufacturer}
+										</td>
+										<td>
+											<img src="${item.fabricant_logo}">
+										</td>
+									</tr>
+									<tr> 
+										<td>
+											<label>Critére</label>
+										</td>
+										<td>
+											${item.critere_text}
+										</td>
+										<td>
+											
+										</td>
+									</tr>
+								</table>
+									
+
+								<hr>
+								<label>Chercher dans designation avec (Ctr + F)</label><br>
+								<p>${item.nom_generique_long} </p>
+									
+								`
+								);
+						}  
+					}
+				}); 
+		});
+		
+		
+		
+		
+		this.$cart_items.on('click', '.btn-related', function(event) {
+			event.stopPropagation();
+			const $item = $(this);
+			const item_code = unescape($item.attr('data-item-code'));
+			const modele = item_code.substring(0,11);
+			console.log("modele",modele);
+			me.item_modele  = modele; 
+			me.item_modele_field.set_value(modele);
+			me.item_manufacturer_field.set_value(''); 
+			me.search_field.set_value(''); 
+		});
 
 		// current item
 		this.$cart_items.on('click', '.list-item', function() {
@@ -1895,16 +2002,6 @@ class POSItems {
 		
 		
 		
-		this.wrapper.on('click', '.btn-cart-delete', function(event) {
-			event.stopPropagation();
-			const $vitem = $(this);
-			const item_code = unescape($vitem.attr('data-item-code'));
-			const item_selector = `[data-item-code="${item_code}"]`;
-
-			const $item = this.$cart_items.find(item_selector);
-			$item.remove();
-			
-		});
 		
 		this.wrapper.on('click', '.btn-related', function(event) {
 			event.stopPropagation();
