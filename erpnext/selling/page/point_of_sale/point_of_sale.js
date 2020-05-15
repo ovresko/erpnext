@@ -2033,9 +2033,10 @@ class POSItems {
 					"callback": function(response) {
 						var item = response.message; 
 						if (item) {
+							console.log(item);
 							frappe.msgprint(
-								`Qts Magasins : ${item[0]} <br>
-								Qts Depots : ${item[1]} <br>
+								`Qts Magasins : ${item[0].actual_qty} <br>
+								Qts Depots : ${item[1].actual_qty} <br>
 								`
 								);
 						}  
