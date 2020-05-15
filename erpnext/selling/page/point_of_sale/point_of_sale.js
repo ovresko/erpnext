@@ -1236,11 +1236,11 @@ class POSCart {
 		
 		this.$cart_items.on('click', '.btn-cart-delete', function(event) {
 			event.stopPropagation();
-			const $vitem = $(this);
+			const $vitem = $(me);
 			const item_code = unescape($vitem.attr('data-item-code'));
 			const item_selector = `[data-item-code="${item_code}"]`;
 
-			const $item = this.$cart_items.find(item_selector);
+			const $item = me.$cart_items.find(item_selector);
 			$item.remove();
 			
 		});
@@ -1330,14 +1330,14 @@ class POSCart {
 		
 		this.$cart_items.on('click', '.btn-related', function(event) {
 			event.stopPropagation();
-			const $item = $(this);
+			const $item = $(me);
 			const item_code = unescape($item.attr('data-item-code'));
 			const modele = item_code.substring(0,11);
-			console.log("modele",modele);
-			me.item_modele  = modele; 
-			me.item_modele_field.set_value(modele);
-			me.item_manufacturer_field.set_value(''); 
-			me.search_field.set_value(''); 
+			 
+			me.items.item_modele  = modele; 
+			me.items.item_modele_field.set_value(modele);
+			me.items.item_manufacturer_field.set_value(''); 
+			me.items.search_field.set_value(''); 
 		});
 
 		// current item
