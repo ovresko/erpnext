@@ -2020,6 +2020,27 @@ class POSItems {
 			const item_code = unescape($item.attr('data-item-code'));
 			me.events.update_cart(item_code, 'qty', '+1');
 		});
+		
+		this.wrapper.on('click', '.btn-stock', function() {
+			const $item = $(this);
+			const item_code = unescape($item.attr('data-item-code'));
+			
+			frappe.call({
+					"method": "erpnext.selling.page.point_of_sale.point_of_sale.get_stock_details",
+					"args": {
+						"item_code": item_code
+					},
+					"callback": function(response) {
+						var item = response.message; 
+						if (item) {
+							frappe.msgprint(
+								`${item} `
+								);
+						}  
+					}
+				}); 
+		});
+		
 		this.wrapper.on('click', '.oem-text', function() {
 			event.stopPropagation();
 			const $item = $(this);
