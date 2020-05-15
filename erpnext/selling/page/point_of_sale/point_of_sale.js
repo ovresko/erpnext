@@ -1241,7 +1241,8 @@ class POSCart {
 			
 			//const $item = me.$cart_items.find(item_selector);
 			//$item.remove();
-			events.on_field_change(item_code, 'qty', '0');
+			console.log("item_code",item_code);
+			events.on_field_change(item_code, 'qty', 0);
 			
 		});
 		this.$cart_items.on('click', '.btn-open', function(event) {
