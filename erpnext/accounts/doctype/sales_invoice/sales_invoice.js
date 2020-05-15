@@ -409,6 +409,22 @@ erpnext.accounts.SalesInvoiceController = erpnext.selling.SellingController.exte
 	}
 });
 
+ frappe.ui.form.on("Sales Invoice Item", {
+      
+    item_code:function(frm,cdt,cdn){
+           var d = locals[cdt][cdn];
+	    if(d.item_code){
+			
+		    frappe.model.set_value(cdt, cdn, "qty", 1);
+	   
+		    cur_frm.refresh_field("qty");
+		    frappe.model.set_value(cdt, cdn, "fabricant", d.fabricant);
+		    refresh_field('fabricant');
+		  
+		     }
+    },
+    
+});
 // for backward compatibility: combine new and previous states
 $.extend(cur_frm.cscript, new erpnext.accounts.SalesInvoiceController({frm: cur_frm}));
 
