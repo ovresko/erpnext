@@ -1144,7 +1144,7 @@ class POSCart {
 				</div>
 				<div class="rate list-item__content text-right">
 					${rate} 
-				</div>  <div class="item-amount list-item__content text-right" style="text-size:14px;font-weight:600"> ${amount} </div>
+				</div>  <div class="item-amount list-item__content text-right" style="text-size:14px;font-weight:800;color: red;"> ${amount} </div>
 				</div>	
 				
 			</div>
