@@ -1983,7 +1983,7 @@ class POSItems {
 								<label>Chercher dans designation avec (Ctr + F)</label><br>
 								<p>${item.nom_generique_long} </p>
 									
-								`,title="Détails Article"
+								`,"Détails Article"
 								);
 						}  
 					}
@@ -2037,7 +2037,7 @@ class POSItems {
 							frappe.msgprint(
 								`Qts Magasins : ${item[0] || 0} <br>
 								Qts Depots : ${item[1] || 0} <br>
-								`,title="Qts Stock"
+								`,"Qts Stock"
 								);
 						}  
 					}
