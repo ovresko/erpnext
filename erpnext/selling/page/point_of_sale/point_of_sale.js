@@ -1897,8 +1897,8 @@ class POSItems {
 		
 		this.wrapper.on('click', '.btn-cart-delete', function(event) {
 			event.stopPropagation();
-			const $item = $(this);
-			const item_code = unescape($item.attr('data-item-code'));
+			const $vitem = $(this);
+			const item_code = unescape($vitem.attr('data-item-code'));
 			const item_selector = `[data-item-code="${item_code}"]`;
 
 			const $item = this.$cart_items.find(item_selector);
