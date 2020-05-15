@@ -1101,11 +1101,11 @@ class POSCart {
 			const is_stock_item = _item.is_stock_item;
 			const indicator_class = (!is_stock_item || item.actual_qty >= item.qty) ? 'green' : 'red';
 			const remove_class = indicator_class == 'green' ? 'red' : 'green';
-			const amount = _item.rate * item.qty;
+			const amount = item.rate * item.qty;
 			$item.find('.quantity input').val(item.qty);
 			$item.find('.discount').text(item.discount_percentage + '%');
 			$item.find('.rate').text(format_currency(item.rate, this.frm.doc.currency,0));
-			$item.find('.item-amount').text(format_currency(amount, this.frm.doc.currency,0));
+			$item.find('.item-amount').text(format_currency(amount || 0, this.frm.doc.currency,0));
 			
 
 			$item.addClass(indicator_class);
