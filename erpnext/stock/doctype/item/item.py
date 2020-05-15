@@ -254,12 +254,7 @@ class Item(WebsiteGenerator):
 					from `tabWebsite Item Group`
 					where parentfield='website_item_groups' and parenttype='Item' and parent=%s""", self.name)
 
-	def on_update(self):
-		invalidate_cache_for_item(self)
-		self.validate_name_with_item_group()
-		self.update_variants()
-		self.update_item_price()
-		self.update_template_item()
+	def sync_comp(self):
 		if self.variant_of:
 			self.composant_text = ""
 			#_variantes = frappe.db.sql(""" select name,manufacturer_part_no,manufacturer from  `tabItem` where variant_of= '{}'""".format(self.name),as_dict=True)
@@ -281,6 +276,14 @@ class Item(WebsiteGenerator):
 					if var_comp:
 						_comp=var_comp[0]
 						self.articles_text +=  (_comp.manufacturer_part_no or '') +' / '
+	def on_update(self):
+		invalidate_cache_for_item(self)
+		self.validate_name_with_item_group()
+		self.update_variants()
+		self.update_item_price()
+		self.update_template_item()
+		self.sync_comp()
+		
 
 
 	def validate_description(self):
@@ -1197,6 +1200,7 @@ def update_variants(variants, template, publish_progress=True):
 	for d in variants:
 		variant = frappe.get_doc("Item", d)
 		copy_attributes_to_variant(template, variant)
+		variant.sync_comp()
 		variant.save()
 		count+=1
 		if publish_progress:
