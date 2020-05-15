@@ -1097,13 +1097,17 @@ class POSCart {
 		const $item = this.$cart_items.find(item_selector);
 
 		if(item.qty > 0) {
-			const is_stock_item = this.get_item_details(item.item_code).is_stock_item;
+			const _item =this.get_item_details(item.item_code);
+			const is_stock_item = _item.is_stock_item;
 			const indicator_class = (!is_stock_item || item.actual_qty >= item.qty) ? 'green' : 'red';
 			const remove_class = indicator_class == 'green' ? 'red' : 'green';
-
+			const amount = _item.rate * item.qty;
 			$item.find('.quantity input').val(item.qty);
 			$item.find('.discount').text(item.discount_percentage + '%');
 			$item.find('.rate').text(format_currency(item.rate, this.frm.doc.currency,0));
+			$item.find('.item-amount').text(format_currency(amount, this.frm.doc.currency,0));
+			
+
 			$item.addClass(indicator_class);
 			$item.removeClass(remove_class);
 		} else {
@@ -1140,7 +1144,7 @@ class POSCart {
 				</div>
 				<div class="rate list-item__content text-right">
 					${rate} 
-				</div>  <span style="text-size:14px;font-weight:600"> ${amount} </span>
+				</div>  <div class="item-amount list-item__content text-right" style="text-size:14px;font-weight:600"> ${amount} </div>
 				</div>	
 				
 			</div>
