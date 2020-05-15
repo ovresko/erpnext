@@ -277,10 +277,10 @@ erpnext.pos.PointOfSale = class PointOfSale {
 		}
 
 		// add to cur_frm
-		//const item = this.frm.add_child('items', args);
-		let item = this.frm.add_child('items');
-		item['item_code']=item_code;
-		frappe.model.set_value("Sales Invoice Item", item.name, "item_code", item_code);
+		const item = this.frm.add_child('items', args);
+		//let item = this.frm.add_child('items');
+		//item['item_code']=item_code;
+		//frappe.model.set_value("Sales Invoice Item", item.name, "item_code", item_code);
 		 
 		frappe.flags.hide_serial_batch_dialog = true;
 		 
@@ -1139,8 +1139,8 @@ class POSCart {
 					Remise : ${item.discount_percentage}%
 				</div>
 				<div class="rate list-item__content text-right">
-					${rate}  <span style='text-size:14px;text-weight:600'> ${amount} </span>
-				</div>
+					${rate} 
+				</div>  <span style="text-size:14px;font-weight:600"> ${amount} </span>
 				</div>	
 				
 			</div>
