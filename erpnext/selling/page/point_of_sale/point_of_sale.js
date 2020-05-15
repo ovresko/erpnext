@@ -1131,9 +1131,19 @@ class POSCart {
 		return `
 			<div class="list-item indicator ${indicator_class}" data-item-code="${escape(item.item_code)}"
 				data-batch-no="${batch_no}" title="Item: ${item.item_name}  Available Qty: ${item.actual_qty}">
-				<div class="item-name   ">
+				<div class="item-name   " style="flex-grow:1">
 					<div>${item.item_name}</div>
 					<div>${fabricant} ${ref_fabricant}</div>
+					<div>
+						<button data-item-code="${escape(item.item_code)}" data-label="open" class="btn btn-default btn-xs btn-open" style="margin-right: 5px;"><i class="fa fa-eye"></i>
+						</button>
+						<button data-item-code="${escape(item.item_code)}" data-label="related" class="btn btn-default btn-xs btn-related" style="margin-right: 5px;"><i class="fa fa-link"></i>
+						</button>
+						<button data-item-code="${escape(item.item_code)}" data-label="information" class="btn btn-default btn-xs btn-information" style="margin-right: 5px;"><i class="fa fa-question"></i>
+						</button>
+						<button data-item-code="${escape(item.item_code)}" data-label="cart-delete" class="btn btn-danger btn-xs btn-cart-delete" style="margin-left: 5px;"><i class="fa fa-close"></i></button>
+
+					</div>
 				</div>
 				<div class=" text-right" style="margin:10px">
 				<div class="quantity list-item__content text-right">
@@ -1885,7 +1895,16 @@ class POSItems {
 		
 		
 		
-		
+		this.wrapper.on('click', '.btn-cart-delete', function(event) {
+			event.stopPropagation();
+			const $item = $(this);
+			const item_code = unescape($item.attr('data-item-code'));
+			const item_selector = `[data-item-code="${item_code}"]`;
+
+			const $item = this.$cart_items.find(item_selector);
+			$item.remove();
+			
+		});
 		
 		this.wrapper.on('click', '.btn-related', function(event) {
 			event.stopPropagation();
