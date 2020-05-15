@@ -281,16 +281,15 @@ erpnext.pos.PointOfSale = class PointOfSale {
 		let item = this.frm.add_child('items');
 		item['item_code']=item_code;
 		frappe.model.set_value("Sales Invoice Item", item.name, "item_code", item_code);
-		this.frm.refresh_field("items");
+		 
 		frappe.flags.hide_serial_batch_dialog = true;
-		this.frm.trigger("validate");
-		this.frm.refresh_fields();
+		 
 		
 		frappe.run_serially([
 			() => this.frm.script_manager.trigger('item_code', item.doctype, item.name),
 			//() => this.frm.validate(),
 			() => {
-				console.log("updateing",this.frm.doc.items);
+				 
 				const show_dialog = item.has_serial_no || item.has_batch_no;
 
 				// if actual_batch_qty and actual_qty if then there is only one batch. In such
@@ -1114,7 +1113,7 @@ class POSCart {
 
 	get_item_html(item) {
 		
-		let  == this.get_item_details(item.item_code);
+		let origin_item = this.get_item_details(item.item_code);
 
 		const is_stock_item =origin_item.is_stock_item;
 		const rate = format_currency(item.rate, this.frm.doc.currency,0);
