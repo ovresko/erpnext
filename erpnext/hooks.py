@@ -229,7 +229,8 @@ scheduler_events = {
 		"erpnext.erpnext_integrations.doctype.amazon_mws_settings.amazon_mws_settings.schedule_get_order_details",
 		"erpnext.erpnext_integrations.doctype.plaid_settings.plaid_settings.automatic_synchronization",
 		"erpnext.projects.doctype.project.project.hourly_reminder",
-		"erpnext.projects.doctype.project.project.collect_project_status"
+		"erpnext.projects.doctype.project.project.collect_project_status",
+		"erpnext.stock.reorder_item.refresh_items"
 	],
 	"daily": [
 		"erpnext.stock.reorder_item.reorder_item",
@@ -253,8 +254,7 @@ scheduler_events = {
 		"erpnext.projects.doctype.project.project.send_project_status_email_to_users"
 	],
 	"daily_long": [
-		"erpnext.manufacturing.doctype.bom_update_tool.bom_update_tool.update_latest_price_in_all_boms",
-		"erpnext.stock.reorder_item.refresh_items"
+		"erpnext.manufacturing.doctype.bom_update_tool.bom_update_tool.update_latest_price_in_all_boms"
 	],
 	"monthly_long": [
 		"erpnext.accounts.deferred_revenue.convert_deferred_revenue_to_income",
