@@ -1997,6 +1997,26 @@ class POSItems {
 								`,"Détails Article"
 								);
 							$(msg.body).find('.btn-versions-list').on('click', () => {
+									const $item = $(this);
+									const item_code = unescape($item.attr('data-item-code'));
+								frappe.call({
+									"method": "erpnext.selling.page.point_of_sale.point_of_sale.get_vehicule_details",
+									"args": {
+										"item_code": item_code
+									},
+									"callback": function(response) {
+										var item = response.message; 
+										if (item) {
+											
+											console.log(item);
+											var versions = item[0];
+											console.log(versions);
+										
+										}
+										}
+								
+									});
+										
 									console.log("btn-versions-list");
 							});
 							 
