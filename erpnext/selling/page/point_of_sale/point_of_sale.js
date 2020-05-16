@@ -2015,62 +2015,62 @@ class POSItems {
 											var marques = item[3];
 											
 											var html = '';
-											html += `<table>`;
+											html += `<label>Versions: </label><table class="table table-bordered table-condensed">`;
 											for (const _v in versions) {
 												
 												let v = versions[_v];
-												console.log(v);
+												 
 												html += `<tr>`;
 												html += ` 
-													<td> ${v.version_vehicule} </td>
-													<td> ${v.marque_vehicule} </td>
-													<td> ${v.nom_version} </td>
-													<td> ${v.critere}  ${v.valeur_1} <br> ${v.critere_1}  ${v.valeur_2} <br> ${v.critere_2}  ${v.valeur_3} <br>  </td>
+													<td> ${v.version_vehicule || ''} </td>
+													<td> ${v.marque_vehicule || ''} </td>
+													<td> ${v.nom_version || ''} </td>
+													<td> ${v.critere || ''}  ${v.valeur_1 || ''} <br> ${v.critere_1 || ''}  ${v.valeur_2 || ''} <br> ${v.critere_2 || ''}  ${v.valeur_3 || ''} <br>  </td>
 												`;
 												html += `</tr>`;
 											}
 											html += `</table>`;
 											
 											var html_generations = '';
-											html_generations += `<table>`;
+											html_generations += `<label>Generations: </label><table class="table table-bordered table-condensed">`;
 											for (const _v in generations) {
 												
 												let v = generations[_v];
-												console.log(v);
+												 
 												html_generations += `<tr>`;
 												html_generations += ` 
-													<td> ${v.nom_generation} </td>
-													<td> ${v.date_debut} </td>
-													<td> ${v.date_fin} </td>
+													<td> ${v.nom_generation || ''} </td>
+													<td> ${v.date_debut || ''} </td>
+													<td> ${v.date_fin || ''} </td>
 												`;
 												html_generations += `</tr>`;
 											}
 											html_generations += `</table>`;
 											
 											var html_modeles = '';
-											html_modeles += `<table>`;
+											html_modeles += `<label>Modeles: </label><table class="table table-bordered table-condensed">`;
 											for (const _v in modeles) {
 												
 												let v = modeles[_v];
-												console.log(v);
+												 
 												html_modeles += `<tr>`;
 												html_modeles += ` 
-													<td> ${v.nom_modele} </td>
-													<td> ${v.nom_marque} </td>
+													<td> ${v.nom_modele || ''} </td>
+													<td> ${v.nom_marque || ''} </td>
 												`;
 												html_modeles += `</tr>`;
 											}
 											html_modeles += `</table>`;
 											
 											var html_marques = '';
-											html_marques += `<table>`;
+											html_marques += `<label>Marques: </label><table class="table table-bordered table-condensed">`;
 											for (const _v in marques) {
 												
 												let v = marques[_v];
-												console.log(v);
+												 
 												html_marques += `<tr>`;
 												html_marques += ` 
-													<td> ${v.marque} </td>
+													<td> ${v.marque || ''} </td>
 												`;
 												html_marques += `</tr>`;
 											}
