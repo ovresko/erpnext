@@ -9,6 +9,14 @@ from erpnext.accounts.doctype.pos_profile.pos_profile import get_item_groups
 
 from six import string_types
 
+@frappe.whitelist()
+def get_vehicule_details(item_code):
+	versions = frappe.get_all("Version vehicule item",filters={"parent":item_code})
+	generations = frappe.get_all("Generation vehicule item",filters={"parent":item_code})
+	modeles = frappe.get_all("Modele vehicule item",filters={"parent":item_code})
+	marques = frappe.get_all("Marque vehicule item",filters={"parent":item_code})
+	
+	return versions,generations,modeles,marques
 
 @frappe.whitelist()
 def get_stock_details(item_code):
