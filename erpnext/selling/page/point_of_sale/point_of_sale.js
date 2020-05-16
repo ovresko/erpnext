@@ -1997,8 +1997,7 @@ class POSItems {
 								`,"Détails Article"
 								);
 								$(msg.body).find('.btn-versions-list').on('click', () => {
-									const $item = $(this).find('.btn-versions-list');
-									const item_code = unescape($item.attr('data-item-code'));
+									 
 								console.log("item_code",item_code);
 								frappe.call({
 									"method": "erpnext.selling.page.point_of_sale.point_of_sale.get_vehicule_details",
@@ -2017,8 +2016,7 @@ class POSItems {
 										}
 								
 									});
-										
-									console.log("btn-versions-list");
+										 
 							});
 							 
 						}  
