@@ -1915,7 +1915,7 @@ class POSItems {
 			const item_code = unescape($item.attr('data-item-code'));
 			window.open('#Form/Item/'+item_code, '_blank', 'toolbar=0,location=0,menubar=0'); 
 		});
-		this.on('click', '.btn-versions-list', function(event) {
+		this.wrapper.on('click', '.btn-versions-list', function(event) {
 			console.log("btn-versions-list");
 		}); 
 		this.wrapper.on('click', '.btn-information', function(event) {
