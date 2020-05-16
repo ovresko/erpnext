@@ -67,7 +67,12 @@ def get_data():
 		},
 		{
 			"label": _("Masters"),
-			"items": [
+			"items": [				
+				{
+					"type": "doctype",
+					"name": "Sync POS",
+					"description": _("Sync POS")
+				},
 				{
 					"type": "doctype",
 					"name": "Customer",
