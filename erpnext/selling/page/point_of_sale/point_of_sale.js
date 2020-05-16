@@ -2008,7 +2008,7 @@ class POSItems {
 										var item = response.message; 
 										if (item) {
 											
-											console.log(item);
+											
 											var versions = item[0];
 											var generations = item[1];
 											var modeles = item[2];
@@ -2017,6 +2017,7 @@ class POSItems {
 											var html = '';
 											html += `<table>`;
 											for (const v in versions) {
+												console.log(v);
 												html += `<tr>`;
 												html += ` 
 													<td> ${v.version_vehicule} </td>
