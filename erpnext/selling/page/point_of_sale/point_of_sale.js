@@ -1917,7 +1917,7 @@ class POSItems {
 		});
 		this.on('click', '.btn-versions-list', function(event) {
 			console.log("btn-versions-list");
-		}
+		}); 
 		this.wrapper.on('click', '.btn-information', function(event) {
 			 event.stopPropagation();
 			const $item = $(this);
