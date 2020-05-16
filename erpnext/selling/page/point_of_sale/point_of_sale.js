@@ -1915,9 +1915,7 @@ class POSItems {
 			const item_code = unescape($item.attr('data-item-code'));
 			window.open('#Form/Item/'+item_code, '_blank', 'toolbar=0,location=0,menubar=0'); 
 		});
-		$('.btn-versions-list').on('click',  function(event) {
-			console.log("btn-versions-list");
-		}); 
+		
 		 
 		this.wrapper.on('click', '.btn-information', function(event) {
 			 event.stopPropagation();
@@ -1933,7 +1931,7 @@ class POSItems {
 					"callback": function(response) {
 						var item = response.message; 
 						if (item) {
-							frappe.msgprint(
+							var msg = frappe.msgprint(
 								`
 								<button type="button" data-item-code="${item_code}" class="btn btn-primary btn-sm btn-versions-list" > 
 									<span class="hidden-xs">Véhicules Supportées</span>
@@ -1998,6 +1996,10 @@ class POSItems {
 									
 								`,"Détails Article"
 								);
+							$(msg.body).find('.btn-versions-list').on('click', () => {
+									console.log("btn-versions-list");
+							});
+							 
 						}  
 					}
 				}); 
