@@ -2016,7 +2016,9 @@ class POSItems {
 											
 											var html = '';
 											html += `<table>`;
-											for (const v in versions) {
+											for (const _v in versions) {
+												
+												let v = versions[_v];
 												console.log(v);
 												html += `<tr>`;
 												html += ` 
@@ -2031,7 +2033,10 @@ class POSItems {
 											
 											var html_generations = '';
 											html_generations += `<table>`;
-											for (const v in generations) {
+											for (const _v in generations) {
+												
+												let v = generations[_v];
+												console.log(v);
 												html_generations += `<tr>`;
 												html_generations += ` 
 													<td> ${v.nom_generation} </td>
@@ -2044,7 +2049,10 @@ class POSItems {
 											
 											var html_modeles = '';
 											html_modeles += `<table>`;
-											for (const v in modeles) {
+											for (const _v in modeles) {
+												
+												let v = modeles[_v];
+												console.log(v);
 												html_modeles += `<tr>`;
 												html_modeles += ` 
 													<td> ${v.nom_modele} </td>
@@ -2056,7 +2064,10 @@ class POSItems {
 											
 											var html_marques = '';
 											html_marques += `<table>`;
-											for (const v in marques) {
+											for (const _v in marques) {
+												
+												let v = marques[_v];
+												console.log(v);
 												html_marques += `<tr>`;
 												html_marques += ` 
 													<td> ${v.marque} </td>
