@@ -11,10 +11,10 @@ from six import string_types
 
 @frappe.whitelist()
 def get_vehicule_details(item_code):
-	versions = frappe.get_all("Version vehicule item",filters={"parent":item_code})
-	generations = frappe.get_all("Generation vehicule item",filters={"parent":item_code})
-	modeles = frappe.get_all("Modele vehicule item",filters={"parent":item_code})
-	marques = frappe.get_all("Marque vehicule item",filters={"parent":item_code})
+	versions = frappe.get_all("Version vehicule item",filters={"parent":item_code},fields=["*"])
+	generations = frappe.get_all("Generation vehicule item",filters={"parent":item_code},fields=["*"])
+	modeles = frappe.get_all("Modele vehicule item",filters={"parent":item_code},fields=["*"])
+	marques = frappe.get_all("Marque vehicule item",filters={"parent":item_code},fields=["*"])
 	
 	return versions,generations,modeles,marques
 
