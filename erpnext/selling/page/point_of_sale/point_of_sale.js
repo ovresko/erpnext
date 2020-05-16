@@ -1996,8 +1996,8 @@ class POSItems {
 									
 								`,"Détails Article"
 								);
-							$(msg.body).find('.btn-versions-list').on('click', () => {
-									const $item = $(this);
+								$(msg.body).find('.btn-versions-list').on('click', () => {
+									const $item = $(this).find('.btn-versions-list');
 									const item_code = unescape($item.attr('data-item-code'));
 								console.log("item_code",item_code);
 								frappe.call({
