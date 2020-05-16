@@ -2225,7 +2225,7 @@ class POSItems {
 		   {   
 		   	   complements = '<div style="width:160px;padding-left:5px" >'+coml+comp+'</div>';
 		   }
-		 console.log("complements",complements);
+		 
 		//image-view-item
 		const template = `
 			<div class="pos-item-wrapper " data-item-code="${escape(item_code)}" style="width:100%;display:flex;flex-direction: inherit;">
