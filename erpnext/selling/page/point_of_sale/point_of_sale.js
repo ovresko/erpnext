@@ -2010,7 +2010,66 @@ class POSItems {
 											
 											console.log(item);
 											var versions = item[0];
+											var generations = item[1];
+											var modeles = item[2];
+											var marques = item[3];
 											
+											var html = '';
+											html += `<table>`;
+											for (const v in versions) {
+												html += `<tr>`;
+												html += ` 
+													<td> ${v.version_vehicule} </td>
+													<td> ${v.marque_vehicule} </td>
+													<td> ${v.nom_version} </td>
+													<td> ${v.critere}  ${v.valeur_1} <br> ${v.critere_1}  ${v.valeur_2} <br> ${v.critere_2}  ${v.valeur_3} <br>  </td>
+												`;
+												html += `</tr>`;
+											}
+											html += `</table>`;
+											
+											var html_generations = '';
+											html_generations += `<table>`;
+											for (const v in generations) {
+												html_generations += `<tr>`;
+												html_generations += ` 
+													<td> ${v.nom_generation} </td>
+													<td> ${v.date_debut} </td>
+													<td> ${v.date_fin} </td>
+												`;
+												html_generations += `</tr>`;
+											}
+											html_generations += `</table>`;
+											
+											var html_modeles = '';
+											html_modeles += `<table>`;
+											for (const v in modeles) {
+												html_modeles += `<tr>`;
+												html_modeles += ` 
+													<td> ${v.nom_modele} </td>
+													<td> ${v.nom_marque} </td>
+												`;
+												html_modeles += `</tr>`;
+											}
+											html_modeles += `</table>`;
+											
+											var html_marques = '';
+											html_marques += `<table>`;
+											for (const v in marques) {
+												html_marques += `<tr>`;
+												html_marques += ` 
+													<td> ${v.marque} </td>
+												`;
+												html_marques += `</tr>`;
+											}
+											html_marques += `</table>`;
+											 
+											frappe.msgprint(`
+												${html}
+												${html_generations}
+												${html_modeles}
+												${html_marques}
+											`);
 										
 										}
 										}
