@@ -1915,7 +1915,9 @@ class POSItems {
 			const item_code = unescape($item.attr('data-item-code'));
 			window.open('#Form/Item/'+item_code, '_blank', 'toolbar=0,location=0,menubar=0'); 
 		});
-		
+		this.on('click', '.btn-versions-list', function(event) {
+			console.log("btn-versions-list");
+		}
 		this.wrapper.on('click', '.btn-information', function(event) {
 			 event.stopPropagation();
 			const $item = $(this);
@@ -1931,7 +1933,12 @@ class POSItems {
 						var item = response.message; 
 						if (item) {
 							frappe.msgprint(
-								`<table class="table table-bordered table-condensed">
+								`
+								<button type="button" data-item-code="${item_code}" class="btn btn-primary btn-sm btn-versions-list" > 
+									<span class="hidden-xs">Véhicules Supportées</span>
+								</button>
+<br>
+								<table class="table table-bordered table-condensed">
 									<tr><td>${item.item_name}</td><td><img src="${item.image}"></td></tr>
 									<tr> 
 										<td>
@@ -1970,15 +1977,20 @@ class POSItems {
 											<label>Critére</label>
 										</td>
 										<td>
-											${item.critere_text}
+											${item.critere_text || ''}
 										</td>
 										<td>
 											
 										</td>
 									</tr>
 								</table>
-									
-
+								
+								<hr>	
+								<label>Complementent </label>
+								<div>${item.articles_text || ''}</div>
+								<hr>	
+								<label>Composants </label>
+								<div>${item.composant_text || ''}</div>
 								<hr>
 								<label>Chercher dans designation avec (Ctr + F)</label><br>
 								<p>${item.nom_generique_long} </p>
