@@ -132,10 +132,10 @@ class Item(WebsiteGenerator):
 			frappe.msgprint("Attention vous avez mis des valeurs dans table Generation vehicule et Modeles vehicule au meme temps!")
 		
 		cr = []
-		if self.has_variants:
-			for critere in self.critere_piece:
-				if critere.important:
-					cr.append("{0}: {1}".format(critere.parametre, (critere.valeur_p or '') +' '+ (critere.valeur or '')))
+		#if self.has_variants:
+		for critere in self.critere_piece:
+			if critere.important:
+				cr.append("{0}: {1}".format(critere.parametre, (critere.valeur_p or '') +' '+ (critere.valeur or '')))
 		
 		for vcritere in self.criteres_piece_variante:
 			if vcritere.important:
