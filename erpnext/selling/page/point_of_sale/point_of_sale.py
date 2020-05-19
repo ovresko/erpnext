@@ -41,7 +41,7 @@ def get_stock_details(item_code,pos_profile):
 	#		aw.extend([x.name for x in alldepot])
 	rest = frappe.db.sql(""" select warehouse, actual_qty from `tabBin` where item_code=%s and warehouse in (%s) """,(item_code,', '.join(['"%s"' % d for d in aw])), as_dict=1)
 	#res_depots = frappe.db.sql(""" select warehouse, actual_qty from `tabBin` where item_code=%s  and warehouse in (%s)   """,(item_code, ', '.join(['"%s"' % d for d in aw])) , as_dict=1)
-	return rest
+	return rest,aw
 
 @frappe.whitelist()
 def make_devis(customer,items):
