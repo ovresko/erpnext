@@ -2160,13 +2160,13 @@ class POSItems {
 							console.log(item);
 							var depot = item[1];
 							var mag = item[0];
-							var html  ='<label>Magasins :</label> <br>';
+							var html  ='<label>Magasins :</label> <hr>';
 							for (const d in mag) {
-								html+=d.warehouse+' : '+d.actual_qty+'<br>';
+								html+='<label>'+d['warehouse']+'</label>'+' : '+d['actual_qty']+'<br>';
 							}
-							html +='<label>Depots :</label> <br>';
+							html +='<label>Depots :</label> <hr>';
 							for (const d in depot) {
-								html+=d.warehouse+' : '+d.actual_qty+'<br>';
+								html+='<label>'+d['warehouse']+'</label>'+' : '+d['actual_qty']+'<br>';
 							}
 							frappe.msgprint(html,"Qts Stock"
 								);
