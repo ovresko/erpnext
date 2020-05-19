@@ -1269,8 +1269,9 @@ class POSCart {
 						var item = response.message; 
 						if (item) {
 							if(me.msg_information)
-							{
-								me.msg_information.hide();
+							{	
+								me.msg_information.remove();
+								me.msg_information = null;
 							}
 							me.msg_information = frappe.msgprint(
 								`<table class="table table-bordered table-condensed">
@@ -1947,7 +1948,8 @@ class POSItems {
 						if (item) {
 							if(me.msg_information)
 							{
-								me.msg_information.hide();
+								me.msg_information.remove();
+								me.msg_information = null;
 							}
 							me.msg_information = frappe.msgprint(
 								`
