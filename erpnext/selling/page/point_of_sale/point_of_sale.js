@@ -2162,11 +2162,11 @@ class POSItems {
 							var mag = item[0];
 							var html  ='<label>Magasins :</label> <br>';
 							for (const d in mag) {
-								html+=d.warehouse+' : '+d.actual_qty`+'<br>';
+								html+=d.warehouse+' : '+d.actual_qty+'<br>';
 							}
 							html +='<label>Depots :</label> <br>';
 							for (const d in depot) {
-								html+=d.warehouse+' : '+d.actual_qty`+'<br>';
+								html+=d.warehouse+' : '+d.actual_qty+'<br>';
 							}
 							frappe.msgprint(html,"Qts Stock"
 								);
