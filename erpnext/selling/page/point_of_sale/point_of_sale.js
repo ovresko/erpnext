@@ -1270,7 +1270,7 @@ class POSCart {
 						if (item) {
 							if(me.msg_information)
 							{	
-								me.msg_information.remove();
+								$(me.msg_information).remove();
 								me.msg_information = null;
 							}
 							me.msg_information = frappe.msgprint(
@@ -1948,7 +1948,7 @@ class POSItems {
 						if (item) {
 							if(me.msg_information)
 							{
-								me.msg_information.remove();
+								$(me.msg_information).remove();
 								me.msg_information = null;
 							}
 							me.msg_information = frappe.msgprint(
