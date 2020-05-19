@@ -2158,10 +2158,17 @@ class POSItems {
 						var item = response.message; 
 						if (item) {
 							console.log(item);
-							frappe.msgprint(
-								`Qts Magasins : ${item[0] || 0} <br>
-								Qts Depots : ${item[1] || 0} <br>
-								`,"Qts Stock"
+							var depot = item[1];
+							var mag = item[0];
+							var html  ='<label>Magasins :</label> <br>';
+							for (const d in mag) {
+								html+=d.warehouse+' : '+d.actual_qty`+'<br>';
+							}
+							html +='<label>Depots :</label> <br>';
+							for (const d in depot) {
+								html+=d.warehouse+' : '+d.actual_qty`+'<br>';
+							}
+							frappe.msgprint(html,"Qts Stock"
 								);
 						}  
 					}
