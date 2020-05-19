@@ -2148,11 +2148,12 @@ class POSItems {
 		this.wrapper.on('click', '.btn-stock', function() {
 			const $item = $(this);
 			const item_code = unescape($item.attr('data-item-code'));
-			
+			var ms = this;
 			frappe.call({
 					"method": "erpnext.selling.page.point_of_sale.point_of_sale.get_stock_details",
 					"args": {
-						"item_code": item_code
+						"item_code": item_code,
+						"pos_profile": me.frm.doc.pos_profile
 					},
 					"callback": function(response) {
 						var item = response.message; 
