@@ -595,7 +595,8 @@ erpnext.pos.PointOfSale = class PointOfSale {
 		// }).addClass('visible-xs');
 		this.page.add_menu_item("Effacer tous", function () {
 			me.make_new_invoice();
-			me.make_items();
+			me.reset_cart();
+			//me.make_items();
 		});	
 		this.page.add_menu_item(__("Form View"), function () {
 			console.log(me.frm.doc.items);
@@ -1267,7 +1268,11 @@ class POSCart {
 					"callback": function(response) {
 						var item = response.message; 
 						if (item) {
-							frappe.msgprint(
+							if(me.msg_information)
+							{
+								me.msg_information.hide();
+							}
+							me.msg_information = frappe.msgprint(
 								`<table class="table table-bordered table-condensed">
 									<tr><td>${item.item_name}</td><td><img src="${item.image}"></td></tr>
 									<tr> 
@@ -1904,7 +1909,15 @@ class POSItems {
 	}
 
 	reset_search_field() {
+		
 		this.search_field.set_value('');
+		this.vehicule_version_field.set_value('');
+		this.vehicule_generation_field.set_value('');
+		this.vehicule_modele_field.set_value('');
+		this.vehicule_marque_field.set_value('');
+		this.item_modele_field.set_value('');
+		this.item_group_field.set_value('');
+		   
 		this.search_field.$input.trigger("input");
 	}
 
@@ -1932,7 +1945,11 @@ class POSItems {
 					"callback": function(response) {
 						var item = response.message; 
 						if (item) {
-							var msg = frappe.msgprint(
+							if(me.msg_information)
+							{
+								me.msg_information.hide();
+							}
+							me.msg_information = frappe.msgprint(
 								`
 								<button type="button" data-item-code="${item_code}" class="btn btn-primary btn-sm btn-versions-list" > 
 									<span class="hidden-xs">Véhicules Supportées</span>
