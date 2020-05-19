@@ -2159,6 +2159,7 @@ class POSItems {
 						var item = response.message; 
 						if (item) {
 							 console.log(item);
+							 console.log(me.frm.doc.pos_profile);
 							var depot = item[1];
 							var mag = item[0];
 							 
