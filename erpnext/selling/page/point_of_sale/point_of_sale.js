@@ -2016,9 +2016,8 @@ class POSItems {
 									
 								`,"Détails Article"
 								);
-								$(msg.body).find('.btn-versions-list').on('click', () => {
-									 
-								console.log("item_code",item_code);
+								$(me.msg_information.body).find('.btn-versions-list').on('click', () => {
+									  
 								frappe.call({
 									"method": "erpnext.selling.page.point_of_sale.point_of_sale.get_vehicule_details",
 									"args": {
