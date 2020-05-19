@@ -2165,11 +2165,11 @@ class POSItems {
 							$.each(mag, function(i, d) {
 								
 								html+='<label>'+d['warehouse']+'</label>'+' : '+d['actual_qty']+'<br>';
-							}
+							});
 							html +='<label>Depots  </label> <br>';
 							$.each(depot, function(i, d) {
 								html+='<label>'+d['warehouse']+'</label>'+' : '+d['actual_qty']+'<br>';
-							}
+							});
 							frappe.msgprint(html,"Qts Stock"
 								);
 						}  
