@@ -2157,17 +2157,18 @@ class POSItems {
 					"callback": function(response) {
 						var item = response.message; 
 						if (item) {
-							
+							console.log(item);
 							var depot = item[1];
 							var mag = item[0];
+							console.log(depot);
+							console.log(mag);
 							var html  ='<label>Magasins  </label> <br>';
 							for (const d in mag) {
-								console.log(d);
+								
 								html+='<label>'+d['warehouse']+'</label>'+' : '+d['actual_qty']+'<br>';
 							}
 							html +='<label>Depots  </label> <br>';
-							for (const d in depot) {
-								console.log(d);
+							for (const d in depot) { 
 								html+='<label>'+d['warehouse']+'</label>'+' : '+d['actual_qty']+'<br>';
 							}
 							frappe.msgprint(html,"Qts Stock"
