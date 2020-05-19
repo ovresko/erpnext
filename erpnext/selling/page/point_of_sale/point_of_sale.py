@@ -22,7 +22,11 @@ def get_vehicule_details(item_code):
 def get_stock_details(item_code,pos_profile):
 	
 	my_warehouses = frappe.get_all("Entrepot Pofile PDV",fields=['warehouse'],filters={"parent":pos_profile})
+	pwh = frappe.get_value("POS Profile",pos_profile,"warehouse")
 	aw = []
+	if pwh:
+		aw.append(pwh)
+	
 	if my_warehouses:
 		aw = (x.warehouse for x in my_warehouses)
 	magasin = frappe.db.get_single_value("Stock Settings", "entrepot_magasin")
