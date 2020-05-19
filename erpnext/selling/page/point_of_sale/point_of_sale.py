@@ -28,7 +28,7 @@ def get_stock_details(item_code,pos_profile):
 		aw.append(pwh)
 	
 	if my_warehouses:
-		aw = (x.warehouse for x in my_warehouses)
+		aw.extend([x.warehouse for x in my_warehouses])
 	magasin = frappe.db.get_single_value("Stock Settings", "entrepot_magasin")
 	depot = frappe.db.get_single_value("Stock Settings", "entrepot_depot")
 	res_magasins = frappe.db.sql(""" select warehouse, actual_qty from `tabBin` where item_code=%s and warehouse in (%s) and warehouse in (select name from `tabWarehouse` where parent_warehouse = %s) """,(item_code,', '.join(['"%s"' % d for d in aw]),magasin), as_dict=1)
