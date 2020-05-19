@@ -2159,19 +2159,13 @@ class POSItems {
 						var item = response.message; 
 						if (item) {
 							 console.log(item);
-							 console.log(me.frm.doc.pos_profile);
-							var depot = item[1];
-							var mag = item[0];
-							 
-							var html  ='<label>Magasins  </label> <br>';
-							$.each(mag, function(i, d) {
+							
+							var html  ='';
+							$.each(item, function(i, d) {
 								
-								html+='<label>'+d['warehouse']+'</label>'+' : '+d['actual_qty']+'<br>';
+								html+='<label>'+d['warehouse']+'</label>'+' :         '+d['actual_qty']+'<br>';
 							});
-							html +='<label>Depots  </label> <br>';
-							$.each(depot, function(i, d) {
-								html+='<label>'+d['warehouse']+'</label>'+' : '+d['actual_qty']+'<br>';
-							});
+							 
 							frappe.msgprint(html,"Qts Stock"
 								);
 						}  
