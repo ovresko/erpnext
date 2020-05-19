@@ -2160,8 +2160,8 @@ class POSItems {
 						if (item) {
 							 console.log(item);
 							
-							var html  ='';
-							$.each(item, function(i, d) {
+							var html  ='Qts disponible dans le réseau <br>';
+							$.each(item[0], function(i, d) {
 								
 								html+='<label>'+d['warehouse']+'</label>'+' :         '+d['actual_qty']+'<br>';
 							});
