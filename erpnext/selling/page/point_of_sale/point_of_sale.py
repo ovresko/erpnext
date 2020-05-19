@@ -30,10 +30,18 @@ def get_stock_details(item_code,pos_profile):
 	if my_warehouses:
 		aw.extend([x.warehouse for x in my_warehouses])
 	magasin = frappe.db.get_single_value("Stock Settings", "entrepot_magasin")
+	if magasin:
+		allmagasin = frappe.get_all("Warehouse",fields=['name'],filters={"parent_warehouse":magasin})
+		if allmagasin:
+			aw.extend([x.name for x in allmagasin])
 	depot = frappe.db.get_single_value("Stock Settings", "entrepot_depot")
-	res_magasins = frappe.db.sql(""" select warehouse, actual_qty from `tabBin` where item_code=%s and warehouse in (%s) and warehouse in (select name from `tabWarehouse` where parent_warehouse = %s) """,(item_code,', '.join(['"%s"' % d for d in aw]),magasin), as_dict=1)
-	res_depots = frappe.db.sql(""" select warehouse, actual_qty from `tabBin` where item_code=%s  and warehouse in (%s)  and warehouse in (select name from `tabWarehouse` where parent_warehouse = %s)  """,(item_code, ', '.join(['"%s"' % d for d in aw]),depot) , as_dict=1)
-	return res_magasins,res_depots
+	if depot:
+		alldepot = frappe.get_all("Warehouse",fields=['name'],filters={"parent_warehouse":depot})
+		if alldepot:
+			aw.extend([x.name for x in alldepot])
+	rest = frappe.db.sql(""" select warehouse, actual_qty from `tabBin` where item_code=%s and warehouse in (%s) """,(item_code,', '.join(['"%s"' % d for d in aw])), as_dict=1)
+	#res_depots = frappe.db.sql(""" select warehouse, actual_qty from `tabBin` where item_code=%s  and warehouse in (%s)   """,(item_code, ', '.join(['"%s"' % d for d in aw])) , as_dict=1)
+	return rest
 
 @frappe.whitelist()
 def make_devis(customer,items):
