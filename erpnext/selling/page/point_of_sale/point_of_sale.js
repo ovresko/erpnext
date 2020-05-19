@@ -2158,7 +2158,7 @@ class POSItems {
 					"callback": function(response) {
 						var item = response.message; 
 						if (item) {
-							 
+							 console.log(item);
 							var depot = item[1];
 							var mag = item[0];
 							 
