@@ -31,8 +31,8 @@ def get_stock_details(item_code,pos_profile):
 		aw = (x.warehouse for x in my_warehouses)
 	magasin = frappe.db.get_single_value("Stock Settings", "entrepot_magasin")
 	depot = frappe.db.get_single_value("Stock Settings", "entrepot_depot")
-	res_magasins = frappe.db.sql(""" select warehouse, actual_qty from `tabBin` where item_code=%s and warehouse in (%s) and warehouse in (select name from `tabWarehouse` where parent_warehouse = %s) """,(item_code,magasin),', '.join(['"%s"' % d for d in aw]), as_dict=1)
-	res_depots = frappe.db.sql(""" select warehouse, actual_qty from `tabBin` where item_code=%s  and warehouse in (%s)  and warehouse in (select name from `tabWarehouse` where parent_warehouse = %s)  """,(item_code,depot),', '.join(['"%s"' % d for d in aw]), as_dict=1)
+	res_magasins = frappe.db.sql(""" select warehouse, actual_qty from `tabBin` where item_code=%s and warehouse in (%s) and warehouse in (select name from `tabWarehouse` where parent_warehouse = %s) """,(item_code,', '.join(['"%s"' % d for d in aw]),magasin), as_dict=1)
+	res_depots = frappe.db.sql(""" select warehouse, actual_qty from `tabBin` where item_code=%s  and warehouse in (%s)  and warehouse in (select name from `tabWarehouse` where parent_warehouse = %s)  """,(item_code, ', '.join(['"%s"' % d for d in aw]),depot) , as_dict=1)
 	return res_magasins,res_depots
 
 @frappe.whitelist()
