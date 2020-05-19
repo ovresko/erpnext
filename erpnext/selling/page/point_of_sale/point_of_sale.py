@@ -22,8 +22,8 @@ def get_vehicule_details(item_code):
 def get_stock_details(item_code):
 	magasin = frappe.db.get_single_value("Stock Settings", "entrepot_magasin")
 	depot = frappe.db.get_single_value("Stock Settings", "entrepot_depot")
-	res_magasins = frappe.db.sql(""" select sum(actual_qty) from `tabBin` where item_code=%s and warehouse in (select name from `tabWarehouse` where parent_warehouse = %s) """,(item_code,magasin))
-	res_depots = frappe.db.sql(""" select sum(actual_qty) from `tabBin` where item_code=%s and warehouse in (select name from `tabWarehouse` where parent_warehouse = %s)  """,(item_code,depot))
+	res_magasins = frappe.db.sql(""" select warehouse, actual_qty from `tabBin` where item_code=%s and warehouse in (select name from `tabWarehouse` where parent_warehouse = %s) """,(item_code,magasin), as_dict=1)
+	res_depots = frappe.db.sql(""" select warehouse, actual_qty from `tabBin` where item_code=%s and warehouse in (select name from `tabWarehouse` where parent_warehouse = %s)  """,(item_code,depot), as_dict=1)
 	return res_magasins[0],res_depots[0]
 
 @frappe.whitelist()
