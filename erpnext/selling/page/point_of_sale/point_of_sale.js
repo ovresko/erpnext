@@ -2043,7 +2043,8 @@ class POSItems {
 												html += ` 
 													<td> ${v.version_vehicule || ''}<br>${v.marque_vehicule || ''} </td>
 													 
-													<td> ${v.nom_version || ''} <br>${v.periode || ''}</td>
+													<td> ${v.nom_version || ''}  </td>
+													<td> ${v.periode || ''}</td>
 													<td> ${v.critere || ''}  ${v.valeur_1 || ''} <br> ${v.critere_1 || ''}  ${v.valeur_2 || ''} <br> ${v.critere_2 || ''}  ${v.valeur_3 || ''} <br>  </td>
 												`;
 												html += `</tr>`;
@@ -2055,11 +2056,13 @@ class POSItems {
 											for (const _v in generations) {
 												
 												let v = generations[_v];
-												 
+												 let d = v.date_debut.substring(5,7)+'-'+v.date_debut.substring(2,4)
+												 let f = v.date_fin.substring(5,7)+'-'+v.date_fin.substring(2,4)
 												html_generations += `<tr>`;
 												html_generations += ` 
+													<td> ${v.nom_marque || ''} </td>	
 													<td> ${v.nom_generation || ''} </td>
-													<td> ${v.date_debut || ''} </td>
+													<td> (${d || ''} ${f || ''}) </td>
 													<td> ${v.date_fin || ''} </td>
 												`;
 												html_generations += `</tr>`;
