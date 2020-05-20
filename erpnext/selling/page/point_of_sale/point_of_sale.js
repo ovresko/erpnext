@@ -2044,7 +2044,7 @@ class POSItems {
 													<td> ${v.version_vehicule || ''}<br>${v.marque_vehicule || ''} </td>
 													 
 													<td> ${v.nom_version || ''}  </td>
-													<td> ${v.periode || ''}</td>
+													<td  style="width:100px"> ${v.periode || ''}</td>
 													<td> ${v.critere || ''}  ${v.valeur_1 || ''} <br> ${v.critere_1 || ''}  ${v.valeur_2 || ''} <br> ${v.critere_2 || ''}  ${v.valeur_3 || ''} <br>  </td>
 												`;
 												html += `</tr>`;
