@@ -72,6 +72,7 @@ erpnext.pos.PointOfSale = class PointOfSale {
 	}
 
 	get_pos_profile() {
+		var me = this;
 		return frappe.xcall("erpnext.stock.get_item_details.get_pos_profile",
 			{'company': this.frm.doc.company})
 			.then((r) => {
@@ -81,7 +82,7 @@ erpnext.pos.PointOfSale = class PointOfSale {
 						.then(() => {
 							this.on_change_pos_profile();
 						});
-					this.page.set_title("PDV "+r.name);
+					me.page.set_title("PDV "+r.name);
 				} else {
 					this.raise_exception_for_pos_profile();
 				}
