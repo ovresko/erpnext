@@ -2056,13 +2056,13 @@ class POSItems {
 											for (const _v in generations) {
 												
 												let v = generations[_v];
-												 let d = v.date_debut.substring(5,7)+'-'+v.date_debut.substring(2,4)
-												 let f = v.date_fin.substring(5,7)+'-'+v.date_fin.substring(2,4)
+												 let d = (v.date_debut || '').substring(5,7)+'-'+(v.date_debut || '').substring(2,4)
+												 let f = (v.date_fin || '').substring(5,7)+'-'+(v.date_fin || '').substring(2,4)
 												html_generations += `<tr>`;
 												html_generations += ` 
 													<td> ${v.nom_marque || ''} </td>	
 													<td> ${v.nom_generation || ''} </td>
-													<td> (${d || ''} ${f || ''}) </td>
+													<td style="width:100px"> (${d || ''} ${f || ''}) </td>
 													<td> ${v.date_fin || ''} </td>
 												`;
 												html_generations += `</tr>`;
