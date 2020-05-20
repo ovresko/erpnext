@@ -2015,8 +2015,7 @@ class POSItems {
 								<label>Composants </label>
 								<div>${item.composant_text || ''}</div>
 								<hr>
-								<label>Chercher dans designation avec (Ctr + F)</label><br>
-								<p>${item.nom_generique_long} </p>
+ 
 									
 								`,"Détails Article"
 								);
