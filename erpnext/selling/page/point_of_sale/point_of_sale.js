@@ -82,7 +82,7 @@ erpnext.pos.PointOfSale = class PointOfSale {
 						.then(() => {
 							this.on_change_pos_profile();
 						});
-					me.page.set_title("PDV "+r.name);
+					
 				} else {
 					this.raise_exception_for_pos_profile();
 				}
@@ -91,13 +91,15 @@ erpnext.pos.PointOfSale = class PointOfSale {
 
 	set_online_status() {
 		this.connection_status = false;
-		this.page.set_indicator(__("Offline"), "grey");
+		 
+		var pr = this.frm.doc.pos_profile;
+		this.page.set_indicator("Hors Ligne - "+pr.name, "grey");
 		frappe.call({
 			method: "frappe.handler.ping",
 			callback: r => {
 				if (r.message) {
 					this.connection_status = true;
-					this.page.set_indicator(__("Online"), "green");
+					this.page.set_indicator("En Ligne - "+pr.name, "green");
 				}
 			}
 		});
