@@ -40,7 +40,7 @@ def get_stock_details(item_code,pos_profile):
 	#	alldepot = frappe.get_all("Warehouse",fields=['name'],filters={"parent_warehouse":depot})
 	#	if alldepot:
 	#		aw.extend([x.name for x in alldepot])
-	rest = frappe.db.sql(""" select warehouse, actual_qty from `tabBin` where item_code=%s and warehouse in (%s) """,(item_code,', '.join(['"%s"' % d for d in aw])) )
+	rest = frappe.db.sql(''' select warehouse, actual_qty from `tabBin` where item_code='{item_code}' and warehouse in ({wr})'''.format(item_code=item_code,   wr=", ".join(['%s']*len(aw))), tuple(aw), as_dict=1 )
 	#res_depots = frappe.db.sql(""" select warehouse, actual_qty from `tabBin` where item_code=%s  and warehouse in (%s)   """,(item_code, ', '.join(['"%s"' % d for d in aw])) , as_dict=1)
 	return rest,aw
 
