@@ -931,7 +931,7 @@ class POSCart {
 	make_customer_field() {
 		const wr = this.wrapper;
 		var pr = this.frm.doc.pos_profile;
-		console.log(this.frm.doc);
+		console.log(pr);
 		this.customer_field = frappe.ui.form.make_control({
 			df: {
 				fieldtype: 'Link',
@@ -961,7 +961,7 @@ class POSCart {
 								var sinv = response.message; 
 								if (sinv) {
 									 
-									wr.find('.customer-info').html('<label style="font-size:18px">'+pr.name+'</label><br>' +'Nom : '+(sinv.customer_name || '')+'<br>'+(sinv.customer_group || '')+'<br>'+(sinv.territory || '')+'<br>'+(sinv.mobile_no || '')+ ' -  '+(sinv.email_id || '')); 
+									wr.find('.customer-info').html('[ Profile : '+pr+' ]<br>' +'Nom : '+(sinv.customer_name || '')+'<br>'+(sinv.customer_group || '')+'<br>'+(sinv.territory || '')+'<br>'+(sinv.mobile_no || '')+ ' -  '+(sinv.email_id || '')); 
 								}  else{
 									   wr.find('.customer-info').html('');
 								   }
