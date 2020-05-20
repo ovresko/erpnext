@@ -81,6 +81,7 @@ erpnext.pos.PointOfSale = class PointOfSale {
 						.then(() => {
 							this.on_change_pos_profile();
 						});
+					this.page.set_title("PDV "+r.name);
 				} else {
 					this.raise_exception_for_pos_profile();
 				}
