@@ -2254,7 +2254,7 @@ class POSItems {
 			   }
 		   if(coml || comp)
 		   {   
-		   	   complements = '<div style="width:160px;padding-left:5px" >'+coml+comp+'</div>';
+		   	   complements = '<div>'+coml+comp+'</div>';
 		   }
 		 
 		//image-view-item
@@ -2284,9 +2284,10 @@ class POSItems {
 						</a>
 						${designation_commerciale}
 	 					${critere}
+						${complements}
 						 
 					</div>
-					<div>${complements}</div>
+					 
 					<div style="width:160px;padding-left:5px" >
 						<div style="margin-bottom:10px"><img src="${item.fabricant_logo ||'#'}" width="80px" ></div>
 						<div>
