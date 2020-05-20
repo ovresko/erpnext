@@ -205,7 +205,7 @@ def get_items(start, page_length, price_list, item_group, search_value="", pos_p
 		res.update({
 			'barcode': barcode
 		})
-	if item_manufacturer or item_modele or vehicule_version or vehicule_generation or vehicule_modele or vehicule_marque:
+	if not search_value and (item_manufacturer or item_modele or vehicule_version or vehicule_generation or vehicule_modele or vehicule_marque):
 		_items = res['items']
 		_items.sort(key=lambda x: x.actual_qty, reverse=True)
 		res.update({
