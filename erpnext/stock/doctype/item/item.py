@@ -265,22 +265,22 @@ class Item(WebsiteGenerator):
 			#_variantes = frappe.db.sql(""" select name,manufacturer_part_no,manufacturer from  `tabItem` where variant_of= '{}'""".format(self.name),as_dict=True)
 			for cmp in self.composant:
 				if cmp.manufacturer_part_no:
-					self.composant_text +=  (cmp.manufacturer_part_no or '') +' / '
+					self.composant_text += "%s (%s) /" % ((cmp.manufacturer_part_no or ''),cmp.item_group )
 				elif cmp.item:
-					var_comp = frappe.db.sql(""" select name,manufacturer_part_no,manufacturer from  `tabItem` where variant_of= '{}' and manufacturer='{}' limit 1""".format(cmp.item,self.manufacturer),as_dict=True)
+					var_comp = frappe.db.sql(""" select name,item_group,manufacturer_part_no,manufacturer from  `tabItem` where variant_of= '{}' and manufacturer='{}' limit 1""".format(cmp.item,self.manufacturer),as_dict=True)
 					if var_comp:
 						_comp=var_comp[0]
-						self.composant_text +=  (_comp.manufacturer_part_no or '') +' / '
+						self.composant_text += "%s (%s) /" %  ((_comp.manufacturer_part_no or ''),_comp.item_group)
 		
 			self.articles_text= ""
 			for art in self.articles:
 				if art.manufacturer_part_no:
-					self.articles_text +=  (art.manufacturer_part_no or '') +' / '
+					self.articles_text += "%s (%s) /" % ((art.manufacturer_part_no or ''),art.item_group )
 				elif art.item:
-					var_comp = frappe.db.sql(""" select name,manufacturer_part_no,manufacturer from  `tabItem` where variant_of= '{}' and manufacturer='{}' limit 1""".format(art.item,self.manufacturer),as_dict=True)
+					var_comp = frappe.db.sql(""" select name,item_group,manufacturer_part_no,manufacturer from  `tabItem` where variant_of= '{}' and manufacturer='{}' limit 1""".format(art.item,self.manufacturer),as_dict=True)
 					if var_comp:
 						_comp=var_comp[0]
-						self.articles_text +=  (_comp.manufacturer_part_no or '') +' / '
+						self.articles_text += "%s (%s) /" % ((_comp.manufacturer_part_no or '')  ,_comp.item_group )
 	def on_update(self):
 		invalidate_cache_for_item(self)
 		self.validate_name_with_item_group()
