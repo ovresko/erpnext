@@ -206,9 +206,10 @@ def get_items(start, page_length, price_list, item_group, search_value="", pos_p
 			'barcode': barcode
 		})
 	if item_manufacturer or item_modele or vehicule_version or vehicule_generation or vehicule_modele or vehicule_marque:
-		res.update({
-			'items': res.items.sort(key=lambda x: x.actual_qty, reverse=True)
-		})
+		res.items.sort(key=lambda x: x.actual_qty, reverse=True)
+		#res.update({
+		#	'items':
+		#})
 	return res
 
 @frappe.whitelist()
