@@ -82,7 +82,7 @@ def make_sales_order(customer,items):
 	return so
 
 @frappe.whitelist()
-def get_items(start, page_length, price_list, item_group, search_value="", pos_profile=None,item_manufacturer=None,item_modele=None, vehicule_marque=None, vehicule_modele=None, vehicule_generation=None, vehicule_version=None,item_eom=None):
+def get_items(start, page_length, price_list, item_group, search_value="", pos_profile=None,item_manufacturer=None,item_modele=None, vehicule_marque=None, vehicule_modele=None, vehicule_generation=None, vehicule_version=None,item_oem=None):
 	data = dict()
 	warehouse = ""
 	display_items_in_stock = 0
@@ -112,8 +112,8 @@ def get_items(start, page_length, price_list, item_group, search_value="", pos_p
 
 	if item_manufacturer:
 		condition += get_item_manufacturer(item_manufacturer)
-	if item_eom:
-		condition += get_item_eom(item_eom)
+	if item_oem:
+		condition += get_item_oem(item_oem)
 
 	if vehicule_version:
 		condition += get_item_version(vehicule_version)
@@ -255,8 +255,8 @@ def get_item_manufacturer(item_manufacturer):
 	cond = """ and i.manufacturer = '%s'""" % (item_manufacturer)
 	return cond
 
-def get_item_eom(item_eom):
-	cond = """ and i.oem_text LIKE  '%%%s%' """ % (item_eom)
+def get_item_oem(item_oem):
+	cond = """ and i.oem_text LIKE  '%%%s%' """ % (item_oem)
 	return cond
 
 def get_item_version(vehicule_version):
