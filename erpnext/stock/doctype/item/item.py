@@ -256,10 +256,6 @@ class Item(WebsiteGenerator):
 
 	def sync_comp(self):
 		if self.variant_of:
-			self.nbr_variante = ''
-			vars = frappe.db.sql(''' select count(name) from `tabItem` where variant_of=%s ''',self.name)
-			if vars:
-				self.nbr_variante = vars[0]
 			self.composant_text = ""
 			#_variantes = frappe.db.sql(""" select name,manufacturer_part_no,manufacturer from  `tabItem` where variant_of= '{}'""".format(self.name),as_dict=True)
 			for cmp in self.composant:
@@ -287,6 +283,11 @@ class Item(WebsiteGenerator):
 		self.update_item_price()
 		self.update_template_item()
 		self.sync_comp()
+		if self.has_variants:
+			self.nbr_variante = ''
+			vars = frappe.db.sql(''' select count(name) from `tabItem` where variant_of=%s ''',self.name)
+			if vars:
+				self.nbr_variante = vars[0]
 		
 		
 
