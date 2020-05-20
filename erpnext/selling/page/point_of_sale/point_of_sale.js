@@ -92,14 +92,13 @@ erpnext.pos.PointOfSale = class PointOfSale {
 	set_online_status() {
 		this.connection_status = false;
 		 
-		var pr = this.frm.doc.pos_profile;
-		this.page.set_indicator("Hors Ligne - "+pr.name, "grey");
+		this.page.set_indicator("Hors Ligne", "grey");
 		frappe.call({
 			method: "frappe.handler.ping",
 			callback: r => {
 				if (r.message) {
 					this.connection_status = true;
-					this.page.set_indicator("En Ligne - "+pr.name, "green");
+					this.page.set_indicator("En Ligne", "green");
 				}
 			}
 		});
@@ -945,6 +944,7 @@ class POSCart {
 				},
 				onchange: () => {
 					let customer = this.customer_field.get_value();
+					var pr = this.frm.doc.pos_profile;
 					this.events.on_customer_change(customer);
 					this.events.get_loyalty_details();
 					if(customer){
@@ -959,7 +959,7 @@ class POSCart {
 								var sinv = response.message; 
 								if (sinv) {
 									 
-									wr.find('.customer-info').html('Nom : '+(sinv.customer_name || '')+'<br>'+(sinv.customer_group || '')+'<br>'+(sinv.territory || '')+'<br>'+(sinv.mobile_no || '')+ ' -  '+(sinv.email_id || '')); 
+									wr.find('.customer-info').html('<label style="font-size:18px">'+pr.name+'</label><br>' +'Nom : '+(sinv.customer_name || '')+'<br>'+(sinv.customer_group || '')+'<br>'+(sinv.territory || '')+'<br>'+(sinv.mobile_no || '')+ ' -  '+(sinv.email_id || '')); 
 								}  else{
 									   wr.find('.customer-info').html('');
 								   }
