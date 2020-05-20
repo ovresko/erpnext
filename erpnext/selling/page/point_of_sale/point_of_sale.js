@@ -2163,7 +2163,7 @@ class POSItems {
 							var html  ='Qts disponible dans le réseau <br>';
 							$.each(item[0], function(i, d) {
 								
-								html+='<hr><label>'+d['warehouse']+'</label>'+' :         '+d['actual_qty']+'<br>';
+								html+='<hr><label>'+d['warehouse']+'</label>'+' :&nbsp;&nbsp;&nbsp;&nbsp;'+d['actual_qty']+'<br>';
 							});
 							 
 							frappe.msgprint(html,"Qts Stock"
@@ -2292,7 +2292,7 @@ class POSItems {
 						 <div>${item.adresse ||''}</div>
 						 
 						<div>
-							${item_code}
+							${item_code} (Var : ${item.nbr_variante || ''})
 						</div>
 						 
 						OEM: <span style="font-weight:800"><a data-item-code="${item_code}" class="oem-text">${oem}</a></span>
