@@ -688,7 +688,7 @@ class POSCart {
 							<div class="list-item__content text-muted text-right">${__('Discount')}</div>
 							<div class="list-item__content text-muted text-right">${__('Rate')}</div>
 						</div>
-						<div class="cart-items">
+						<div class="cart-items" style="height:100% !important"> 
 							<div class="empty-state">
 								<span>${__('No Items added to cart')}</span>
 							</div>
@@ -1488,7 +1488,7 @@ class POSItems {
 
 		this.items_wrapper = this.wrapper.find('.items-wrapper');
 		this.items_wrapper.append(`
-			<div class="list-item-table pos-items-wrapper">
+			<div class="list-item-table pos-items-wrapper" style="height:100% !important;max-height:100% !important">
 				<div class="pos-items image-view-container">
 				</div>
 			</div>
