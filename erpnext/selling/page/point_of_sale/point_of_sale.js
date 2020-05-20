@@ -2063,7 +2063,7 @@ class POSItems {
 													<td> ${v.nom_marque || ''} </td>	
 													<td> ${v.nom_generation || ''} </td>
 													<td style="width:100px"> (${d || ''} ${f || ''}) </td>
-													<td> ${v.date_fin || ''} </td>
+													<td> ${v.critere || ''}  ${v.valeur_1 || ''} <br> ${v.critere_1 || ''}  ${v.valeur_2 || ''} <br> ${v.critere_2 || ''}  ${v.valeur_3 || ''} <br>  </td>
 												`;
 												html_generations += `</tr>`;
 											}
