@@ -256,7 +256,7 @@ def get_item_manufacturer(item_manufacturer):
 	return cond
 
 def get_item_oem(item_oem):
-	cond = """ and i.oem_text LIKE  '%%%s%' """ % (item_oem)
+	cond = """ and i.oem_text LIKE  '%%%s%%' """ % (item_oem)
 	return cond
 
 def get_item_version(vehicule_version):
