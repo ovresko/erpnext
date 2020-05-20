@@ -2229,7 +2229,7 @@ class POSItems {
 		}
 		let variantes = '';
 		if(item.nbr_variante){
-		   variantes = '['+item.nbr_variante || ''+']'
+		   variantes = '<span style="font-weight:800">['+(item.nbr_variante || '')+']</span>'
 		   }
 		let critere = '';
 		if(critere_text){
