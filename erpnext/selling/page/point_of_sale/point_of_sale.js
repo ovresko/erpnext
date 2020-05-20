@@ -1888,7 +1888,7 @@ class POSItems {
 			   && !this.vehicule_modele
 			   && !this.vehicule_generation
 			   && !this.item_modele
-			   && !this.item_eom
+			   && !this.item_oem
 			   && !this.vehicule_version) {
 				const items = this.search_index[search_term];
 				this.items = items;
@@ -1901,7 +1901,7 @@ class POSItems {
 			   && !this.vehicule_marque
 			   && !this.vehicule_modele
 			   && !this.item_modele
-			   && !this.item_eom
+			   && !this.item_oem
 			   && !this.vehicule_generation
 			   && !this.vehicule_version) {
 				this.items = this.all_items;
@@ -2216,8 +2216,8 @@ class POSItems {
 			const $item = $(this);
 			const oem = $item.text();
 			const item_code = unescape($item.attr('data-item-code'));
-			me.item_eom_field.set_value(oem);
-			me.item_eom = oem;
+			me.item_oem_field.set_value(oem);
+			me.item_oem = oem;
 			//me.search_field.set_value(oem);
 			me.search_field.set_value('');
 			me.filter_items();
@@ -2380,7 +2380,7 @@ class POSItems {
 					item_manufacturer:this.item_manufacturer ,
 					vehicule_marque:this.vehicule_marque, 
 					vehicule_modele:this.vehicule_modele, 
-					item_eom: this.item_eom,
+					item_oem: this.item_oem,
 					item_modele:this.item_modele,
 					vehicule_generation:this.vehicule_generation, 
 					vehicule_version:this.vehicule_version					
