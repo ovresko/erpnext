@@ -2227,6 +2227,10 @@ class POSItems {
 			actual_qty = '<span class="strong" style="color:red">Qts: 0 </span>   <button data-item-code="'+item.item_code+'" data-label="stock" class="btn btn-default btn-xs btn-stock" style="margin-right: 5px;"><i class="fa fa-cubes"></i></button>';
 				
 		}
+		let variantes = '';
+		if(item.nbr_variante){
+		   variantes = '['+item.nbr_variante || ''+']'
+		   }
 		let critere = '';
 		if(critere_text){
 			critere = '<hr style="margin:5px 0px 5px 0px"><span style="font-size:13px;color:red">'+critere_text +'</span>';
@@ -2292,7 +2296,7 @@ class POSItems {
 						 <div>${item.adresse ||''}</div>
 						 
 						<div>
-							${item_code} (Var : ${item.nbr_variante || ''})
+							${item_code} ${variantes}
 						</div>
 						 
 						OEM: <span style="font-weight:800"><a data-item-code="${item_code}" class="oem-text">${oem}</a></span>
