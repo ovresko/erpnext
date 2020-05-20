@@ -258,7 +258,8 @@ class Item(WebsiteGenerator):
 		if self.variant_of:
 			self.nbr_variante = ''
 			vars = frappe.db.sql(''' select count(name) from `tabItem` where variant_of=%s ''',self.name)
-				self.nbr_variante = vars
+			if vars:
+				self.nbr_variante = vars[0]
 			self.composant_text = ""
 			#_variantes = frappe.db.sql(""" select name,manufacturer_part_no,manufacturer from  `tabItem` where variant_of= '{}'""".format(self.name),as_dict=True)
 			for cmp in self.composant:
