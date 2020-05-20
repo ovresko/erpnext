@@ -1470,6 +1470,8 @@ class POSItems {
 					</div>
 				<div class="item-modele-field" style="width:100% ">
 					</div> 
+				<div class="item-oem-field" style="width:100% ">
+					</div> 
  
 			</div>
 			<div class="fields">
@@ -1491,6 +1493,31 @@ class POSItems {
 				</div>
 			</div>
 		`);
+	}
+	
+	make_oem(){ 
+		const me = this; 
+		var val = this.wrapper.find('.item-oem-field');
+		if(val)
+			val.empty();
+	 	const wr = this.wrapper;
+		this.item_oem_field = frappe.ui.form.make_control({
+			df: {
+				fieldtype: 'Data',
+				label: "OEM",
+				default: this.item_oem,
+				placeholder: "OEM"
+				
+			},
+			parent: this.wrapper.find('.item-oem-field'),
+			render_input: true
+		});
+		this.item_oem_field.$input.on('input', (e) => {
+			 this.item_oem = e.target.value;
+			 this.filter_items();
+			 
+		});
+		
 	}
 	
 	make_item_modele(){ 
@@ -1736,6 +1763,7 @@ class POSItems {
 		this.make_generation();
 		this.make_version();
 		  this.make_item_modele();
+		this.make_oem();
 		
 		this.search_field = frappe.ui.form.make_control({
 			df: {
@@ -1860,6 +1888,7 @@ class POSItems {
 			   && !this.vehicule_modele
 			   && !this.vehicule_generation
 			   && !this.item_modele
+			   && !this.item_eom
 			   && !this.vehicule_version) {
 				const items = this.search_index[search_term];
 				this.items = items;
@@ -1872,13 +1901,14 @@ class POSItems {
 			   && !this.vehicule_marque
 			   && !this.vehicule_modele
 			   && !this.item_modele
+			   && !this.item_eom
 			   && !this.vehicule_generation
 			   && !this.vehicule_version) {
 				this.items = this.all_items;
 				return this.render_items(this.all_items);
 			}
 		 
-		console.log("filter_items2",this.item_manufacturer);
+		//console.log("filter_items2",this.item_manufacturer);
 		this.get_items({search_value: search_term})
 			.then(({ items, serial_no, batch_no, barcode }) => {
 				if (search_term && !barcode) {
@@ -1922,6 +1952,8 @@ class POSItems {
 		this.vehicule_marque_field.set_value('');
 		this.item_modele_field.set_value('');
 		this.item_group_field.set_value('');
+		this.item_oem_field.set_value('');
+		 
 		   
 		this.search_field.$input.trigger("input");
 	}
@@ -2184,13 +2216,16 @@ class POSItems {
 			const $item = $(this);
 			const oem = $item.text();
 			const item_code = unescape($item.attr('data-item-code'));
-			me.search_field.set_value(oem);
-			//me.filter_items();
-			clearTimeout(me.last_search);
-			me.last_search = setTimeout(() => {
-				const search_term = oem;
-				me.filter_items({ search_term });
-			}, 300);
+			me.item_eom_field.set_value(oem);
+			me.item_eom = oem;
+			//me.search_field.set_value(oem);
+			me.search_field.set_value('');
+			me.filter_items();
+			//clearTimeout(me.last_search);
+			//me.last_search = setTimeout(() => {
+			//	const search_term = oem;
+			//	me.filter_items({ search_term });
+			//}, 300);
 		});
 		
 		
@@ -2345,6 +2380,7 @@ class POSItems {
 					item_manufacturer:this.item_manufacturer ,
 					vehicule_marque:this.vehicule_marque, 
 					vehicule_modele:this.vehicule_modele, 
+					item_eom: this.item_eom,
 					item_modele:this.item_modele,
 					vehicule_generation:this.vehicule_generation, 
 					vehicule_version:this.vehicule_version					
