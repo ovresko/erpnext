@@ -930,6 +930,8 @@ class POSCart {
 
 	make_customer_field() {
 		const wr = this.wrapper;
+		var pr = this.frm.doc.pos_profile;
+		console.log(this.frm.doc);
 		this.customer_field = frappe.ui.form.make_control({
 			df: {
 				fieldtype: 'Link',
@@ -944,7 +946,7 @@ class POSCart {
 				},
 				onchange: () => {
 					let customer = this.customer_field.get_value();
-					var pr = this.frm.doc.pos_profile;
+					
 					this.events.on_customer_change(customer);
 					this.events.get_loyalty_details();
 					if(customer){
