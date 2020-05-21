@@ -1998,7 +1998,7 @@ class POSItems {
 			me.item_modele_field.set_value(me.last_query.item_modele || '');
 			//me.item_group_field.set_value(me.last_query.item_group || '');
 			me.item_oem_field.set_value(me.last_query.item_oem || '');
-			me.item_oem_field.trigger("input");
+			me.item_oem_field.$input.trigger("input"); 
 			//me.filter_items();
 			//me.search_value = me.last_query.search_value || '';
 			//me.item_group = me.last_query.item_group || '';
