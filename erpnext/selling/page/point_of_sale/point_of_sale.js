@@ -2392,7 +2392,7 @@ class POSItems {
 		
 		this.last_query = {
 			"search_value":search_value,
-			"item_group":item_group, 
+			"item_group":this.item_group, 
 			"pos_profile": this.frm.doc.pos_profile,
 			"item_manufacturer":this.item_manufacturer ,
 			"vehicule_marque":this.vehicule_marque, 
