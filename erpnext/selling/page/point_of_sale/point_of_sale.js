@@ -2275,7 +2275,7 @@ class POSItems {
 			 
 			//me.search_field.set_value(oem);
 			me.search_field.set_value('');
-			//me.filter_items();
+			me.filter_items();
 			//clearTimeout(me.last_search);
 			//me.last_search = setTimeout(() => {
 			//	const search_term = oem;
