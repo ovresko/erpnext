@@ -1998,10 +1998,11 @@ class POSItems {
 			me.item_modele_field.set_value(me.last_query.item_modele || '');
 			//me.item_group_field.set_value(me.last_query.item_group || '');
 			me.item_oem_field.set_value(me.last_query.item_oem || '');
+			me.item_oem_field.trigger("input");
 			//me.filter_items();
 			//me.search_value = me.last_query.search_value || '';
 			//me.item_group = me.last_query.item_group || '';
-			me.item_manufacturer = me.last_query.item_manufacturer || '';
+			me.item_manufacturer_field.set_value(me.last_query.item_manufacturer || '');
 			//me.vehicule_marque = me.last_query.vehicule_marque || '';
 			//me.vehicule_modele = me.last_query.vehicule_modele || '';
 			//me.item_oem = me.last_query.item_oem || '';
