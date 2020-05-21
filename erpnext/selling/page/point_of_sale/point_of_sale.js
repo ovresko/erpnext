@@ -1481,6 +1481,7 @@ class POSItems {
 				</div>
 				<div class="item-manufacturer-field" style="width: 20%;margin-left: 10px;">
 				</div>
+				<button  data-label="return" class="btn btn-default btn btn-return" style="margin-right: 5px;"><i class="fa fa-arrow-left"></i></button>
 			</div>
 			<div class="items-wrapper">
 			</div>
@@ -1786,6 +1787,8 @@ class POSItems {
 				this.filter_items({ search_term });
 			}, 300);
 		});
+		
+		
 
 		// item-manufacturer-field
 		this.item_manufacturer_field = frappe.ui.form.make_control({
@@ -1966,7 +1969,29 @@ class POSItems {
 			const item_code = unescape($item.attr('data-item-code'));
 			window.open('#Form/Item/'+item_code, '_blank', 'toolbar=0,location=0,menubar=0'); 
 		});
-		
+		this.wrapper.on('click', '.btn-return', function(event) {
+			  console.log(this.last_query)
+			  this.search_value = this.last_query.search_value;
+			this.item_group = this.last_query.item_group;
+			this.item_manufacturer = this.last_query.item_manufacturer;
+			this.vehicule_marque = this.last_query.vehicule_marque;
+			this.vehicule_modele = this.last_query.vehicule_modele;
+			this.item_oem = this.last_query.item_oem;
+			this.item_modele = this.last_query.item_modele;
+			this.vehicule_generation = this.last_query.vehicule_generation;
+			this.vehicule_version = this.last_query.vehicule_version;
+			this.filter_items();
+			//"item_group", 
+			//"pos_profile": this.frm.doc.pos_profile,
+			//"item_manufacturer":this.item_manufacturer ,
+			//"vehicule_marque":this.vehicule_marque, 
+			//"vehicule_modele":this.vehicule_modele, 
+			//"item_oem": this.item_oem,
+			//"item_modele":this.item_modele,
+			//"vehicule_generation":this.vehicule_generation, 
+			//"vehicule_version":this.vehicule_version	
+		});
+		 
 		 
 		this.wrapper.on('click', '.btn-information', function(event) {
 			 event.stopPropagation();
@@ -2364,7 +2389,20 @@ class POSItems {
 		if(!this.item_group){
 		this.item_group = this.parent_item_group;	
 		}
-		console.log("get_items",this.item_modele );
+		
+		this.last_query = {
+			"search_value":search_value,
+			"item_group", 
+			"pos_profile": this.frm.doc.pos_profile,
+			"item_manufacturer":this.item_manufacturer ,
+			"vehicule_marque":this.vehicule_marque, 
+			"vehicule_modele":this.vehicule_modele, 
+			"item_oem": this.item_oem,
+			"item_modele":this.item_modele,
+			"vehicule_generation":this.vehicule_generation, 
+			"vehicule_version":this.vehicule_version		
+		}
+		
 		const item_group = this.item_group ;
 		return new Promise(res => {
 			frappe.call({
