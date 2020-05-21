@@ -1795,7 +1795,7 @@ class POSItems {
 		});
 
 		this.search_field.$input.on('input', (e) => {
-			/this.last_query['search_term'] = this.search_term;
+			//this.last_query['search_term'] = this.search_term;
 			clearTimeout(this.last_search);
 			this.last_search = setTimeout(() => {
 				const search_term = e.target.value;
