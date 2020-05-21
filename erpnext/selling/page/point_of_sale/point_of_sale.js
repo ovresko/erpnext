@@ -2009,7 +2009,7 @@ class POSItems {
 			//me.item_modele = me.last_query.item_modele || '';
 			//me.vehicule_generation = me.last_query.vehicule_generation || '';
 			//me.vehicule_version = me.last_query.vehicule_version || '';
-			//me.filter_items();
+			me.filter_items();
 			//"item_group", 
 			//"pos_profile": this.frm.doc.pos_profile,
 			//"item_manufacturer":this.item_manufacturer ,
