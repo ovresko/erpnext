@@ -1971,17 +1971,17 @@ class POSItems {
 			window.open('#Form/Item/'+item_code, '_blank', 'toolbar=0,location=0,menubar=0'); 
 		});
 		this.wrapper.on('click', '.btn-return', function(event) {
-			  console.log(this.last_query)
-			  this.search_value = this.last_query.search_value;
-			this.item_group = this.last_query.item_group;
-			this.item_manufacturer = this.last_query.item_manufacturer;
-			this.vehicule_marque = this.last_query.vehicule_marque;
-			this.vehicule_modele = this.last_query.vehicule_modele;
-			this.item_oem = this.last_query.item_oem;
-			this.item_modele = this.last_query.item_modele;
-			this.vehicule_generation = this.last_query.vehicule_generation;
-			this.vehicule_version = this.last_query.vehicule_version;
-			this.filter_items();
+			  console.log(me.last_query)
+			  me.search_value = me.last_query.search_value || '';
+			me.item_group = me.last_query.item_group || '';
+			me.item_manufacturer = me.last_query.item_manufacturer || '';
+			me.vehicule_marque = me.last_query.vehicule_marque || '';
+			me.vehicule_modele = me.last_query.vehicule_modele || '';
+			me.item_oem = me.last_query.item_oem || '';
+			me.item_modele = me.last_query.item_modele || '';
+			me.vehicule_generation = me.last_query.vehicule_generation || '';
+			me.vehicule_version = me.last_query.vehicule_version || '';
+			me.filter_items();
 			//"item_group", 
 			//"pos_profile": this.frm.doc.pos_profile,
 			//"item_manufacturer":this.item_manufacturer ,
