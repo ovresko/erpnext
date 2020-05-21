@@ -1988,17 +1988,17 @@ class POSItems {
 			window.open('#Form/Item/'+item_code, '_blank', 'toolbar=0,location=0,menubar=0'); 
 		});
 		this.wrapper.on('click', '.btn-return', function(event) {
-			console.log(me.last_query)
+			console.log("btn-return",me.last_query)
 			
-			me.search_field.set_value(me.last_query.search_value || '');
-			me.vehicule_version_field.set_value(me.last_query.vehicule_version || '');
-			me.vehicule_generation_field.set_value(me.last_query.vehicule_generation || '');
-			me.vehicule_modele_field.set_value(me.last_query.vehicule_modele || '');
-			me.vehicule_marque_field.set_value(me.last_query.vehicule_marque || '');
+			//me.search_field.set_value(me.last_query.search_value || '');
+			//me.vehicule_version_field.set_value(me.last_query.vehicule_version || '');
+			//me.vehicule_generation_field.set_value(me.last_query.vehicule_generation || '');
+			//me.vehicule_modele_field.set_value(me.last_query.vehicule_modele || '');
+			//me.vehicule_marque_field.set_value(me.last_query.vehicule_marque || '');
 			me.item_modele_field.set_value(me.last_query.item_modele || '');
-			me.item_group_field.set_value(me.last_query.item_group || '');
+			//me.item_group_field.set_value(me.last_query.item_group || '');
 			me.item_oem_field.set_value(me.last_query.item_oem || '');
-			me.filter_items();
+			//me.filter_items();
 			//me.search_value = me.last_query.search_value || '';
 			//me.item_group = me.last_query.item_group || '';
 			//me.item_manufacturer = me.last_query.item_manufacturer || '';
