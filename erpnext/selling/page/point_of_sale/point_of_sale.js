@@ -1402,6 +1402,8 @@ class POSItems {
 		this.frm = frm;
 		this.items = {};
 		this.last_query = {};
+		this.old_query = {};
+		 
 		this.events = events;
 		this.currency = this.frm.doc.currency;
 
@@ -2384,14 +2386,14 @@ class POSItems {
 
 		return template;
 	}
-
+		
 	get_items({start = 0, page_length = 60, search_value=''}={}) {
 		const price_list = this.frm.doc.selling_price_list;
 		if(!this.item_group){
 		this.item_group = this.parent_item_group;	
 		}
-		
-		this.last_query = {
+		this.last_query = this.old_query;
+		this.old_query = {
 			"search_value":search_value,
 			"item_group":this.item_group, 
 			"pos_profile": this.frm.doc.pos_profile,
@@ -2403,7 +2405,9 @@ class POSItems {
 			"vehicule_generation":this.vehicule_generation, 
 			"vehicule_version":this.vehicule_version		
 		}
+		 
 		
+		console.log("get_items last_query",this.last_query );
 		const item_group = this.item_group ;
 		return new Promise(res => {
 			frappe.call({
