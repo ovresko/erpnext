@@ -1401,6 +1401,7 @@ class POSItems {
 		this.wrapper = wrapper;
 		this.frm = frm;
 		this.items = {};
+		this.last_query = {};
 		this.events = events;
 		this.currency = this.frm.doc.currency;
 
