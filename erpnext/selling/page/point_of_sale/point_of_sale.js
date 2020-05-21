@@ -1475,7 +1475,8 @@ class POSItems {
 					</div> 
 				<div class="item-oem-field" style="width:100% ">
 					</div> 
- 
+ 				<button  data-label="return" class="btn btn-default btn btn-return-oem" style="margin-right: 5px;"><i class="fa fa-arrow-left"></i></button>
+
 			</div>
 			<div class="fields">
 				<div class="search-field">
@@ -1484,7 +1485,6 @@ class POSItems {
 				</div>
 				<div class="item-manufacturer-field" style="width: 20%;margin-left: 10px;">
 				</div>
-				<button  data-label="return" class="btn btn-default btn btn-return-oem" style="margin-right: 5px;"><i class="fa fa-arrow-left"></i></button>
 			</div>
 			<div class="items-wrapper">
 			</div>
