@@ -2270,11 +2270,12 @@ class POSItems {
 			const $item = $(this);
 			const oem = $item.text();
 			const item_code = unescape($item.attr('data-item-code'));
+			me.item_oem = oem;
 			me.item_oem_field.set_value(oem);
-			//me.item_oem = oem;
+			 
 			//me.search_field.set_value(oem);
 			me.search_field.set_value('');
-			me.filter_items();
+			//me.filter_items();
 			//clearTimeout(me.last_search);
 			//me.last_search = setTimeout(() => {
 			//	const search_term = oem;
