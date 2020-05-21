@@ -1518,7 +1518,9 @@ class POSItems {
 		});
 		this.item_oem_field.$input.on('input', (e) => {
 			this.last_query['item_oem'] = this.item_oem;
+			
 			 this.item_oem = e.target.value;
+				console.log("item_oem",this.item_oem);
 			  this.filter_items();
 			 
 			 
