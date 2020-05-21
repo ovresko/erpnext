@@ -1401,7 +1401,7 @@ class POSItems {
 		this.wrapper = wrapper;
 		this.frm = frm;
 		this.items = {};
-		this.last_query = {};
+		this.last_oem = '';
 		//this.old_query = {};
 		 
 		this.events = events;
@@ -1484,7 +1484,7 @@ class POSItems {
 				</div>
 				<div class="item-manufacturer-field" style="width: 20%;margin-left: 10px;">
 				</div>
-				<button  data-label="return" class="btn btn-default btn btn-return" style="margin-right: 5px;"><i class="fa fa-arrow-left"></i></button>
+				<button  data-label="return" class="btn btn-default btn btn-return-oem" style="margin-right: 5px;"><i class="fa fa-arrow-left"></i></button>
 			</div>
 			<div class="items-wrapper">
 			</div>
@@ -1517,7 +1517,7 @@ class POSItems {
 			render_input: true
 		});
 		this.item_oem_field.$input.on('input', (e) => {
-			this.last_query['item_oem'] = this.item_oem;
+			this.last_oem = this.item_oem;
 			
 			 this.item_oem = e.target.value;
 				console.log("item_oem",this.item_oem);
@@ -1544,7 +1544,7 @@ class POSItems {
 				filters: {"has_variants": 1},
 				default: this.item_modele,
 				onchange: () => {
-					this.last_query['item_modele'] = this.item_modele;
+					//this.last_query['item_modele'] = this.item_modele;
 					this.item_modele = this.item_modele_field.get_value();
 					
 					this.filter_items();
@@ -1571,7 +1571,7 @@ class POSItems {
 				options: 'Marque vehicule',
 				default: this.vehicule_marque,
 				onchange: () => {
-					this.last_query['vehicule_marque'] = this.vehicule_marque;
+					//this.last_query['vehicule_marque'] = this.vehicule_marque;
 					this.vehicule_marque = this.vehicule_marque_field.get_value();
 					if (this.vehicule_marque) { 
 						frappe.call({
@@ -1623,7 +1623,7 @@ class POSItems {
 				default: this.vehicule_modele,
 				filters: filter,
 				onchange: () => {
-					this.last_query['vehicule_modele'] = this.vehicule_modele;
+					//this.last_query['vehicule_modele'] = this.vehicule_modele;
 					this.vehicule_modele = this.vehicule_modele_field.get_value();
 					if (this.vehicule_modele) {
 						
@@ -1674,7 +1674,7 @@ class POSItems {
 				default: this.vehicule_generation,
 				filters: filter,
 				onchange: () => {
-					this.last_query['vehicule_generation'] = this.vehicule_generation;
+					//this.last_query['vehicule_generation'] = this.vehicule_generation;
 					this.vehicule_generation = this.vehicule_generation_field.get_value();
 					if (this.vehicule_generation) {
 						frappe.call({
@@ -1734,7 +1734,7 @@ class POSItems {
 				default: this.vehicule_version,
 				filters: filter,
 				onchange: () => {
-					this.last_query['vehicule_version'] = this.vehicule_version;
+					//this.last_query['vehicule_version'] = this.vehicule_version;
 					this.vehicule_version = this.vehicule_version_field.get_value();
 					if (this.vehicule_version) {
 						
@@ -1795,11 +1795,11 @@ class POSItems {
 		});
 
 		this.search_field.$input.on('input', (e) => {
-			this.last_query['search_term'] = this.search_term;
+			/this.last_query['search_term'] = this.search_term;
 			clearTimeout(this.last_search);
 			this.last_search = setTimeout(() => {
 				const search_term = e.target.value;
-				this.search_term =search_term;
+				//this.search_term =search_term;
 				this.filter_items({ search_term });
 			}, 300);
 		});
@@ -1814,7 +1814,7 @@ class POSItems {
 				options: 'Manufacturer',
 				//default: me.parent_item_group,
 				onchange: () => {
-					this.last_query['item_manufacturer'] = this.item_manufacturer;
+					//this.last_query['item_manufacturer'] = this.item_manufacturer;
 					this.item_manufacturer = this.item_manufacturer_field.get_value();
 					this.filter_items();
 					 
@@ -1834,7 +1834,7 @@ class POSItems {
 				options: 'Item Group',
 				default: me.parent_item_group,
 				onchange: () => {
-					this.last_query['item_group'] = this.item_group;
+					//this.last_query['item_group'] = this.item_group;
 					this.item_group = this.item_group_field.get_value();
 					 if(this.item_group)
 					 {
@@ -1987,22 +1987,24 @@ class POSItems {
 			const item_code = unescape($item.attr('data-item-code'));
 			window.open('#Form/Item/'+item_code, '_blank', 'toolbar=0,location=0,menubar=0'); 
 		});
-		this.wrapper.on('click', '.btn-return', function(event) {
-			console.log("btn-return",me.last_query)
+		this.wrapper.on('click', '.btn-return-oem', function(event) {
+			console.log("btn-return-oem",me.last_oem)
 			
 			//me.search_field.set_value(me.last_query.search_value || '');
 			//me.vehicule_version_field.set_value(me.last_query.vehicule_version || '');
 			//me.vehicule_generation_field.set_value(me.last_query.vehicule_generation || '');
 			//me.vehicule_modele_field.set_value(me.last_query.vehicule_modele || '');
 			//me.vehicule_marque_field.set_value(me.last_query.vehicule_marque || '');
-			me.item_modele_field.set_value(me.last_query.item_modele || '');
+			//me.item_modele_field.set_value(me.last_query.item_modele || '');
 			//me.item_group_field.set_value(me.last_query.item_group || '');
-			me.item_oem_field.set_value(me.last_query.item_oem || '');
-			//me.item_oem_field.$input.trigger("input"); 
+			me.item_oem = me.last_oem;
+			me.item_oem_field.set_value(me.last_oem || '');
+			me.item_oem_field.$input.trigger("input"); 
+			
 			//me.filter_items();
 			//me.search_value = me.last_query.search_value || '';
 			//me.item_group = me.last_query.item_group || '';
-			me.item_manufacturer_field.set_value(me.last_query.item_manufacturer || '');
+			//me.item_manufacturer_field.set_value(me.last_query.item_manufacturer || '');
 			//me.vehicule_marque = me.last_query.vehicule_marque || '';
 			//me.vehicule_modele = me.last_query.vehicule_modele || '';
 			//me.item_oem = me.last_query.item_oem || '';
