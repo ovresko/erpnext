@@ -2416,7 +2416,7 @@ class POSItems {
 		return template;
 	}
 		
-	get_items({start = 0, page_length = 60, search_value=''}={}) {
+	get_items({start = 0, page_length = 40, search_value=''}={}) {
 		const price_list = this.frm.doc.selling_price_list;
 		if(!this.item_group){
 		this.item_group = this.parent_item_group;	
