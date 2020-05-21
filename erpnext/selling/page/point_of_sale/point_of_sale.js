@@ -1998,7 +1998,7 @@ class POSItems {
 			me.item_modele_field.set_value(me.last_query.item_modele || '');
 			//me.item_group_field.set_value(me.last_query.item_group || '');
 			me.item_oem_field.set_value(me.last_query.item_oem || '');
-			me.item_oem_field.$input.trigger("input"); 
+			//me.item_oem_field.$input.trigger("input"); 
 			//me.filter_items();
 			//me.search_value = me.last_query.search_value || '';
 			//me.item_group = me.last_query.item_group || '';
@@ -2271,10 +2271,10 @@ class POSItems {
 			const oem = $item.text();
 			const item_code = unescape($item.attr('data-item-code'));
 			me.item_oem_field.set_value(oem);
-			me.item_oem = oem;
+			//me.item_oem = oem;
 			//me.search_field.set_value(oem);
 			me.search_field.set_value('');
-			me.filter_items();
+			//me.filter_items();
 			//clearTimeout(me.last_search);
 			//me.last_search = setTimeout(() => {
 			//	const search_term = oem;
