@@ -2425,7 +2425,7 @@ class POSItems {
 		 
 		
 		console.log("get_items last_query",this.last_query );
-		const item_group = this.item_group ;
+		const item_group = this.item_oem ;
 		return new Promise(res => {
 			frappe.call({
 				method: "erpnext.selling.page.point_of_sale.point_of_sale.get_items",
