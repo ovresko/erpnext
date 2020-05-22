@@ -203,6 +203,19 @@ erpnext.pos.PointOfSale = class PointOfSale {
 				this.items.reset_items();
 			}
 		})
+		
+		frappe.ui.keys.on('ctrl+q', () => {
+			if (!this.payment) {
+				this.make_payment_modal();
+			} else {
+				this.frm.doc.payments.map(p => {
+					this.payment.dialog.set_value(p.mode_of_payment, p.amount);
+				});
+
+				this.payment.set_title();
+			}
+			this.payment.open_modal();
+		});
 	}
 
 	toggle_editing(flag) {
@@ -715,7 +728,8 @@ class POSCart {
 						</div>
 						<button  data-label="commander" class="btn btn-default btn btn-commander" style="margin-right: 5px;">Créer Commande</button>
 						<button  data-label="devis" class="btn btn-default btn btn-devis" style="margin-right: 5px;">Créer Devis</button>
-
+						<br>
+						<p>Ctrl + Q pour terminer la facture</p>
 						
 					</div>
 				</div>
@@ -1747,7 +1761,7 @@ class POSItems {
 				<img class="vehicule-image" src="" style="position: relative;top: 50%;transform: translateY(-50%);">
 				</div>
 
-				<div style="width:20% ;padding:10px">	
+				<div style="width:15% ;padding:10px">	
 				<span class="strong">Marque </span>:<br>
 				<span class="strong">Modele </span>:<br>
 				<span class="strong">Generation </span>:<br>
@@ -1759,13 +1773,15 @@ class POSItems {
 				 <span class="vehicule-generation-name"></span>  <br>
 				 <span class="vehicule-version-name"></span> 
 				</div>
-				<div style="width:15% ;padding:10px">					
+				<div style="width:20% ;padding:10px">					
 				<span class="strong">Date </span>: <br> <span class="vehicule-date"></span>  
 
 				<br><br>
- 				<button  data-label="return" class="btn btn-default btn-xs btn btn-pagination-return" style="margin: 18px 3px;"><i class="fa fa-arrow-left"></i></button>
- 				<span class="pagination"></span> <button  data-label="return" class="btn btn-default btn-xs btn btn-pagination" style="margin: 18px 3px;"><i class="fa fa-arrow-right"></i></button>
-				 <button  data-label="return" class="btn btn-default btn-xs btn btn-remove-pagination" style="margin: 18px 3px;"><i class="fa fa-remove"></i></button>
+ 				<button  data-label="return" class="btn btn-default btn-xs btn btn-remove-pagination" style="margin: 18px 3px;"><i class="fa fa-remove"></i></button>
+				<button  data-label="return" class="btn btn-default btn-xs btn btn-pagination-return" style="margin: 18px 3px;"><i class="fa fa-arrow-left"></i></button>
+ 				<span class="pagination"></span>
+				<button  data-label="return" class="btn btn-default btn-xs btn btn-pagination" style="margin: 18px 3px;"><i class="fa fa-arrow-right"></i></button>
+				
 				</div>
 
 			</div>
