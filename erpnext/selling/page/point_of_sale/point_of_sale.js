@@ -2308,9 +2308,9 @@ class POSItems {
 			if(!me.start){
 				me.start = 0;
 			}
-			console.log("me.start",me.start);
+			 
 			me.start = me.start +1;
-			me.get_items({start:1});
+			me.get_items({start:me.start});
 			 
 		});
 		//btn-return-manufacturer
@@ -2565,8 +2565,9 @@ class POSItems {
 		}
 		console.log("get_items start",start);
 		console.log("get_items this.start",this.start);
-		 if(start==0){
-		 this.start = 0;
+		 
+		 if(start==0 || !this.start){
+		   this.start = 0;
 		 }
 		 
 		const item_group = this.item_group ;
