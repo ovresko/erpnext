@@ -26,10 +26,10 @@ def refresh_refs():
 	update tabItem set clean_manufacturer_part_number= REPLACE(REPLACE(REPLACE(REPLACE(manufacturer_part_no,' ',''),'-',''),'.',''),'/','') where ((clean_manufacturer_part_number ='' or clean_manufacturer_part_number IS NULL ) and manufacturer_part_no != '' and manufacturer_part_no IS NOT NULL) 
 	""")
 	frappe.db.sql("""
-	update tabItem set nbr_variante=(select count(it.name) from `tabItem` as it where it.variant_of=name) where has_variants=1 ) 
+	update tabItem set nbr_variante=(select count(it.name) from `tabItem` as it where it.variant_of=name) where has_variants=1 
 	""")
 	frappe.db.sql("""
-	update tabItem set nbr_variante=(select nbr_variante from `tabItem` as it where it.name=variant_of limit 1) where has_variants=0 ) 
+	update tabItem set nbr_variante=(select nbr_variante from `tabItem` as it where it.name=variant_of limit 1) where has_variants=0  
 	""")
 	
 def refresh_items():
