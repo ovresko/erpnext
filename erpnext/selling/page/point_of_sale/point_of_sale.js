@@ -1402,6 +1402,7 @@ class POSItems {
 		this.frm = frm;
 		this.items = {};
 		this.last_oem = '';
+		this.last_item_modele = '';
 		//this.old_query = {};
 		 
 		this.events = events;
@@ -1544,6 +1545,8 @@ class POSItems {
 				filters: {"has_variants": 1},
 				default: this.item_modele,
 				onchange: () => {
+					
+					this.last_item_modele = this.item_modele;
 					//this.last_query['item_modele'] = this.item_modele;
 					this.item_modele = this.item_modele_field.get_value();
 					
@@ -1995,7 +1998,8 @@ class POSItems {
 			//me.vehicule_generation_field.set_value(me.last_query.vehicule_generation || '');
 			//me.vehicule_modele_field.set_value(me.last_query.vehicule_modele || '');
 			//me.vehicule_marque_field.set_value(me.last_query.vehicule_marque || '');
-			//me.item_modele_field.set_value(me.last_query.item_modele || '');
+			me.item_modele = me.last_item_modele;
+			me.item_modele_field.set_value(me.last_item_modele);
 			//me.item_group_field.set_value(me.last_query.item_group || '');
 			me.item_oem = me.last_oem;
 			me.item_oem_field.set_value(me.last_oem);
