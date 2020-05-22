@@ -197,10 +197,10 @@ class Item(WebsiteGenerator):
 		self.update_defaults_from_item_group()
 		self.validate_stock_for_has_batch_and_has_serial()
 		if self.has_variants:
-			self.nbr_variante = ''
+			self.nbr_var = ''
 			vars = frappe.db.sql(''' select count(name) from `tabItem` where variant_of=%s ''',self.name)
 			if vars:
-				self.nbr_variante = vars[0] or 0
+				self.nbr_var = vars[0] or 0
                 # set table reorder
                 min_qts = self.recom_minimum
 		qts = self.recom_qts
