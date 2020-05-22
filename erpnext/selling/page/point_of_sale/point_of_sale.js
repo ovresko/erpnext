@@ -1274,7 +1274,7 @@ class POSCart {
 			 event.stopPropagation();
 			const $item = $(this);
 			const item_code = unescape($item.attr('data-item-code'));
-			this.items.open_item_info(item_code);
+			me.items.open_item_info(item_code);
 				 
 		});
 		
@@ -2143,7 +2143,7 @@ class POSItems {
 			 event.stopPropagation();
 			const $item = $(this);
 			const item_code = unescape($item.attr('data-item-code'));
-			this.open_item_info(item_code);
+			me.open_item_info(item_code);
 				
 		});
 		
