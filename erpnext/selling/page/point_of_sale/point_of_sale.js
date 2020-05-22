@@ -768,6 +768,7 @@ class POSCart {
 							args: {
 								"customer": this.frm.doc.customer,
 								"items": this.frm.doc.items,
+								"pos_profile": this.frm.doc.pos_profile
 							},
 							callback: function(r) {
 								if (r.message) {
@@ -1760,6 +1761,10 @@ class POSItems {
 				</div>
 				<div style="width:15% ;padding:10px">					
 				<span class="strong">Date </span>: <br> <span class="vehicule-date"></span>  
+
+				<br><br>
+ 				<button  data-label="return" class="btn btn-default btn-xs btn btn-pagination" style="margin: 18px 3px;">Plus</button>
+
 				</div>
 
 			</div>
@@ -2297,6 +2302,16 @@ class POSItems {
 			const item_code = unescape($item.attr('data-item-code'));
 			window.open('#Form/Item/'+item_code, '_blank', 'toolbar=0,location=0,menubar=0'); 
 		});
+		
+		//btn-pagination
+		this.wrapper.on('click', '.btn-pagination', function(event) {
+			if(!me.start){
+				me.start = 0;
+			}
+			me.start = me.start +1;
+			me.get_items({start:1});
+			 
+		});
 		//btn-return-manufacturer
 		this.wrapper.on('click', '.btn-return-manufacturer', function(event) {
 			me.item_manufacturer = '';
@@ -2548,7 +2563,9 @@ class POSItems {
 		this.item_group = this.parent_item_group;	
 		}
 		 
-		 
+		 if(start==0){
+		 this.start = 0;
+		 }
 		
 		console.log("get_items last_query",this.item_oem );
 		const item_group = this.item_group ;
