@@ -216,6 +216,17 @@ erpnext.pos.PointOfSale = class PointOfSale {
 			}
 			this.payment.open_modal();
 		});
+		
+		//cree_commande()
+		frappe.ui.keys.on('ctrl+b', () => {
+			 
+			this.cree_commande();
+		});
+		//cree_commande()
+		frappe.ui.keys.on('ctrl+x', () => {
+			 
+			this.cree_devis();
+		});
 	}
 
 	toggle_editing(flag) {
@@ -729,7 +740,10 @@ class POSCart {
 						<button  data-label="commander" class="btn btn-default btn btn-commander" style="margin-right: 5px;">Créer Commande</button>
 						<button  data-label="devis" class="btn btn-default btn btn-devis" style="margin-right: 5px;">Créer Devis</button>
 						<br>
-						<p>Ctrl + Q pour terminer la facture</p>
+						<p>Ctrl + Q pour terminer la facture<br>
+						  Ctrl + B Créer Bon de commande<br>
+						  Ctrl + X Créer Devis<br>
+						</p>
 						
 					</div>
 				</div>
@@ -755,46 +769,56 @@ class POSCart {
 		this.$grand_total.on('click', () => {
 			this.toggle_taxes_and_totals();
 		});
-		
+		const me = this;
 		this.$btn_devis.on('click', () => {
-			console.log(this.frm.doc.items);
-			frappe.call({
-							method: "erpnext.selling.page.point_of_sale.point_of_sale.make_devis",
-							args: {
-								"customer": this.frm.doc.customer,
-								"items": this.frm.doc.items,
-							},
-							callback: function(r) {
-								if (r.message) {
-									let cmd = r.message;
-									window.open('#Form/Quotation/'+cmd.name, '_blank', 'toolbar=0,location=0,menubar=0'); 
-									 //frappe.set_route('Form', "Sales Order", cmd.name);
-								} 
-							}
-						});
+			 
+			me.cree_devis();
 		});
 		
 		
 		this.$btn_commander.on('click', () => {
-			console.log(this.frm.doc.items);
-			frappe.call({
-							method: "erpnext.selling.page.point_of_sale.point_of_sale.make_sales_order",
-							args: {
-								"customer": this.frm.doc.customer,
-								"items": this.frm.doc.items,
-								"pos_profile": this.frm.doc.pos_profile
-							},
-							callback: function(r) {
-								if (r.message) {
-									let cmd = r.message;
-									window.open('#Form/Sales Order/'+cmd.name, '_blank', 'toolbar=0,location=0,menubar=0'); 
-									 //frappe.set_route('Form', "Sales Order", cmd.name);
-								} 
-							}
-						});
+			 
+			me.cree_commande();
 		});
 		
 		
+	}
+	
+	cree_devis()
+	{
+		frappe.call({
+			method: "erpnext.selling.page.point_of_sale.point_of_sale.make_devis",
+			args: {
+				"customer": this.frm.doc.customer,
+				"items": this.frm.doc.items,
+			},
+			callback: function(r) {
+				if (r.message) {
+					let cmd = r.message;
+					window.open('#Form/Quotation/'+cmd.name, '_blank', 'toolbar=0,location=0,menubar=0'); 
+					 //frappe.set_route('Form', "Sales Order", cmd.name);
+				} 
+			}
+		});
+	}
+	
+	cree_commande()
+	{
+		frappe.call({
+			method: "erpnext.selling.page.point_of_sale.point_of_sale.make_sales_order",
+			args: {
+				"customer": this.frm.doc.customer,
+				"items": this.frm.doc.items,
+				"pos_profile": this.frm.doc.pos_profile
+			},
+			callback: function(r) {
+				if (r.message) {
+					let cmd = r.message;
+					window.open('#Form/Sales Order/'+cmd.name, '_blank', 'toolbar=0,location=0,menubar=0'); 
+					 //frappe.set_route('Form', "Sales Order", cmd.name);
+				} 
+			}
+		});
 	}
 
 	reset() {
