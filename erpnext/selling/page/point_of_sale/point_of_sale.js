@@ -2215,7 +2215,7 @@ class POSItems {
 		 
 		 if(start==0 || !this.start){
 		   this.start = 0;
-		   start=0;
+		   //start=0;
 		 }
 		
 		if(!this.item_group){
@@ -2318,6 +2318,7 @@ class POSItems {
 			}
 			 
 			me.start = me.start +1;
+			console.log("page ",me.start)
 			me.filter_items({start:me.start});
 			 
 		});
@@ -2573,6 +2574,9 @@ class POSItems {
 		}
 		
 		 console.log("get_items start",start);
+		if(start){
+			start = start * page_length;	
+		}
 		const item_group = this.item_group ;
 		return new Promise(res => {
 			frappe.call({
