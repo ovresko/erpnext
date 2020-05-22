@@ -2210,11 +2210,12 @@ class POSItems {
 
 	filter_items({start=0, search_term='' }={}) {
 		 
-		console.log("get_items start",start);
-		console.log("get_items this.start",this.start);
+		console.log("filter_items start",start);
+		console.log("this.start",this.start);
 		 
 		 if(start==0 || !this.start){
 		   this.start = 0;
+		   start=0;
 		 }
 		
 		if(!this.item_group){
@@ -2571,7 +2572,7 @@ class POSItems {
 		this.item_group = this.parent_item_group;	
 		}
 		
-		 
+		 console.log("get_items start",start);
 		const item_group = this.item_group ;
 		return new Promise(res => {
 			frappe.call({
