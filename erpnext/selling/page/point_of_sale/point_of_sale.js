@@ -1763,7 +1763,8 @@ class POSItems {
 				<span class="strong">Date </span>: <br> <span class="vehicule-date"></span>  
 
 				<br><br>
- 				<button  data-label="return" class="btn btn-default btn-xs btn btn-pagination" style="margin: 18px 3px;">Plus</button>
+ 				<button  data-label="return" class="btn btn-default btn-xs btn btn-pagination-return" style="margin: 18px 3px;">Retour</button>
+ 				 <button  data-label="return" class="btn btn-default btn-xs btn btn-pagination" style="margin: 18px 3px;">Plus</button>
 
 				</div>
 
@@ -2210,14 +2211,14 @@ class POSItems {
 
 	filter_items({start=0, search_term='' }={}) {
 		 
-		console.log("filter_items start",start);
-		console.log("this.start",this.start);
+		
 		 
-		 if(start==0 || !this.start){
+		if(start==0 || !this.start){
 		   this.start = 0;
 		   //start=0;
-		 }
-		
+		}
+		console.log("filter_items start",start);
+		console.log("this.start",this.start);
 		if(!this.item_group){
 			this.item_group = this.parent_item_group;
 		}
@@ -2322,6 +2323,19 @@ class POSItems {
 			me.filter_items({start:me.start});
 			 
 		});
+		//btn-pagination-return
+		this.wrapper.on('click', '.btn-pagination', function(event) {
+			if(!me.start){
+				me.start = 0;
+			}
+			 if(me.start > 0){
+				me.start = me.start -1;
+			 } 
+			me.filter_items({start:me.start});
+			 
+		});
+		
+		
 		//btn-return-manufacturer
 		this.wrapper.on('click', '.btn-return-manufacturer', function(event) {
 			me.item_manufacturer = '';
