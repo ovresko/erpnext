@@ -1472,6 +1472,8 @@ class POSItems {
 					</div>
 				<div class="vehicule-version-field" style="width:100% ">
 					</div>
+ 				<button  data-label="return" class="btn btn-default btn btn-return-vehicule" style="margin-right: 5px;"><i class="fa fa-arrow-left"></i></button>
+
 				<div class="item-modele-field" style="width:100% ">
 					</div> 
 				<div class="item-oem-field" style="width:100% ">
@@ -1990,41 +1992,21 @@ class POSItems {
 			const item_code = unescape($item.attr('data-item-code'));
 			window.open('#Form/Item/'+item_code, '_blank', 'toolbar=0,location=0,menubar=0'); 
 		});
+		
+		this.wrapper.on('click', '.btn-return-vehicule', function(event) {
+			me.vehicule_version_field.set_value('');
+			me.vehicule_generation_field.set_value('');
+			me.vehicule_modele_field.set_value('');
+			me.vehicule_marque_field.set_value('');
+		});
 		this.wrapper.on('click', '.btn-return-oem', function(event) {
-			//console.log("btn-return-oem",me.last_item_modele)
-			
-			//me.search_field.set_value(me.last_query.search_value || '');
-			//me.vehicule_version_field.set_value(me.last_query.vehicule_version || '');
-			//me.vehicule_generation_field.set_value(me.last_query.vehicule_generation || '');
-			//me.vehicule_modele_field.set_value(me.last_query.vehicule_modele || '');
-			//me.vehicule_marque_field.set_value(me.last_query.vehicule_marque || '');
+			 
 			me.item_modele = '';
 			me.item_modele_field.set_value('');
 			//me.item_group_field.set_value(me.last_query.item_group || '');
 			me.item_oem = '';
-			me.item_oem_field.set_value('');
-			//me.item_oem_field.$input.trigger("input"); 
-			
-			//me.filter_items();
-			//me.search_value = me.last_query.search_value || '';
-			//me.item_group = me.last_query.item_group || '';
-			//me.item_manufacturer_field.set_value(me.last_query.item_manufacturer || '');
-			//me.vehicule_marque = me.last_query.vehicule_marque || '';
-			//me.vehicule_modele = me.last_query.vehicule_modele || '';
-			//me.item_oem = me.last_query.item_oem || '';
-			//me.item_modele = me.last_query.item_modele || '';
-			//me.vehicule_generation = me.last_query.vehicule_generation || '';
-			//me.vehicule_version = me.last_query.vehicule_version || '';
-			me.filter_items();
-			//"item_group", 
-			//"pos_profile": this.frm.doc.pos_profile,
-			//"item_manufacturer":this.item_manufacturer ,
-			//"vehicule_marque":this.vehicule_marque, 
-			//"vehicule_modele":this.vehicule_modele, 
-			//"item_oem": this.item_oem,
-			//"item_modele":this.item_modele,
-			//"vehicule_generation":this.vehicule_generation, 
-			//"vehicule_version":this.vehicule_version	
+			me.item_oem_field.set_value(''); 
+			me.filter_items(); 	
 		});
 		 
 		 
