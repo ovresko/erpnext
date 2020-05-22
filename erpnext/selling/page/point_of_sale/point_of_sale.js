@@ -2259,7 +2259,13 @@ class POSItems {
 					}
 				}); 
 		});
-		
+		//btn-manufacturer
+		this.wrapper.on('click', '.btn-manufacturer', function() {
+			event.stopPropagation();
+			const manufacturer = $(this);
+			const manufacturer = manufacturer.text();
+			me.item_manufacturer_field.set_value(manufacturer);
+		});
 		this.wrapper.on('click', '.oem-text', function() {
 			event.stopPropagation();
 			const $item = $(this);
@@ -2379,7 +2385,7 @@ class POSItems {
 					<div style="width:160px;padding-left:5px" >
 						<div style="margin-bottom:10px"><img src="${item.fabricant_logo ||'#'}" width="80px" ></div>
 						<div>
-							${item.manufacturer ||''}
+							<a class="btn-manufacturer" data-name="${item.manufacturer ||''}">${item.manufacturer ||''}</a>
 						</div>
 						<div>
 							${actual_qty}
