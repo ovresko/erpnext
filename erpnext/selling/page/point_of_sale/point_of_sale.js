@@ -220,12 +220,12 @@ erpnext.pos.PointOfSale = class PointOfSale {
 		//cree_commande()
 		frappe.ui.keys.on('ctrl+b', () => {
 			 
-			this.cree_commande();
+			this.cart.cree_commande();
 		});
 		//cree_commande()
 		frappe.ui.keys.on('ctrl+x', () => {
 			 
-			this.cree_devis();
+			this.cart.cree_devis();
 		});
 	}
 
