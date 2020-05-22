@@ -1763,8 +1763,8 @@ class POSItems {
 				<span class="strong">Date </span>: <br> <span class="vehicule-date"></span>  
 
 				<br><br>
- 				<button  data-label="return" class="btn btn-default btn-xs btn btn-pagination-return" style="margin: 18px 3px;">Retour</button>
- 				 <button  data-label="return" class="btn btn-default btn-xs btn btn-pagination" style="margin: 18px 3px;">Plus</button>
+ 				<button  data-label="return" class="btn btn-default btn-xs btn btn-pagination-return" style="margin: 18px 3px;"><i class="fa fa-arrow-left"></i></button>
+ 				 <button  data-label="return" class="btn btn-default btn-xs btn btn-pagination" style="margin: 18px 3px;"><i class="fa fa-arrow-right"></i></button>
 
 				</div>
 
@@ -2324,7 +2324,7 @@ class POSItems {
 			 
 		});
 		//btn-pagination-return
-		this.wrapper.on('click', '.btn-pagination', function(event) {
+		this.wrapper.on('click', '.btn-pagination-return', function(event) {
 			if(!me.start){
 				me.start = 0;
 			}
