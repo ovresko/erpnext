@@ -1111,7 +1111,8 @@ class POSCart {
 			const remove_class = indicator_class == 'green' ? 'red' : 'green';
 			const amount = item.rate * item.qty;
 			$item.find('.quantity input').val(item.qty);
-			$item.find('.discount').text(item.discount_percentage + '%');
+			$item.find('.discount input').val(item.discount_percentage);
+			//$item.find('.discount').text(item.discount_percentage + '%');
 			$item.find('.rate').text(format_currency(item.rate, this.frm.doc.currency,0));
 			$item.find('.item-amount').text(format_currency(amount || 0, this.frm.doc.currency,0));
 			
@@ -1157,7 +1158,8 @@ class POSCart {
 					${get_quantity_html(item.qty)}
 				</div>
 				<div class="discount list-item__content text-right">
-					Remise : ${item.discount_percentage}%
+					Remise :<input class="form-control" type="number" value="${item.discount_percentage}">%
+					
 				</div>
 				<div class="rate list-item__content text-right">
 					${rate} 
@@ -1166,7 +1168,7 @@ class POSCart {
 				
 			</div>
 		`;
-
+			//Remise : ${item.discount_percentage}%
 		function get_quantity_html(value) {
 			return `
 				<div class="input-group input-group-xs">
@@ -1238,6 +1240,13 @@ class POSCart {
 			const $item = $input.closest('.list-item[data-item-code]');
 			const item_code = unescape($item.attr('data-item-code'));
 			events.on_field_change(item_code, 'qty', flt($input.val()));
+		});
+		
+		this.$cart_items.on('change', '.discount input', function() {
+			const $input = $(this);
+			const $item = $input.closest('.list-item[data-item-code]');
+			const item_code = unescape($item.attr('data-item-code'));
+			events.on_field_change(item_code, 'discount', flt($input.val()));
 		});
 		
 		
