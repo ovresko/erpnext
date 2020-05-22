@@ -1765,7 +1765,7 @@ class POSItems {
 				<br><br>
  				<button  data-label="return" class="btn btn-default btn-xs btn btn-pagination-return" style="margin: 18px 3px;"><i class="fa fa-arrow-left"></i></button>
  				<span class="pagination"></span> <button  data-label="return" class="btn btn-default btn-xs btn btn-pagination" style="margin: 18px 3px;"><i class="fa fa-arrow-right"></i></button>
-
+				 <button  data-label="return" class="btn btn-default btn-xs btn btn-remove-pagination" style="margin: 18px 3px;"><i class="fa fa-remove"></i></button>
 				</div>
 
 			</div>
@@ -2338,6 +2338,14 @@ class POSItems {
 			wr.find('.pagination').text(" "+(me.start || '')+" "); 
 			
 			 
+		});
+		
+		//btn-remove-pagination
+		this.wrapper.on('click', '.btn-remove-pagination', function(event) {
+			 
+			me.start = 0;
+			me.filter_items({start:me.start});
+			wr.find('.pagination').text(" "+(me.start || '')+" ");  
 		});
 		
 		
