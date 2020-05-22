@@ -1764,7 +1764,7 @@ class POSItems {
 
 				<br><br>
  				<button  data-label="return" class="btn btn-default btn-xs btn btn-pagination-return" style="margin: 18px 3px;"><i class="fa fa-arrow-left"></i></button>
- 				 <button  data-label="return" class="btn btn-default btn-xs btn btn-pagination" style="margin: 18px 3px;"><i class="fa fa-arrow-right"></i></button>
+ 				<span class="pagination"></span> <button  data-label="return" class="btn btn-default btn-xs btn btn-pagination" style="margin: 18px 3px;"><i class="fa fa-arrow-right"></i></button>
 
 				</div>
 
@@ -2313,6 +2313,7 @@ class POSItems {
 		});
 		
 		//btn-pagination
+		const wr = this.wrapper;
 		this.wrapper.on('click', '.btn-pagination', function(event) {
 			if(!me.start){
 				me.start = 0;
@@ -2321,6 +2322,8 @@ class POSItems {
 			me.start = me.start +1;
 			console.log("page ",me.start)
 			me.filter_items({start:me.start});
+			wr.find('.pagination').text(" "+(me.start || '')+" "); 
+			
 			 
 		});
 		//btn-pagination-return
@@ -2332,6 +2335,8 @@ class POSItems {
 				me.start = me.start -1;
 			 } 
 			me.filter_items({start:me.start});
+			wr.find('.pagination').text(" "+(me.start || '')+" "); 
+			
 			 
 		});
 		
