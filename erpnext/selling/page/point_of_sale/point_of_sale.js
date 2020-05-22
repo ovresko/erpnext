@@ -1216,6 +1216,11 @@ class POSCart {
 		this.$cart_items.animate({ scrollTop });
 	}
 
+	open_item_info(item_code)
+	{
+		this.items.open_item_info(item_code);
+	}
+	
 	bind_events() {
 		const me = this;
 		const events = this.events;
