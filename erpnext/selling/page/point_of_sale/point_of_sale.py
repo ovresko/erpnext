@@ -64,12 +64,16 @@ def make_devis(customer,items):
 	return so
 
 @frappe.whitelist()
-def make_sales_order(customer,items):
+def make_sales_order(customer,items,pos_profile):
 	#frappe.msgprint(items)
 	items = json.loads(items)
 	
 	so = frappe.new_doc("Sales Order")
 	so.customer = customer
+	if pos_profile:
+		warehouse = frappe.get_value("POS Profile",pos_profile,"warehouse")
+		so.set_warehouse = warehouse
+	
 	for item in items:
 		item = frappe._dict(item)
 		item.doctype="Sales Order Item"
