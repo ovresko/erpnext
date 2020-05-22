@@ -1401,8 +1401,8 @@ class POSItems {
 		this.wrapper = wrapper;
 		this.frm = frm;
 		this.items = {};
-		this.last_oem = '';
-		this.last_item_modele = '';
+		//this.last_oem = '';
+		//this.last_item_modele = '';
 		//this.old_query = {};
 		 
 		this.events = events;
@@ -1518,7 +1518,7 @@ class POSItems {
 			render_input: true
 		});
 		this.item_oem_field.$input.on('input', (e) => {
-			this.last_oem = this.item_oem;
+			//this.last_oem = this.item_oem;
 			
 			 this.item_oem = e.target.value;
 				console.log("item_oem",this.item_oem);
@@ -1546,7 +1546,7 @@ class POSItems {
 				default: this.item_modele,
 				onchange: () => {
 					
-					this.last_item_modele = this.item_modele;
+					//this.last_item_modele = this.item_modele;
 					//this.last_query['item_modele'] = this.item_modele;
 					this.item_modele = this.item_modele_field.get_value();
 					
@@ -1991,18 +1991,18 @@ class POSItems {
 			window.open('#Form/Item/'+item_code, '_blank', 'toolbar=0,location=0,menubar=0'); 
 		});
 		this.wrapper.on('click', '.btn-return-oem', function(event) {
-			console.log("btn-return-oem",me.last_item_modele)
+			//console.log("btn-return-oem",me.last_item_modele)
 			
 			//me.search_field.set_value(me.last_query.search_value || '');
 			//me.vehicule_version_field.set_value(me.last_query.vehicule_version || '');
 			//me.vehicule_generation_field.set_value(me.last_query.vehicule_generation || '');
 			//me.vehicule_modele_field.set_value(me.last_query.vehicule_modele || '');
 			//me.vehicule_marque_field.set_value(me.last_query.vehicule_marque || '');
-			me.item_modele = me.last_item_modele;
-			me.item_modele_field.set_value(me.last_item_modele);
+			me.item_modele = '';
+			me.item_modele_field.set_value('');
 			//me.item_group_field.set_value(me.last_query.item_group || '');
-			me.item_oem = me.last_oem;
-			me.item_oem_field.set_value(me.last_oem);
+			me.item_oem = '';
+			me.item_oem_field.set_value('');
 			//me.item_oem_field.$input.trigger("input"); 
 			
 			//me.filter_items();
