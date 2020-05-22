@@ -2262,8 +2262,8 @@ class POSItems {
 		//btn-manufacturer
 		this.wrapper.on('click', '.btn-manufacturer', function() {
 			event.stopPropagation();
-			const manufacturer = $(this);
-			const manufacturer = manufacturer.text();
+			const _manufacturer = $(this);
+			const manufacturer = _manufacturer.text();
 			me.item_manufacturer_field.set_value(manufacturer);
 		});
 		this.wrapper.on('click', '.oem-text', function() {
