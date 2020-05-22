@@ -1991,7 +1991,7 @@ class POSItems {
 			window.open('#Form/Item/'+item_code, '_blank', 'toolbar=0,location=0,menubar=0'); 
 		});
 		this.wrapper.on('click', '.btn-return-oem', function(event) {
-			console.log("btn-return-oem",me.last_oem)
+			console.log("btn-return-oem",me.last_item_modele)
 			
 			//me.search_field.set_value(me.last_query.search_value || '');
 			//me.vehicule_version_field.set_value(me.last_query.vehicule_version || '');
