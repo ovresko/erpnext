@@ -2563,12 +2563,12 @@ class POSItems {
 		if(!this.item_group){
 		this.item_group = this.parent_item_group;	
 		}
-		 console.log("this.start",this.start);
+		console.log("get_items start",start);
+		console.log("get_items this.start",this.start);
 		 if(start==0){
 		 this.start = 0;
 		 }
-		
-		console.log("get_items last_query",this.item_oem );
+		 
 		const item_group = this.item_group ;
 		return new Promise(res => {
 			frappe.call({
