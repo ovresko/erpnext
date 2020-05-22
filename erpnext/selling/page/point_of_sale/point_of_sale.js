@@ -1472,13 +1472,13 @@ class POSItems {
 					</div>
 				<div class="vehicule-version-field" style="width:100% ">
 					</div>
- 				<button  data-label="return" class="btn btn-xs btn btn-return-vehicule" style="margin: 18px 3px;"><i class="fa fa-remove"></i></button>
+ 				<button  data-label="return" class="btn btn-default btn-xs btn btn-return-vehicule" style="margin: 18px 3px;"><i class="fa fa-remove"></i></button>
 
 				<div class="item-modele-field" style="width:100% ">
 					</div> 
 				<div class="item-oem-field" style="width:100% ">
 					</div> 
- 				<button  data-label="return" class="btn btn-xs btn btn-return-oem" style="margin: 18px 3px;"><i class="fa fa-remove"></i></button>
+ 				<button  data-label="return" class="btn btn-default btn-xs btn btn-return-oem" style="margin: 18px 3px;"><i class="fa fa-remove"></i></button>
 
 			</div>
 			<div class="fields">
@@ -1488,7 +1488,7 @@ class POSItems {
 				</div>
 				<div class="item-manufacturer-field" style="width: 20%;margin-left: 10px;">
 				</div>
-				<button  data-label="return" class="btn btn-xs btn btn-return-manufacturer" style="margin: 18px 3px;"><i class="fa fa-remove"></i></button>
+				<button  data-label="return" class="btn btn-default btn-xs btn btn-return-manufacturer" style="margin: 18px 3px;"><i class="fa fa-remove"></i></button>
 
 			</div>
 			<div class="items-wrapper">
