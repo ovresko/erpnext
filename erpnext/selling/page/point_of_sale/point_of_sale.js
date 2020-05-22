@@ -2308,6 +2308,7 @@ class POSItems {
 			if(!me.start){
 				me.start = 0;
 			}
+			console.log("me.start",me.start);
 			me.start = me.start +1;
 			me.get_items({start:1});
 			 
@@ -2562,7 +2563,7 @@ class POSItems {
 		if(!this.item_group){
 		this.item_group = this.parent_item_group;	
 		}
-		 
+		 console.log("this.start",this.start);
 		 if(start==0){
 		 this.start = 0;
 		 }
