@@ -1472,13 +1472,13 @@ class POSItems {
 					</div>
 				<div class="vehicule-version-field" style="width:100% ">
 					</div>
- 				<button  data-label="return" class="btn btn-default btn btn-return-vehicule" style="margin-right: 5px;"><i class="fa fa-arrow-left"></i></button>
+ 				<button  data-label="return" class="btn btn-xs btn btn-return-vehicule" style="margin-right: 5px;"><i class="fa fa-remove"></i></button>
 
 				<div class="item-modele-field" style="width:100% ">
 					</div> 
 				<div class="item-oem-field" style="width:100% ">
 					</div> 
- 				<button  data-label="return" class="btn btn-default btn btn-return-oem" style="margin-right: 5px;"><i class="fa fa-arrow-left"></i></button>
+ 				<button  data-label="return" class="btn btn-xs btn btn-return-oem" style="margin-right: 5px;"><i class="fa fa-remove"></i></button>
 
 			</div>
 			<div class="fields">
@@ -1488,6 +1488,8 @@ class POSItems {
 				</div>
 				<div class="item-manufacturer-field" style="width: 20%;margin-left: 10px;">
 				</div>
+				<button  data-label="return" class="btn btn-xs btn btn-return-manufacturer" style="margin-right: 5px;"><i class="fa fa-remove"></i></button>
+
 			</div>
 			<div class="items-wrapper">
 			</div>
@@ -1992,7 +1994,12 @@ class POSItems {
 			const item_code = unescape($item.attr('data-item-code'));
 			window.open('#Form/Item/'+item_code, '_blank', 'toolbar=0,location=0,menubar=0'); 
 		});
-		
+		//btn-return-manufacturer
+		this.wrapper.on('click', '.btn-return-manufacturer', function(event) {
+			me.item_manufacturer = '';
+			me.item_manufacturer_field.set_value('');
+			 
+		});
 		this.wrapper.on('click', '.btn-return-vehicule', function(event) {
 			me.vehicule_version_field.set_value('');
 			me.vehicule_generation_field.set_value('');
