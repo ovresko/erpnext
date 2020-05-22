@@ -2208,8 +2208,15 @@ class POSItems {
 		this.clusterize.update(row_items);
 	}
 
-	filter_items({ search_term='' }={}) {
+	filter_items({start=0, search_term='' }={}) {
 		 
+		console.log("get_items start",start);
+		console.log("get_items this.start",this.start);
+		 
+		 if(start==0 || !this.start){
+		   this.start = 0;
+		 }
+		
 		if(!this.item_group){
 			this.item_group = this.parent_item_group;
 		}
@@ -2245,7 +2252,7 @@ class POSItems {
 			}
 		 
 		//console.log("filter_items2",this.item_manufacturer);
-		this.get_items({search_value: search_term})
+		this.get_items({search_value: search_term,start:start})
 			.then(({ items, serial_no, batch_no, barcode }) => {
 				if (search_term && !barcode) {
 					this.search_index[search_term] = items;
@@ -2310,7 +2317,7 @@ class POSItems {
 			}
 			 
 			me.start = me.start +1;
-			me.get_items({start:me.start});
+			me.filter_items({start:me.start});
 			 
 		});
 		//btn-return-manufacturer
@@ -2563,12 +2570,7 @@ class POSItems {
 		if(!this.item_group){
 		this.item_group = this.parent_item_group;	
 		}
-		console.log("get_items start",start);
-		console.log("get_items this.start",this.start);
-		 
-		 if(start==0 || !this.start){
-		   this.start = 0;
-		 }
+		
 		 
 		const item_group = this.item_group ;
 		return new Promise(res => {
