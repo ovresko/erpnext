@@ -200,7 +200,7 @@ class Item(WebsiteGenerator):
 			self.nbr_variante = ''
 			vars = frappe.db.sql(''' select count(name) from `tabItem` where variant_of=%s ''',self.name)
 			if vars:
-				self.nbr_variante = vars[0]
+				self.nbr_variante = vars[0] or 0
                 # set table reorder
                 min_qts = self.recom_minimum
 		qts = self.recom_qts
