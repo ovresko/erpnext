@@ -1246,7 +1246,8 @@ class POSCart {
 			const $input = $(this);
 			const $item = $input.closest('.list-item[data-item-code]');
 			const item_code = unescape($item.attr('data-item-code'));
-			events.on_field_change(item_code, 'discount', flt($input.val()));
+			console.log(flt($input.val()));
+			events.on_field_change(item_code, 'discount_percentage', flt($input.val()));
 		});
 		
 		
