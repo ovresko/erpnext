@@ -35,8 +35,9 @@ def refresh_items():
 			print("handeling %s" % model.name)
 			doc = frappe.get_doc("Item",model.name)
 			count = frappe.db.sql("""select count(name) from `tabItem` where variant_of='%s'""" % (doc.name),as_dict=1)
-			doc.nbr_variante = count[0]
-			print(count[0])
+			if count:
+				doc.nbr_variante = count[0][0] or 0
+				print(count[0][0] or 0)
 			#doc.update_variants()
 			doc.save()
 		except:
