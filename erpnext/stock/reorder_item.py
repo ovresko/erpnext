@@ -25,13 +25,8 @@ def refresh_refs():
 	frappe.db.sql("""
 	update tabItem  set clean_manufacturer_part_number= REPLACE(REPLACE(REPLACE(REPLACE(manufacturer_part_no,' ',''),'-',''),'.',''),'/','') where ((clean_manufacturer_part_number ='' or clean_manufacturer_part_number IS NULL ) and manufacturer_part_no != '' and manufacturer_part_no IS NOT NULL) 
 	""")
-	frappe.db.sql("""
-	update tabItem  set nbr_variante=(select res.mcount from (select count(it.name) as mcount from `tabItem` as it where it.variant_of=name) as res)  where has_variants=1 
-	""")
-	frappe.db.sql("""
-	update tabItem  set nbr_variante=(select res.mcount from (select it.nbr_variante as mcount from `tabItem` as it where it.name=variant_of limit 1) as res)  where has_variants=0  
-	""")
 	
+
 def refresh_items():
         models = frappe.get_all("Item",filters={"has_variants":"1"},fields=["name","modified"],order_by='modified asc',limit=10)
         print("found %d " % len(models))
@@ -39,6 +34,9 @@ def refresh_items():
 		try:
 			print("handeling %s" % model.name)
 			doc = frappe.get_doc("Item",model.name)
+			count = frappe.db.sql("""select count(it.name) from `tabItem` where variant_of='%s'""" % (doc.name),as_dict=1)
+			doc.nbr_variante = count[0]
+			print(count[0])
 			#doc.update_variants()
 			doc.save()
 		except:
