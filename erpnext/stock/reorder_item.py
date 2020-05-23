@@ -29,7 +29,7 @@ def refresh_refs():
 	update tabItem  set nbr_variante=(select res.mcount from (select count(it.variant_of) as mcount from `tabItem` as it where it.variant_of=name) as res)  where has_variants=1 
 	""")
 	frappe.db.sql("""
-	update tabItem as i  set i.nbr_variante=( select res.mcount from ( select it.nbr_variante) as mcount from `tabItem` as it where it.name=i.variant_of limit 1)  as res)   where i.has_variants=0  
+	update tabItem  set nbr_variante=( select res.mcount from ( select it.nbr_variante) as mcount from `tabItem` as it where it.name=variant_of limit 1)  as res)   where has_variants=0  
 	""")
 	
 def refresh_items():
