@@ -233,26 +233,26 @@ class Item(WebsiteGenerator):
                 #original = list(filter(lambda(x: x.warehouse != "GLOBAL - MV",self.reorder_levels))
 		nom_g = ''
 		if self.variant_of and self.manufacturer_part_no and self.manufacturer:
-			nom_g +=nom_g+ self.manufacturer +' '+self.manufacturer_part_no +' '+ self.item_name + ' '
+			nom_g +=nom_g+ (self.manufacturer or '') +' '+(self.manufacturer_part_no or '') +' '+ (self.item_name or '') + ' '
 		if self.has_variants:
-			nom_g += self.item_name + ' '
+			nom_g += (self.item_name or '') + ' '
 		if self.oem_text:
-			nom_g += self.oem_text + ' '
+			nom_g += (self.oem_text or '') + ' '
 		if self.critere_text:
-			nom_g += self.critere_text + ' '
+			nom_g += (self.critere_text or '') + ' '
 		if self.composant_text:
-			nom_g += 'Composant : ' + self.composant_text+ ' '
+			nom_g += 'Composant : ' + (self.composant_text or '')+ ' '
 		if self.articles_text:
-			nom_g += 'Complements : ' + self.articles_text+ ' '
+			nom_g += 'Complements : ' + (self.articles_text or '')+ ' '
 		if self.clean_manufacturer_part_number:
-			nom_g += self.clean_manufacturer_part_number + ' '
+			nom_g += (self.clean_manufacturer_part_number or '') + ' '
 		for v in self.versions:
-			nom_g += v.nom_marque+' '+v.modele_vehicule+' '+v.nom_version+' '
+			nom_g += (v.nom_marque or '')+' '+(v.modele_vehicule or '')+' '+(v.nom_version or '')+' '
 		for g in self.generation_vehicule_supporte:
-			nom_g += g.nom_marque+' '+g.nom_generation+' '
+			nom_g += (g.nom_marque or '')+' '+(g.nom_generation or '')+' '
 		for g in self.marque_vehicule_supporte:
-			nom_g += g.marque+' '
-		self.nom_generique_long = nom_g.lower()
+			nom_g += (g.marque or '')+' '
+		self.nom_generique_long = (nom_g or '').lower()
 		if not self.get("__islocal"):
 			self.old_item_group = frappe.db.get_value(self.doctype, self.name, "item_group")
 			self.old_website_item_groups = frappe.db.sql_list("""select item_group
