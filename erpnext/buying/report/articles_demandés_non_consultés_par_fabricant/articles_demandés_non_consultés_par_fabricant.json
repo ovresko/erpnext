@@ -1,0 +1,32 @@
+{
+ "add_total_row": 1, 
+ "creation": "2020-03-01 13:38:23.042731", 
+ "disable_prepared_report": 1, 
+ "disabled": 0, 
+ "docstatus": 0, 
+ "doctype": "Report", 
+ "idx": 0, 
+ "is_standard": "Yes", 
+ "letter_head": "MON VEHCIULE", 
+ "modified": "2020-03-01 13:45:31.238473", 
+ "modified_by": "Administrator", 
+ "module": "Buying", 
+ "name": "Articles demand\u00e9s non consult\u00e9s par fabricant", 
+ "owner": "Administrator", 
+ "prepared_report": 0, 
+ "query": "select \n\tmr.name as \"Fabricant:Data:180\",\n\t@total :=(select count(*) from `tabMaterial Request Item` sqi5 where sqi5.fabricant=mr.name and sqi5.docstatus=1 and sqi5.consulted=0) as \"Non consulte:Data:200\",\n\t(select count(*) from `tabMaterial Request Item` sqi5 where sqi5.fabricant=mr.name and sqi5.docstatus=1) as \"Nombre total:Data:200\"\n\n\nfrom\n\t`tabManufacturer` as mr\n\n\n\n", 
+ "ref_doctype": "Supplier Quotation", 
+ "report_name": "Articles demand\u00e9s non consult\u00e9s par fabricant", 
+ "report_type": "Query Report", 
+ "roles": [
+  {
+   "role": "Stock User"
+  }, 
+  {
+   "role": "Purchase Manager"
+  }, 
+  {
+   "role": "Purchase User"
+  }
+ ]
+}

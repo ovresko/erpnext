@@ -1,0 +1,32 @@
+{
+ "add_total_row": 1, 
+ "creation": "2020-03-15 11:36:42.572094", 
+ "disable_prepared_report": 0, 
+ "disabled": 0, 
+ "docstatus": 0, 
+ "doctype": "Report", 
+ "idx": 0, 
+ "is_standard": "Yes", 
+ "letter_head": "MON VEHCIULE", 
+ "modified": "2020-03-15 11:36:42.572094", 
+ "modified_by": "Administrator", 
+ "module": "Buying", 
+ "name": "Articles Demand\u00e9s Sans Consultation", 
+ "owner": "Administrator", 
+ "prepared_report": 0, 
+ "query": "select  \n\tmr_item.item_code as \"Code Article:Link/Item:120\",\n\tmr_item.item_name as \"Item Name::250\",\n\tmr.name as \"DM:Link/Material Request:80\",\n\tmr_item.consultation as \"Consultation::100\",\n\tmr_item.fabricant as \"Fabricant::70\",\n\tmr_item.ref_fabricant as \"Ref Fabricant::100\",\n\n\tsum(ifnull(mr_item.stock_qty, 0)) as \"Qt\u00e9 demand\u00e9:Float:100\", \n\tsum(ifnull(mr_item.ordered_qty, 0)) as \"Qt\u00e9 reliquats:Float:120\", \n\tsum(ifnull(mr_item.actual_qty, 0)) as \"Qt\u00e9 Variante En Stock:Float:100\", \n\tsum(ifnull(mr_item.projected_qty, 0)) as \"Qt\u00e9 Projet\u00e9:Float:100\", \n\tsum(ifnull(mr_item.max_order_qty, 0)) as \"Qt\u00e9 Max d'achat:Float:150\", \n\t(sum(mr_item.stock_qty) - sum(ifnull(mr_item.ordered_qty, 0))) as \"Qt\u00e9 \u00e0 command\u00e9e:Float:130\",\n\tmr_item.last_purchase_rate as \"D\u00e9rnier Prix d'achat::150\",\n\tit.last_purchase_devise as \"D\u00e9rnier Prix d'achat (EUR)::170\",\n\tit.prices as \"Prix d'achat::650\",\n\tit.selling as \"Prix de vente::650\" \n\t\nfrom\n\t`tabMaterial Request Item` mr_item ,`tabMaterial Request` mr, `tabItem` it   \nwhere\n\tmr_item.parent = mr.name \n\tand it.name = mr_item.item_code\n\tand mr.material_request_type = \"Purchase\"\n\tand mr_item.docstatus = 1\n\tand mr_item.consulted = 0\n\tand mr.status != \"Stopped\"\ngroup by mr_item.item_code\nhaving\n\tsum(ifnull(mr_item.ordered_qty, 0)) < sum(ifnull(mr_item.stock_qty, 0))\norder by mr_item.creation asc", 
+ "ref_doctype": "Purchase Order", 
+ "report_name": "Articles Demand\u00e9s Sans Consultation", 
+ "report_type": "Query Report", 
+ "roles": [
+  {
+   "role": "Stock User"
+  }, 
+  {
+   "role": "Purchase Manager"
+  }, 
+  {
+   "role": "Purchase User"
+  }
+ ]
+}

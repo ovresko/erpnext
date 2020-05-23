@@ -324,7 +324,7 @@
   {
    "allow_bulk_edit": 0, 
    "allow_in_quick_entry": 0, 
-   "allow_on_submit": 0, 
+   "allow_on_submit": 1, 
    "bold": 0, 
    "collapsible": 0, 
    "columns": 0, 
@@ -358,7 +358,7 @@
   {
    "allow_bulk_edit": 0, 
    "allow_in_quick_entry": 0, 
-   "allow_on_submit": 0, 
+   "allow_on_submit": 1, 
    "bold": 0, 
    "collapsible": 0, 
    "columns": 0, 
@@ -392,7 +392,7 @@
   {
    "allow_bulk_edit": 0, 
    "allow_in_quick_entry": 0, 
-   "allow_on_submit": 0, 
+   "allow_on_submit": 1, 
    "bold": 0, 
    "collapsible": 0, 
    "columns": 0, 
@@ -1888,7 +1888,7 @@
  "istable": 0, 
  "max_attachments": 0, 
  "menu_index": 0, 
- "modified": "2020-01-29 17:47:56.479817", 
+ "modified": "2020-03-22 13:33:13.011393", 
  "modified_by": "Administrator", 
  "module": "Accounts", 
  "name": "Journal Entry", 

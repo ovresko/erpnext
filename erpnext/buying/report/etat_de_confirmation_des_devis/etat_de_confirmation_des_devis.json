@@ -1,0 +1,32 @@
+{
+ "add_total_row": 1, 
+ "creation": "2020-02-11 20:56:36.301277", 
+ "disable_prepared_report": 1, 
+ "disabled": 0, 
+ "docstatus": 0, 
+ "doctype": "Report", 
+ "idx": 0, 
+ "is_standard": "Yes", 
+ "letter_head": "MON VEHCIULE", 
+ "modified": "2020-02-25 23:56:51.823978", 
+ "modified_by": "Administrator", 
+ "module": "Buying", 
+ "name": "Etat de confirmation des devis", 
+ "owner": "Administrator", 
+ "prepared_report": 0, 
+ "query": "select \n\tmr.name as \"Devis Fournisseur:Link/Supplier Quotation:100\",\n\tmr.resultat as \"Resultat test:Data:20\",\n\tmr.supplier_name as \"Fournisseur:Data:100\",\n\tmr.transaction_date as \"Date:Data:100\",\n\t@total :=(select count(*) from `tabSupplier Quotation Item` sqi5 where sqi5.parent=mr.name) as \"Total:Data:100\",\n\t@offre :=(select count(*) from `tabSupplier Quotation Item` sqi6 where sqi6.parent=mr.name and sqi6.prix_fournisseur > 0) as \"Avec Offre:Data:100\",\n\t@change:=(select count(*) from `tabSupplier Quotation Item` sqia where sqia.parent=mr.name and sqia.prix_fournisseur != sqia.offre_fournisseur_initial and sqia.offre_fournisseur_initial >0) as \"Change Offre:Data:100\",\n\t @en_cours:=(select count(*) from `tabSupplier Quotation Item` sqi where sqi.parent=mr.name and (sqi.confirmation=\"En cours\" or sqi.confirmation IS NULL or sqi.confirmation='' or sqi.confirmation=' ')) as \"En cours:Data:100\",\n\t@en_negociation:=(select count(*) from `tabSupplier Quotation Item` sqi2 where sqi2.parent=mr.name and sqi2.confirmation=\"En negociation\") as \"En negociation:Data:100\",\n\t@approuve:=(select count(*) from `tabSupplier Quotation Item` sqi3 where sqi3.parent=mr.name and sqi3.confirmation=\"Approuve\") as \"Approuve:Data:100\",\n\t@annule :=(select count(*) from `tabSupplier Quotation Item` sqi4 where sqi4.parent=mr.name and sqi4.confirmation=\"Annule\") as \"Annule:Data:100\",\n\t@rest := round(( @approuve + @annule)*100 /@total,2)  as \"&percnt; Trait\u00e9:Data:120\",\n\t@neg := round(( @en_negociation)*100 /@total,2)  as \"&percnt; N\u00e9goci\u00e9e:Data:120\",\n\tmr.etat_mail as \"Mail:Data:100\",\n\tCASE \n\tWHEN ((@en_cours = @total) and (@offre=0) and (mr.etat_mail !='Email Envoye')) THEN 'A Envoyer P1'\n\tWHEN ((@en_cours = @total) and (@offre=0) and (mr.etat_mail ='Email Envoye')) THEN 'En attente de repense P1'\n\tWHEN (@en_cours > 0 and @change=0 and @offre>0 and (mr.etat_mail !='Email Envoye')) THEN 'A Traite P1'\n\tWHEN ((@en_cours = 0) and @change=0 and (@offre>0) and (mr.etat_mail !='Email Envoye')) THEN 'A Envoyer P2'\n\tWHEN ((@en_cours = 0) and (@offre>0) and (mr.etat_mail ='Email Envoye')) THEN 'En attente de repense P2'\n\tWHEN (  (@offre>0) and @change >0 and (@annule + @approuve < @total) and (mr.etat_mail !='Email Envoye')) THEN 'A Traite P2'\n\tWHEN ((@en_cours = 0) and (@offre>0) and (@annule + @approuve = @total) and (mr.etat_mail !='Email Envoye')) THEN 'Envoyer la confirmation'\n\tWHEN ((@en_cours = 0) and (@offre>0) and (@annule + @approuve = @total) and (mr.etat_mail ='Email Envoye')) THEN 'Termine P3'\n\tELSE 'NA' END as \"Resultat:Data:300\"\nfrom\n\t`tabSupplier Quotation` as mr\nwhere mr.docstatus =0\norder by mr.transaction_date DESC", 
+ "ref_doctype": "Supplier Quotation", 
+ "report_name": "Etat de confirmation des devis", 
+ "report_type": "Query Report", 
+ "roles": [
+  {
+   "role": "Stock User"
+  }, 
+  {
+   "role": "Purchase Manager"
+  }, 
+  {
+   "role": "Purchase User"
+  }
+ ]
+}

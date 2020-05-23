@@ -1,0 +1,41 @@
+{
+ "add_total_row": 0, 
+ "creation": "2020-03-10 19:59:21.233530", 
+ "disable_prepared_report": 0, 
+ "disabled": 0, 
+ "docstatus": 0, 
+ "doctype": "Report", 
+ "idx": 0, 
+ "is_standard": "Yes", 
+ "letter_head": "MON VEHCIULE", 
+ "modified": "2020-03-18 16:55:03.547999", 
+ "modified_by": "Administrator", 
+ "module": "Buying", 
+ "name": "CA Commandes Fournisseurs", 
+ "owner": "Administrator", 
+ "prepared_report": 0, 
+ "query": "select \nsupp.name as \"Fournisseur:Data:200\",\nsupp.supplier_name as \"Fournisseur:Data:100\",\ncount(po.name) as \"Nbr Commandes:Data:150\",\nsum(po.total_qty) as \"Qts Total:Data:100\",\n(select count(name) from `tabPurchase Order Item` as poi where poi.parent=po.name) as \"Nombre \n article:Data:150\",\n@facture:=(select sum(billed_amt) from `tabPurchase Order Item`  poi2 where  poi2.parent=po.name) as \"Montant facture:Data:150\",\n@gtotal:= sum(ifnull(po.grand_total, 0)) as \"Montant Bon Commande Total:Data:200\",\n( sum(ifnull(po.grand_total, 0)) -  ifnull(@facture, 0))  as \"Montant Bon de Commande reste:Data:300\",\npo.currency as \"Devise:Data:100\"\n\nfrom `tabSupplier` supp\nLEFT JOIN `tabPurchase Order` po  \nON supp.name= po.supplier and (po.docstatus=1 and po.per_billed<100)\ngroup by supp.name\n\n", 
+ "ref_doctype": "Purchase Order", 
+ "report_name": "CA Commandes Fournisseurs", 
+ "report_type": "Query Report", 
+ "roles": [
+  {
+   "role": "Purchase User"
+  }, 
+  {
+   "role": "Stock User"
+  }, 
+  {
+   "role": "Purchase Manager"
+  }, 
+  {
+   "role": "Purchase User"
+  }, 
+  {
+   "role": "Stock User"
+  }, 
+  {
+   "role": "Purchase Manager"
+  }
+ ]
+}
