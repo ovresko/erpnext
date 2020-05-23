@@ -100,7 +100,7 @@ def get_items(start, page_length, price_list, item_group, search_value="", pos_p
 	if search_value:
 		data = search_serial_or_batch_or_barcode_number(search_value)
 
-	item_code = data.get("item_code") if data.get("item_code") else strip(search_value or '')
+	item_code = data.get("item_code") if data.get("item_code") else (search_value or '').strip()
 	serial_no = data.get("serial_no") if data.get("serial_no") else ""
 	batch_no = data.get("batch_no") if data.get("batch_no") else ""
 	barcode = data.get("barcode") if data.get("barcode") else ""
