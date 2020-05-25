@@ -5,6 +5,12 @@
   max-height: calc(100vh - 210px);
 }
 
+@media (min-width: 768px)
+.modal-dialog {
+    width: 65%;
+    margin: 30px auto;
+}
+
 .awesomplete > ul {
     position: absolute;
     left: 0;
