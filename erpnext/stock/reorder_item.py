@@ -10,6 +10,8 @@ from frappe import _
 def reorder_item():
 	""" Reorder item if stock reaches reorder level"""
 	# if initial setup not completed, return
+	
+	
 	if not (frappe.db.a_row_exists("Company") and frappe.db.a_row_exists("Fiscal Year")):
 		return
 
@@ -28,6 +30,9 @@ def refresh_refs():
 	
 
 def refresh_items():
+	sp = frappe.get_single('Sync POS')
+	if sp.is_master:
+		return
         models = frappe.get_all("Item",filters={"has_variants":"1"},fields=["name","modified"],order_by='modified asc',limit=10)
         print("found %d " % len(models))
         for model in models:
