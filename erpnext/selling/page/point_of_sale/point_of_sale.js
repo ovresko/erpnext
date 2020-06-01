@@ -1835,6 +1835,8 @@ class POSItems {
 				</div>
 				<div class="item-group-field" style="width: 20%;margin-left: 10px;">
 				</div>
+				<button  data-label="return" class="btn btn-default btn-xs btn btn-return-item-group" style="margin: 18px 3px;"><i class="fa fa-trash-o"></i></button>
+
 				<div class="item-manufacturer-field" style="width: 20%;margin-left: 10px;">
 				</div>
 				<button  data-label="return" class="btn btn-default btn-xs btn btn-return-manufacturer" style="margin: 18px 3px;"><i class="fa fa-trash-o"></i></button>
@@ -2377,6 +2379,14 @@ class POSItems {
 			me.filter_items({start:me.start});
 			wr.find('.pagination').text(" "+(me.start || '')+" "); 
 			
+			 
+		});
+		
+		//btn-return-item-group
+		this.wrapper.on('click', '.btn-return-item-group', function(event) {
+			
+			me.item_group = '';
+			me.item_group_field.set_value('');
 			 
 		});
 		
