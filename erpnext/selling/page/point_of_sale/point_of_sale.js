@@ -1855,7 +1855,7 @@ class POSItems {
 
 		this.items_wrapper = this.wrapper.find('.items-wrapper');
 		this.items_wrapper.append(`
-			<div class="list-item-table pos-items-wrapper" style="height:100% !important;max-height:100% !important">
+			<div class="list-item-table pos-items-wrapper">
 				<div class="pos-items image-view-container">
 				</div>
 			</div>
