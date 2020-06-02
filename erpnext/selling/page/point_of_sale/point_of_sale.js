@@ -2193,7 +2193,7 @@ class POSItems {
 		this.item_group_parent_field = frappe.ui.form.make_control({
 			df: {
 				fieldtype: 'Link',
-				label: 'Item Group',
+				label: 'Famille Article',
 				options: 'Item Group',
 				default: me.parent_item_group,
 				filters: {"is_group":1},
@@ -2305,6 +2305,7 @@ class POSItems {
 			   && !this.vehicule_generation
 			   && !this.item_modele
 			   && !this.item_oem
+			   && !this.item_group_parent
 			   && !this.vehicule_version) {
 				const items = this.search_index[search_term];
 				this.items = items;
@@ -2318,6 +2319,7 @@ class POSItems {
 			   && !this.vehicule_modele
 			   && !this.item_modele
 			   && !this.item_oem
+			   && !this.item_group_parent
 			   && !this.vehicule_generation
 			   && !this.vehicule_version) {
 				this.items = this.all_items;
@@ -2709,7 +2711,8 @@ class POSItems {
 					item_oem: this.item_oem,
 					item_modele:this.item_modele,
 					vehicule_generation:this.vehicule_generation, 
-					vehicule_version:this.vehicule_version					
+					vehicule_version:this.vehicule_version,
+					parent_item_group: this.item_group_parent
 				}
 			}).then(r => {
 				// const { items, serial_no, batch_no } = r.message;
