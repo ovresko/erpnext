@@ -2291,7 +2291,7 @@ class POSItems {
 		}
 		console.log("filter_items start",start);
 		console.log("this.start",this.start);
-		if(!this.item_group){
+		if(!this.item_group && !this.item_group_parent){
 			this.item_group = this.parent_item_group;
 		}
 		   if (search_term) {
