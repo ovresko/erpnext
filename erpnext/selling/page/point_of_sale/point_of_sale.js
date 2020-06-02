@@ -1801,12 +1801,13 @@ class POSItems {
 				<span class="strong">Date </span>: <br> <span class="vehicule-date"></span>  
 
 				<br>
-	 			<button  data-label="return" class="btn btn-default btn-xs btn btn-back-result">Retour</button>
+	 			<button  data-label="return" class="btn btn-danger btn-xs btn btn-back-result">Retour</button>
 				
  				<button  data-label="return" class="btn btn-default btn-xs btn btn-remove-pagination" ><i class="fa fa-trash-o"></i></button>
 				<button  data-label="return" class="btn btn-default btn-xs btn btn-pagination-return" ><i class="fa fa-arrow-left"></i></button>
  				<span class="pagination"></span>
 				<button  data-label="return" class="btn btn-default btn-xs btn btn-pagination" ><i class="fa fa-arrow-right"></i></button>
+				<button  data-label="return" class="btn btn-default btn-xs btn btn-vente-perdue" >Vente perdue</button>
 				
 				</div>
 
@@ -2441,6 +2442,31 @@ class POSItems {
 			me.last_last_items = me.last_last_last_items;
 			me.last_last_last_items = [];
 			me.render_items(me.items);
+		});
+		
+		//btn-vente-perdue
+		this.wrapper.on('click', '.btn-vente-perdue', function(event) {
+			let value = prompt("Cause de vente perdue?");
+			if (value == null || value == "") {
+			   return;
+			} else {
+			  
+				//Vente Perdue
+				frappe.call({
+					method: "erpnext.selling.page.point_of_sale.point_of_sale.vente_perdue",
+					args: {
+						"cause": value,
+						"profile": me.frm.doc.pos_profile
+					},
+					callback: function(r) {
+						
+						alert("Opération terminée !");
+						
+					}
+				});
+				
+			}
+			
 		});
 		
 		
