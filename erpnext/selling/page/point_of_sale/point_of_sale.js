@@ -712,7 +712,7 @@ class POSCart {
 							<div class="list-item__content text-muted text-right">${__('Discount')}</div>
 							<div class="list-item__content text-muted text-right">${__('Rate')}</div>
 						</div>
-						<div class="cart-items" style="height:100% !important"> 
+						<div class="cart-items" style="min-height:800px"> 
 							<div class="empty-state">
 								<span>${__('No Items added to cart')}</span>
 							</div>
