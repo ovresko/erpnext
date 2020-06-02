@@ -57,7 +57,7 @@ def get_vehicule_details(item_code):
 @frappe.whitelist()
 def get_stock_details(item_code,pos_profile):
 	
-	my_warehouses = frappe.get_all("Entrepot Pofile PDV",fields=['warehouse'],filters={"parent":pos_profile})
+	my_warehouses = frappe.get_all("Entrepot Pofile PDV",fields=['*'],filters={"parent":pos_profile})
 	pwh = frappe.get_value("POS Profile",pos_profile,"warehouse")
 	aw = []
 	if pwh:
@@ -78,6 +78,10 @@ def get_stock_details(item_code,pos_profile):
 	#		aw.extend([x.name for x in alldepot])
 	rest = frappe.db.sql(''' select warehouse, actual_qty from `tabBin` where item_code='{item_code}' and warehouse in ({wr})'''.format(item_code=item_code,   wr=", ".join(['%s']*len(aw))), tuple(aw), as_dict=1 )
 	#res_depots = frappe.db.sql(""" select warehouse, actual_qty from `tabBin` where item_code=%s  and warehouse in (%s)   """,(item_code, ', '.join(['"%s"' % d for d in aw])) , as_dict=1)
+	for r in rest:
+		_item = next(w for w in aw if w==r.warehouse)
+		if not _item.voir_qts:
+			r.actual_qty = "Disponible" if r.actual_qty > 0 esle "Non Disponible"
 	return rest,aw
 
 @frappe.whitelist()
