@@ -21,10 +21,10 @@ def get_complements(item_code):
 		_size = len(version.item)
 		if _size == 11:
 			item = frappe.get_all("Item",filters={"manufacturer":manufacturer,"variant_of":version.item},fields=["*"])
-			items.append(item)
+			items.extend(item)
 		else:
 			item = frappe.get_all("Item",filters={"manufacturer":manufacturer,"item_code":version.item},fields=["*"])
-			items.append(item)
+			items.extend(item)
 	return items
 
 @frappe.whitelist()
