@@ -2490,7 +2490,7 @@ class POSItems {
 				"callback": function(response) {
 					var items = response.message; 
 					if(items){
-						console.log(items);
+						 
 						me.items = items;
 						me.render_items(items);	
 					}
@@ -2502,6 +2502,32 @@ class POSItems {
 		
 		//btn-composant
 		this.wrapper.on('click', '.btn-composant', function(event) {
+			
+			event.stopPropagation();
+			const $item = $(this);
+			const item_code = unescape($item.attr('data-item-code'));
+			if(!item_code)
+			{
+				return;
+			}
+			//Composant
+			frappe.call({
+				"method": "erpnext.selling.page.point_of_sale.point_of_sale.get_composants",
+				"args": {
+					"item_code": item_code
+				},
+				"callback": function(response) {
+					var items = response.message; 
+					if(items){
+						 
+						me.items = items;
+						me.render_items(items);	
+					}
+					
+				}
+			}); 
+			
+			
 		});
 		
 		
@@ -2639,17 +2665,17 @@ class POSItems {
 			   let coml = '';
 			   if(articles_text)
 			   {
-				   coml = '<span>Compléments : <br>'+articles_text +'</span><br>';
+				   coml = '<span><strong>Compléments :</strong> <br>'+articles_text +'</span><br>';
 			   }
 			   
 			   let comp = '';
 			   if(composant_text)
 			   {
-				   comp = '<span>Composants : <br>'+ composant_text +'</span><br>';
+				   comp = '<span><strong>Composants :</strong> <br>'+ composant_text +'</span><br>';
 			   }
 		   if(coml || comp)
 		   {   
-		   	   complements = '<div>'+coml+comp+'</div>';
+		   	   complements = '<hr><div>'+coml+comp+'</div>';
 		   }
 		 
 		//image-view-item
