@@ -129,16 +129,16 @@ def execute(filters=None):
 				"label": "Etat d'article dans consultation",
 				"width": 180
 			})
-		columns.append({
-				"fieldname": "last_qty",
-				"label": "Derniere Qts Achetee",
-				"width": 150
-			})
-		columns.append({
-				"fieldname": "last_valuation",
-				"label": "Derniere taux de valorisation",
-				"width": 150
-			})
+	columns.append({
+			"fieldname": "last_qty",
+			"label": "Derniere Qts Achetee",
+			"width": 150
+		})
+	columns.append({
+			"fieldname": "last_valuation",
+			"label": "Derniere taux de valorisation",
+			"width": 150
+		})
 	columns.append({
 			"fieldname": "consom",
 			"label": "Consommation 1 ans",
@@ -633,6 +633,8 @@ def execute(filters=None):
 				s_qts_devis = qts_devis
 				
 		qts_max_achat = 0
+		last_qty = 0
+		last_valuation = 0
 		if mri.variant_of:
 			#variante
 			info = info_variante(mri.item_code)
@@ -647,8 +649,7 @@ def execute(filters=None):
 			if sqllast_qty:
 				last_qty = sqllast_qty[0].actual_qty
 				last_valuation = sqllast_qty[0].valuation_rate
-		last_qty = 0
-		last_valuation = 0
+		
 		recom = 0
 		_date = ""
 		date =""
@@ -778,9 +779,9 @@ def execute(filters=None):
 			       #qts_demande,
 			       #prix_target,
 			       #last_qty
-			       #last_qty,
+			       last_qty,
 			       #last_valuation
-			       #last_valuation or 0,
+			       last_valuation or 0,
 			       #consom,
 			       "_",
 			       #qts_reliquat
