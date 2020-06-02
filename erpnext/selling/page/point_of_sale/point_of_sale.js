@@ -1801,6 +1801,8 @@ class POSItems {
 				<span class="strong">Date </span>: <br> <span class="vehicule-date"></span>  
 
 				<br><br>
+	 			<button  data-label="return" class="btn btn-default btn-xs btn btn-back-result" style="margin: 18px 3px;">Retour</button>
+
  				<button  data-label="return" class="btn btn-default btn-xs btn btn-remove-pagination" style="margin: 18px 3px;"><i class="fa fa-trash-o"></i></button>
 				<button  data-label="return" class="btn btn-default btn-xs btn btn-pagination-return" style="margin: 18px 3px;"><i class="fa fa-arrow-left"></i></button>
  				<span class="pagination"></span>
@@ -2333,7 +2335,9 @@ class POSItems {
 				if (search_term && !barcode) {
 					this.search_index[search_term] = items;
 				}
-
+				
+				this.last_last_items =this.last_items;
+				this.last_items =this.items;
 				this.items = items;
 				this.render_items(items);
 				this.set_item_in_the_cart(items, serial_no, batch_no, barcode);
@@ -2429,6 +2433,15 @@ class POSItems {
 			me.item_group_parent_field.set_value('');
 			 
 		});
+		
+		//btn-back-result
+		this.wrapper.on('click', '.btn-back-result', function(event) {
+			me.items = me.last_items;
+			me.last_items = me.last_last_items;
+			me.last_last_items = [];
+			me.render_items(me.items);
+		});
+		
 		
 		//btn-remove-pagination
 		this.wrapper.on('click', '.btn-remove-pagination', function(event) {
