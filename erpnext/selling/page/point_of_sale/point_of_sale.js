@@ -1800,9 +1800,9 @@ class POSItems {
 				<div style="width:20% ;padding:10px">					
 				<span class="strong">Date </span>: <br> <span class="vehicule-date"></span>  
 
-				<br><br>
+				<br>
 	 			<button  data-label="return" class="btn btn-default btn-xs btn btn-back-result" style="margin: 18px 3px;">Retour</button>
-
+				<br>
  				<button  data-label="return" class="btn btn-default btn-xs btn btn-remove-pagination" style="margin: 18px 3px;"><i class="fa fa-trash-o"></i></button>
 				<button  data-label="return" class="btn btn-default btn-xs btn btn-pagination-return" style="margin: 18px 3px;"><i class="fa fa-arrow-left"></i></button>
  				<span class="pagination"></span>
