@@ -303,6 +303,7 @@ def get_item_group_condition(pos_profile):
 def item_group_query(doctype, txt, searchfield, start, page_len, filters):
 	item_groups = []
 	cond = "1=1"
+	pcond = "1=1"
 	pos_profile= filters.get('pos_profile')
 	
 
@@ -313,9 +314,9 @@ def item_group_query(doctype, txt, searchfield, start, page_len, filters):
 			cond = "name in (%s)"%(', '.join(['%s']*len(item_groups)))
 			cond = cond % tuple(item_groups)
 		if filters.get('parent'):
-			cond += """ and parent_item_group LIKE '%{}%%' """.format(filters.get('parent'))
+			pcond = """ parent_item_group LIKE '%%{}%%' """.format(filters.get('parent'))
 
 	return frappe.db.sql(""" select distinct name from `tabItem Group`
-			where {condition} and is_group=0 and (name like %(txt)s) limit {start}, {page_len}"""
-		.format(condition = cond, start=start, page_len= page_len),
+			where {condition} and {pcond} and is_group=0 and (name like %(txt)s) limit {start}, {page_len}"""
+		.format(condition = cond,pcond=pcond, start=start, page_len= page_len),
 			{'txt': '%%%s%%' % txt})
