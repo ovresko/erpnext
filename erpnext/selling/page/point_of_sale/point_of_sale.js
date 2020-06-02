@@ -2722,7 +2722,7 @@ class POSItems {
 						 
 					</div>
 					 
-					<div style="width:160px;padding-left:5px" >
+					<div style="width:200px;padding-left:5px" >
 						<div style="margin-bottom:10px"><img src="${item.fabricant_logo ||'#'}" width="80px" ></div>
 						<div>
 							<a class="btn-manufacturer" data-name="${item.manufacturer ||''}">${item.manufacturer ||''}</a>
