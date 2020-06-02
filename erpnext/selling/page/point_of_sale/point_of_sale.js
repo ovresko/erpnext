@@ -2203,6 +2203,7 @@ class POSItems {
 					 if(this.item_group_parent)
 					 {
 						 this.item_modele = '';
+						 this.item_group = '';
 						 this.make_item_modele();
 					 }
 						 
