@@ -11,9 +11,10 @@ from six import string_types
 
 
 @frappe.whitelist()
-def vente_perdue(cause,profile):
+def vente_perdue(cause,article,profile):
 	vp = frappe.new_doc("Vente Perdue")
 	vp.cause = cause
+	vp.article = article
 	vp.declarer_par = profile
 	vp.save()
 	return
