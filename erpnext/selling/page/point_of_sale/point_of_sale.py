@@ -11,6 +11,15 @@ from six import string_types
 
 
 @frappe.whitelist()
+def vente_perdue(cause,profile):
+	vp = frappe.new_doc("Vente Perdue")
+	vp.cause = cause
+	vp.declarer_par = profile
+	vp.save()
+	return
+	
+	
+@frappe.whitelist()
 def get_complements(item_code):
 	if not item_code:
 		return []
