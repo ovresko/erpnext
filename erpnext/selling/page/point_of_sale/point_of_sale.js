@@ -2490,8 +2490,8 @@ class POSItems {
 				"callback": function(response) {
 					var items = response.message; 
 					if(items){
-						this.items = items;
-						this.render_items(items);	
+						me.items = items;
+						me.render_items(items);	
 					}
 					
 				}
