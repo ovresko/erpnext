@@ -2685,11 +2685,11 @@ class POSItems {
 		
 	get_items({start = 0, page_length = 40, search_value=''}={}) {
 		const price_list = this.frm.doc.selling_price_list;
-		if(!this.item_group){
+		if(!this.item_group && !this.item_group_parent){
 		this.item_group = this.parent_item_group;	
 		}
 		
-		 console.log("get_items start",start);
+		 console.log("item_group",this.item_group);
 		if(start){
 			start = start * page_length;	
 		}
