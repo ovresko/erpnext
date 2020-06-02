@@ -1484,10 +1484,17 @@ class POSCart {
 			
 		});
 		this.$cart_items.on('click', '.btn-open', function(event) {
-			 event.stopPropagation();
-			const $item = $(this);
-			const item_code = unescape($item.attr('data-item-code'));
-			window.open('#Form/Item/'+item_code, '_blank', 'toolbar=0,location=0,menubar=0'); 
+			
+			if(me.frm.allow_edit_rate){
+				 event.stopPropagation();
+				const $item = $(this);
+				const item_code = unescape($item.attr('data-item-code'));
+				window.open('#Form/Item/'+item_code, '_blank', 'toolbar=0,location=0,menubar=0'); 
+			}else{
+				alert("vous n'êtes pas autorisé");	
+			}
+			
+			 
 		});
 		
 		this.$cart_items.on('click', '.btn-information', function(event) {
@@ -2385,10 +2392,16 @@ class POSItems {
 	bind_events() {
 		var me = this;
 		this.wrapper.on('click', '.btn-open', function(event) {
-			 event.stopPropagation();
-			const $item = $(this);
-			const item_code = unescape($item.attr('data-item-code'));
-			window.open('#Form/Item/'+item_code, '_blank', 'toolbar=0,location=0,menubar=0'); 
+			//allow_view_item
+			if(me.frm.allow_edit_rate){
+				 event.stopPropagation();
+				const $item = $(this);
+				const item_code = unescape($item.attr('data-item-code'));
+				window.open('#Form/Item/'+item_code, '_blank', 'toolbar=0,location=0,menubar=0'); 
+			}else{
+				alert("vous n'êtes pas autorisé");	
+			}
+			
 		});
 		
 		//btn-pagination
