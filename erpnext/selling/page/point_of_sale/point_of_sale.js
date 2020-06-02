@@ -2471,6 +2471,37 @@ class POSItems {
 		});
 		
 		
+		//btn-complement
+		this.wrapper.on('click', '.btn-complement', function(event) {
+			
+			event.stopPropagation();
+			const $item = $(this);
+			const item_code = unescape($item.attr('data-item-code'));
+			if(!item_code)
+			{
+				return;
+			}
+			//Composant
+			frappe.call({
+				"method": "erpnext.selling.page.point_of_sale.point_of_sale.get_complements",
+				"args": {
+					"item_code": item_code
+				},
+				"callback": function(response) {
+					var items = response.message; 
+					if(items){
+						this.items = items;
+						this.render_items(items);	
+					}
+					
+				}
+			}); 
+			
+		});
+		
+		//btn-composant
+		this.wrapper.on('click', '.btn-composant', function(event) {
+		});
 		
 		
 		this.wrapper.on('click', '.btn-related', function(event) {
@@ -2670,7 +2701,10 @@ class POSItems {
 						<br>
 						<button data-item-code="${item_code}" data-label="open" class="btn btn-default btn-xs btn-open" style="margin-right: 5px;"><i class="fa fa-eye"></i>
 						</button>
-						
+						<button data-item-code="${item_code}" data-label="composant" class="btn btn-default btn-xs btn-composant" style="margin-right: 5px;">CPS
+						</button>
+						<button data-item-code="${item_code}" data-label="complement" class="btn btn-default btn-xs btn-complement" style="margin-right: 5px;">CPL
+						</button>
 						<button data-item-code="${item_code}" data-label="information" class="btn btn-default btn-xs btn-information" style="margin-right: 5px;"><i class="fa fa-question"></i>
 						</button>
 						<button data-item-code="${item_code}" data-label="add" class="btn btn-success btn-xs btn-add" style="margin-right: 5px;"><i class="fa fa-shopping-cart"></i></button>
