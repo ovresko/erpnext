@@ -2663,15 +2663,14 @@ class POSItems {
 						 <div>${item.adresse ||''}</div>
 						 
 						<div>
-							${item_code} ${variantes}
+							<a class="btn-related" data-item-code="${item_code}">${item_code} </a> ${variantes}
 						</div>
 						 
 						OEM: <span style="font-weight:800"><a data-item-code="${item_code}" class="oem-text">${oem}</a></span>
 						<br>
 						<button data-item-code="${item_code}" data-label="open" class="btn btn-default btn-xs btn-open" style="margin-right: 5px;"><i class="fa fa-eye"></i>
 						</button>
-						<button data-item-code="${item_code}" data-label="related" class="btn btn-default btn-xs btn-related" style="margin-right: 5px;"><i class="fa fa-link"></i>
-						</button>
+						
 						<button data-item-code="${item_code}" data-label="information" class="btn btn-default btn-xs btn-information" style="margin-right: 5px;"><i class="fa fa-question"></i>
 						</button>
 						<button data-item-code="${item_code}" data-label="add" class="btn btn-success btn-xs btn-add" style="margin-right: 5px;"><i class="fa fa-shopping-cart"></i></button>
