@@ -86,7 +86,7 @@ def make_sales_order(customer,items,pos_profile):
 	return so
 
 @frappe.whitelist()
-def get_items(start, page_length, price_list, item_group, search_value="", pos_profile=None,item_manufacturer=None,item_modele=None, vehicule_marque=None, vehicule_modele=None, vehicule_generation=None, vehicule_version=None,item_oem=None):
+def get_items(start, page_length, price_list, item_group, search_value="", pos_profile=None,item_manufacturer=None,item_modele=None, vehicule_marque=None, vehicule_modele=None, vehicule_generation=None, vehicule_version=None,item_oem=None,parent_item_group=None):
 	data = dict()
 	warehouse = ""
 	display_items_in_stock = 0
@@ -94,8 +94,13 @@ def get_items(start, page_length, price_list, item_group, search_value="", pos_p
 	if pos_profile:
 		warehouse, display_items_in_stock = frappe.db.get_value('POS Profile', pos_profile, ['warehouse', 'display_items_in_stock'])
 
+	if parent_item_group:
+		lft, rgt = frappe.db.get_value('Item Group', parent_item_group, ['lft', 'rgt'])
+	
 	if not frappe.db.exists('Item Group', item_group):
 		item_group = get_root_of('Item Group')
+	else:
+		lft, rgt = frappe.db.get_value('Item Group', item_group, ['lft', 'rgt'])
 
 	if search_value:
 		data = search_serial_or_batch_or_barcode_number(search_value)
@@ -129,7 +134,7 @@ def get_items(start, page_length, price_list, item_group, search_value="", pos_p
 		condition += get_item_marque(vehicule_marque)
 	
 
-	lft, rgt = frappe.db.get_value('Item Group', item_group, ['lft', 'rgt'])
+	
 	# locate function is used to sort by closest match from the beginning of the value
 
 
@@ -308,7 +313,7 @@ def item_group_query(doctype, txt, searchfield, start, page_len, filters):
 			cond = "name in (%s)"%(', '.join(['%s']*len(item_groups)))
 			cond = cond % tuple(item_groups)
 		if filters.get('parent'):
-			cond += """ and parent_item_group LIKE '%{}%%' """.format(filters.get('parent')) "
+			cond += """ and parent_item_group LIKE '%{}%%' """.format(filters.get('parent'))
 
 	return frappe.db.sql(""" select distinct name from `tabItem Group`
 			where {condition} and is_group=0 and (name like %(txt)s) limit {start}, {page_len}"""
