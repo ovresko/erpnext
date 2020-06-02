@@ -27,6 +27,24 @@ def get_complements(item_code):
 			items.extend(item)
 	return items
 
+
+@frappe.whitelist()
+def get_composants(item_code):
+	if not item_code:
+		return []
+	versions = frappe.get_all("Composant",filters={"parent":item_code,"parentfield":"composant"},fields=["item","parent"])
+	manufacturer = frappe.db.get_value('Item', item_code, "manufacturer")
+	items = []
+	for version in versions:
+		_size = len(version.item)
+		if _size == 11:
+			item = frappe.get_all("Item",filters={"manufacturer":manufacturer,"variant_of":version.item},fields=["*"])
+			items.extend(item)
+		else:
+			item = frappe.get_all("Item",filters={"manufacturer":manufacturer,"item_code":version.item},fields=["*"])
+			items.extend(item)
+	return items
+
 @frappe.whitelist()
 def get_vehicule_details(item_code):
 	versions = frappe.get_all("Version vehicule item",filters={"parent":item_code},fields=["*"])
