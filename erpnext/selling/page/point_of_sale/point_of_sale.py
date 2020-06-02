@@ -308,7 +308,7 @@ def item_group_query(doctype, txt, searchfield, start, page_len, filters):
 			cond = "name in (%s)"%(', '.join(['%s']*len(item_groups)))
 			cond = cond % tuple(item_groups)
 		if filters.get('parent'):
-			cond += " and parent_item_group = '%s' " % filters.get('parent')
+			cond += """ and parent_item_group LIKE '%{}%%' """.format(filters.get('parent')) "
 
 	return frappe.db.sql(""" select distinct name from `tabItem Group`
 			where {condition} and is_group=0 and (name like %(txt)s) limit {start}, {page_len}"""
