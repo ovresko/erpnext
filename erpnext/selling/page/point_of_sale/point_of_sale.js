@@ -1833,10 +1833,17 @@ class POSItems {
 			<div class="fields">
 				<div class="search-field">
 				</div>
+
+				<div class="item-group-parent-field" style="width: 20%;margin-left: 10px;">
+				</div>
+				<button  data-label="return" class="btn btn-default btn-xs btn btn-return-item-group-parent" style="margin: 18px 3px;"><i class="fa fa-trash-o"></i></button>
+
+
 				<div class="item-group-field" style="width: 20%;margin-left: 10px;">
 				</div>
 				<button  data-label="return" class="btn btn-default btn-xs btn btn-return-item-group" style="margin: 18px 3px;"><i class="fa fa-trash-o"></i></button>
 
+				
 				<div class="item-manufacturer-field" style="width: 20%;margin-left: 10px;">
 				</div>
 				<button  data-label="return" class="btn btn-default btn-xs btn btn-return-manufacturer" style="margin: 18px 3px;"><i class="fa fa-trash-o"></i></button>
@@ -2183,7 +2190,28 @@ class POSItems {
 			render_input: true
 		});
 		
-		
+		this.item_group_parent_field = frappe.ui.form.make_control({
+			df: {
+				fieldtype: 'Link',
+				label: 'Item Group',
+				options: 'Item Group',
+				default: me.parent_item_group,
+				filters: {"is_group":1},
+				onchange: () => {
+					//this.last_query['item_group'] = this.item_group;
+					this.item_group_parent = this.item_group_parent_field.get_value();
+					 if(this.item_group_parent)
+					 {
+						 this.item_modele = '';
+						 this.make_item_modele();
+					 }
+						 
+					this.filter_items();
+				}
+			},
+			parent: this.wrapper.find('.item-group-parent-field'),
+			render_input: true
+		});
 		
 		this.item_group_field = frappe.ui.form.make_control({
 			df: {
@@ -2206,7 +2234,8 @@ class POSItems {
 					return {
 						query: 'erpnext.selling.page.point_of_sale.point_of_sale.item_group_query',
 						filters: {
-							pos_profile: this.frm.doc.pos_profile
+							pos_profile: this.frm.doc.pos_profile,
+							parent: this.item_group_parent
 						}
 					};
 				}
@@ -2387,6 +2416,14 @@ class POSItems {
 			
 			me.item_group = '';
 			me.item_group_field.set_value('');
+			 
+		});
+		
+		//btn-return-item-group-parent
+		this.wrapper.on('click', '.btn-return-item-group-parent', function(event) {
+			
+			me.item_group_parent = '';
+			me.item_group_parent_field.set_value('');
 			 
 		});
 		
