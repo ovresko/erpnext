@@ -2450,12 +2450,13 @@ class POSItems {
 			if (value == null || value == "") {
 			   return;
 			} else {
-			  
+			  	let article = prompt("Code, Référence ou nom d'article?");
 				//Vente Perdue
 				frappe.call({
 					method: "erpnext.selling.page.point_of_sale.point_of_sale.vente_perdue",
 					args: {
 						"cause": value,
+						"article":article,
 						"profile": me.frm.doc.pos_profile
 					},
 					callback: function(r) {
