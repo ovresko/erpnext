@@ -9,6 +9,24 @@ from erpnext.accounts.doctype.pos_profile.pos_profile import get_item_groups
 
 from six import string_types
 
+
+@frappe.whitelist()
+def get_complements(item_code):
+	if not item_code:
+		return []
+	versions = frappe.get_all("Composant",filters={"parent":item_code,"parentfield":"articles"},fields=["item","parent"])
+	manufacturer = frappe.db.get_value('Item', item_code, "manufacturer")
+	items = []
+	for version in versions:
+		_size = len(version.item)
+		if _size == 11:
+			item = frappe.get_all("Item",filters={"manufacturer":manufacturer,"variant_of":version.item},fields=["*"])
+			items.append(item)
+		else:
+			item = frappe.get_all("Item",filters={"manufacturer":manufacturer,"item_code":version.item},fields=["*"])
+			items.append(item)
+	return items
+
 @frappe.whitelist()
 def get_vehicule_details(item_code):
 	versions = frappe.get_all("Version vehicule item",filters={"parent":item_code},fields=["*"])
