@@ -2335,7 +2335,7 @@ class POSItems {
 				if (search_term && !barcode) {
 					this.search_index[search_term] = items;
 				}
-				
+				this.last_last_last_items =this.last_last_items;
 				this.last_last_items =this.last_items;
 				this.last_items =this.items;
 				this.items = items;
@@ -2438,7 +2438,8 @@ class POSItems {
 		this.wrapper.on('click', '.btn-back-result', function(event) {
 			me.items = me.last_items;
 			me.last_items = me.last_last_items;
-			me.last_last_items = [];
+			me.last_last_items = me.last_last_last_items;
+			me.last_last_last_items = [];
 			me.render_items(me.items);
 		});
 		
