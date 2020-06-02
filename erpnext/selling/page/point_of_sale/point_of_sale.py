@@ -81,7 +81,7 @@ def get_stock_details(item_code,pos_profile):
 	for r in rest:
 		_item = next(w for w in aw if w==r.warehouse)
 		if not _item.voir_qts:
-			r.actual_qty = "Disponible" if r.actual_qty > 0 esle "Non Disponible"
+			r.actual_qty = "Disponible" if r.actual_qty > 0 else "Non Disponible"
 	return rest,aw
 
 @frappe.whitelist()
