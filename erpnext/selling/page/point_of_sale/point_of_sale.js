@@ -1015,9 +1015,10 @@ class POSCart {
 				if(!$items)
 					return;
 				this.$cart_items.find('.list-item').remove();
-				$items.forEach((a) => {
-					a.appendTo(this.$cart_items);
+				$items.each(function( index ) {
+				    $( this ).appendTo(this.$cart_items);
 				});
+ 
 			}
 			 
 			
