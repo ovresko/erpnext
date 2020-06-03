@@ -1005,7 +1005,7 @@ class POSCart {
 			}
 			
 			if(!search_term || search_term == ""){
-				
+				console.log("reset",this.original_items);
 				this.$cart_items = this.original_items;
 				this.original_items = null;
 			
@@ -1015,9 +1015,7 @@ class POSCart {
 				if(!$items)
 					return;
 				this.$cart_items.find('.list-item').remove();
-				$items.each(function( index ) {
-				    console.log("index",index);
-				    console.log($(this));
+				$items.each(function( index ) { 
 				    $(this).appendTo(".cart-items");
 				});
  
