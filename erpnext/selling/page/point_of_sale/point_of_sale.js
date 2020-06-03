@@ -298,7 +298,11 @@ erpnext.pos.PointOfSale = class PointOfSale {
 			return;
 		}
 
+		
 		let args = { item_code: item_code };
+		if (field == "qty"){
+			args['qty'] = value;
+		}
 		if (in_list(['serial_no', 'batch_no'], field)) {
 			args[field] = value;
 		}
