@@ -2614,7 +2614,10 @@ class POSItems {
 			let qts= prompt("Quantité");
 			if (qts == null || qts == "") {
 			   qts = "+1";
+			}else{
+				qts = "+"+qts
 			}
+			console.log("qts",qts);
 			me.events.update_cart(item_code, 'qty', qts);
 		});
 		
