@@ -997,11 +997,11 @@ class POSCart {
 			render_input: true,
 		});
 		
-		this.cart_search.$input.on('input', (e) => {
+		this.cart_search.$input.on('keypress', (e) => {
 			
 			var keycode = (e.keyCode ? e.keyCode : e.which);
 			
-				const search_term = e.target.value;
+				const search_term = this.value;
 				const wr = this.wrapper;
 
 				if(!this.original_items){
