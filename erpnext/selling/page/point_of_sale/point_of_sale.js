@@ -301,6 +301,15 @@ erpnext.pos.PointOfSale = class PointOfSale {
 		
 		let args = { item_code: item_code };
 		if (field == "qty"){
+			if (typeof value === 'string' && !in_list(['serial_no', 'batch_no'], field)) {
+				// value can be of type '+1' or '-1'
+				if(value.includes("+")){
+					value = value.replace("+","");
+					value = flt(value);
+				} else{
+					value = flt(value);
+				}				
+			}
 			args['qty'] = value;
 		}
 		if (in_list(['serial_no', 'batch_no'], field)) {
@@ -2617,11 +2626,11 @@ class POSItems {
 			
 			let qts= prompt("Quantité");
 			if (qts == null || qts == "") {
-			   qts = "1";
+			   qts = "+1";
 			}
 			
 			console.log("qts",qts);
-			me.events.update_cart(item_code, 'qty', parseFloat(qts));
+			me.events.update_cart(item_code, 'qty', qts);
 		});
 		
 		this.wrapper.on('click', '.btn-stock', function() {
