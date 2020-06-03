@@ -999,8 +999,8 @@ class POSCart {
 		
 		this.cart_search.$input.on('input', (e) => {
 			
-			var keycode = (event.keyCode ? event.keyCode : event.which);
-			if(keycode == '13'){
+			var keycode = (e.keyCode ? e.keyCode : e.which);
+			
 				const search_term = e.target.value;
 				const wr = this.wrapper;
 
@@ -1016,17 +1016,19 @@ class POSCart {
 					$(".cart-items").replaceWith(this.$cart_items);
 					this.original_items = null;
 				}else{
-					const $items = this.$cart_items.find(`[title*="${search_term}"]`); 
+					if(keycode == '13'){
+						const $items = this.$cart_items.find(`[title*="${search_term}"]`); 
 
-					if(!$items)
-						return;
-					this.$cart_items.find('.list-item').remove();
-					$items.each(function( index ) { 
-					    $(this).appendTo(".cart-items");
-					});
+						if(!$items)
+							return;
+						this.$cart_items.find('.list-item').remove();
+						$items.each(function( index ) { 
+						    $(this).appendTo(".cart-items");
+						});
+					}
 
 				}
-			}
+			
 		});
 		
 		this.customer_field = frappe.ui.form.make_control({
