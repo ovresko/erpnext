@@ -998,7 +998,7 @@ class POSCart {
 		
 		this.cart_search.$input.on('input', (e) => {
 			const search_term = e.target.value;
-			
+			const wr = this.wrapper;
 			
 			if(!this.original_items){
 				this.original_items = this.$cart_items.clone( true );
@@ -1008,7 +1008,8 @@ class POSCart {
 			if(!search_term || search_term == ""){
 				console.log("reset",this.original_items);
 				this.$cart_items = this.original_items;
-				//this.$cart_items.appendTo(".cart-items");
+				wr.find('.cart-items').remove();
+				this.$cart_items.appendTo(".cart-items");
 				this.original_items = null;
 			}else{
 				const $items = this.$cart_items.find(`[title*="${search_term}"]`); 
