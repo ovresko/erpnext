@@ -1008,7 +1008,7 @@ class POSCart {
 			if(!search_term || search_term == ""){
 				console.log("reset",this.original_items);
 				this.$cart_items = this.original_items;
-				this.$cart_items.appendTo(".cart-items");
+				//this.$cart_items.appendTo(".cart-items");
 				this.original_items = null;
 			}else{
 				const $items = this.$cart_items.find(`[title*="${search_term}"]`); 
