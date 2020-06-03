@@ -1010,7 +1010,10 @@ class POSCart {
 				this.original_items = null;
 			
 			}else{
-				const $items = this.$cart_items.find(`[data-item-code*="${search_term}"]`); 
+				const $items = this.$cart_items.find(`[title*="${search_term}"]`); 
+				console.log($items);
+				if(!$items)
+					return;
 				this.$cart_items.find('.list-item').remove();
 				$items.forEach((a) => {
 					a.appendTo(this.$cart_items);
