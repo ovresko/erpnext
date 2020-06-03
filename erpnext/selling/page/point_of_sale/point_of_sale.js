@@ -1001,7 +1001,7 @@ class POSCart {
 			
 			
 			if(!this.original_items){
-				this.original_items = this.$cart_items;
+				this.original_items = this.$cart_items.clone( true );
 				console.log("set original");
 			}
 			
