@@ -990,40 +990,43 @@ class POSCart {
 		this.cart_search = frappe.ui.form.make_control({
 			df: {
 				fieldtype: 'Data',
-				placeholder: "Chercher dans panier"
+				label: 'Chercher Article',
+				placeholder: "Appuyer touche [entrée]"
 			},
 			parent: this.wrapper.find('.cart-search'),
 			render_input: true,
 		});
 		
 		this.cart_search.$input.on('input', (e) => {
-			const search_term = e.target.value;
-			const wr = this.wrapper;
 			
-			if(!this.original_items){
-				this.original_items = this.$cart_items.clone( true );
-				console.log("set original");
+			var keycode = (event.keyCode ? event.keyCode : event.which);
+			if(keycode == '13'){
+				const search_term = e.target.value;
+				const wr = this.wrapper;
+
+				if(!this.original_items){
+					this.original_items = this.$cart_items.clone( true );
+					console.log("set original");
+				}
+
+				if(!search_term || search_term == ""){
+					console.log("reset",this.original_items);
+					this.$cart_items.find('.list-item').remove();
+					this.$cart_items = this.original_items; 
+					$(".cart-items").replaceWith(this.$cart_items);
+					this.original_items = null;
+				}else{
+					const $items = this.$cart_items.find(`[title*="${search_term}"]`); 
+
+					if(!$items)
+						return;
+					this.$cart_items.find('.list-item').remove();
+					$items.each(function( index ) { 
+					    $(this).appendTo(".cart-items");
+					});
+
+				}
 			}
-			
-			if(!search_term || search_term == ""){
-				console.log("reset",this.original_items);
-				this.$cart_items.find('.list-item').remove();
-				this.$cart_items = this.original_items; 
-				$(".cart-items").replaceWith(this.$cart_items);
-				this.original_items = null;
-			}else{
-				const $items = this.$cart_items.find(`[title*="${search_term}"]`); 
-				
-				if(!$items)
-					return;
-				this.$cart_items.find('.list-item').remove();
-				$items.each(function( index ) { 
-				    $(this).appendTo(".cart-items");
-				});
- 
-			}
-			 
-			
 		});
 		
 		this.customer_field = frappe.ui.form.make_control({
