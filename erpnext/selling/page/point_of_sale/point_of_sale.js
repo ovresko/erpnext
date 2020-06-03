@@ -997,15 +997,14 @@ class POSCart {
 			render_input: true,
 		});
 		
-		this.cart_search.$input.on('keypress', (e) => {
+		this.cart_search.$input.on('keyup', (e) => {
 			
 			var keycode = (e.keyCode ? e.keyCode : e.which);
 			
-				const search_term = this.value;
+				const search_term = $(this).val();
 				const wr = this.wrapper;
 				console.log("keycode",keycode);
-				console.log("search_term",search_term);
-				console.log("search_term2",e.target.value);
+				console.log("search_term",search_term); 
 				if(!this.original_items){
 					this.original_items = this.$cart_items.clone( true );
 					console.log("set original");
