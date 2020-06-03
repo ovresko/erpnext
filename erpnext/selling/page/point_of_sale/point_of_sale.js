@@ -2610,7 +2610,12 @@ class POSItems {
 		this.wrapper.on('click', '.btn-add', function() {
 			const $item = $(this);
 			const item_code = unescape($item.attr('data-item-code'));
-			me.events.update_cart(item_code, 'qty', '+1');
+			
+			let qts= prompt("Quantité");
+			if (qts == null || qts == "") {
+			   qts = "+1";
+			}
+			me.events.update_cart(item_code, 'qty', qts);
 		});
 		
 		this.wrapper.on('click', '.btn-stock', function() {
