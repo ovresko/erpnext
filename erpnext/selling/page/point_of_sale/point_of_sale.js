@@ -998,7 +998,7 @@ class POSCart {
 		});
 		
 		this.cart_search.$input.on('keyup', (e) => {
-			
+			e.stopPropagation();
 			var keycode = (e.keyCode ? e.keyCode : e.which);
 			
 				const search_term = $(this).val();
