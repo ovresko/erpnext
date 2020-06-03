@@ -1001,12 +1001,14 @@ class POSCart {
 			
 			
 			if(!this.original_items){
-			this.original_items = this.$cart_items;
+				this.original_items = this.$cart_items;
+				console.log("set original");
 			}
 			
 			if(!search_term || search_term == ""){
 				console.log("reset",this.original_items);
 				this.$cart_items = this.original_items;
+				$(this.$cart_items).appendTo(".cart-items");
 				this.original_items = null;
 			
 			}else{
