@@ -1011,12 +1011,14 @@ class POSCart {
 			
 			}else{
 				const $items = this.$cart_items.find(`[title*="${search_term}"]`); 
-				console.log($items);
+				
 				if(!$items)
 					return;
 				this.$cart_items.find('.list-item').remove();
 				$items.each(function( index ) {
-				    $( this ).appendTo(this.$cart_items);
+				    console.log("index",index);
+				    console.log($(this));
+				    $(this).appendTo(this.$cart_items);
 				});
  
 			}
