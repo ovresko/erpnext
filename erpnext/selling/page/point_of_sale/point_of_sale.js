@@ -2617,12 +2617,11 @@ class POSItems {
 			
 			let qts= prompt("Quantité");
 			if (qts == null || qts == "") {
-			   qts = "+1";
-			}else{
-				qts = "+"+qts
+			   qts = "1";
 			}
+			
 			console.log("qts",qts);
-			me.events.update_cart(item_code, 'qty', qts);
+			me.events.update_cart(item_code, 'qty', parseFloat(qts));
 		});
 		
 		this.wrapper.on('click', '.btn-stock', function() {
