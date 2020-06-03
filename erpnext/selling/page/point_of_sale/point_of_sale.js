@@ -1018,7 +1018,7 @@ class POSCart {
 				$items.each(function( index ) {
 				    console.log("index",index);
 				    console.log($(this));
-				    this.appendTo(this.$cart_items);
+				    $(this).appendTo(".cart-items");
 				});
  
 			}
