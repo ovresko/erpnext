@@ -1003,7 +1003,9 @@ class POSCart {
 			
 				const search_term = this.value;
 				const wr = this.wrapper;
-
+				console.log("keycode",keycode);
+				console.log("search_term",search_term);
+				console.log("search_term2",e.target.value);
 				if(!this.original_items){
 					this.original_items = this.$cart_items.clone( true );
 					console.log("set original");
@@ -1016,7 +1018,7 @@ class POSCart {
 					$(".cart-items").replaceWith(this.$cart_items);
 					this.original_items = null;
 				}else{
-					console.log("keycode",keycode);
+					
 					if(keycode == '13'){
 						const $items = this.$cart_items.find(`[title*="${search_term}"]`); 
 
