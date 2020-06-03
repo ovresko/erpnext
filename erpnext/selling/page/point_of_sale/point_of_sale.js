@@ -1016,6 +1016,7 @@ class POSCart {
 					$(".cart-items").replaceWith(this.$cart_items);
 					this.original_items = null;
 				}else{
+					console.log("keycode",keycode);
 					if(keycode == '13'){
 						const $items = this.$cart_items.find(`[title*="${search_term}"]`); 
 
