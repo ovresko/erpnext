@@ -717,6 +717,8 @@ class POSCart {
 				</div>
 				<div class="customer-field">
 				</div>
+				<div class="cart-search">
+				</div>
 				<div class="cart-wrapper">
 					<div class="list-item-table">
 						<div class="list-item list-item--head">
@@ -983,7 +985,41 @@ class POSCart {
 	make_customer_field() {
 		const wr = this.wrapper;
 		var pr = this.frm.doc.pos_profile;
-		console.log(pr);
+		 
+		//cart-search
+		this.cart_search = frappe.ui.form.make_control({
+			df: {
+				fieldtype: 'Data',
+				placeholder: "Chercher dans panier"
+			},
+			parent: this.wrapper.find('.cart-search'),
+			render_input: true,
+		});
+		
+		this.cart_search.$input.on('input', (e) => {
+			const search_term = e.target.value;
+			
+			
+			if(!this.original_items){
+			this.original_items = this.$cart_items;
+			}
+			
+			if(!search_term || search_term == ""){
+				
+				this.$cart_items = this.original_items;
+				this.original_items = null;
+			
+			}else{
+				const $items = this.$cart_items.find(`[data-item-code*="${search_term}"]`); 
+				this.$cart_items.find('.list-item').remove();
+				$items.forEach((a) => {
+					a.appendTo(this.$cart_items);
+				});
+			}
+			 
+			
+		});
+		
 		this.customer_field = frappe.ui.form.make_control({
 			df: {
 				fieldtype: 'Link',
