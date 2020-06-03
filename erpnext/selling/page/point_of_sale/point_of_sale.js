@@ -1009,7 +1009,7 @@ class POSCart {
 				console.log("reset",this.original_items);
 				this.$cart_items.find('.list-item').remove();
 				this.$cart_items = this.original_items; 
-				this.$cart_items.appendTo(".cart-items");
+				$(".cart-items").replaceWith(this.$cart_items);
 				this.original_items = null;
 			}else{
 				const $items = this.$cart_items.find(`[title*="${search_term}"]`); 
