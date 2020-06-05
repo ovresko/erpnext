@@ -41,12 +41,7 @@ def print_address_magasin(items,pos_profile):
 		frappe.local.response.type = "download"
 		
 def prepare_bulk_print_html(names):
-	final_html = frappe.render_template("
-					    {% for sc in names %}					    
-					    	{{sc}}  ________ {{names[sc]}} 		<br>			    
-					    {% endfor %}
-					    ", {"names":names})
-
+	final_html = frappe.render_template("""{% for sc in names %}{{sc}}  ________ {{names[sc]}}<br>{% endfor %}""", {"names":names})
 	return final_html
 
 def dignity_get_pdf(html, options=None):
