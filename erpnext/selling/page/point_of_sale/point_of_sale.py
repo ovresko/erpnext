@@ -30,7 +30,7 @@ def print_address_magasin(items,pos_profile):
 	if result:
 		final_html = prepare_bulk_print_html(result)
 		pdf_options = { 
-						"page-height" : "29.7cm",
+						"page-height" : "15.0cm",
 						"page-width" : "8.0cm",
 						"margin-top": "10mm",
 						"margin-bottom": "10mm",
@@ -51,7 +51,7 @@ def print_address_magasin(items,pos_profile):
 		return failed
 		
 def prepare_bulk_print_html(names):
-	final_html = frappe.render_template("""{% for sc in names %}{{sc}}  ________ {{names[sc]}}<br>{% endfor %}""", {"names":names})
+	final_html = frappe.render_template("""{% for sc in names %}<small>{{sc}} ----- {{names[sc]}}</small><br>{% endfor %}""", {"names":names})
 	return final_html
 
 def dignity_get_pdf(html, options=None):
