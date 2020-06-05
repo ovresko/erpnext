@@ -998,12 +998,13 @@ class POSCart {
 		});
 		
 		this.cart_search.$input.on('keyup', (e) => {
+			console.log("keyup");
 			e.stopPropagation();
 			var keycode = (e.keyCode ? e.keyCode : e.which);
-			
+			console.log("keycode",keycode);
 				const search_term = $(this).val();
 				const wr = this.wrapper;
-				console.log("keycode",keycode);
+				
 				console.log("search_term",search_term); 
 				if(!this.original_items){
 					this.original_items = this.$cart_items.clone( true );
