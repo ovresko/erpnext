@@ -2765,11 +2765,12 @@ class POSItems {
 		if(item.designation_commerciale){
 			designation_commerciale = '<br>'+item.designation_commerciale+	 '<br>';
 		}
+		let price = '';
 		
 		let actual_qty = '0';
 		if(item.actual_qty){
 			actual_qty = '<span class="strong" style="color:#02AF22">Qts: '+item.actual_qty+'</span>   <button data-item-code="'+item.item_code+'" data-label="stock" class="btn btn-default btn-xs btn-stock" style="margin-right: 5px;"><i class="fa fa-cubes"></i></button>';
-		
+			price = '<span class="price-info" style="margin:0px;background-color: rgba(10, 154, 7, 0.8);border-radius: 0px;font-weight: bold;">' +price_list_rate +'</span>';
 		}else{
 			actual_qty = '<span class="strong" style="color:red">Qts: 0 </span>   <button data-item-code="'+item.item_code+'" data-label="stock" class="btn btn-default btn-xs btn-stock" style="margin-right: 5px;"><i class="fa fa-cubes"></i></button>';
 				
@@ -2817,7 +2818,7 @@ class POSItems {
 							${item_image ? `<img src="${item_image}" alt="${item_title}">` : '' }
 						</div>
 						<span class="price-info" style="margin:0px;background-color: rgba(141, 153, 166, 0.8);border-radius: 0px;">
-							${price_list_rate}
+							${price}
 						</span>
 					</a>
 			</div>	
