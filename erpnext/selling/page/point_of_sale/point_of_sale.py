@@ -25,7 +25,7 @@ def print_address_magasin(items,pos_profile):
 			if adr:
 				result.update({item:adr})
 	else:
-		failed = "no items %s " % items
+		failed = "no items %s %s %s" % (result,items,warehouse)
 		
 	if result:
 		final_html = prepare_bulk_print_html(result)
@@ -45,7 +45,7 @@ def print_address_magasin(items,pos_profile):
 		frappe.local.response.filecontent = dignity_get_pdf(final_html, options=pdf_options) #get_pdf(final_html, pdf_options)
 		frappe.local.response.type = "download"
 	else:
-		failed = "no result %s " % result
+		failed = "no result %s %s %s" % (result,items,warehouse)
 		
 	if failed:
 		return failed
