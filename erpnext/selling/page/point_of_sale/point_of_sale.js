@@ -998,11 +998,12 @@ class POSCart {
 		});
 		
 		this.cart_search.$input.on('keyup', (e) => {
-			console.log("keyup");
+			 
 			e.stopPropagation();
 			var keycode = (e.keyCode ? e.keyCode : e.which);
-			console.log("keycode",keycode);
-				const search_term = $(this).val();
+			
+				const search_term = this.val();
+				console.log("search_term",search_term);
 				const wr = this.wrapper;
 				
 				console.log("search_term",search_term); 
