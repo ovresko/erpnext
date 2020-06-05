@@ -37,7 +37,7 @@ def print_address_magasin(items,pos_profile):
 						"title": "ADRESSE",
 					}
 
-		frappe.local.response.filename = "{filename}.pdf".format(filename="catalogue".replace(" ", "-").replace("/", "-"))
+		frappe.local.response.filename = "{filename}.pdf".format(filename="catalogue_address")
 		frappe.local.response.filecontent = dignity_get_pdf(final_html, options=pdf_options) #get_pdf(final_html, pdf_options)
 		frappe.local.response.type = "download"
 		
