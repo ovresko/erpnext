@@ -754,11 +754,11 @@ class POSCart {
 						</div>
 						<button  data-label="commander" class="btn btn-default btn btn-commander" style="margin-right: 5px;">Créer Commande</button>
 						<button  data-label="devis" class="btn btn-default btn btn-devis" style="margin-right: 5px;">Créer Devis</button>
+						
+
 						<br>
-						<p>Ctrl + Q pour terminer la facture<br>
-						  Ctrl + B Créer Bon de commande<br>
-						  Ctrl + X Créer Devis<br>
-						</p>
+						<button  data-label="address_magasin" class="btn btn-default btn btn-address-magasin" style="margin-right: 5px;">Impr. Adresse</button>
+
 						
 					</div>
 				</div>
@@ -774,6 +774,7 @@ class POSCart {
 		this.$qty_total = this.wrapper.find('.quantity-total');
 		this.$btn_commander = this.wrapper.find('.btn-commander');
 		this.$btn_devis = this.wrapper.find('.btn-devis');
+		this.$btn_address_magasin = this.wrapper.find('.btn-address-magasin');
 		// this.$loyalty_button = this.wrapper.find('.loyalty-button');
 
 		// this.$loyalty_button.on('click', () => {
@@ -785,9 +786,16 @@ class POSCart {
 			this.toggle_taxes_and_totals();
 		});
 		const me = this;
+		
 		this.$btn_devis.on('click', () => {
 			 
 			me.cree_devis();
+		});
+		
+		
+		this.$btn_address_magasin.on('click', () => {
+			 
+			me.cree_address_magasin();
 		});
 		
 		
@@ -798,6 +806,21 @@ class POSCart {
 		
 		
 	}
+	
+	cree_address_magasin()
+	{
+		var names = this.frm.doc.items.map(a => a.item_code);
+		var w = window.open("/api/method/erpnext.selling.page.point_of_sale.point_of_sale.print_address_magasin?"
+				    			+"pos_profile="+this.frm.doc.pos_profile
+							+"items="+encodeURIComponent(names));
+	
+		if(!w) {
+			frappe.msgprint(__("Please enable pop-ups")); return;
+		}
+		
+		 
+	}
+	
 	
 	cree_devis()
 	{
