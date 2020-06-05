@@ -2817,9 +2817,7 @@ class POSItems {
 								</span>` : '' }
 							${item_image ? `<img src="${item_image}" alt="${item_title}">` : '' }
 						</div>
-						<span class="price-info" style="margin:0px;background-color: rgba(141, 153, 166, 0.8);border-radius: 0px;">
-							${price}
-						</span>
+						${price}
 					</a>
 			</div>	
 			<div style="flex-grow:1;padding:5px;display:flex" >
