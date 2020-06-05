@@ -1002,7 +1002,7 @@ class POSCart {
 			e.stopPropagation();
 			var keycode = (e.keyCode ? e.keyCode : e.which);
 			
-				const search_term = this.value;
+				const search_term = $(".cart-search input").val();
 				console.log("search_term",search_term);
 				const wr = this.wrapper;
 				
