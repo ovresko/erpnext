@@ -6,9 +6,83 @@ import frappe, json
 from frappe.utils.nestedset import get_root_of
 from frappe.utils import cint
 from erpnext.accounts.doctype.pos_profile.pos_profile import get_item_groups
+from frappe.utils.pdf import get_pdf
+import pdfkit
+import os
 
 from six import string_types
 
+
+@frappe.whitelist()
+def print_address_magasin(items,pos_profile):
+	warehouse = frappe.get_value("POS Profile",pos_profile,"warehouse")
+	result = {}
+	if items:
+		for item in items:
+			adr = frappe.db.get_value("Adresse Magasin", {"parent": item,"warehouse":warehouse}, 'adresse')
+			if adr:
+				result.update({item:adr})
+	if result:
+		final_html = prepare_bulk_print_html(result)
+		pdf_options = { 
+						"page-height" : "29.7cm",
+						"page-width" : "8.0cm",
+						"margin-top": "10mm",
+						"margin-bottom": "10mm",
+						"margin-left": "5mm",
+						"margin-right": "5mm",
+						"no-outline": None,
+						"encoding": "UTF-8",
+						"title": "ADRESSE",
+					}
+
+		frappe.local.response.filename = "{filename}.pdf".format(filename="catalogue".replace(" ", "-").replace("/", "-"))
+		frappe.local.response.filecontent = dignity_get_pdf(final_html, options=pdf_options) #get_pdf(final_html, pdf_options)
+		frappe.local.response.type = "download"
+		
+def prepare_bulk_print_html(names):
+	final_html = frappe.render_template("
+					    {% for sc in names %}					    
+					    	{{sc}}  ________ {{names[sc]}} 		<br>			    
+					    {% endfor %}
+					    ", {"names":names})
+
+	return final_html
+
+def dignity_get_pdf(html, options=None):
+	fname = os.path.join("/tmp", "dignity-sc-list-{0}.pdf".format(frappe.generate_hash()))
+
+	try:
+		pdfkit.from_string(html, fname, options=options or {})
+
+		with open(fname, "rb") as fileobj:
+			filedata = fileobj.read()
+
+	except IOError, e:
+		if ("ContentNotFoundError" in e.message
+			or "ContentOperationNotPermittedError" in e.message
+			or "UnknownContentError" in e.message
+			or "RemoteHostClosedError" in e.message):
+
+			# allow pdfs with missing images if file got created
+			if os.path.exists(fname):
+				with open(fname, "rb") as fileobj:
+					filedata = fileobj.read()
+
+			else:
+				frappe.throw(_("PDF generation failed because of broken image links"))
+		else:
+			raise
+
+	finally:
+		cleanup(fname)
+
+
+	return filedata
+
+def cleanup(fname):
+	if os.path.exists(fname):
+		os.remove(fname)
 
 @frappe.whitelist()
 def vente_perdue(cause,article,profile):
