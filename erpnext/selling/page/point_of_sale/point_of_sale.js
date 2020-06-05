@@ -1003,10 +1003,9 @@ class POSCart {
 			var keycode = (e.keyCode ? e.keyCode : e.which);
 			
 				const search_term = $(".cart-search input").val();
-				console.log("search_term",search_term);
+				 
 				const wr = this.wrapper;
-				
-				console.log("search_term",search_term); 
+				 
 				if(!this.original_items){
 					this.original_items = this.$cart_items.clone( true );
 					console.log("set original");
