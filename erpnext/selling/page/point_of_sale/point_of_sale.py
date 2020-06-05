@@ -15,6 +15,7 @@ from six import string_types
 
 @frappe.whitelist()
 def print_address_magasin(items,pos_profile):
+	items = items.split(",")
 	warehouse = frappe.get_value("POS Profile",pos_profile,"warehouse")
 	result = {}
 	if items:
