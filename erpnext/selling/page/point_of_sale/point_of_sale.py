@@ -18,11 +18,14 @@ def print_address_magasin(items,pos_profile):
 	items = items.split(",")
 	warehouse = frappe.get_value("POS Profile",pos_profile,"warehouse")
 	result = {}
+	failed = false
 	if items:
 		for item in items:
 			adr = frappe.db.get_value("Adresse Magasin", {"parent": item,"warehouse":warehouse}, 'adresse')
 			if adr:
 				result.update({item:adr})
+	else:
+		failed = true
 	if result:
 		final_html = prepare_bulk_print_html(result)
 		pdf_options = { 
@@ -40,6 +43,10 @@ def print_address_magasin(items,pos_profile):
 		frappe.local.response.filename = "{filename}.pdf".format(filename="catalogue_address")
 		frappe.local.response.filecontent = dignity_get_pdf(final_html, options=pdf_options) #get_pdf(final_html, pdf_options)
 		frappe.local.response.type = "download"
+	else:
+		failed = true
+	if failed:
+		return failed
 		
 def prepare_bulk_print_html(names):
 	final_html = frappe.render_template("""{% for sc in names %}{{sc}}  ________ {{names[sc]}}<br>{% endfor %}""", {"names":names})
