@@ -136,12 +136,13 @@ def get_item_warehouse_projected_qty(items_to_consider):
 		.format(", ".join(["%s"] * len(items_to_consider))), items_to_consider):
 
 		# add consulted
-		#cnl = frappe.db.sql("""select sum(qty) from `tabMaterial Request Item` 
-		#	where item_code=%s and docstatus=1 and consulted=1""", (item_code))[0][0]
-		#if cnl:
-		#	projected_qty = projected_qty + cnl
+		cnl = frappe.db.sql("""select sum(qty) from `tabMaterial Request Item` 
+			where item_code=%s and docstatus=1 and consulted=1""", (item_code))[0][0]
+		if cnl:
+			projected_qty = projected_qty + cnl
 			
 		# add devis encours
+		#
 		
 			
 		if item_code not in item_warehouse_projected_qty:
