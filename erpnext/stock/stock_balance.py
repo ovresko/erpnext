@@ -133,15 +133,18 @@ def get_indented_qty(item_code, warehouse):
 	lids = "','".join(ids)
 	qty_zeroz = frappe.db.sql("""select sum(qty) from `tabMaterial Request Item` 
 	where name in ('{0}')""".format(lids), as_dict=1)[0]
-	
+	print("zeroz")
 	print(zeroz)
+	print("lids")
 	print(lids)
 	if qnl:
-		print("%d"%qnl)
+		print("qnl: %d"%qnl)
 		_qty = flt(_qty) + flt(qnl)
 	if qty_zeroz:
+		print("qty_zeroz")
 		print(qty_zeroz)
 		_qty = flt(_qty) + flt(qty_zeroz)
+	print("_qty")
 	print(_qty)
 	#print("indent %s %d" % (item_code,_qty))
 
