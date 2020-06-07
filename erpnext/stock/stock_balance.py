@@ -124,11 +124,11 @@ def get_indented_qty(item_code, warehouse):
 	and qty > 0
 	and handled=0 and warehouse=%s""", (item_code, warehouse))[0][0]
 	
-	zeroz = frappe.db.sql("""select material_request_item from `tabSupplier Quotation Item` 
+	zeroz = frappe.db.sql("""select name, material_request_item from `tabSupplier Quotation Item` 
 	where item_code=%s 
 	and docstatus<2
 	and qty=0
-	and handled=0 and warehouse=%s""", (item_code, warehouse), as_dict=1)
+	and handled=0 and warehouse=%s""", (item_code, warehouse))
 	ids = {o.material_request_item for o in zeroz if o.material_request_item}
 	lids = "','".join(ids)
 	qty_zeroz = frappe.db.sql("""select sum(qty) from `tabMaterial Request Item` 
