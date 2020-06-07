@@ -141,6 +141,7 @@ def get_indented_qty(item_code, warehouse):
 	if qty_zeroz:
 		print(qty_zeroz)
 		_qty = flt(_qty) + flt(qty_zeroz)
+	print(_qty)
 	#print("indent %s %d" % (item_code,_qty))
 
 	return flt(_qty) if indented_qty else 0
