@@ -1037,7 +1037,7 @@ class POSCart {
 					console.log("set original");
 				}
 
-				if(!search_term || search_term == ""){
+				if(!search_term || search_term == "" || keycode == '8' || keycode == '46'){
 					console.log("reset",this.original_items);
 					this.$cart_items.find('.list-item').remove();
 					this.$cart_items = this.original_items; 
