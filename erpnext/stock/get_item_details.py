@@ -406,8 +406,14 @@ def get_price_list_rate(args, item_doc, out):
 			price_list_rate = get_price_list_rate_for(args, item_doc.variant_of)
 
 		# insert in database
-		if args.price_list and args.rate and ((price_list_rate and price_list_rate != args.rate) or not price_list_rate ) :
-			insert_item_price(args)
+		if args.transaction_type=="buying":			
+			if args.price_list and args.rate and ((price_list_rate and price_list_rate != args.rate) or not price_list_rate ) :
+				insert_item_price(args)
+		else:
+			if not price_list_rate:
+				if args.price_list and args.rate:
+					insert_item_price(args)
+				return {}
 		if not price_list_rate:
 			return {}
 
