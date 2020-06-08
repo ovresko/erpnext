@@ -1046,6 +1046,7 @@ class POSCart {
 				}else{
 					
 					if(keycode == '13'){
+						search_term = search_term.toLowerCase();
 						const $items = this.$cart_items.find(`[title*="${search_term}"]`); 
 
 						if(!$items)
@@ -1267,7 +1268,7 @@ class POSCart {
 		
 		return `
 			<div class="list-item indicator ${indicator_class}" data-item-code="${escape(item.item_code)}"
-				data-batch-no="${batch_no}" title="Item: ${item.item_name} ${fabricant} ${ref_fabricant} Available Qty: ${item.actual_qty}">
+				data-batch-no="${batch_no}" title="Item: ${item.item_name.toLowerCase()} ${fabricant.toLowerCase()} ${ref_fabricant.toLowerCase()} Available Qty: ${item.actual_qty}">
 				<div class="item-name   " style="flex-grow:1">
 					<div>${item.item_name}</div>
 					<div>${fabricant} ${ref_fabricant}</div>
