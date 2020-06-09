@@ -720,7 +720,7 @@ class POSCart {
 					<div class="customer-field" style="width:92% ">
 					</div>
 					<div  style="width:8% ">
-                                           <button  class="btn btn-default btn-xs btn-customer-delete" style="margin-left: 5px;"><i class="fa fa-close"></i></button>
+                                           <button  class="btn btn-default btn-xs btn-customer-delete" style="margin-left: 5px;margin-top:30px"><i class="fa fa-close"></i></button>
 
 					</div>
 				</div>
