@@ -2945,7 +2945,9 @@ class POSItems {
 			
 		{
 			console.log("ops nothing to search for");
-			return new Promise();
+			return new Promise(res => {
+				"items":[]
+			});
 		}
 		
 		
