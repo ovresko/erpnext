@@ -45,6 +45,8 @@ class SupplierQuotation(BuyingController):
 				item.confirmation = "En cours"
 			if item.confirmation == "Annule":
 				item.qty = 0
+			if item.qty == 0 and item.confirmation == "Approuve":
+				frappe.msgprint("Attentio il existe l'article %s avec qts %d et confirmation %s" % (item.item_code,item.qty,item.confirmation))
 			if self.manufacturer:
 				if item.fabricant == self.manufacturer:
 					if not any(x.name == item.name for x in _items):
