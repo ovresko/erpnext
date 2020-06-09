@@ -2870,7 +2870,7 @@ class POSItems {
 		const template = `
 			<div class="pos-item-wrapper " data-item-code="${escape(item_code)}" style="width:100%;display:flex;flex-direction: inherit;">
 			<div style="width:150px">
-					<a	data-item-code="${item_code}"
+					<a class="btn-add" data-item-code="${item_code}"
 						title="${item_title}"
 					>
 						<div class="image-field"
