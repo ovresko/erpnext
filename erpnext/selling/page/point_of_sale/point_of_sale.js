@@ -1249,7 +1249,11 @@ class POSCart {
 			const amount = item.rate * item.qty;
 			$item.find('.quantity input').val(item.qty);
 			$item.find('.discount input').val(item.discount_percentage);
-			//$item.find('.discount').text(item.discount_percentage + '%');
+			if(item.rate != _item.price_list_rate){
+				$item.find('.remise').text(format_currency(_item.price_list_rate, this.frm.doc.currency,0));
+			}else{
+				$item.find('.remise').text('');
+			}
 			$item.find('.rate').text(format_currency(item.rate, this.frm.doc.currency,0));
 			$item.find('.item-amount').text(format_currency(amount || 0, this.frm.doc.currency,0));
 			
@@ -1304,8 +1308,14 @@ class POSCart {
 					
 				</div>
 				<div class="rate list-item__content text-right">
-					${rate} ${remise}
-				</div>  <div class="item-amount list-item__content text-right" style="text-size:14px;font-weight:800;color: red;"> ${amount} </div>
+					${rate}
+				</div> 
+				<div class="remise list-item__content text-right">
+				 	${remise}
+				</div> 
+					
+
+					<div class="item-amount list-item__content text-right" style="text-size:14px;font-weight:800;color: red;"> ${amount} </div>
 				</div>	
 				
 			</div>
