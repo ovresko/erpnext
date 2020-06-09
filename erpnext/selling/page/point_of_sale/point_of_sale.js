@@ -715,8 +715,16 @@ class POSCart {
 			<div class="pos-cart">
 				<div class="customer-info" style="display:flex;background-color:#F0FBFA;border-radius:20px;padding:10px">
 				</div>
-				<div class="customer-field">
+
+				<div style="display:flex">
+					<div class="customer-field" style="width:92% ">
+					</div>
+					<div  style="width:8% ">
+                                           <button  class="btn btn-default btn-xs btn-customer-delete" style="margin-left: 5px;"><i class="fa fa-close"></i></button>
+
+					</div>
 				</div>
+
 				<div class="cart-search">
 				</div>
 				<div class="cart-wrapper">
@@ -1558,6 +1566,16 @@ class POSCart {
 			const item_code = unescape($item.attr('data-item-code'));
 			console.log(flt($input.val()));
 			events.on_field_change(item_code, 'discount_percentage', flt($input.val()));
+		});
+		
+		
+		//btn-customer-delete
+		this.$cart_items.on('click', '.btn-customer-delete', function(event) {
+			event.stopPropagation();
+			  
+			me.customer_field.set_value("");
+			me.frm.doc.customer = None;
+			me.reset_cart();
 		});
 		
 		
