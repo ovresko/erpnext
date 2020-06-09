@@ -126,6 +126,11 @@ class DeliveryNote(SellingController):
 		self.update_current_stock()
 
 		if not self.installation_status: self.installation_status = 'Not Installed'
+		for item in self.items:
+			adr = frappe.get_list("Adresse Magasin",fields=['adresse'],
+					      filters={"parent":item.item_code,"warehouse":self.set_warehouse})
+			if adr:
+				item.adresse_magasin = adr[-1]
 
 	def validate_with_previous_doc(self):
 		super(DeliveryNote, self).validate_with_previous_doc({
