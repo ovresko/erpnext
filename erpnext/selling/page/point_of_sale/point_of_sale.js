@@ -1570,7 +1570,7 @@ class POSCart {
 		
 		
 		//btn-customer-delete
-		this.$cart_items.on('click', '.btn-customer-delete', function(event) {
+		this.wrapper.on('click', '.btn-customer-delete', function(event) {
 			event.stopPropagation();
 			  
 			me.customer_field.set_value("");
