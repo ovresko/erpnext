@@ -218,15 +218,15 @@ erpnext.pos.PointOfSale = class PointOfSale {
 		});
 		
 		//cree_commande()
-		frappe.ui.keys.on('ctrl+b', () => {
+		//frappe.ui.keys.on('ctrl+b', () => {
 			 
-			this.cart.cree_commande();
-		});
+		//	this.cart.cree_commande();
+		//});
 		//cree_commande()
-		frappe.ui.keys.on('ctrl+x', () => {
+		//frappe.ui.keys.on('ctrl+x', () => {
 			 
-			this.cart.cree_devis();
-		});
+		//	this.cart.cree_devis();
+		//});
 	}
 
 	toggle_editing(flag) {
