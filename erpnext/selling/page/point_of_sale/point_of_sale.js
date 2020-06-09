@@ -1590,7 +1590,8 @@ class POSCart {
 			  
 			me.customer_field.set_value("");
 			me.frm.doc.customer = "";
-			me.cart.reset();
+			me.frm.doc.items = []
+			me.reset();
 		});
 		
 		
