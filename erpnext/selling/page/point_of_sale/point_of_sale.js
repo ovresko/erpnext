@@ -2434,6 +2434,7 @@ class POSItems {
 			// memoize
 			this.search_index = this.search_index || {};
 			if (this.search_index[search_term]
+			    && this.frm.doc.customer.includes("COMPTOIR");
 			   && !this.item_manufacturer 
 			   && !this.vehicule_marque
 			   && !this.vehicule_modele
@@ -2449,6 +2450,7 @@ class POSItems {
 				return;
 				}
 			} else if (this.item_group == this.parent_item_group  
+			   && this.frm.doc.customer.includes("COMPTOIR");
 			   && !this.item_manufacturer 
 			   && !this.vehicule_marque
 			   && !this.vehicule_modele
