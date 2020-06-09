@@ -378,6 +378,7 @@ def get_conditions(item_code, serial_no, batch_no, barcode):
 	if not item_code:
 		return ""," 1=1 "
 	words = item_code.split()
+	words = words.replace("(","").replace(")","")
 	keyword = '* *'.join(w for w in words)
 	keyword = "*%s*" % keyword
 
