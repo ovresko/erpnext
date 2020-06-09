@@ -377,8 +377,9 @@ def get_conditions(item_code, serial_no, batch_no, barcode):
 		return frappe.db.escape(item_code), "i.name = %(item_code)s"
 	if not item_code:
 		return ""," 1=1 "
+	item_code = item_code.replace("(","").replace(")","")
 	words = item_code.split()
-	words = words.replace("(","").replace(")","")
+	
 	keyword = '* *'.join(w for w in words)
 	keyword = "*%s*" % keyword
 
