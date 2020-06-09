@@ -1273,13 +1273,14 @@ class POSCart {
 		const batch_no = item.batch_no || '';
 		let fabricant = origin_item.manufacturer || '';
 		let ref_fabricant = origin_item.manufacturer_part_no || '';
+		let adresse = origin_item.adresse || '';
 		
 		return `
 			<div class="list-item indicator ${indicator_class}" data-item-code="${escape(item.item_code)}"
 				data-batch-no="${batch_no}" title="Item: ${item.item_name.toLowerCase()} ${fabricant.toLowerCase()} ${ref_fabricant.toLowerCase()} Available Qty: ${item.actual_qty}">
 				<div class="item-name   " style="flex-grow:1">
 					<div>${item.item_name}</div>
-					<div>${fabricant} ${ref_fabricant}  [ ${item.adresse ||''} ]    </div>
+					<div><strong>${fabricant} ${ref_fabricant} </strong> [ ${adresse} ]    </div>
 					<div style="margin-top:5px">
 						<button data-item-code="${escape(item.item_code)}" data-label="open" class="btn btn-default btn-xs btn-open" style="margin-right: 5px;"><i class="fa fa-eye"></i>
 						</button>
