@@ -1267,6 +1267,7 @@ class POSCart {
 
 		const is_stock_item =origin_item.is_stock_item;
 		const rate = format_currency(item.rate, this.frm.doc.currency,0);
+		const price_list_rate = format_currency(item.price_list_rate, this.frm.doc.currency,0);
 		const amount = format_currency(item.amount, this.frm.doc.currency,0);
 		console.log("item",item);
 		const indicator_class = (!is_stock_item || item.actual_qty >= item.qty) ? 'green' : 'red';
@@ -1274,6 +1275,9 @@ class POSCart {
 		let fabricant = origin_item.manufacturer || '';
 		let ref_fabricant = origin_item.manufacturer_part_no || '';
 		let adresse = origin_item.adresse || '';
+		let remise = '';
+		if(item.rate!=item.price_list_rate)
+			remise = '(${price_list_rate})';
 		
 		return `
 			<div class="list-item indicator ${indicator_class}" data-item-code="${escape(item.item_code)}"
@@ -1300,7 +1304,7 @@ class POSCart {
 					
 				</div>
 				<div class="rate list-item__content text-right">
-					${rate} 
+					${rate} ${remise}
 				</div>  <div class="item-amount list-item__content text-right" style="text-size:14px;font-weight:800;color: red;"> ${amount} </div>
 				</div>	
 				
