@@ -434,7 +434,8 @@ def approuver_item(item_code):
 	if item_code:
 		item = frappe.get_doc("Supplier Quotation Item",item_code)
 		if item:
-			
+			if item.qty == 0:
+				return "Attention impossible d'approuver avec la Qts egale 0"
 			item.confirmation = "Approuve"
 			item.rate = item.prix_fournisseur
 			item.save()
