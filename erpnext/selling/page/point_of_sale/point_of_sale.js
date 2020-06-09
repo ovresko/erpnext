@@ -1574,7 +1574,7 @@ class POSCart {
 			event.stopPropagation();
 			  
 			me.customer_field.set_value("");
-			me.frm.doc.customer = None;
+			me.frm.doc.customer = "";
 			me.reset_cart();
 		});
 		
