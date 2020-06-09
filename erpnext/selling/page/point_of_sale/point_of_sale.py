@@ -380,7 +380,8 @@ def get_conditions(item_code, serial_no, batch_no, barcode):
 	item_code = item_code.replace("(","").replace(")","")
 	words = item_code.split()
 	
-	keyword = '* *'.join(w for w in words)
+	
+	keyword = '* *'.join(w.rstrip('-()#.').lstrip('-()#.') for w in words)
 	keyword = "*%s*" % keyword
 
 	#condition = """ ( i.clean_manufacturer_part_number LIKE '%%{}%%' or i.oem_text LIKE '%%{}%%' or  MATCH(i.name,i.item_name,i.nom_generique_long,i.manufacturer_part_no,i.clean_manufacturer_part_number,i.oem_text) AGAINST('({})' IN NATURAL LANGUAGE MODE)  )""".format(item_code,item_code,item_code)
