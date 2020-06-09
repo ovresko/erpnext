@@ -1250,7 +1250,7 @@ class POSCart {
 			$item.find('.quantity input').val(item.qty);
 			$item.find('.discount input').val(item.discount_percentage);
 			if(item.rate != _item.price_list_rate){
-				$item.find('.remise').text(format_currency(_item.price_list_rate, this.frm.doc.currency,0));
+				$item.find('.remise').text("Original : "+format_currency(_item.price_list_rate, this.frm.doc.currency,0));
 			}else{
 				$item.find('.remise').text('');
 			}
