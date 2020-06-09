@@ -129,8 +129,8 @@ class DeliveryNote(SellingController):
 		for item in self.items:
 			adr = frappe.get_list("Adresse Magasin",fields=['adresse'],
 					      filters={"parent":item.item_code,"warehouse":self.set_warehouse})
-			if adr:
-				item.adresse_magasin = adr[-1]
+			if adr and adr[-1]:
+				item.adresse_magasin = adr[-1].adresse
 
 	def validate_with_previous_doc(self):
 		super(DeliveryNote, self).validate_with_previous_doc({
