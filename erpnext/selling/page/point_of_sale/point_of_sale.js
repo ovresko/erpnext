@@ -2739,7 +2739,7 @@ class POSItems {
 			   qts = "+1";
 			}
 			
-			console.log("qts",qts);
+			console.log("price_list",me.frm.doc.selling_price_list);
 			me.events.update_cart(item_code, 'qty', qts);
 		});
 		
