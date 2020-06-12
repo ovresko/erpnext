@@ -109,13 +109,6 @@ frappe.query_reports["Etude des prix de vente"] = {
 			options: "Price List"
 		},
 		{
-			"fieldname":"from_date",
-			"label": __("From Date"),
-			"fieldtype": "Date",
-			"default": frappe.datetime.add_days(frappe.datetime.get_today(), -240),
-			"width": "80"
-		},
-		{
 		"fieldname": "receipt",
 		"label": "Recu d'achat",
 		fieldtype: "Link",
