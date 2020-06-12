@@ -220,7 +220,7 @@ def execute(filters=None):
 	for mri in mitems:
 		receipt = ''
 		if hasattr(mri, 'parent') and mri.parent:
-			receipt = pri.parent
+			receipt = mri.parent
 		global info
 		qts_max_achat = 0
 		last_qty = 0
