@@ -104,7 +104,7 @@ def execute(filters=None):
 			columns.append({
 				"fieldname": pl.name,
 				"label": "%s (%s)" % (pl.name,pl.currency),
-				"width": 150
+				"width": 350
 			})
 
 	mris = []
@@ -262,12 +262,16 @@ def execute(filters=None):
 		# get prices in each price list
 		if price_lists and not mri.has_variants:
 			for pl in price_lists:
+				itr = ''
+				# [ 20% ] [ 1420 ]    ok
 				if pl.name:
+					#taux
+					benefice =  frappe.db.sql("""select benefice from `tabPrice List` where selling=1 and price_list=%s ORDER BY creation DESC LIMIT 1;""",(pl.name))
 					price = frappe.db.sql("""select price_list_rate from `tabItem Price` where selling=1 and price_list=%s and (  item_code=%s) ORDER BY creation DESC LIMIT 1;""",(pl.name,mri.item_code))
 					if price:
-						row.append(price[0][0])
-					else:
-						row.append("_")
+						itr = """[ %s % ] [ %s ] <input placeholder='Prix %s' id='price_%s' value='%s' style='color:black'></input><a  onClick="set_price_item('%s','%s')" type='a'> OK </a>""" % (benefice,price[0][0],pl.name,pl.name,price[0][0],pl.name,mri.name)
+				if itr:
+					row.append(itr)
 				else:
 					row.append("_")
 
