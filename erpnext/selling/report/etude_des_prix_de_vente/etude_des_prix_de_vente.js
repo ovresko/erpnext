@@ -3,6 +3,15 @@
 /* eslint-disable */
 
 frappe.query_reports["Etude des prix de vente"] = {
+	"formatter": function (value, row, column, data, default_formatter) {
+		value = default_formatter(value, row, column, data);
+		
+		
+		if ( data["item_code"].length == 11 ) {
+			value = "<div style='color: white;background-color: #008081;padding: 5px;'>" + value + "</div>";
+		}
+		return value
+	},
 	"filters": [
 		{
 			"fieldname": "item_code",
