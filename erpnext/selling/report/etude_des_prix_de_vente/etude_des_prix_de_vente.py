@@ -239,7 +239,7 @@ def execute(filters=None):
 			last_qty = sqllast_qty[0].actual_qty
 			last_valuation = sqllast_qty[0].valuation_rate
 			if last_valuation:
-				last_valuation = truncate(last_valuation)
+				last_valuation = round(last_valuation)
 
 
 		row = [
