@@ -266,10 +266,16 @@ def execute(filters=None):
 				# [ 20% ] [ 1420 ]    ok
 				if pl.name:
 					#taux
+					_price = 0
+					new_taux = 0
 					benefice =  frappe.db.sql("""select benefice from `tabPrice List` where selling=1 and name=%s ORDER BY creation DESC LIMIT 1;""",(pl.name))
 					price = frappe.db.sql("""select price_list_rate from `tabItem Price` where selling=1 and price_list=%s and (  item_code=%s) ORDER BY creation DESC LIMIT 1;""",(pl.name,mri.item_code))
 					if price:
-						itr = """[ %s %% ] [ %s ] <input placeholder='Prix %s' id='price_%s' value='%s' style='color:black'></input><a  onClick="set_price_item('%s','%s')" type='a'> OK </a>""" % (benefice,price[0][0],pl.name,pl.name,price[0][0],pl.name,mri.name)
+						_price = price[0][0]
+					if benefice:
+						new_taux = benefice * (mri.last_purchase_rate or 0)
+					
+					itr = """[ %s %% ] [ %s ] <input placeholder='Prix %s' id='price_%s' value='%s' style='color:black'></input><a  onClick="set_price_item('%s','%s')" type='a'> OK </a>""" % (benefice,_price,pl.name,pl.name,new_taux,pl.name,mri.name)
 				if itr:
 					row.append(itr)
 				else:
