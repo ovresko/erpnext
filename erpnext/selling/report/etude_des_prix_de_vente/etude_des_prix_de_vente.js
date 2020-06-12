@@ -7,7 +7,7 @@ frappe.query_reports["Etude des prix de vente"] = {
 		value = default_formatter(value, row, column, data);
 		
 		
-		if ( data["item_code"].length == 11 ) {
+		if (data!=null && data["item_code"] &&  data["item_code"].length == 11 ) {
 			value = "<div style='color: white;background-color: #008081;padding: 5px;'>" + value + "</div>";
 		}
 		return value
