@@ -54,32 +54,32 @@ def execute(filters=None):
 	columns.append({
 			"fieldname": "last_qty",
 			"label": "Derniere Qts Achetee",
-			"width": 150
+			"width": 250
 		})
 	columns.append({
 			"fieldname": "qts",
 			"label": "Qte En stock",
-			"width": 150
+			"width": 250
 		})
 	columns.append({
 			"fieldname": "qts_projete",
 			"label": "Qte Projete",
-			"width": 150
+			"width": 250
 		})
 	columns.append({
 			"fieldname": "last_purchase_rate",
 			"label": "Dernier Prix d'achat (DZD)",
-			"width": 150
+			"width": 250
 		})
 	columns.append({
 			"fieldname": "last_purchase_devise",
 			"label": "Dernier Prix d'achat (Devise)",
-			"width": 150
+			"width": 250
 		})
 	columns.append({
 			"fieldname": "last_valuation",
 			"label": "Derniere taux de valorisation",
-			"width": 150
+			"width": 250
 		})
 	
 	#item_code 
@@ -238,6 +238,8 @@ def execute(filters=None):
 		if sqllast_qty:
 			last_qty = sqllast_qty[0].actual_qty
 			last_valuation = sqllast_qty[0].valuation_rate
+			if last_valuation:
+				last_valuation = truncate(last_valuation)
 
 
 		row = [
