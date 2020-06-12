@@ -276,7 +276,7 @@ def execute(filters=None):
 						benefice = benefice[0][0]
 						new_taux = round((1+(float(benefice or 0)/100)) * float(mri.last_purchase_rate or 0))
 					
-					itr = """[ %s %% ]  [ %s ]   <input placeholder='Prix %s' id='price_%s_%s' value='%s' style='color:black'></input><a  onClick="set_price_item('%s','%s')" type='a'> OK </a>""" % (benefice,_price,pl.name,mri.item_code,pl.name,new_taux,pl.name,mri.name)
+					itr = """[ %s %% ]  [ %s ]    <input placeholder='Prix %s' id='price_%s_%s' value='%s' style='color:black'></input><a  onClick="set_price_item('%s','%s')" type='a'> OK </a>""" % (benefice,_price,pl.name,mri.item_code,pl.name,new_taux,pl.name,mri.name)
 				if itr:
 					row.append(itr)
 				else:
