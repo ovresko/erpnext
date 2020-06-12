@@ -273,7 +273,8 @@ def execute(filters=None):
 					if price:
 						_price = price[0][0]
 					if benefice:
-						new_taux = float(benefice) * float(mri.last_purchase_rate or 0)
+						benefice = benefice[0][0]
+						new_taux = float(benefice or 0) * float(mri.last_purchase_rate or 0)
 					
 					itr = """[ %s %% ] [ %s ] <input placeholder='Prix %s' id='price_%s' value='%s' style='color:black'></input><a  onClick="set_price_item('%s','%s')" type='a'> OK </a>""" % (benefice,_price,pl.name,pl.name,new_taux,pl.name,mri.name)
 				if itr:
