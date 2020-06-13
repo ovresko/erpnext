@@ -15,7 +15,7 @@ function set_price_item(pl,item) {
 		args: {
 			item_code: item,
 			price_list:pl,
-			price: val
+			_price: val
 		},
 		callback: function(r) {
 			if (r.message) {
