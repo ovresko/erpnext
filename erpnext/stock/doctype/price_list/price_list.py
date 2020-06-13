@@ -55,6 +55,7 @@ def update_price(item_code,price_list,price):
 		else:
 			so = frappe.new_doc("Item Price")
 			so.item_code = item_code
+			so.price_list = price_list
 			so.price_list_rate = price
 			so.selling = 1
 			so.save()
