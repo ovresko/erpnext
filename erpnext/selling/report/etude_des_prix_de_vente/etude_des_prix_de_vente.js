@@ -8,7 +8,7 @@ function set_price_item(pl,item) {
 	var val_id = 'price_'+item+'_'+pl;
 	console.log(val_id);
 	var val = $('#'+val_id).val();
-	console.log(val);
+	console.log("pl",pl);
 	
 	frappe.call({
 		method: "erpnext.stock.doctype.price_list.price_list.update_price",
