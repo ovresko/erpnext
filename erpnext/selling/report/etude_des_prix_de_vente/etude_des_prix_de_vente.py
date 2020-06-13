@@ -272,12 +272,12 @@ def execute(filters=None):
 					price = frappe.db.sql("""select price_list_rate,min_qty from `tabItem Price` where selling=1 and price_list=%s and (  item_code=%s) ORDER BY creation DESC;""",(pl.name,mri.item_code))
 					if price:
 						for p in price:
-							_price += "[ + %s = %s ]" % (p[1],p[0])
+							_price += "&nbsp;&nbsp;  +%s/%s  &nbsp;&nbsp;" % (p[1],p[0])
 					if benefice:
 						benefice = benefice[0][0]
 						new_taux = round((1+(float(benefice or 0)/100)) * float(mri.last_purchase_rate or 0))
 					
-					itr = """[ %s %% ] 	&nbsp;	&nbsp;	&nbsp;   %s	&nbsp;	&nbsp;	&nbsp;<input placeholder='Prix %s' id='price_%s_%s' value='%s' style='color:black'></input>&nbsp;<input placeholder='Qts' id='qts_%s_%s' style='color:black;width:60px'></input><a  onClick="set_price_item('%s','%s')" type='a'> OK </a>""" % (benefice,_price,pl.name,mri.item_code,pl.name.replace(" ",""),new_taux,mri.item_code,pl.name.replace(" ",""),pl.name,mri.item_code)
+					itr = """[ %s %% ]  	&nbsp;	&nbsp;   %s	&nbsp;	&nbsp;	&nbsp;<input placeholder='Prix %s' id='price_%s_%s' value='%s' style='color:black'></input>&nbsp;<input placeholder='Qts' id='qts_%s_%s' style='color:black;width:60px'></input><a  onClick="set_price_item('%s','%s')" type='a'> OK </a>""" % (benefice,_price,pl.name,mri.item_code,pl.name.replace(" ",""),new_taux,mri.item_code,pl.name.replace(" ",""),pl.name,mri.item_code)
 				if itr:
 					row.append(itr)
 				else:
