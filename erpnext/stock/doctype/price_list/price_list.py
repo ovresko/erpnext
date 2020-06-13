@@ -45,18 +45,22 @@ class PriceList(Document):
 			_update_default_price_list(module)
 
 @frappe.whitelist()
-def update_price(item_code,price_list,_price):
+def update_price(item_code,price_list,_price,qts):
 	if item_code and price_list and _price:
-		price = frappe.get_all("Item Price",fields=["name"],filters={"item_code":item_code,"price_list":price_list})
+		if not qts:
+			qts = 0
+		price = frappe.get_all("Item Price",fields=["name"],filters={"min_qty":qts,"item_code":item_code,"price_list":price_list})
 		if price:
 			price = frappe.get_doc("Item Price",price[0].name)
 			price.price_list_rate = _price
+			price.min_qty = qts
 			price.save()
 		else:
 			so = frappe.new_doc("Item Price")
 			so.item_code = item_code
 			so.price_list = price_list
 			so.price_list_rate = _price
+			so..min_qty = qts
 			so.save()
 
 		return "done"
