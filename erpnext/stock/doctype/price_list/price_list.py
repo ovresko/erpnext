@@ -43,3 +43,9 @@ class PriceList(Document):
 
 		for module in ["Selling", "Buying"]:
 			_update_default_price_list(module)
+
+@frappe.whitelist()
+def update_price(item_code,price_list,price):
+	if item_code and price_list and price:
+		return "done"
+	return "not done"
