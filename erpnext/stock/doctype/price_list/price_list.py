@@ -49,7 +49,7 @@ def update_price(item_code,price_list,_price):
 	if item_code and price_list and _price:
 		price = frappe.get_all("Item Price",fields=["name"],filters={"item_code":item_code,"price_list":price_list})
 		if price:
-			price = price[0]
+			price = frappe.get_doc("Item Price",price[0].name)
 			price.price_list_rate = _price
 			price.save()
 		else:
