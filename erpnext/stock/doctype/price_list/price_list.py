@@ -47,5 +47,17 @@ class PriceList(Document):
 @frappe.whitelist()
 def update_price(item_code,price_list,price):
 	if item_code and price_list and price:
+		price = frappe.get_all("Item Price",fields=["name"],filters={"item_code":item_code,"price_list":price_list})
+		if price:
+			price = price[0]
+			price.price_list_rate = price
+			price.save()
+		else:
+			so = frappe.new_doc("Item Price")
+			so.item_code = item_code
+			so.price_list_rate = price
+			so.selling = 1
+			so.save()
+
 		return "done"
 	return "not done"
