@@ -272,7 +272,7 @@ def execute(filters=None):
 					price = frappe.db.sql("""select price_list_rate,min_qty from `tabItem Price` where selling=1 and price_list=%s and (  item_code=%s) ORDER BY creation DESC;""",(pl.name,mri.item_code))
 					if price:
 						for p in price:
-							_price += '[ + '+p["min_qty"]+' = '+p["price_list_rate"]+' ] '
+							_price += '[ + '+p[1]+' = '+p[0]+' ] '
 					if benefice:
 						benefice = benefice[0][0]
 						new_taux = round((1+(float(benefice or 0)/100)) * float(mri.last_purchase_rate or 0))
