@@ -5,7 +5,8 @@
 
 function set_price_item(pl,item) {
 	var val_id = 'price_'+item+pl;
-	var val = $('#'+qty_id).val();
+	console.log(val_id);
+	var val = $('#'+val_id).val();
 	console.log(val);
 	
 	frappe.call({
