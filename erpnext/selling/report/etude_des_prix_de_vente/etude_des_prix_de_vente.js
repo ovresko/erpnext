@@ -6,16 +6,21 @@
 function set_price_item(pl,item) {
 	  
 	var val_id = 'price_'+item+'_'+pl.replace(" ","");
-	console.log(val_id);
+	 
 	var val = $('#'+val_id).val();
-	console.log("pl",pl);
+	
+     	var qts_id = 'qts_'+item+'_'+pl.replace(" ","");
+	var qts = $('#'+qts_id).val();
+
+ 
 	
 	frappe.call({
 		method: "erpnext.stock.doctype.price_list.price_list.update_price",
 		args: {
 			item_code: item,
 			price_list:pl,
-			_price: val
+			_price: val,
+			qts:qts
 		},
 		callback: function(r) {
 			if (r.message) {
