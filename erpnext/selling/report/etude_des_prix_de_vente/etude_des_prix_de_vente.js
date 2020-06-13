@@ -4,6 +4,7 @@
 
 
 function set_price_item(pl,item) {
+	pl = pl.replace(" ","");
 	var val_id = 'price_'+item+'_'+pl;
 	console.log(val_id);
 	var val = $('#'+val_id).val();
