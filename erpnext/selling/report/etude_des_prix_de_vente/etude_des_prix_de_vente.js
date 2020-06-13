@@ -2,6 +2,29 @@
 // For license information, please see license.txt
 /* eslint-disable */
 
+
+function set_price_item(pl,item) {
+	var val_id = 'price_'+item+pl;
+	var val = $('#'+qty_id).val();
+	console.log(val);
+	
+	frappe.call({
+		method: "erpnext.stock.doctype.price_list.price_list.update_price",
+		args: {
+			item_code: item,
+			price_list:pl,
+			price: val
+		},
+		callback: function(r) {
+			if (r.message) {
+				alert(r.message);
+			}
+		}
+	});
+	
+}
+
+
 frappe.query_reports["Etude des prix de vente"] = {
 	"formatter": function (value, row, column, data, default_formatter) {
 		value = default_formatter(value, row, column, data);
