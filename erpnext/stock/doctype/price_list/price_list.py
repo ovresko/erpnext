@@ -60,7 +60,7 @@ def update_price(item_code,price_list,_price,qts):
 			so.item_code = item_code
 			so.price_list = price_list
 			so.price_list_rate = _price
-			so..min_qty = qts
+			so.min_qty = qts
 			so.save()
 
 		return "done"
