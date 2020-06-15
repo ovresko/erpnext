@@ -251,6 +251,8 @@ def update_mr(doc):
 	mr = []
 	allmr = []
 	for item in doc.items:
+	    if not item.qty or item.qty <= 0:
+		frappe.db.set_value("Item",item.item_code,"item_bloque",1)
 	    if item.material_request_item:
 		mr.append(item.material_request_item)
 	    if item.material_request:
