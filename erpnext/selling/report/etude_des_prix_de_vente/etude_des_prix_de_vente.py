@@ -22,6 +22,11 @@ def execute(filters=None):
 			"width": 150
 		})
 	columns.append({
+			"fieldname": "info",
+			"label": "Info",
+			"width": 100
+		})
+	columns.append({
 			"fieldname": "item_name",
 			"label": _("Item Name"),
 			"width": 150
@@ -242,7 +247,7 @@ def execute(filters=None):
 				last_valuation = round(last_valuation)
 
 
-		row = [
+		row = ["""<a   onClick="open_item_info('%s')" type='b'> info </a> &nbsp;&nbsp;&nbsp;""" % (mri.item_code),
 			mri.item_code,
 			mri.item_name,
 			mri.stock_uom,
