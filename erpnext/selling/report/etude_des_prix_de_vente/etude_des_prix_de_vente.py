@@ -333,7 +333,8 @@ def execute(filters=None):
 					if price:
 						for p in price:
 							lp_benefice = p[0] - val_ttc
-							lp_benefice = ((lp_benefice * 100) / val_ttc) or 0
+							if val_ttc:
+								lp_benefice = ((lp_benefice * 100) / val_ttc) or 0
 							_price += "&nbsp;&nbsp;  +%s/%s/%s%%  &nbsp;&nbsp;" % (p[1],p[0],lp_benefice)
 					if benefice:
 						benefice = benefice[0][0]
