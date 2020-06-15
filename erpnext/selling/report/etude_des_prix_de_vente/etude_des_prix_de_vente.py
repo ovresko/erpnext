@@ -359,7 +359,7 @@ def get_conditions(filters):
 		
 	#receipt
 	if filters.get('receipt'):
-		conditions.append(""" it.item_code in (select item_code from `tabPurchaseReceiptItem` sqi where sqi.parent=%(receipt)s)""")
+		conditions.append(""" it.item_code in (select item_code from `tabPurchase Receipt Item` sqi where sqi.parent=%(receipt)s)""")
 	
 	#perfection
 	if filters.get('perfection'):
