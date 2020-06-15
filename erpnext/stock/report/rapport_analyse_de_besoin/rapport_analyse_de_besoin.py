@@ -160,7 +160,7 @@ def execute(filters=None):
 	items = frappe.db.sql(
 		"""
 		select
-			stock_uom, perfection,is_purchase_item,weight_per_unit,variant_of,has_variants,item_name, item_code, manufacturer,last_purchase_rate , manufacturer_part_no, item_group,last_purchase_devise,max_order_qty,max_ordered_variante
+			stock_uom,item_bloque, perfection,is_purchase_item,weight_per_unit,variant_of,has_variants,item_name, item_code, manufacturer,last_purchase_rate , manufacturer_part_no, item_group,last_purchase_devise,max_order_qty,max_ordered_variante
 		from `tabItem`
 		where disabled=0 and has_variants=0 {conditions}
 		{order_by_statement}
@@ -249,12 +249,12 @@ def execute(filters=None):
 			where item_code=%s and docstatus=0""", (mri.item_code))[0][0]
 			qts_demande = frappe.db.sql("""select sum(qty) from `tabMaterial Request Item` 
 			where item_code=%s and docstatus=1 and consulted=0""", (mri.item_code))[0][0]
-			r_qts_bloque=''
-			qts_bloque = frappe.db.sql("""select sum(qty) from `tabMaterial Request Item` 
-			where item_code=%s and docstatus=1 and consulted=1""", (mri.item_code))[0][0]
+			r_qts_bloque="Bloque" if item.item_bloque else ""
+			#qts_bloque = frappe.db.sql("""select sum(qty) from `tabMaterial Request Item` 
+			#where item_code=%s and docstatus=1 and ordered_qty=0 and consulted=1""", (mri.item_code))[0][0]
 			
-			if qts_bloque and qts_bloque > 0:
-				r_qts_bloque = "Bloque au recommande auto"
+			#if qts_bloque and qts_bloque > 0:
+			#	r_qts_bloque = "Bloque au recommande auto"
 			last_valuation = 0
 			recom = 0
 			_date = ""
