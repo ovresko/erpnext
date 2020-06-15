@@ -4,7 +4,7 @@
 
 function open_item_info(item_code) {
 			var me  = this;
-			console.log(item_code);
+			
 			frappe.call({
 					"method": "frappe.client.get",
 					"args": {
@@ -13,6 +13,7 @@ function open_item_info(item_code) {
 					},
 					"callback": function(response) {
 						var item = response.message; 
+						console.log(item);
 						if (item) {
 							if(me.msg_information)
 							{
