@@ -71,6 +71,7 @@ def _reorder_item():
 	items_to_consider = frappe.db.sql_list("""select name from `tabItem` item
 		where is_stock_item=1 and has_variants=0
 			and disabled=0
+			and item_bloque=0
 			and (end_of_life is null or end_of_life='0000-00-00' or end_of_life > %(today)s)
 			and (exists (select name from `tabItem Reorder` ir where ir.parent=item.name)
 				or (variant_of is not null and variant_of != ''
@@ -136,10 +137,10 @@ def get_item_warehouse_projected_qty(items_to_consider):
 		.format(", ".join(["%s"] * len(items_to_consider))), items_to_consider):
 
 		# add consulted
-		cnl = frappe.db.sql("""select sum(qty) from `tabMaterial Request Item` 
-			where item_code=%s and docstatus=1 and consulted=1 and ordered_qty=0""", (item_code))[0][0]
-		if cnl:
-			projected_qty = projected_qty + cnl
+		#cnl = frappe.db.sql("""select sum(qty) from `tabMaterial Request Item` 
+		#	where item_code=%s and docstatus=1 and consulted=1 and ordered_qty=0""", (item_code))[0][0]
+		#if cnl:
+		#	projected_qty = projected_qty + cnl
 			
 		# add devis encours
 		#
