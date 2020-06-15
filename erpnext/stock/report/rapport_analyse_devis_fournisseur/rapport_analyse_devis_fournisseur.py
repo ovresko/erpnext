@@ -660,7 +660,7 @@ def execute(filters=None):
 			_date = _recom[0].modified
 				#date = frappe.utils.get_datetime(date).strftime("%d/%m/%Y")
 
-		comp = """<a   onClick="open_item_info('%s')" type='b'> info </a>  <a   onClick="achat_item('%s')" type='a'> X </a>""" % (mri.item_code,mri.name)
+		comp = """<a   onClick="open_item_info('%s')" type='b'> info </a> &nbsp;&nbsp;&nbsp; <a   onClick="achat_item('%s')" type='a'> X </a>""" % (mri.item_code,mri.name)
 		if len(mri.item_code) == 11 and mri.item_code not in _models:
 			comp = None
 		if is_full:
