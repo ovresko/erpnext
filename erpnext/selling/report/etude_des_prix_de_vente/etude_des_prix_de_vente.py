@@ -118,9 +118,7 @@ def execute(filters=None):
 	#parent material_request_item - material_request - qty - variant_of - creation
 	items = frappe.db.sql(
 		"""
-		select sqi.parent,
-		sqi.qty,
-		sqi.creation,
+		select 
 		it.item_code,
 		it.item_name,
 		it.stock_uom,
@@ -138,9 +136,8 @@ def execute(filters=None):
 		it.last_purchase_devise,
 		it.max_order_qty,
 		it.max_ordered_variante
-		from `tabItem` it left join `tabPurchase Receipt Item` sqi
-		ON it.item_code  = sqi.item_code
-		where 1=1 {conditions}
+		from `tabItem` it 
+		where  it.disabled=0 and it.has_variants=0 and it.is_sales_item=1 {conditions}
 		{order_by_statement}
 		""".format(
 			conditions=get_conditions(filters),
@@ -224,8 +221,8 @@ def execute(filters=None):
 	
 	for mri in mitems:
 		receipt = ''
-		if hasattr(mri, 'parent') and mri.parent:
-			receipt = mri.parent
+		#if hasattr(mri, 'parent') and mri.parent:
+		#	receipt = mri.parent
 		global info
 		qts_max_achat = 0
 		last_qty = 0
@@ -237,10 +234,11 @@ def execute(filters=None):
 		elif mri.has_variants:
 			info = info_modele(mri.item_code)
 			qts_max_achat = mri.max_order_qty
-		sqllast_qty = frappe.db.sql("""select actual_qty,valuation_rate from `tabStock Ledger Entry` 
+		sqllast_qty = frappe.db.sql("""select actual_qty,valuation_rate,voucher_type, voucher_no from `tabStock Ledger Entry` 
 		where item_code=%s and voucher_type=%s 
 		order by posting_date, posting_time limit 1""", (mri.item_code,"Purchase Receipt"), as_dict=1)
 		if sqllast_qty:
+			receipt = "%s %s" % (sqllast_qty[0].voucher_type, sqllast_qty[0].voucher_no)
 			last_qty = sqllast_qty[0].actual_qty
 			last_valuation = sqllast_qty[0].valuation_rate
 			if last_valuation:
@@ -303,7 +301,7 @@ def get_conditions(filters):
 		
 	#receipt
 	if filters.get('receipt'):
-		conditions.append("""sqi.parent=%(receipt)s""")
+		conditions.append(""" it.item_code in (select item_code from `tabPurchaseReceiptItem` sqi where sqi.parent=%(receipt)s)""")
 	
 	#perfection
 	if filters.get('perfection'):
