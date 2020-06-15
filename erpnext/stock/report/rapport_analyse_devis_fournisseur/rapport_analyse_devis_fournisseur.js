@@ -26,7 +26,9 @@ function open_item_info(item_code) {
 								</button>
 <br>
 								<table class="table table-bordered table-condensed">
-									<tr><td>${item.item_name}</td><td><img src="${item.image}"></td></tr>
+									<tr><td>${item.item_name}</td><td>
+										
+										</td></tr>
 									<tr> 
 										<td>
 											<label>${item.item_code}</label>
@@ -55,7 +57,7 @@ function open_item_info(item_code) {
 											${item.manufacturer}
 										</td>
 										<td>
-											<img src="${item.fabricant_logo}">
+										
 										</td>
 									</tr>
 									<tr> 
