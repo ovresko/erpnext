@@ -191,7 +191,8 @@ function open_item_info(item_code) {
 									});
 										 
 							});
-							 me.msg_information.show();
+							console.log(me.msg_information);
+							me.msg_information.show();
 						}  
 					}
 				}); 	
