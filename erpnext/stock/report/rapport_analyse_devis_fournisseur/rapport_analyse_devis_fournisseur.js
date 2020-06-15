@@ -18,8 +18,8 @@ function open_item_info(item_code) {
 							if(me.msg_information)
 							{
 								//$(me.msg_information).remove();
-								me.msg_information.hide();
-								me.msg_information = null;
+								//me.msg_information.hide();
+								//me.msg_information = null;
 							}
 							 
 							let image = '';
