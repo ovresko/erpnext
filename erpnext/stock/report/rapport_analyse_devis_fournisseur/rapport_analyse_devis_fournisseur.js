@@ -13,8 +13,12 @@ function open_item_info(item_code) {
 					"callback": function(response) {
 						var item = response.message; 
 						if (item) {
-							
-							let msg_information = frappe.msgprint(
+							if(me.msg_information)
+							{
+								//$(me.msg_information).remove();
+								me.msg_information = null;
+							}
+							me.msg_information = frappe.msgprint(
 								`
 								<button type="button" data-item-code="${item_code}" class="btn btn-primary btn-sm btn-versions-list" > 
 									<span class="hidden-xs">Véhicules Supportées</span>
@@ -77,7 +81,7 @@ function open_item_info(item_code) {
 									
 								`,"Détails Article"
 								);
-								$(msg_information.body).find('.btn-versions-list').on('click', () => {
+								$(me.msg_information.body).find('.btn-versions-list').on('click', () => {
 									  
 								frappe.call({
 									"method": "erpnext.selling.page.point_of_sale.point_of_sale.get_vehicule_details",
