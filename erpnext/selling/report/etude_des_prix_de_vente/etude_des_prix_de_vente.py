@@ -72,18 +72,48 @@ def execute(filters=None):
 			"width": 250
 		})
 	columns.append({
-			"fieldname": "last_purchase_rate",
-			"label": "Dernier Prix d'achat (DZD)",
-			"width": 250
-		})
-	columns.append({
 			"fieldname": "last_purchase_devise",
 			"label": "Dernier Prix d'achat (Devise)",
 			"width": 250
 		})
 	columns.append({
+			"fieldname": "last_purchase_rate",
+			"label": "Dernier Prix d'achat (DZD)",
+			"width": 250
+		})
+	columns.append({
+			"fieldname": "taux_change",
+			"label": "Taux de change",
+			"width": 200
+		})
+	columns.append({
+			"fieldname": "charge",
+			"label": "Montant Charges",
+			"width": 200
+		})
+	columns.append({
 			"fieldname": "last_valuation",
 			"label": "Derniere taux de valorisation",
+			"width": 250
+		})
+	columns.append({
+			"fieldname": "taux_valuation_ttc",
+			"label": "Taux Taxe",
+			"width": 250
+		})
+	columns.append({
+			"fieldname": "last_valuation_ttc",
+			"label": "Taux de valorisation TTC",
+			"width": 250
+		})
+	columns.append({
+			"fieldname": "pond_valuation",
+			"label": "Taux Moyen",
+			"width": 250
+		})
+	columns.append({
+			"fieldname": "pond_valuation_ttc",
+			"label": "Taux Moyen TTC",
 			"width": 250
 		})
 	
@@ -235,14 +265,35 @@ def execute(filters=None):
 			info = info_modele(mri.item_code)
 			qts_max_achat = mri.max_order_qty
 		sqllast_qty = frappe.db.sql("""select actual_qty,valuation_rate,voucher_type, voucher_no from `tabStock Ledger Entry` 
-		where item_code=%s and voucher_type=%s 
-		order by posting_date, posting_time limit 1""", (mri.item_code,"Purchase Receipt"), as_dict=1)
+		where item_code=%s and actual_qty>0 
+		order by posting_date, posting_time limit 1""", (mri.item_code), as_dict=1)
+		
+		
 		if sqllast_qty:
 			receipt = "%s %s" % (sqllast_qty[0].voucher_type, sqllast_qty[0].voucher_no)
 			last_qty = sqllast_qty[0].actual_qty
 			last_valuation = sqllast_qty[0].valuation_rate
 			if last_valuation:
 				last_valuation = round(last_valuation)
+		taux_change = 0
+		if mri.last_purchase_devise and mri.last_purchase_rate:
+			taux_change = mri.last_purchase_rate / mri.last_purchase_devise
+		
+		charge = 0
+		if mri.last_purchase_rate and last_valuation:
+			charge = last_valuation - mri.last_purchase_rate
+		val_ttc = 0
+		taux_taxe =0 
+		pond_valuation_ttc=0
+		if last_valuation:
+			taux_taxe = last_valuation*0.19
+			val_ttc = last_valuation+taux_taxe
+		pond_valuation = 0
+		pondere = frappe.db.sql("""select avg(sum(actual_qty) * sum(valuation_rate)) from `tabStock Ledger Entry` 
+		where item_code=%s and actual_qty>0 """, (mri.item_code), as_dict=1)
+		if pondere:
+			pond_valuation = pondere[0][0] or 0
+			pond_valuation_ttc = pond_valuation*1.19
 
 
 		row = [
@@ -257,9 +308,15 @@ def execute(filters=None):
 			last_qty,
 			info[0] or 0,
 			info[2] or 0,
-			mri.last_purchase_rate  or 0,
 			mri.last_purchase_devise  or 0,
-			last_valuation or 0
+			mri.last_purchase_rate  or 0,	
+			taux_change or 0,
+			charge or 0,
+			last_valuation or 0,
+			taux_taxe or 0,
+			val_ttc or 0,
+			pond_valuation or 0,
+			pond_valuation_ttc or 0			
 		]
 
 		
@@ -276,12 +333,14 @@ def execute(filters=None):
 					price = frappe.db.sql("""select price_list_rate,min_qty from `tabItem Price` where selling=1 and price_list=%s and (  item_code=%s) ORDER BY creation DESC;""",(pl.name,mri.item_code))
 					if price:
 						for p in price:
-							_price += "&nbsp;&nbsp;  +%s/%s  &nbsp;&nbsp;" % (p[1],p[0])
+							lp_benefice = p[0] - val_ttc
+							lp_benefice = ((lp_benefice * 100) / val_ttc) or 0
+							_price += "&nbsp;&nbsp;  +%s/%s/%s%%  &nbsp;&nbsp;" % (p[1],p[0],lp_benefice)
 					if benefice:
 						benefice = benefice[0][0]
-						new_taux = round((1+(float(benefice or 0)/100)) * float(mri.last_purchase_rate or 0))
+						new_taux = round((1+(float(benefice or 0)/100)) * float(val_ttc or 0))
 					
-					itr = """[ %s %% ]  	&nbsp;	&nbsp;   %s	&nbsp;	&nbsp;	&nbsp;<input placeholder='Prix %s' id='price_%s_%s' value='%s' style='color:black'></input>&nbsp;<input placeholder='Qts' id='qts_%s_%s' style='color:black;width:60px'></input><a  onClick="set_price_item('%s','%s')" type='a'> OK </a>""" % (benefice,_price,pl.name,mri.item_code,pl.name.replace(" ",""),new_taux,mri.item_code,pl.name.replace(" ",""),pl.name,mri.item_code)
+					itr = """[ %s %% %s ]  	&nbsp;	&nbsp;   %s	&nbsp;	&nbsp;	&nbsp;<input placeholder='Prix %s' id='price_%s_%s' value='%s' style='color:black'></input>&nbsp;<input placeholder='Qts' id='qts_%s_%s' style='color:black;width:60px'></input><a  onClick="set_price_item('%s','%s')" type='a'> OK </a>""" % (benefice,new_taux,_price,pl.name,mri.item_code,pl.name.replace(" ",""),new_taux,mri.item_code,pl.name.replace(" ",""),pl.name,mri.item_code)
 				if itr:
 					row.append(itr)
 				else:
