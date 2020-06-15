@@ -4,6 +4,7 @@
 
 function open_item_info(item_code) {
 			var me  = this;
+			console.log(item_code);
 			frappe.call({
 					"method": "frappe.client.get",
 					"args": {
