@@ -247,8 +247,9 @@ def execute(filters=None):
 				last_valuation = round(last_valuation)
 
 
-		row = ["""<a   onClick="open_item_info('%s')" type='b'> info </a> &nbsp;&nbsp;&nbsp;""" % (mri.item_code),
+		row = [
 			mri.item_code,
+			"""<a   onClick="open_item_info('%s')" type='b'> info </a> &nbsp;&nbsp;&nbsp;""" % (mri.item_code),
 			mri.item_name,
 			mri.stock_uom,
 			mri.manufacturer,
