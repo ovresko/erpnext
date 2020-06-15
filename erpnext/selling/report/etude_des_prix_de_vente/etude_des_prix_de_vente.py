@@ -103,13 +103,13 @@ def execute(filters=None):
 	#benefice
 
 	price_lists = []
-	price_lists= frappe.get_all("Price List",filters={"selling":1},fields=["name","currency"])
+	price_lists= frappe.get_all("Price List",filters={"selling":1,"enabled":1},fields=["name","currency"])
 	if price_lists:
 		for pl in price_lists:
 			columns.append({
 				"fieldname": pl.name,
 				"label": "%s (%s)" % (pl.name,pl.currency),
-				"width": 420
+				"width": 450
 			})
 
 	mris = []
@@ -138,8 +138,8 @@ def execute(filters=None):
 		it.last_purchase_devise,
 		it.max_order_qty,
 		it.max_ordered_variante
-		from `tabPurchase Receipt Item` sqi left join `tabItem` it
-		ON sqi.item_code = it.item_code
+		from `tabItem` it left join `tabPurchase Receipt Item` sqi
+		ON it.item_code  = sqi.item_code
 		where sqi.parent != "" {conditions}
 		{order_by_statement}
 		""".format(
