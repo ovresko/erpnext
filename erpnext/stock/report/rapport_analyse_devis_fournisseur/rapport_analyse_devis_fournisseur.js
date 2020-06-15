@@ -20,7 +20,17 @@ function open_item_info(item_code) {
 								//$(me.msg_information).remove();
 								me.msg_information = null;
 							}
-							 
+							console.log(item.item_code)
+							let image = '';
+							let fabricant_logo = '';
+							if(item.fabricant_logo){
+								fabricant_logo ='<img src="'+item.fabricant_logo+'">';
+							}
+							if(item.image){
+								image ='<img src="'+item.image+'">';
+							}
+							console.log(image);
+							console.log(fabricant_logo);
 							me.msg_information = frappe.msgprint(
 								`
 								<button type="button" data-item-code="${item_code}" class="btn btn-primary btn-sm btn-versions-list" > 
@@ -29,7 +39,7 @@ function open_item_info(item_code) {
 <br>
 								<table class="table table-bordered table-condensed">
 									<tr><td>${item.item_name}</td><td>
-										<img src="${item.image  || ''}">
+											 ${image} 
 										</td></tr>
 									<tr> 
 										<td>
@@ -59,7 +69,7 @@ function open_item_info(item_code) {
 											${item.manufacturer}
 										</td>
 										<td>
-											<img src="${item.fabricant_logo || ''}">
+											${fabricant_logo}
 										</td>
 									</tr>
 									<tr> 
