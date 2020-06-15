@@ -29,7 +29,7 @@ function open_item_info(item_code) {
 <br>
 								<table class="table table-bordered table-condensed">
 									<tr><td>${item.item_name}</td><td>
-										
+										<img src="${item.image}">
 										</td></tr>
 									<tr> 
 										<td>
@@ -59,7 +59,7 @@ function open_item_info(item_code) {
 											${item.manufacturer}
 										</td>
 										<td>
-										
+											<img src="${item.fabricant_logo}">
 										</td>
 									</tr>
 									<tr> 
