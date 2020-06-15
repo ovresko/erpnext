@@ -291,7 +291,7 @@ def execute(filters=None):
 		pond_valuation = 0
 		pondere = frappe.db.sql("""select avg(medium) from (select t.item_code, (sum(t.actual_qty) * sum(t.valuation_rate)) AS medium from `tabStock Ledger Entry` t where item_code=%s and actual_qty>0 GROUP BY t.item_code ) as inner_query""", (mri.item_code), as_dict=1)
 		if pondere:
-			pond_valuation = pondere[0][0] or 0
+			pond_valuation = pondere[0] or 0
 			pond_valuation_ttc = pond_valuation*1.19
 
 
