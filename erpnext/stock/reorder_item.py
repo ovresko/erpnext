@@ -137,7 +137,7 @@ def get_item_warehouse_projected_qty(items_to_consider):
 
 		# add consulted
 		cnl = frappe.db.sql("""select sum(qty) from `tabMaterial Request Item` 
-			where item_code=%s and docstatus=1 and consulted=1""", (item_code))[0][0]
+			where item_code=%s and docstatus=1 and consulted=1 and ordered_qty=0""", (item_code))[0][0]
 		if cnl:
 			projected_qty = projected_qty + cnl
 			
