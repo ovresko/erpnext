@@ -114,7 +114,7 @@ def execute(filters=None):
 
 	mris = []
 
-	order_by_statement = "order by sqi.item_code"
+	order_by_statement = "order by it.item_code"
 	#parent material_request_item - material_request - qty - variant_of - creation
 	items = frappe.db.sql(
 		"""
