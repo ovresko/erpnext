@@ -20,7 +20,7 @@ function open_item_info(item_code) {
 								//$(me.msg_information).remove();
 								me.msg_information = null;
 							}
-							console.log(me.msg_information);
+							 
 							me.msg_information = frappe.msgprint(
 								`
 								<button type="button" data-item-code="${item_code}" class="btn btn-primary btn-sm btn-versions-list" > 
