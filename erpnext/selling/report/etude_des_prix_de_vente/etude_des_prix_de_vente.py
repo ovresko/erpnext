@@ -138,7 +138,7 @@ def execute(filters=None):
 		it.last_purchase_devise,
 		it.max_order_qty,
 		it.max_ordered_variante
-		from `tabItem` it left join `tabPurchase Receipt Item` sqi
+		from `tabItem` it full outer join `tabPurchase Receipt Item` sqi
 		ON it.item_code  = sqi.item_code
 		where sqi.parent != "" {conditions}
 		{order_by_statement}
