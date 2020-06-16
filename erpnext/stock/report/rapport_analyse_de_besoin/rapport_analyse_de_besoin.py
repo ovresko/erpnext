@@ -239,9 +239,9 @@ def execute(filters=None):
 			elif mri.has_variants:
 				info = info_modele(mri.item_code)
 				qts_max_achat = mri.max_order_qty
-			sqllast_qty = frappe.db.sql("""select actual_qty,valuation_rate from `tabStock Ledger Entry` 
+			sqllast_qty = frappe.db.sql("""select actual_qty,valuation_rate,incoming_rate from `tabStock Ledger Entry` 
 			where item_code=%s and voucher_type=%s 
-			order by posting_date, posting_time limit 1""", (mri.item_code,"Purchase Receipt"), as_dict=1)
+			order by posting_date desc, posting_time desc limit 1""", (mri.item_code,"Purchase Receipt"), as_dict=1)
 			relq = frappe.db.sql("""select sum(ordered_qty) - sum(qty) from `tabPurchase Invoice Item` 
 			where item_code=%s and docstatus=1 and ordered_qty>0""", (mri.item_code))[0][0]
 			last_qty = 0
@@ -266,7 +266,7 @@ def execute(filters=None):
 				date = frappe.utils.get_datetime(date).strftime("%d/%m/%Y")
 			if sqllast_qty:
 				last_qty = sqllast_qty[0].actual_qty
-				last_valuation = sqllast_qty[0].valuation_rate
+				last_valuation = sqllast_qty[0].incoming_rate
 				
 			row = ["""<button   onClick="open_item_info('%s')" type='b'> info </button> &nbsp;&nbsp;&nbsp; <button id='%s' onClick="demander_item('%s')" type='button'>Demander</button><input placeholder='Qts' id='input_%s' style='color:black'></input><button   onClick="achat_item('%s')" type='button'>ACHAT %s</button>""" % (mri.item_code,mri.item_code,mri.item_code,mri.item_code,mri.item_code,mri.is_purchase_item),
 			       mri.item_code,
