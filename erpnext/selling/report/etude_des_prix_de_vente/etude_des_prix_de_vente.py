@@ -141,6 +141,11 @@ def execute(filters=None):
 				"label": "%s (%s)" % (pl.name,pl.currency),
 				"width": 450
 			})
+		columns.append({
+			"fieldname": "empty",
+			"label": "__",
+			"width": 100
+		})
 
 	mris = []
 
