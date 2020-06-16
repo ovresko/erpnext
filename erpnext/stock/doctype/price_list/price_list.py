@@ -53,11 +53,13 @@ def update_price(item_code,price_list,_price,qts):
 		if price:
 			if not _price or _price == 0:
 				frappe.delete_doc("Item Price", price[0].name)
+				return "effacer - done -"
 			else:
 				price = frappe.get_doc("Item Price",price[0].name)
 				price.price_list_rate = _price
 				price.min_qty = qts
 				price.save()
+				return "modifie - done -"
 		elif _price:
 			so = frappe.new_doc("Item Price")
 			so.item_code = item_code
@@ -65,6 +67,7 @@ def update_price(item_code,price_list,_price,qts):
 			so.price_list_rate = _price
 			so.min_qty = qts
 			so.save()
+			return "ajoute - done -"
 
-		return "done"
+		
 	return "not done"
