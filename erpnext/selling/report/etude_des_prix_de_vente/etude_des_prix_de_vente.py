@@ -98,7 +98,7 @@ def execute(filters=None):
 		})
 	columns.append({
 			"fieldname": "taux_valuation_ttc",
-			"label": "Taux Taxe",
+			"label": "Taux TVA 19% (DZD)",
 			"width": 250
 		})
 	columns.append({
@@ -266,7 +266,7 @@ def execute(filters=None):
 			qts_max_achat = mri.max_order_qty
 		sqllast_qty = frappe.db.sql("""select incoming_rate,actual_qty,valuation_rate,voucher_type, voucher_no from `tabStock Ledger Entry` 
 		where item_code=%s and actual_qty>0 
-		order by posting_date, posting_time limit 1""", (mri.item_code), as_dict=1)
+		order by posting_date desc, posting_time desc limit 1""", (mri.item_code), as_dict=1)
 		
 		pondere = 0
 		if sqllast_qty:
@@ -342,7 +342,7 @@ def execute(filters=None):
 						benefice = benefice[0][0]
 						new_taux = round((1+(float(benefice or 0)/100)) * float(val_ttc or 0))
 					
-					itr = """[ %s %% %s ]  	&nbsp;	&nbsp;   %s	&nbsp;	&nbsp;	&nbsp;<input placeholder='Prix %s' id='price_%s_%s' value='%s' style='color:black'></input>&nbsp;<input placeholder='Qts' id='qts_%s_%s' style='color:black;width:60px'></input><a  onClick="set_price_item('%s','%s')" type='a'> OK </a>""" % (benefice,new_taux,_price,pl.name,mri.item_code,pl.name.replace(" ",""),new_taux,mri.item_code,pl.name.replace(" ",""),pl.name,mri.item_code)
+					itr = """[ %s %% %s DA ]  	&nbsp;	&nbsp;   %s	&nbsp;	&nbsp;	&nbsp;<input placeholder='Prix %s' id='price_%s_%s' value='%s' style='color:black'></input>&nbsp;<input placeholder='Qts' id='qts_%s_%s' style='color:black;width:60px'></input><a  onClick="set_price_item('%s','%s')" type='a'> OK </a>""" % (benefice,new_taux,_price,pl.name,mri.item_code,pl.name.replace(" ",""),new_taux,mri.item_code,pl.name.replace(" ",""),pl.name,mri.item_code)
 				if itr:
 					row.append(itr)
 				else:
