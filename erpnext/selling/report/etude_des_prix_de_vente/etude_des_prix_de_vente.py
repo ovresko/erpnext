@@ -108,12 +108,12 @@ def execute(filters=None):
 		})
 	columns.append({
 			"fieldname": "pond_valuation",
-			"label": "Taux Moyen",
+			"label": "Taux valorisation Moyen",
 			"width": 250
 		})
 	columns.append({
 			"fieldname": "pond_valuation_ttc",
-			"label": "Taux Moyen TTC",
+			"label": "Taux valorisation Moyen TTC",
 			"width": 250
 		})
 	
@@ -293,7 +293,7 @@ def execute(filters=None):
 		
 		#frappe.db.sql("""select (medium / total) as result from (select t.item_code, sum(t.actual_qty) AS total, (t.actual_qty * t.valuation_rate) AS medium from `tabStock Ledger Entry` t where item_code=%s and actual_qty>0 GROUP BY t.item_code ) as inner_query""", (mri.item_code), as_dict=1)
 		if pondere:
-			pond_valuation = pondere or 0
+			pond_valuation = round(pondere or 0)
 			pond_valuation_ttc = round(pond_valuation*1.19)
 
 
@@ -342,7 +342,7 @@ def execute(filters=None):
 						benefice = benefice[0][0]
 						new_taux = round((1+(float(benefice or 0)/100)) * float(val_ttc or 0))
 					
-					itr = """[ %s %% %s DA ]  	&nbsp;	&nbsp;   %s	&nbsp;	&nbsp;	&nbsp;<input placeholder='Prix %s' id='price_%s_%s' value='%s' style='color:black'></input>&nbsp;<input placeholder='Qts' id='qts_%s_%s' style='color:black;width:60px'></input><a  onClick="set_price_item('%s','%s')" type='a'> OK </a>""" % (benefice,new_taux,_price,pl.name,mri.item_code,pl.name.replace(" ",""),new_taux,mri.item_code,pl.name.replace(" ",""),pl.name,mri.item_code)
+					itr = """[ %s %% %s DA ]&nbsp;<input placeholder='Prix %s' id='price_%s_%s' value='%s' style='color:black'></input>&nbsp;<input placeholder='Qts' id='qts_%s_%s' style='color:black;width:60px'></input><a  onClick="set_price_item('%s','%s')" type='a'> OK </a>&nbsp;	&nbsp;   %s	""" % (benefice,new_taux,pl.name,mri.item_code,pl.name.replace(" ",""),new_taux,mri.item_code,pl.name.replace(" ",""),pl.name,mri.item_code,_price)
 				if itr:
 					row.append(itr)
 				else:
