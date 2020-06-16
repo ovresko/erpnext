@@ -256,6 +256,11 @@ def execute(filters=None):
 		global info
 		qts_max_achat = 0
 		last_qty = 0
+		qr_last_qty = frappe.db.sql("""select qty from `tabPurchase Receipt Item` 
+		where item_code=%s and qty>0 and docstatus=1
+		order by creation desc limit 1""", (mri.item_code), as_dict=1)
+		if qr_last_qty:
+			last_qty = qr_last_qty[0].qty
 		last_valuation = 0
 		if mri.variant_of:
 			#variante
@@ -271,7 +276,7 @@ def execute(filters=None):
 		pondere = 0
 		if sqllast_qty:
 			receipt = "%s %s" % (sqllast_qty[0].voucher_type, sqllast_qty[0].voucher_no)
-			last_qty = sqllast_qty[0].actual_qty
+			
 			last_valuation = sqllast_qty[0].incoming_rate
 			pondere = sqllast_qty[0].valuation_rate
 			if last_valuation:
