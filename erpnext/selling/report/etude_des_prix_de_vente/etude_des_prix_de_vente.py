@@ -264,7 +264,7 @@ def execute(filters=None):
 		elif mri.has_variants:
 			info = info_modele(mri.item_code)
 			qts_max_achat = mri.max_order_qty
-		sqllast_qty = frappe.db.sql("""select actual_qty,valuation_rate,voucher_type, voucher_no from `tabStock Ledger Entry` 
+		sqllast_qty = frappe.db.sql("""select incoming_rate,actual_qty,valuation_rate,voucher_type, voucher_no from `tabStock Ledger Entry` 
 		where item_code=%s and actual_qty>0 
 		order by posting_date, posting_time limit 1""", (mri.item_code), as_dict=1)
 		
@@ -272,7 +272,7 @@ def execute(filters=None):
 		if sqllast_qty:
 			receipt = "%s %s" % (sqllast_qty[0].voucher_type, sqllast_qty[0].voucher_no)
 			last_qty = sqllast_qty[0].actual_qty
-			last_valuation = sqllast_qty[0].valuation_rate
+			last_valuation = sqllast_qty[0].incoming_rate
 			if last_valuation:
 				last_valuation = round(last_valuation)
 		taux_change = 0
@@ -289,9 +289,10 @@ def execute(filters=None):
 			taux_taxe = last_valuation*0.19
 			val_ttc = round(last_valuation+taux_taxe)
 		pond_valuation = 0
-		pondere = frappe.db.sql("""select (medium / total) as result from (select t.item_code, sum(t.actual_qty) AS total, (t.actual_qty * t.valuation_rate) AS medium from `tabStock Ledger Entry` t where item_code=%s and actual_qty>0 GROUP BY t.item_code ) as inner_query""", (mri.item_code), as_dict=1)
+		pondere = sqllast_qty[0].valuation_rate
+		#frappe.db.sql("""select (medium / total) as result from (select t.item_code, sum(t.actual_qty) AS total, (t.actual_qty * t.valuation_rate) AS medium from `tabStock Ledger Entry` t where item_code=%s and actual_qty>0 GROUP BY t.item_code ) as inner_query""", (mri.item_code), as_dict=1)
 		if pondere:
-			pond_valuation = round(pondere[0].result or 0)
+			pond_valuation = pondere or 0
 			pond_valuation_ttc = round(pond_valuation*1.19)
 
 
