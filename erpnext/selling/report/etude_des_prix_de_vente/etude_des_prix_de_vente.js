@@ -212,7 +212,10 @@ function set_price_item(pl,item) {
  	var btn_id = 'btn_'+item+'_'+pl.replace(" ","");
 	 
 
-	
+	console.log("item_code",item);
+	console.log("price_list",pl);
+	console.log("_price",val);
+	console.log("qts",qts);
 	frappe.call({
 		method: "erpnext.stock.doctype.price_list.price_list.update_price",
 		args: {
