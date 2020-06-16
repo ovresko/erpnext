@@ -297,7 +297,7 @@ def execute(filters=None):
 
 		row = [
 			mri.item_code,
-			"""<a   onClick="open_item_info('%s')" type='b'> info </a> &nbsp;&nbsp;&nbsp;""" % (mri.item_code),
+			"""<button   onClick="open_item_info('%s')" type='b'> info </button> &nbsp;&nbsp;&nbsp;""" % (mri.item_code),
 			mri.item_name,
 			mri.stock_uom,
 			mri.manufacturer,
