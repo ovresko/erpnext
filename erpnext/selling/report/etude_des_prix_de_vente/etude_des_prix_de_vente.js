@@ -202,14 +202,14 @@ function open_item_info(item_code) {
 
 function set_price_item(pl,item) {
 	  
-	var val_id = 'price_'+item+'_'+pl.replace(" ","");
+	var val_id = 'price_'+item+'_'+pl.replace(" "/g,"");
 	 
 	var val = $('#'+val_id).val();
 	
-     	var qts_id = 'qts_'+item+'_'+pl.replace(" ","");
+     	var qts_id = 'qts_'+item+'_'+pl.replace(" "/g,"");
 	var qts = $('#'+qts_id).val();
 
- 	var btn_id = 'btn_'+item+'_'+pl.replace(" ","");
+ 	var btn_id = 'btn_'+item+'_'+pl.replace(" "/g,"");
 	 
 
 	console.log("qts_id",qts_id);
