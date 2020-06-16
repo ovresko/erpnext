@@ -209,7 +209,9 @@ function set_price_item(pl,item) {
      	var qts_id = 'qts_'+item+'_'+pl.replace(" ","");
 	var qts = $('#'+qts_id).val();
 
- 
+ 	var btn_id = 'btn_'+item+'_'+pl.replace(" ","");
+	 
+
 	
 	frappe.call({
 		method: "erpnext.stock.doctype.price_list.price_list.update_price",
@@ -222,6 +224,7 @@ function set_price_item(pl,item) {
 		callback: function(r) {
 			if (r.message) {
 				alert(r.message);
+				$('#'+btn_id).css('color', 'green');
 			}
 		}
 	});
