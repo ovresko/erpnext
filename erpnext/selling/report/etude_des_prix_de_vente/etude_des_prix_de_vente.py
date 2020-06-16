@@ -289,7 +289,7 @@ def execute(filters=None):
 			taux_taxe = last_valuation*0.19
 			val_ttc = round(last_valuation+taux_taxe)
 		pond_valuation = 0
-		pondere = frappe.db.sql("""select avg(medium) as result from (select t.item_code, (sum(t.actual_qty) * sum(t.valuation_rate)) AS medium from `tabStock Ledger Entry` t where item_code=%s and actual_qty>0 GROUP BY t.item_code ) as inner_query""", (mri.item_code), as_dict=1)
+		pondere = frappe.db.sql("""select (medium / total) as result from (select t.item_code, sum(t.actual_qty) AS total, (t.actual_qty * t.valuation_rate) AS medium from `tabStock Ledger Entry` t where item_code=%s and actual_qty>0 GROUP BY t.item_code ) as inner_query""", (mri.item_code), as_dict=1)
 		if pondere:
 			pond_valuation = round(pondere[0].result or 0)
 			pond_valuation_ttc = round(pond_valuation*1.19)
