@@ -51,7 +51,7 @@ def update_price(item_code,price_list,_price,qts):
 			qts = 0
 		price = frappe.get_all("Item Price",fields=["name"],filters={"min_qty":qts,"item_code":item_code,"price_list":price_list})
 		if price:
-			if (not _price or _price == 0 ) and price[0].name:
+			if (not _price or _price == '0' or _price == 0 ) and price[0].name:
 				frappe.delete_doc("Item Price", price[0].name)
 				return "effacer - done -"
 			else:
