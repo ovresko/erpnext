@@ -116,6 +116,11 @@ def execute(filters=None):
 			"label": "Taux valorisation Moyen TTC",
 			"width": 250
 		})
+	columns.append({
+			"fieldname": "prix_traite",
+			"label": "Etat Etude Prix",
+			"width": 250
+		})
 	
 	#item_code 
 	#item_name 
@@ -155,6 +160,7 @@ def execute(filters=None):
 		"""
 		select 
 		it.item_code,
+		it.prix_traite,
 		it.item_name,
 		it.stock_uom,
 		it.weight_per_unit,
@@ -222,6 +228,7 @@ def execute(filters=None):
 		others = frappe.get_all("Item",filters={"variant_of":model,"item_code":("not in",oids)},fields=[
 		"variant_of",
 		"stock_uom", 
+		"prix_traite",
 		"perfection",
 		"is_purchase_item",
 		"weight_per_unit",
@@ -294,7 +301,10 @@ def execute(filters=None):
 		if mri.last_purchase_rate and last_valuation:
 			charge = round(last_valuation - mri.last_purchase_rate)
 		val_ttc = 0
-		taux_taxe =0 
+		taux_taxe = 0 
+		prix_traite = ''
+		if mri.prix_traite:
+			prix_traite =  mri.prix_traite
 		pond_valuation_ttc=0
 		if last_valuation:
 			taux_taxe = last_valuation*0.19
@@ -327,7 +337,8 @@ def execute(filters=None):
 			taux_taxe or 0,
 			val_ttc or 0,
 			pond_valuation or 0,
-			pond_valuation_ttc or 0			
+			pond_valuation_ttc or 0,
+			prix_traite or ''
 		]
 
 		
