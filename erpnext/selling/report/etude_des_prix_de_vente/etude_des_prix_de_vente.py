@@ -347,7 +347,7 @@ def execute(filters=None):
 							lp_benefice = round(p[0] - val_ttc)
 							if val_ttc:
 								lp_benefice = round((lp_benefice * 100) / val_ttc) or 0
-							_price += "&nbsp;&nbsp;  +%s/%s/%s%%  &nbsp;&nbsp;" % (p[1],p[0],lp_benefice)
+							_price += "&nbsp;&nbsp;  +%s/<span style='background-color:black;color:white'>%s<span>/%s%%  &nbsp;&nbsp;" % (p[1],p[0],lp_benefice)
 					if benefice:
 						benefice = benefice[0][0]
 						new_taux = round((1+(float(benefice or 0)/100)) * float(val_ttc or 0))
