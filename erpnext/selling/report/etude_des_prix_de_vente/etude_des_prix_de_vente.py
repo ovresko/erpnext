@@ -341,7 +341,7 @@ def execute(filters=None):
 					_price = ''
 					new_taux = 0
 					benefice =  frappe.db.sql("""select benefice from `tabPrice List` where selling=1 and name=%s ORDER BY creation DESC LIMIT 1;""",(pl.name))
-					price = frappe.db.sql("""select price_list_rate,min_qty from `tabItem Price` where selling=1 and price_list=%s and (  item_code=%s) ORDER BY creation DESC;""",(pl.name,mri.item_code))
+					price = frappe.db.sql("""select price_list_rate,min_qty from `tabItem Price` where selling=1 and price_list=%s and (  item_code=%s) ORDER BY min_qty;""",(pl.name,mri.item_code))
 					if price:
 						for p in price:
 							lp_benefice = round(p[0] - val_ttc)
