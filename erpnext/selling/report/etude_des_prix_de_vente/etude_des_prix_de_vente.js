@@ -13,8 +13,9 @@ function switch_etat(item_code,etat) {
 		},
 		callback: function(r) {
 			if (r.message) {
-				alert(r.message);
+				console.log("setting ",etat);
 				$('.prix_traite_text_'+item_code).text(etat);
+				alert(r.message);				
 			}
 		}
 	});
