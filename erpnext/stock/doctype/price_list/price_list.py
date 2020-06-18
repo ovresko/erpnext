@@ -45,6 +45,16 @@ class PriceList(Document):
 			_update_default_price_list(module)
 
 @frappe.whitelist()
+def switch_etat(item_code,etat):
+	if item_code:
+		if not etat or etat == "Approuve":
+			frappe.db.set_value("Item", item_code, "prix_traite", "En cours")
+			return "En cours"
+		else:
+			frappe.db.set_value("Item", item_code, "prix_traite", "Approuve")
+			return "Approuve"
+
+@frappe.whitelist()
 def update_price(item_code,price_list,_price,qts):
 	if item_code and price_list and _price:
 		if not qts:
