@@ -242,6 +242,7 @@ function set_price_item(pl,item) {
 			if (r.message) {
 				alert(r.message);
 				$('#'+btn_id).css('color', 'green');
+				$('.prix_traite_text_'+item).text("En cours");
 			}
 		}
 	});
