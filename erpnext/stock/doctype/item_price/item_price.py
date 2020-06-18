@@ -56,6 +56,7 @@ class ItemPrice(Document):
 			frappe.throw(_("Item Price appears multiple times based on Price List, Supplier/Customer, Currency, Item, UOM, Qty and Dates."), ItemPriceDuplicateItem)
 
 	def before_save(self):
+		frappe.db.set_value("Item", self.item_code, "prix_traite", "En cours")
 		if self.selling:
 			self.reference = self.customer
 		if self.buying:
