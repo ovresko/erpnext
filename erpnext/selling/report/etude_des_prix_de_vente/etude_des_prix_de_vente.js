@@ -377,6 +377,13 @@ frappe.query_reports["Etude des prix de vente"] = {
 					}
 				}
 			}
+		},
+		{
+			"fieldname":"prix_traite",
+			"label": "Etat Etude",
+			"fieldtype": "Select",
+			"options": ["","Approuve","En cours"],
+			"default": ""
 		}
 	]
 }
