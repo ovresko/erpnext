@@ -154,6 +154,7 @@ class PurchaseReceipt(BuyingController):
 
 		self.make_gl_entries()
 		for item in self.items:
+			frappe.db.set_value("Item", item.item_code, "prix_traite", "En cours")
 			if item.facture_item:
 				frappe.db.set_value("Purchase Invoice Item",item.facture_item,"pr_detail",item.name)
 				frappe.db.set_value("Purchase Invoice Item",item.facture_item,"purchase_receipt",item.parent)
