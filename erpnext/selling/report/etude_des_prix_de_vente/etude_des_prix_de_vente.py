@@ -9,7 +9,7 @@ from frappe.utils import getdate, cstr, flt, fmt_money
 
 def execute(filters=None):
 	columns, data = [], []
-	if not filters.group and not filters.receipt and not filters.ref_fabricant and not filters.item_code and not filters.generation_v and not filters.marque_v and not filters.variant_of and not filters.modele_v and not filters.version and not filters.price_list and not filters.manufacturer:
+	if not filters.group and not filters.receipt and not filters.prix_traite and not filters.ref_fabricant and not filters.item_code and not filters.generation_v and not filters.marque_v and not filters.variant_of and not filters.modele_v and not filters.version and not filters.price_list and not filters.manufacturer:
 		frappe.msgprint("Appliquer un filtre")
 		return columns, data
 	if filters.get('manufacturer'):
@@ -394,7 +394,8 @@ def get_conditions(filters):
 	if filters.get('group'):
 		conditions.append("it.item_group=%(group)s")
 	
-		
+	if filters.get('prix_traite'):
+		conditions.append(""" it.prix_traite=%(prix_traite)s""")
 	#receipt
 	if filters.get('receipt'):
 		conditions.append(""" it.item_code in (select item_code from `tabPurchase Receipt Item` sqi where sqi.parent=%(receipt)s)""")
