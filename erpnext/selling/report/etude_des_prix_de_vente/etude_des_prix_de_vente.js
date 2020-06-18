@@ -386,6 +386,12 @@ frappe.query_reports["Etude des prix de vente"] = {
 			"fieldtype": "Select",
 			"options": ["","Approuve","En cours"],
 			"default": ""
+		},
+		{
+			"fieldname": "with_qty",
+			"label": "Avec Qts",
+			"fieldtype": "Check",
+			"default": 1
 		}
 	]
 }
