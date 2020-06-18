@@ -121,6 +121,11 @@ def execute(filters=None):
 			"label": "Etat Etude Prix",
 			"width": 250
 		})
+	columns.append({
+			"fieldname": "etid_traite",
+			"label": "Changer Etat",
+			"width": 250
+		})
 	
 	#item_code 
 	#item_name 
@@ -303,8 +308,11 @@ def execute(filters=None):
 		val_ttc = 0
 		taux_taxe = 0 
 		prix_traite = ''
+		btn_prix_traite=''
 		if mri.prix_traite:
-			prix_traite =  mri.prix_traite
+			prix_traite =  '<span class="prix_traite_text_%s">%s</span>' % (mri.item_code,mri.prix_traite)
+		btn_prix_traite = """<button   onClick="switch_etat('%s','%s')" type='b'> Rendre %s </button>""" % (mri.item_code,mri.prix_traite or '',mri.prix_traite or 'En cours')
+		
 		pond_valuation_ttc=0
 		if last_valuation:
 			taux_taxe = last_valuation*0.19
@@ -338,7 +346,8 @@ def execute(filters=None):
 			val_ttc or 0,
 			pond_valuation or 0,
 			pond_valuation_ttc or 0,
-			prix_traite or ''
+			prix_traite or '',
+			btn_prix_traite
 		]
 
 		
