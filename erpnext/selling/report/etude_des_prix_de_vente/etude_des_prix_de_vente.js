@@ -14,7 +14,8 @@ function switch_etat(item_code,etat) {
 		callback: function(r) {
 			if (r.message) {
 				console.log("setting ",etat);
-				$('.prix_traite_text_'+item_code).text(etat);
+				$('.prix_traite_btn_'+item_code).text(etat);
+				$('.prix_traite_text_'+item_code).text(r.message);
 				alert(r.message);				
 			}
 		}
