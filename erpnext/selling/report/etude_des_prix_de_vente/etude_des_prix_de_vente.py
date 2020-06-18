@@ -312,7 +312,7 @@ def execute(filters=None):
 		if mri.prix_traite:
 			prix_traite =  '<span class="prix_traite_text_%s">%s</span>' % (mri.item_code,mri.prix_traite)
 		new_traite = ''
-		if not mri.prix_traite or mri.prix_traite == 'En cours'':
+		if not mri.prix_traite or mri.prix_traite == 'En cours':
 			new_traite = 'Approuve'
 		else:
 			new_traite = 'En cours'
