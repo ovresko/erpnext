@@ -2,6 +2,24 @@
 // For license information, please see license.txt
 /* eslint-disable */
 
+function switch_etat(item_code,etat) {
+
+	
+	frappe.call({
+		method: "erpnext.stock.doctype.price_list.price_list.switch_etat",
+		args: {
+			item_code: item_code,
+			etat:etat
+		},
+		callback: function(r) {
+			if (r.message) {
+				alert(r.message);
+				$('#prix_traite_text_'+item_code).text(r.message);
+			}
+		}
+	});
+
+}
 
 function open_item_info(item_code) {
 			var me  = this;
@@ -211,12 +229,7 @@ function set_price_item(pl,item) {
 	var qts = $('#'+qts_id).val();
 
  	var btn_id = 'btn_'+item+'_'+pl.replace(/ /g,'');
-	 
-
-	console.log("qts_id",qts_id);
-	console.log("val_id",val_id);
-	console.log("_price",val);
-	console.log("qts",qts);
+	  
 	frappe.call({
 		method: "erpnext.stock.doctype.price_list.price_list.update_price",
 		args: {
