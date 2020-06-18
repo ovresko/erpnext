@@ -286,6 +286,8 @@ def execute(filters=None):
 		elif mri.has_variants:
 			info = info_modele(mri.item_code)
 			qts_max_achat = mri.max_order_qty
+		if filters.get("with_qty") and (not info or info[0] <= 0):
+			continue
 		sqllast_qty = frappe.db.sql("""select incoming_rate,actual_qty,valuation_rate,voucher_type, voucher_no from `tabStock Ledger Entry` 
 		where item_code=%s and actual_qty>0 
 		order by posting_date desc, posting_time desc limit 1""", (mri.item_code), as_dict=1)
