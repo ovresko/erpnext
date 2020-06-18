@@ -316,7 +316,7 @@ def execute(filters=None):
 			new_traite = 'Approuve'
 		else:
 			new_traite = 'En cours'
-		btn_prix_traite = """<button   onClick="switch_etat('%s','%s')" type='b'> Rendre <span class="prix_traite_text_%s">%s</span> </button>""" % (mri.item_code,mri.prix_traite or '',mri.item_code,new_traite)
+		btn_prix_traite = """<button   onClick="switch_etat('%s','%s')" type='b'> Rendre <span class="prix_traite_btn_%s">%s</span> </button>""" % (mri.item_code,mri.prix_traite or '',mri.item_code,new_traite)
 		
 		pond_valuation_ttc=0
 		if last_valuation:
