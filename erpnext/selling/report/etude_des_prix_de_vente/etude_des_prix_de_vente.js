@@ -3,7 +3,7 @@
 /* eslint-disable */
 
 function switch_etat(item_code,etat) {
-	etat = $('.prix_traite_text_'+item_code)[0].text();
+	etat = $('.prix_traite_text_'+item_code).first().text();
 	console.log("etat",etat);
 	frappe.call({
 		method: "erpnext.stock.doctype.price_list.price_list.switch_etat",
