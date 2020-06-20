@@ -392,17 +392,14 @@ frappe.query_reports["Etude des prix de vente"] = {
 			"label": "Avec Qts",
 			"fieldtype": "Check",
 			"default": 1
-		},
-		{
-		"fieldname": "reset_encours",
-		"label": "Convertir tous en cours",
-		"fieldtype": "Button"
-		
 		}
 	],
 	onload: function(report) {
-		report.page.add_inner_button("Test", function() {
-			frappe.msgprint("Test");
+		report.page.add_inner_button("Convertir En Cours", function() {
+			var items = report["item_code"]
+			console.log(items);
+			console.log(report);
+			
 		});
 	}
 }
