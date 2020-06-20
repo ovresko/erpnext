@@ -113,7 +113,7 @@ def execute(filters=None):
 		})
 	columns.append({
 			"fieldname": "last_valuation_ttc",
-			"label": "Taux de valorisation TTC",
+			"label": "Derniere Taux de valorisation TTC",
 			"width": 250
 		})
 	columns.append({
