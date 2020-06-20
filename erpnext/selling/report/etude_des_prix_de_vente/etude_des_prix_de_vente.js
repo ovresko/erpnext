@@ -395,10 +395,15 @@ frappe.query_reports["Etude des prix de vente"] = {
 		}
 	],
 	onload: function(report) {
+		var me = this;
 		report.page.add_inner_button("Convertir En Cours", function() {
-			var items = report["item_code"]
-			console.log(items);
-			console.log(report);
+			var data = report.data;
+			data.forEach( (item) => {
+				var item_code = item['item_code'];
+				console.log(item_code);
+				me.switch_etat(item_code,"Approuve");
+			});
+			//console.log(report);
 			
 		});
 	}
