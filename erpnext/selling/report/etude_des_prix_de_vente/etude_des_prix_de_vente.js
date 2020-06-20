@@ -398,10 +398,25 @@ frappe.query_reports["Etude des prix de vente"] = {
 		var me = this;
 		report.page.add_inner_button("Convertir En Cours", function() {
 			var data = report.data;
+			items = [];
 			data.forEach( (item) => {
 				var item_code = item['item_code'];
-				console.log(item_code);
-				me.switch_etat(item_code,"Approuve");
+				if(item_code){
+					items.push(item_code);
+				}
+				
+			});
+			frappe.call({
+				method: "erpnext.stock.doctype.price_list.price_list.switch_etat_bulk",
+				args: {
+					items: items,
+				},
+				callback: function(r) {
+					if (r.message) {
+						
+						alert(r.message);				
+					}
+				}
 			});
 			//console.log(report);
 			
