@@ -403,9 +403,11 @@ frappe.query_reports["Etude des prix de vente"] = {
 				var item_code = item['item_code'];
 				if(item_code){
 					items.push(item_code);
+					console.log(item_code);
 				}
 				
 			});
+			console.log(items);
 			frappe.call({
 				method: "erpnext.stock.doctype.price_list.price_list.switch_etat_bulk",
 				args: {
