@@ -401,7 +401,7 @@ frappe.query_reports["Etude des prix de vente"] = {
 			items = [];
 			data.forEach( (item) => {
 				var item_code = item['item_code'];
-				if(item_code){
+				if(item_code && item_code!="Total"){
 					items.push(item_code);
 					console.log(item_code);
 				}
