@@ -375,7 +375,7 @@ frappe.query_reports["Etude des prix de vente"] = {
 				return {
 					"doctype": "Price List",
 					"filters": {
-						"enabled": ("in",[0,1])
+						"enabled": 0
 					}
 				}
 			}
