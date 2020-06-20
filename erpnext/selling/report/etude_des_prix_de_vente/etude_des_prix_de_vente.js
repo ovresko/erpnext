@@ -399,5 +399,10 @@ frappe.query_reports["Etude des prix de vente"] = {
 		"fieldtype": "Button"
 		
 		}
-	]
+	],
+	onload: function(report) {
+		report.page.add_inner_button("Test", function() {
+			frappe.msgprint("Test");
+		});
+	}
 }
