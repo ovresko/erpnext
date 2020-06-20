@@ -374,7 +374,9 @@ frappe.query_reports["Etude des prix de vente"] = {
 			"get_query": function() {
 				return {
 					"doctype": "Price List",
-					"filters": {}
+					"filters": {
+						"enabled":("!=","2")
+					}
 				}
 			}
 		},
