@@ -7,6 +7,7 @@ from frappe import _, throw
 from frappe.utils import cint
 from frappe.model.document import Document
 import frappe.defaults
+import json
 
 class PriceList(Document):
 	def validate(self):
