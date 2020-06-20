@@ -93,7 +93,7 @@ def execute(filters=None):
 		})
 	columns.append({
 			"fieldname": "last_valuation",
-			"label": "Derniere taux de valorisation",
+			"label": "Derniere taux de valorisation HT",
 			"width": 250
 		})
 	columns.append({
@@ -108,7 +108,7 @@ def execute(filters=None):
 		})
 	columns.append({
 			"fieldname": "pond_valuation",
-			"label": "Taux valorisation Moyen",
+			"label": "Taux valorisation Moyen HT",
 			"width": 250
 		})
 	columns.append({
@@ -155,6 +155,11 @@ def execute(filters=None):
 			"fieldname": "all_prices",
 			"label": "Tous les prix",
 			"width": 280
+		})
+		columns.append({
+			"fieldname": "empty",
+			"label": "__",
+			"width": 250
 		})
 
 	mris = []
@@ -313,13 +318,18 @@ def execute(filters=None):
 		btn_prix_traite=''
 		if mri.prix_traite:
 			prix_traite =  '<span class="prix_traite_text_%s">%s</span>' % (mri.item_code,mri.prix_traite)
-		new_traite = ''
-		if not mri.prix_traite or mri.prix_traite == 'En cours':
-			new_traite = 'Approuve'
-		else:
-			new_traite = 'En cours'
-		btn_prix_traite = """<button   onClick="switch_etat('%s','%s')" type='b'> Rendre <span class="prix_traite_btn_%s">%s</span> </button>""" % (mri.item_code,mri.prix_traite or '',mri.item_code,new_traite)
 		
+			
+		new_traite = ''
+		if (not info or info[0] <= 0):
+			prix_traite = 'Suspendu'
+		else:
+			if not mri.prix_traite or mri.prix_traite == 'En cours':
+				new_traite = 'Approuve'
+			else:
+				new_traite = 'En cours'
+			btn_prix_traite = """<button   onClick="switch_etat('%s','%s')" type='b'> Rendre <span class="prix_traite_btn_%s">%s</span> </button>""" % (mri.item_code,mri.prix_traite or '',mri.item_code,new_traite)
+
 		pond_valuation_ttc=0
 		if last_valuation:
 			taux_taxe = last_valuation*0.19
@@ -378,8 +388,10 @@ def execute(filters=None):
 					if benefice:
 						benefice = benefice[0][0]
 						new_taux = round((1+(float(benefice or 0)/100)) * float(val_ttc or 0))
-					
-					itr = """[ %s %% ]&nbsp;&nbsp;<input placeholder='Prix %s' id='price_%s_%s' value='%s' style='color:black'></input>&nbsp;<input placeholder='Qts' id='qts_%s_%s' style='color:black;width:60px'></input><a  onClick="set_price_item('%s','%s')" type='a'  id='btn_%s_%s'> OK </a>&nbsp;	&nbsp;   %s	""" % (benefice,pl.name,mri.item_code,pl.name.replace(" ",""),new_taux,mri.item_code,pl.name.replace(" ",""),pl.name,mri.item_code,mri.item_code,pl.name.replace(" ",""),_price)
+					if (not info or info[0] <= 0):
+						itr = """%s""" % (_price)
+					else:
+						itr = """[ %s %% ]&nbsp;&nbsp;<input placeholder='Prix %s' id='price_%s_%s' value='%s' style='color:black'></input>&nbsp;<input placeholder='Qts' id='qts_%s_%s' style='color:black;width:60px'></input><a  onClick="set_price_item('%s','%s')" type='a'  id='btn_%s_%s'> OK </a>&nbsp;	&nbsp;   %s	""" % (benefice,pl.name,mri.item_code,pl.name.replace(" ",""),new_taux,mri.item_code,pl.name.replace(" ",""),pl.name,mri.item_code,mri.item_code,pl.name.replace(" ",""),_price)
 				if itr:
 					row.append(itr)
 				else:
