@@ -392,6 +392,12 @@ frappe.query_reports["Etude des prix de vente"] = {
 			"label": "Avec Qts",
 			"fieldtype": "Check",
 			"default": 1
+		},
+		{
+		"fieldname": "reset_encours",
+		"label": "Convertir tous en cours",
+		"fieldtype": "Button"
+		
 		}
 	]
 }
