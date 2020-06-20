@@ -370,15 +370,7 @@ frappe.query_reports["Etude des prix de vente"] = {
 			"fieldname": "price_list",
 			"label": "Liste de prix",
 			fieldtype: "Link",
-			options: "Price List",
-			"get_query": function() {
-				return {
-					"doctype": "Price List",
-					"filters": {
-						"enabled": false
-					}
-				}
-			}
+			options: "Price List"
 		},
 		{
 		"fieldname": "receipt",
