@@ -84,7 +84,9 @@ def update_price(item_code,price_list,_price,qts):
 
 @frappe.whitelist()
 def switch_etat_bulk(items):
+	t = 0
 	if items:
 		for item in items:
 			frappe.db.set_value("Item", item, "prix_traite", "En cours")
-	return "Termine pour %s" %  items
+			t += 1
+	return "Termine pour %d" %  t
