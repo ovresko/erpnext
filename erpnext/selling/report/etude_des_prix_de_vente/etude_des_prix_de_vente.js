@@ -257,13 +257,13 @@ frappe.query_reports["Etude des prix de vente"] = {
 		
 		 
 		if (data!=null && data["item_code"] &&  data["item_code"].length == 11 ) {
-			value = "<div style='color: white;background-color: #008081;padding: 5px;'>" + value + "</div>";
+			value = "<div style='color: white;background-color: #008081;padding: 0px;'>" + value + "</div>";
 		}
 		if (data!=null && data['prix_traite'].includes("Approuve")) {
-			value = "<div style='color:#008000;padding: 5px;'>" + value + "</div>";
+			value = "<div style='color:#008000;padding: 0px;'>" + value + "</div>";
 		}
 		if (data!=null && data['prix_traite'].includes("En cours")) {
-			value = "<div style='color: #610e24;padding: 5px;'>" + value + "</div>";
+			value = "<div style='color: #FC4136;padding: 0px;'>" + value + "</div>";
 		}
 		return value
 	},
