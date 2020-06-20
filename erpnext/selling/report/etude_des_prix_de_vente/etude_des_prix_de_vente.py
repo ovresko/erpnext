@@ -124,7 +124,7 @@ def execute(filters=None):
 	columns.append({
 			"fieldname": "manufacturer2",
 			"label": "Fabricant",
-			"width": 100
+			"width": 180
 		})	
 	columns.append({
 			"fieldname": "prix_traite",
