@@ -387,8 +387,9 @@ def execute(filters=None):
 					
 		
 		all_prices = ""
-		array_price_lists = [a.name for a in price_lists]
-		allprices = frappe.db.sql("""select price_list,currency, price_list_rate from `tabItem Price` where selling=1 and   item_code=%s and price_list not in (%s) ORDER BY creation DESC ;""",(mri.item_code,array_price_lists), as_dict=1)
+		array_price_lists = {a.name for a in price_lists if a.name}
+		allprices = frappe.get_all("Item Price",filters={"item_code":mri.item_code,"selling":1,"price_list":("not in",array_price_lists)},fields=["price_list","currency", "price_list_rate"])
+		#"""select price_list,currency, price_list_rate from `tabItem Price` where selling=1 and   item_code=%s and price_list not in (%s) ORDER BY creation DESC ;""",(mri.item_code,array_price_lists), as_dict=1)
 		if allprices:
 			for i in allprices:
 				all_prices += "%s : %.2f %s - " % (i.price_list ,i.price_list_rate or 0,i.currency)
