@@ -397,7 +397,7 @@ frappe.query_reports["Etude des prix de vente"] = {
 			"fieldname": "with_qty",
 			"label": "Avec Qts",
 			"fieldtype": "Check",
-			"default": 1
+			"default": 0
 		}
 	],
 	onload: function(report) {
