@@ -92,6 +92,16 @@ def execute(filters=None):
 			"width": 200
 		})
 	columns.append({
+			"fieldname": "pond_valuation",
+			"label": "Taux valorisation Moyen HT",
+			"width": 250
+		})
+	columns.append({
+			"fieldname": "pond_valuation_ttc",
+			"label": "Taux valorisation Moyen TTC",
+			"width": 250
+		})
+	columns.append({
 			"fieldname": "last_valuation",
 			"label": "Derniere taux de valorisation HT",
 			"width": 250
@@ -107,24 +117,24 @@ def execute(filters=None):
 			"width": 250
 		})
 	columns.append({
-			"fieldname": "pond_valuation",
-			"label": "Taux valorisation Moyen HT",
-			"width": 250
+			"fieldname": "btn_info",
+			"label": "Info",
+			"width": 50
 		})
 	columns.append({
-			"fieldname": "pond_valuation_ttc",
-			"label": "Taux valorisation Moyen TTC",
-			"width": 250
-		})
+			"fieldname": "manufacturer2",
+			"label": "Fabricant",
+			"width": 100
+		})	
 	columns.append({
 			"fieldname": "prix_traite",
 			"label": "Etat Etude Prix",
-			"width": 250
+			"width": 120
 		})
 	columns.append({
 			"fieldname": "etid_traite",
 			"label": "Changer Etat",
-			"width": 250
+			"width": 120
 		})
 	
 	#item_code 
@@ -358,11 +368,13 @@ def execute(filters=None):
 			mri.last_purchase_rate  or 0,	
 			taux_change or 0,
 			charge or 0,
+			pond_valuation or 0,
+			pond_valuation_ttc or 0,
 			last_valuation or 0,
 			taux_taxe or 0,
 			val_ttc or 0,
-			pond_valuation or 0,
-			pond_valuation_ttc or 0,
+			"""<button   onClick="open_item_info('%s')" type='b'> info </button> &nbsp;&nbsp;&nbsp;""" % (mri.item_code),
+			mri.manufacturer,
 			prix_traite or '',
 			btn_prix_traite
 		]
