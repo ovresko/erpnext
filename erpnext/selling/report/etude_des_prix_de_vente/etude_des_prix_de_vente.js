@@ -396,7 +396,7 @@ frappe.query_reports["Etude des prix de vente"] = {
 	],
 	onload: function(report) {
 		var me = this;
-		report.page.add_inner_button("Convertir En Cours", function() {
+		report.page.add_inner_button("Convertir Tous En Cours", function() {
 			var data = report.data;
 			items = [];
 			data.forEach( (item) => {
