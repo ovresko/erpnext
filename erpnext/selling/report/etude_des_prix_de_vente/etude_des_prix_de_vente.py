@@ -153,7 +153,7 @@ def execute(filters=None):
 	#benefice
 
 	price_lists = []
-	price_lists= frappe.get_all("Price List",filters={"selling":1,"enabled":1},fields=["name","currency"])
+	price_lists= frappe.get_all("Price List",filters={"selling":1,"buying":0,"enabled":1},fields=["name","currency"])
 	if price_lists:
 		for pl in price_lists:
 			columns.append({
