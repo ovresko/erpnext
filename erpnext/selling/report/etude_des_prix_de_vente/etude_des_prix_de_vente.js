@@ -260,10 +260,10 @@ frappe.query_reports["Etude des prix de vente"] = {
 			value = "<div style='color: white;background-color: #008081;padding: 5px;'>" + value + "</div>";
 		}
 		if (data!=null && data["prix_traite"] &&  data["prix_traite"] == "Approuve" ) {
-			value = "<div style='color: white;background-color: #9FDEAC;padding: 5px;'>" + value + "</div>";
+			value = "<div style='black: white;background-color: #9FDEAC;padding: 5px;'>" + value + "</div>";
 		}
 		if (data!=null && data["prix_traite"] &&  data["prix_traite"] == "En cours" ) {
-			value = "<div style='color: white;background-color: #FFABA8;padding: 5px;'>" + value + "</div>";
+			value = "<div style='black: white;background-color: #FFABA8;padding: 5px;'>" + value + "</div>";
 		}
 		return value
 	},
