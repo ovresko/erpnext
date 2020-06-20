@@ -263,7 +263,7 @@ frappe.query_reports["Etude des prix de vente"] = {
 			value = "<div style='color:#008000;padding: 5px;'>" + value + "</div>";
 		}
 		if (data!=null && data['prix_traite'].includes("En cours")) {
-			value = "<div style='color: #ED2259;padding: 5px;'>" + value + "</div>";
+			value = "<div style='color: #610e24;padding: 5px;'>" + value + "</div>";
 		}
 		return value
 	},
