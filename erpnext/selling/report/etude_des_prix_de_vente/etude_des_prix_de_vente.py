@@ -152,9 +152,9 @@ def execute(filters=None):
 				"width": 450
 			})
 		columns.append({
-			"fieldname": "empty",
-			"label": "__",
-			"width": 100
+			"fieldname": "all_prices",
+			"label": "Tous les prix",
+			"width": 280
 		})
 
 	mris = []
@@ -384,6 +384,14 @@ def execute(filters=None):
 					row.append(itr)
 				else:
 					row.append("_")
+					
+		
+		all_prices = ""
+		allprices = frappe.db.sql("""select price_list,currency, price_list_rate from `tabItem Price` where selling=1 and (  item_code=%s) ORDER BY creation DESC ;""",(mri.item_code), as_dict=1)
+		if allprices:
+			for i in allprices:
+				all_prices += "%s : %.2f %s - " % (i.price_list ,i.price_list_rate or 0,i.currency)
+		row.append(all_prices)
 
 		data.append(row)
 		
