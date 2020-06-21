@@ -198,6 +198,7 @@ function open_item_info(item_code) {
 				}); 	
 	}
 
+
 function prix_target_item(data) {
 	var qty_id = 'prix_target_'+data;
 	var qty = $('#'+qty_id).val();
