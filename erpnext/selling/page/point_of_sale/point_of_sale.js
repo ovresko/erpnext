@@ -1393,6 +1393,8 @@ class POSCart {
 								<span class="hidden-xs">Véhicules Supportées</span>
 							</button>
 <br>
+							${prices}
+<br>
 							<table class="table table-bordered table-condensed">
 								<tr><td>${item.item_name}</td><td><img src="${item.image}"></td></tr>
 								<tr> 
