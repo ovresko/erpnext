@@ -1372,7 +1372,7 @@ class POSCart {
 	{
 		var me  = this;
 		frappe.call({
-				"method": "erpnext.accounts.doctype.pos_profile.pos_profile.get_item_info",
+				"method": "erpnext.selling.page.point_of_sale.point_of_sale.get_item_info",
 				"args": {
 					"item_code": item_code,
 					"price_list":me.frm.doc.selling_price_list
