@@ -305,6 +305,8 @@ def on_update_consultation(items,pname):
 	dms = []
 	for item in items:
 		try:
+			if (item.confirmation == "Annule" or item.confirmation == "Approuve") and resultat == "A Traite P1" and item.offre_fournisseur_initial != item.prix_fournisseur:
+				item.confirmation = "En cours"
 			if item.material_request:
 				dms.append(item.material_request)
 			if item.handled_cmd:
