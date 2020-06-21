@@ -22,7 +22,7 @@ def get_item_info(item_code,price_list):
 	prices = frappe.db.get_all("Item Price",filters={"item_code":item_code,"selling":1,"price_list":price_list},fields=["currency","name","price_list_rate","min_qty","price_list"])
 	if prices:
 		for p in prices:
-			text += "%s		Qts Min: +%s	Prix: %s %s" % (p.price_list,p.min_qty,p.price_list_rate,p.currency)
+			text += "<li>%s		Qts Min: +%s	Prix: %s %s </li>" % (p.price_list,p.min_qty,p.price_list_rate,p.currency)
 	res.update({'price':text})
 	return res
 	
