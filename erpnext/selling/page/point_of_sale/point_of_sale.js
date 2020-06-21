@@ -1393,7 +1393,7 @@ class POSCart {
 								<span class="hidden-xs">Véhicules Supportées</span>
 							</button>
 <br>
-							${prices}
+							<ul>${prices}</ul>
 <br>
 							<table class="table table-bordered table-condensed">
 								<tr><td>${item.item_name}</td><td><img src="${item.image}"></td></tr>
@@ -1735,13 +1735,15 @@ class POSItems {
 	open_item_info(item_code) {
 			var me  = this;
 			frappe.call({
-					"method": "frappe.client.get",
-					"args": {
-						"doctype": "Item",
-						"name": item_code
-					},
+				"method": "erpnext.selling.page.point_of_sale.point_of_sale.get_item_info",
+				"args": {
+					"item_code": item_code,
+					"price_list":me.frm.doc.selling_price_list
+				},
 					"callback": function(response) {
-						var item = response.message; 
+						 
+						var item = response.message["item"];
+						var prices = response.message["price"];
 						if (item) {
 							if(me.msg_information)
 							{
@@ -1754,6 +1756,7 @@ class POSItems {
 									<span class="hidden-xs">Véhicules Supportées</span>
 								</button>
 <br>
+<ul>${prices}</ul>
 								<table class="table table-bordered table-condensed">
 									<tr><td>${item.item_name}</td><td><img src="${item.image}"></td></tr>
 									<tr> 
