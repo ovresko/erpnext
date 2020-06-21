@@ -14,6 +14,19 @@ from six import string_types
 
 
 @frappe.whitelist()
+def get_item_info(item_code,price_list):
+	res = {}
+	item = frappe.client.get("Item",item_code)
+	res.update({'item':item})
+	text = ''
+	prices = frappe.db.get_all("Item Price",filters={"item_code":item_code,"selling":1,"price_list":price_list},fields=["currency","name","price_list_rate","min_qty","price_list"])
+	if prices:
+		for p in prices:
+			text += "%s		 %s	%s %s" % (p.price_list,p.min_qty,p.price_list_rate,p.currency)
+	res.update({'price':text})
+	return res
+	
+@frappe.whitelist()
 def print_address_magasin(items,pos_profile):
 	items = items.split(",")
 	warehouse = frappe.get_value("POS Profile",pos_profile,"warehouse")
