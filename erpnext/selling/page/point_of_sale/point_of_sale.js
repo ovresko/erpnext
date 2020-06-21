@@ -1372,13 +1372,15 @@ class POSCart {
 	{
 		var me  = this;
 		frappe.call({
-				"method": "frappe.client.get",
+				"method": "erpnext.accounts.doctype.pos_profile.pos_profile.get_item_info",
 				"args": {
-					"doctype": "Item",
-					"name": item_code
+					"item_code": item_code,
+					"price_list":me.frm.doc.selling_price_list
 				},
 				"callback": function(response) {
-					var item = response.message; 
+					var item = response.message["item"];
+					var prices = response.message["price"];
+					console.log("price",prices);
 					if (item) {
 						if(me.msg_information)
 						{
@@ -1448,6 +1450,7 @@ class POSCart {
 
 							`,"Détails Article"
 							);
+						 
 							$(me.msg_information.body).find('.btn-versions-list').on('click', () => {
 
 							frappe.call({
