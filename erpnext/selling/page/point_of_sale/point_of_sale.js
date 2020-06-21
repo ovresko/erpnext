@@ -1393,7 +1393,7 @@ class POSCart {
 								<span class="hidden-xs">Véhicules Supportées</span>
 							</button>
 <br>
-							<ul>${prices}</ul>
+							<ul style='padding:20px'>${prices}</ul>
 <br>
 							<table class="table table-bordered table-condensed">
 								<tr><td>${item.item_name}</td><td><img src="${item.image}"></td></tr>
@@ -1756,7 +1756,7 @@ class POSItems {
 									<span class="hidden-xs">Véhicules Supportées</span>
 								</button>
 <br>
-<ul>${prices}</ul>
+<ul  style='padding:20px'>${prices}</ul>
 								<table class="table table-bordered table-condensed">
 									<tr><td>${item.item_name}</td><td><img src="${item.image}"></td></tr>
 									<tr> 
