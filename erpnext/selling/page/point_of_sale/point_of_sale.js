@@ -1985,7 +1985,7 @@ class POSItems {
 
 				<div class="item-group-parent-field" style="width: 20%;margin-left: 10px;display:none">
 				</div>
-				<button  data-label="return" class="btn btn-default btn-xs btn btn-return-item-group-parent" style="margin: 20px 5px 10px 5px;"><i class="fa fa-trash-o"></i></button>
+				<button  data-label="return" class="btn btn-default btn-xs btn btn-return-item-group-parent" style="margin: 20px 5px 10px 5px;display:none"><i class="fa fa-trash-o"></i></button>
 
 
 				<div class="item-group-field" style="width: 20%;margin-left: 10px;">
