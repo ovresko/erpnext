@@ -2667,7 +2667,7 @@ class POSItems {
 		if(start){
 			start = start * page_length;	
 		}
-		const item_group = this.item_group ;
+		let item_group = this.item_group ;
 		//console.log(item_group +" "+search_value +" "+this.item_manufacturer  +" "+this.vehicule_marque   +" "+  this.vehicule_modele+" "+ this.item_oem +" "+ this.item_modele +" "+this.vehicule_generation +" "+this.vehicule_version+" "+ this.item_group_parent);
 		if(!search_value && !this.item_manufacturer && !this.vehicule_marque && !this.vehicule_modele
 		   && !this.item_oem && !this.item_modele && !this.vehicule_generation && !this.vehicule_version )
