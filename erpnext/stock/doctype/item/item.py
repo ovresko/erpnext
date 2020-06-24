@@ -15,7 +15,7 @@ from erpnext.controllers.item_variant import (ItemVariantExistsError,
 		copy_attributes_to_variant, get_variant, make_variant_item_code, validate_item_variant_attributes)
 from erpnext.setup.doctype.item_group.item_group import (get_parent_item_groups, invalidate_cache_for)
 from frappe import _, msgprint
-from frappe.utils import (cint, cstr, flt, formatdate, get_timestamp, getdate,
+from frappe.utils import (nowdate, cint, cstr, flt, formatdate, get_timestamp, getdate,
 						  now_datetime, random_string, strip)
 from frappe.utils.html_utils import clean_html
 from frappe.website.doctype.website_slideshow.website_slideshow import \
