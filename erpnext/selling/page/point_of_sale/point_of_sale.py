@@ -232,6 +232,8 @@ def get_items(start, page_length, price_list, item_group, search_value="", pos_p
 	data = dict()
 	warehouse = ""
 	display_items_in_stock = 0
+	lft = ''
+	rgt = ''
 
 	if pos_profile:
 		warehouse, display_items_in_stock = frappe.db.get_value('POS Profile', pos_profile, ['warehouse', 'display_items_in_stock'])
