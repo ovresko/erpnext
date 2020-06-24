@@ -123,6 +123,7 @@ erpnext.pos.PointOfSale = class PointOfSale {
 	}
 
 	make_cart() {
+		 
 		this.cart = new POSCart({
 			frm: this.frm,
 			wrapper: this.wrapper.find('.cart-container'),
@@ -130,8 +131,36 @@ erpnext.pos.PointOfSale = class PointOfSale {
 				 
 				on_customer_change: (customer) => {
 					this.frm.set_value('customer', customer);
-					this.cart.reset();
-					this.items.reset_search_field();
+					this.$cart_items.find('.list-item').remove();
+					this.$empty_state.show();
+					this.$taxes_and_totals.html(this.get_taxes_and_totals());
+					this.numpad && this.numpad.reset_value();
+					 
+					this.frm.msgbox = "";
+
+					let total_item_qty = 0.0;
+					this.frm.set_value("pos_total_qty",total_item_qty);
+
+					this.$discount_amount.find('input:text').val('');
+					this.wrapper.find('.grand-total-value').text(
+						format_currency(this.frm.doc.grand_total, this.frm.currency,0));
+					this.wrapper.find('.rounded-total-value').text(
+						format_currency(this.frm.doc.rounded_total, this.frm.currency,0));
+					this.$qty_total.find(".quantity-total").text(total_item_qty);
+
+					 
+
+					if (this.numpad) {
+						const disable_btns = this.disable_numpad_control()
+						const enable_btns = [__('Rate'), __('Disc')]
+
+						if (disable_btns) {
+							enable_btns.filter(btn => !disable_btns.includes(btn))
+						}
+
+						this.numpad.enable_buttons(enable_btns);
+					}
+					//this.items.reset_search_field();
 					//if(this.items && this.frm.doc.pos_profile) {
 					//	this.items.reset_items();
 					//}
