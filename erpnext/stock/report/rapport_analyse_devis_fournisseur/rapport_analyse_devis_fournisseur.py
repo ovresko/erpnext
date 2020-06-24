@@ -660,7 +660,7 @@ def execute(filters=None):
 			_date = _recom[0].modified
 				#date = frappe.utils.get_datetime(date).strftime("%d/%m/%Y")
 
-		comp = """<button   onClick="open_item_info('%s')" type='b'> info </button>""" % (mri.item_code)
+		comp = """<input type='button' onclick="erpnext.utils.open_item_info('%s', this)" value='info'>  </input>""" % (mri.item_code)
 		if len(mri.item_code) == 11 and mri.item_code not in _models:
 			comp = None
 		if is_full:
