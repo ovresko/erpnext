@@ -28,6 +28,11 @@ def execute(filters=None):
 			"width": 100
 		})
 	columns.append({
+			"fieldname": "info",
+			"label": "info",
+			"width": 100
+		})
+	columns.append({
 			"fieldname": "item_code",
 			"label": _("Item Code"),
 			"width": 150
@@ -665,6 +670,7 @@ def execute(filters=None):
 			comp = None
 		if is_full:
 			row = ["""<input type='button' onclick="erpnext.utils.open_item_info('%s', this)" value='info'>  </input>""" % (mri.item_code),
+			       """<input type='button' onclick="erpnext.utils.open_item_info('%s', this)" value='info'>  </input>""" % (mri.item_code),
 			       mri.item_code,
 			       #date
 			       date,
@@ -757,6 +763,7 @@ def execute(filters=None):
 			      ]
 		else:
 			row = ["""<input type='button' onclick="erpnext.utils.open_item_info('%s', this)" value='info'>  </input>""" % (mri.item_code),
+			       """<input type='button' onclick="erpnext.utils.open_item_info('%s', this)" value='info'>  </input>""" % (mri.item_code),
 			       mri.item_code,
 			       #date
 			       date,
