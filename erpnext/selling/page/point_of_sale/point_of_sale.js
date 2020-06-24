@@ -796,6 +796,8 @@ class POSCart {
 		this.$btn_commander = this.wrapper.find('.btn-commander');
 		this.$btn_devis = this.wrapper.find('.btn-devis');
 		this.$btn_address_magasin = this.wrapper.find('.btn-address-magasin');
+		this.$btn_payer = this.wrapper.find('.btn-payer');
+
 		// this.$loyalty_button = this.wrapper.find('.loyalty-button');
 
 		// this.$loyalty_button.on('click', () => {
@@ -823,6 +825,19 @@ class POSCart {
 		this.$btn_commander.on('click', () => {
 			 
 			me.cree_commande();
+		});
+		
+		this.$btn_payer.on('click', () => {	
+			if (!me.payment) {
+				me.make_payment_modal();
+			} else {
+				me.frm.doc.payments.map(p => {
+					me.payment.dialog.set_value(p.mode_of_payment, p.amount);
+				});
+
+				me.payment.set_title();
+			}
+			me.payment.open_modal();
 		});
 		
 		
