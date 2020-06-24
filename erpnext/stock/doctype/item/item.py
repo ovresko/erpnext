@@ -1166,6 +1166,7 @@ def get_item_attribute(parent, attribute_value=''):
 @frappe.whitelist()
 def set_item_demande(item_code,qty):
 	if item_code and qty:
+		qty = flt(qty)
 		company = frappe.db.get_single_value('Global Defaults', 'default_company')
 		mr = frappe.new_doc("Material Request")
 		mr.update({
