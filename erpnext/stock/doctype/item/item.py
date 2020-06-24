@@ -1166,18 +1166,39 @@ def get_item_attribute(parent, attribute_value=''):
 @frappe.whitelist()
 def set_item_demande(item_code,qty):
 	if item_code and qty:
+		company = frappe.db.get_single_value('Global Defaults', 'default_company')
+		mr = frappe.new_doc("Material Request")
+		mr.update({
+			"company": company,
+			"transaction_date": nowdate(),
+			"material_request_type": "Purchase"
+		})
 		item = frappe.get_doc("Item",item_code)
-		if item:
-			if qty == '0':
-				item.recom_qts = -1
-				item.recom_minimum = -1
-				item.save()
-				return "Recommande supprime"
-			else:
-				item.recom_qts = qty
-				item.recom_minimum = int(float(qty) * float(0.1))
-				item.save()
-				return "Qts enregistree"
+		uom = item.stock_uom
+		conversion_factor = 1.0
+
+		uom = item.purchase_uom or item.stock_uom
+		if uom != item.stock_uom:
+			conversion_factor = frappe.db.get_value("UOM Conversion Detail",
+				{'parent': item.name, 'uom': uom}, 'conversion_factor') or 1.0
+
+		mr.append("items", {
+			"doctype": "Material Request Item",
+			"item_code": item.item_code,
+			"schedule_date": nowdate(),
+			"qty": qty / conversion_factor,
+			"uom": uom,
+			"stock_uom": item.stock_uom,
+			"warehouse": "GLOBAL - MV",
+			"item_name": item.item_name,
+			"description": item.description,
+			"item_group": item.item_group,
+			"brand": item.brand,
+		})
+
+		mr.schedule_date = nowdate()
+		mr.insert()
+		mr.submit()
 
 @frappe.whitelist()
 def set_item_achat(item_code):
