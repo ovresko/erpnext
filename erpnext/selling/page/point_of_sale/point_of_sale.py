@@ -239,7 +239,7 @@ def get_items(start, page_length, price_list, item_group, search_value="", pos_p
 	if parent_item_group:
 		lft, rgt = frappe.db.get_value('Item Group', parent_item_group, ['lft', 'rgt'])
 	
-	if not frappe.db.exists('Item Group', item_group):
+	if not item_group or not frappe.db.exists('Item Group', item_group):
 		item_group = get_root_of('Item Group')
 	else:
 		lft, rgt = frappe.db.get_value('Item Group', item_group, ['lft', 'rgt'])
