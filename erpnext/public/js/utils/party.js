@@ -36,8 +36,8 @@ erpnext.utils.open_item_info =  function(item_code,me) {
 					//me.msg_information = 
 						//frappe.msgprint(
 					var _modal =
-						`<div id="MyPopup" class="modal fade" role="dialog">
-
+						`<div id="MyPopup" class="modal fade modal-dialog" role="dialog">
+						<div class="modal-content"> 
 						<button type="button" data-item-code="${item_code}" class="btn btn-primary btn-sm btn-versions-list" > 
 							<span class="hidden-xs">Véhicules Supportées</span>
 						</button>
@@ -98,7 +98,8 @@ erpnext.utils.open_item_info =  function(item_code,me) {
 						<div>${item.composant_text || ''}</div>
 						<hr>
 
-                        </div>
+                        	</div> 
+			</div>
                         `;
                         $(_modal).modal();
 
