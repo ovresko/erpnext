@@ -1428,192 +1428,7 @@ class POSCart {
 		const scrollTop = $item.offset().top - this.$cart_items.offset().top + this.$cart_items.scrollTop();
 		this.$cart_items.animate({ scrollTop });
 	}
-
-	open_item_info(item_code)
-	{
-		var me  = this;
-		frappe.call({
-				"method": "erpnext.selling.page.point_of_sale.point_of_sale.get_item_info",
-				"args": {
-					"item_code": item_code,
-					"price_list":me.frm.doc.selling_price_list
-				},
-				"callback": function(response) {
-					var item = response.message["item"];
-					var prices = response.message["price"];
-					console.log("price",prices);
-					if (item) {
-						if(me.msg_information)
-						{
-							$(me.msg_information).remove();
-							me.msg_information = null;
-						}
-						me.msg_information = frappe.msgprint(
-							`
-							<button type="button" data-item-code="${item_code}" class="btn btn-primary btn-sm btn-versions-list" > 
-								<span class="hidden-xs">Véhicules Supportées</span>
-							</button>
-<br>
-							<ul style='padding:20px'>${prices}</ul>
-<br>
-							<table class="table table-bordered table-condensed">
-								<tr><td>${item.item_name}</td><td><img src="${item.image}"></td></tr>
-								<tr> 
-									<td>
-										<label>${item.item_code}</label>
-									</td>
-									<td>
-										<label>${item.manufacturer_part_no}</label>
-									</td>
-								</tr> 
-							</table>
-
-							<table class="table table-bordered table-condensed">
-								<tr> 
-									<td>
-										<label>OEM</label>
-									</td>
-									<td>
-										${item.oem_text}
-									</td>
-									<td></td>
-								</tr>
-								<tr> 
-									<td>
-										<label>Fabricant</label>
-									</td>
-									<td>
-										${item.manufacturer}
-									</td>
-									<td>
-										<img src="${item.fabricant_logo}">
-									</td>
-								</tr>
-								<tr> 
-									<td>
-										<label>Critére</label>
-									</td>
-									<td>
-										${item.critere_text || ''}
-									</td>
-									<td>
-
-									</td>
-								</tr>
-							</table>
-
-							<hr>	
-							<label>Complementent </label>
-							<div>${item.articles_text || ''}</div>
-							<hr>	
-							<label>Composants </label>
-							<div>${item.composant_text || ''}</div>
-							<hr>
-
-
-							`,"Détails Article"
-							);
-						 
-							$(me.msg_information.body).find('.btn-versions-list').on('click', () => {
-
-							frappe.call({
-								"method": "erpnext.selling.page.point_of_sale.point_of_sale.get_vehicule_details",
-								"args": {
-									"item_code": item_code
-								},
-								"callback": function(response) {
-									var item = response.message; 
-									if (item) {
-
-
-										var versions = item[0];
-										var generations = item[1];
-										var modeles = item[2];
-										var marques = item[3];
-
-										var html = '';
-										html += `<label>Versions: </label><table class="table table-bordered table-condensed">`;
-										for (const _v in versions) {
-
-											let v = versions[_v];
-
-											html += `<tr>`;
-											html += ` 
-												<td> ${v.version_vehicule || ''}<br>${v.marque_vehicule || ''} </td>
-
-												<td> ${v.nom_version || ''}  </td>
-												<td  style="width:100px"> ${v.periode || ''}</td>
-												<td> ${v.critere || ''}  ${v.valeur_1 || ''} <br> ${v.critere_1 || ''}  ${v.valeur_2 || ''} <br> ${v.critere_2 || ''}  ${v.valeur_3 || ''} <br>  </td>
-											`;
-											html += `</tr>`;
-										}
-										html += `</table>`;
-
-										var html_generations = '';
-										html_generations += `<label>Generations: </label><table class="table table-bordered table-condensed">`;
-										for (const _v in generations) {
-
-											let v = generations[_v];
-											 let d = (v.date_debut || '').substring(5,7)+'-'+(v.date_debut || '').substring(2,4)
-											 let f = (v.date_fin || '').substring(5,7)+'-'+(v.date_fin || '').substring(2,4)
-											html_generations += `<tr>`;
-											html_generations += ` 
-												<td> ${v.nom_marque || ''} </td>	
-												<td> ${v.nom_generation || ''} </td>
-												<td style="width:100px"> (${d || ''} ${f || ''}) </td>
-												<td> ${v.critere || ''}  ${v.valeur_1 || ''} <br> ${v.critere_1 || ''}  ${v.valeur_2 || ''} <br> ${v.critere_2 || ''}  ${v.valeur_3 || ''} <br>  </td>
-											`;
-											html_generations += `</tr>`;
-										}
-										html_generations += `</table>`;
-
-										var html_modeles = '';
-										html_modeles += `<label>Modeles: </label><table class="table table-bordered table-condensed">`;
-										for (const _v in modeles) {
-
-											let v = modeles[_v];
-
-											html_modeles += `<tr>`;
-											html_modeles += ` 
-												<td> ${v.nom_modele || ''} </td>
-												<td> ${v.nom_marque || ''} </td>
-											`;
-											html_modeles += `</tr>`;
-										}
-										html_modeles += `</table>`;
-
-										var html_marques = '';
-										html_marques += `<label>Marques: </label><table class="table table-bordered table-condensed">`;
-										for (const _v in marques) {
-
-											let v = marques[_v];
-
-											html_marques += `<tr>`;
-											html_marques += ` 
-												<td> ${v.marque || ''} </td>
-											`;
-											html_marques += `</tr>`;
-										}
-										html_marques += `</table>`;
-
-										frappe.msgprint(`
-											${html}
-											${html_generations}
-											${html_modeles}
-											${html_marques}
-										`);
-
-									}
-									}
-
-								});
-
-						});
-
-					}  
-				}
-			}); 
-	}
+ 
 	
 	bind_events() {
 		const me = this;
@@ -1691,7 +1506,8 @@ class POSCart {
 			 event.stopPropagation();
 			const $item = $(this);
 			const item_code = unescape($item.attr('data-item-code'));
-			me.open_item_info(item_code);
+			erpnext.utils.open_item_info(item_code,me.frm);
+			//me.open_item_info(item_code);
 				 
 		});
 		
@@ -1792,190 +1608,7 @@ class POSItems {
 		this.init_clusterize();
 		this.load_items_data();
 	}
-	
-	open_item_info(item_code) {
-			var me  = this;
-			frappe.call({
-				"method": "erpnext.selling.page.point_of_sale.point_of_sale.get_item_info",
-				"args": {
-					"item_code": item_code,
-					"price_list":me.frm.doc.selling_price_list
-				},
-					"callback": function(response) {
-						 
-						var item = response.message["item"];
-						var prices = response.message["price"];
-						if (item) {
-							if(me.msg_information)
-							{
-								$(me.msg_information).remove();
-								me.msg_information = null;
-							}
-							me.msg_information = frappe.msgprint(
-								`
-								<button type="button" data-item-code="${item_code}" class="btn btn-primary btn-sm btn-versions-list" > 
-									<span class="hidden-xs">Véhicules Supportées</span>
-								</button>
-<br>
-<ul  style='padding:20px'>${prices}</ul>
-								<table class="table table-bordered table-condensed">
-									<tr><td>${item.item_name}</td><td><img src="${item.image}"></td></tr>
-									<tr> 
-										<td>
-											<label>${item.item_code}</label>
-										</td>
-										<td>
-											<label>${item.manufacturer_part_no}</label>
-										</td>
-									</tr> 
-								</table>
- 
-								<table class="table table-bordered table-condensed">
-									<tr> 
-										<td>
-											<label>OEM</label>
-										</td>
-										<td>
-											${item.oem_text}
-										</td>
-										<td></td>
-									</tr>
-
-									<tr> 
-										<td>
-											<label>Fabricant</label>
-										</td>
-										<td>
-											${item.manufacturer}
-										</td>
-										<td>
-											<img src="${item.fabricant_logo}">
-										</td>
-									</tr>
-									<tr> 
-										<td>
-											<label>Critére</label>
-										</td>
-										<td>
-											${item.critere_text || ''}
-										</td>
-										<td>
-											
-										</td>
-									</tr>
-								</table>
-								
-								<hr>	
-								<label>Complementent </label>
-								<div>${item.articles_text || ''}</div>
-								<hr>	
-								<label>Composants </label>
-								<div>${item.composant_text || ''}</div>
-								<hr>
- 
-									
-								`,"Détails Article"
-								);
-								$(me.msg_information.body).find('.btn-versions-list').on('click', () => {
-									  
-								frappe.call({
-									"method": "erpnext.selling.page.point_of_sale.point_of_sale.get_vehicule_details",
-									"args": {
-										"item_code": item_code
-									},
-									"callback": function(response) {
-										var item = response.message; 
-										if (item) {
-											
-											
-											var versions = item[0];
-											var generations = item[1];
-											var modeles = item[2];
-											var marques = item[3];
-											
-											var html = '';
-											html += `<label>Versions: </label><table class="table table-bordered table-condensed">`;
-											for (const _v in versions) {
-												
-												let v = versions[_v];
-												 
-												html += `<tr>`;
-												html += ` 
-													<td> ${v.version_vehicule || ''}<br>${v.marque_vehicule || ''} </td>
-													 
-													<td> ${v.nom_version || ''}  </td>
-													<td  style="width:100px"> ${v.periode || ''}</td>
-													<td> ${v.critere || ''}  ${v.valeur_1 || ''} <br> ${v.critere_1 || ''}  ${v.valeur_2 || ''} <br> ${v.critere_2 || ''}  ${v.valeur_3 || ''} <br>  </td>
-												`;
-												html += `</tr>`;
-											}
-											html += `</table>`;
-											
-											var html_generations = '';
-											html_generations += `<label>Generations: </label><table class="table table-bordered table-condensed">`;
-											for (const _v in generations) {
-												
-												let v = generations[_v];
-												 let d = (v.date_debut || '').substring(5,7)+'-'+(v.date_debut || '').substring(2,4)
-												 let f = (v.date_fin || '').substring(5,7)+'-'+(v.date_fin || '').substring(2,4)
-												html_generations += `<tr>`;
-												html_generations += ` 
-													<td> ${v.nom_marque || ''} </td>	
-													<td> ${v.nom_generation || ''} </td>
-													<td style="width:100px"> (${d || ''} ${f || ''}) </td>
-													<td> ${v.critere || ''}  ${v.valeur_1 || ''} <br> ${v.critere_1 || ''}  ${v.valeur_2 || ''} <br> ${v.critere_2 || ''}  ${v.valeur_3 || ''} <br>  </td>
-												`;
-												html_generations += `</tr>`;
-											}
-											html_generations += `</table>`;
-											
-											var html_modeles = '';
-											html_modeles += `<label>Modeles: </label><table class="table table-bordered table-condensed">`;
-											for (const _v in modeles) {
-												
-												let v = modeles[_v];
-												 
-												html_modeles += `<tr>`;
-												html_modeles += ` 
-													<td> ${v.nom_modele || ''} </td>
-													<td> ${v.nom_marque || ''} </td>
-												`;
-												html_modeles += `</tr>`;
-											}
-											html_modeles += `</table>`;
-											
-											var html_marques = '';
-											html_marques += `<label>Marques: </label><table class="table table-bordered table-condensed">`;
-											for (const _v in marques) {
-												
-												let v = marques[_v];
-												 
-												html_marques += `<tr>`;
-												html_marques += ` 
-													<td> ${v.marque || ''} </td>
-												`;
-												html_marques += `</tr>`;
-											}
-											html_marques += `</table>`;
-											 
-											frappe.msgprint(`
-												${html}
-												${html_generations}
-												${html_modeles}
-												${html_marques}
-											`);
-										
-										}
-										}
-								
-									});
-										 
-							});
-							 
-						}  
-					}
-				}); 	
-	}
+	 
 
 	make_dom() {
 		this.wrapper.html(`
@@ -2731,7 +2364,8 @@ class POSItems {
 			 event.stopPropagation();
 			const $item = $(this);
 			const item_code = unescape($item.attr('data-item-code'));
-			me.open_item_info(item_code);
+			erpnext.utils.open_item_info(item_code,me.frm);
+			//me.open_item_info(item_code);
 				
 		});
 		
@@ -3006,7 +2640,7 @@ class POSItems {
 						</button>
 						<button data-item-code="${item_code}" data-label="complement" class="btn btn-default btn-xs btn-complement" style="margin-right: 5px;">CPL
 						</button>
-						<button data-item-code="${item_code}" data-label="information"   onclick="erpnext.utils.open_item_info('${item_code}', ${this})"
+						<button data-item-code="${item_code}" data-label="information"   onclick="erpnext.utils.open_item_info('${item_code}', ${this.frm})"
 						class="btn btn-default btn-xs  " style="margin-right: 5px;"><i class="fa fa-question"></i>
 						</button>
 						<button data-item-code="${item_code}" data-label="add" class="btn btn-success btn-xs btn-add" style="margin-right: 5px;"><i class="fa fa-shopping-cart"></i></button>
