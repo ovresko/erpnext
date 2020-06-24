@@ -1972,16 +1972,16 @@ class POSItems {
 					</div>
  				<button  data-label="return" class="btn btn-default btn-xs btn btn-return-vehicule" style="margin: 20px 5px 10px 5px;"><i class="fa fa-trash-o"></i></button>
 
-				<div class="item-group-parent-field" style="width: 20%;margin-left: 10px;display:none">
+				<div class="item-group-parent-field" style="width: 100%;margin-left: 10px;display:none">
 				</div>
 				<button  data-label="return" class="btn btn-default btn-xs btn btn-return-item-group-parent" style="margin: 20px 5px 10px 5px;display:none"><i class="fa fa-trash-o"></i></button>
  
-				<div class="item-group-field" style="width: 20%;margin-left: 10px;">
+				<div class="item-group-field" style="width: 100%;margin-left: 10px;">
 				</div>
 				<button  data-label="return" class="btn btn-default btn-xs btn btn-return-item-group" style="margin: 20px 5px 10px 5px;"><i class="fa fa-trash-o"></i></button>
 
 				
-				<div class="item-manufacturer-field" style="width: 20%;margin-left: 10px;">
+				<div class="item-manufacturer-field" style="width: 100%;margin-left: 10px;">
 				</div>
 				<button  data-label="return" class="btn btn-default btn-xs btn btn-return-manufacturer" style="margin: 20px 5px 10px 5px;"><i class="fa fa-trash-o"></i></button>
 				
@@ -1992,9 +1992,9 @@ class POSItems {
 				</div>
 
 
-				<div class="item-modele-field" style="width:100% ">
+				<div class="item-modele-field" style="width:20% ">
 					</div> 
-				<div class="item-oem-field" style="width:100% ">
+				<div class="item-oem-field" style="width:20% ">
 					</div> 
  				<button  data-label="return" class="btn btn-default btn-xs btn btn-return-oem" style="margin: 20px 5px 10px 5px;"><i class="fa fa-trash-o"></i></button>
 
