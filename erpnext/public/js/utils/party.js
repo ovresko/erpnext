@@ -35,13 +35,9 @@ erpnext.utils.open_item_info =  function(item_code,me) {
 
 					//me.msg_information = 
 						//frappe.msgprint(
-					var _modal =
-						`
 					
- 
-   
-<div id="MyPopup" class="modal fade" role="dialog" style="width:750px;margin:auto;padding:20px">
-
+					var _modal =
+						` 
 						<button type="button" data-item-code="${item_code}" class="btn btn-primary btn-sm btn-versions-list" > 
 							<span class="hidden-xs">Véhicules Supportées</span>
 						</button>
@@ -101,13 +97,13 @@ erpnext.utils.open_item_info =  function(item_code,me) {
 						<label>Composants </label>
 						<div>${item.composant_text || ''}</div>
 						<hr>
-  			</div>
+  			 
                         `;
-                        $(_modal).modal();
-
-						//$(me.msg_information.body).find('.btn-versions-list').on('click', () => {
-						$('.btn-versions-list').on('click', () => {
-
+					frappe.msgprint(_modal,"Details Article");	
+                       			// $(_modal).modal();
+					//$(me.msg_information.body).find('.btn-versions-list').on('click', () => {
+					
+					$('.btn-versions-list').on('click', () => {
 						frappe.call({
 							"method": "erpnext.selling.page.point_of_sale.point_of_sale.get_vehicule_details",
 							"args": {
