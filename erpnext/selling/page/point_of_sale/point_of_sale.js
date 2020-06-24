@@ -2445,7 +2445,7 @@ class POSItems {
 		}
 		   if (search_term) {
 			search_term = search_term.toLowerCase();
-
+		   }
 			// memoize
 			this.search_index = this.search_index || {};
 			//if (this.search_index[search_term]
@@ -2635,8 +2635,8 @@ class POSItems {
 			console.log("keyw",keyw);
 			me.start = 0;
 			me.filter_items({ start:me.start,search_term: keyw});
-			
 		});
+		
 		//btn-remove-pagination
 		this.wrapper.on('click', '.btn-remove-pagination', function(event) {
 			 
