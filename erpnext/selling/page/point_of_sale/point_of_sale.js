@@ -2629,7 +2629,7 @@ class POSItems {
 		
 		//btn-dosearch
 		this.wrapper.on('click', '.btn-dosearch', function(event) {
-			var $search_field = this.wrapper.find('.search-field');
+			var $search_field = me.wrapper.find('.search-field');
 			 var keyw = $search_field.find('input:text').val();
 			console.log("keyw",keyw);
 			me.start = 0;
