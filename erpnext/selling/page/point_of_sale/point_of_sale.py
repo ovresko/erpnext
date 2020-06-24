@@ -278,7 +278,7 @@ def get_items(start, page_length, price_list, item_group, search_value="", pos_p
 
 	group_filter = ''
 	if item_group:
-		group_filter ="""and i.item_group in (select name from `tabItem Group` where lft >= {lft} and rgt <= {rgt})"""
+		group_filter ="""and i.item_group in (select name from `tabItem Group` where lft >= {lft} and rgt <= {rgt})""".format(lft=lft, rgt=rgt)
 	# locate function is used to sort by closest match from the beginning of the value
 
 
