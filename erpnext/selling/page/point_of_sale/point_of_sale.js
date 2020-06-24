@@ -130,6 +130,10 @@ erpnext.pos.PointOfSale = class PointOfSale {
 				 
 				on_customer_change: (customer) => {
 					this.frm.set_value('customer', customer);
+					this.reset_cart();
+					if(this.items && frm.doc.pos_profile) {
+						this.items.reset_items();
+					}
 				},
 				on_field_change: (item_code, field, value, batch_no) => {
 					this.update_item_in_cart(item_code, field, value, batch_no);
