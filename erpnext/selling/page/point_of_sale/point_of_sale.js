@@ -724,8 +724,15 @@ class POSCart {
 
 					</div>
 				</div>
-
-				<div class="cart-search">
+				<div class="fields">
+					<div class="cart-search" style="width:60%">
+					</div>
+					<div class="cart-search" style="width:40%">
+						<button  data-label="commander" class="btn btn-default btn btn-payer brand-primary" style="margin-right: 5px;">Payer</button>
+						<button  data-label="commander" class="btn btn-default btn btn-commander" style="margin-right: 5px;">Commander</button>
+				
+					</div>
+						
 				</div>
 				<div class="cart-wrapper">
 					<div class="list-item-table">
@@ -1963,32 +1970,32 @@ class POSItems {
 					</div>
 				<div class="vehicule-version-field" style="width:100% ">
 					</div>
- 				<button  data-label="return" class="btn btn-default btn-xs btn btn-return-vehicule" style="margin: 18px 3px;"><i class="fa fa-trash-o"></i></button>
+ 				<button  data-label="return" class="btn btn-default btn-xs btn btn-return-vehicule" style="margin: 20px 5px 10px 5px;"><i class="fa fa-trash-o"></i></button>
 
 				<div class="item-modele-field" style="width:100% ">
 					</div> 
 				<div class="item-oem-field" style="width:100% ">
 					</div> 
- 				<button  data-label="return" class="btn btn-default btn-xs btn btn-return-oem" style="margin: 18px 3px;"><i class="fa fa-trash-o"></i></button>
+ 				<button  data-label="return" class="btn btn-default btn-xs btn btn-return-oem" style="margin: 20px 5px 10px 5px;"><i class="fa fa-trash-o"></i></button>
 
 			</div>
 			<div class="fields">
 				<div class="search-field">
 				</div>
 
-				<div class="item-group-parent-field" style="width: 20%;margin-left: 10px;">
+				<div class="item-group-parent-field" style="width: 20%;margin-left: 10px;display:none">
 				</div>
-				<button  data-label="return" class="btn btn-default btn-xs btn btn-return-item-group-parent" style="margin: 18px 3px;"><i class="fa fa-trash-o"></i></button>
+				<button  data-label="return" class="btn btn-default btn-xs btn btn-return-item-group-parent" style="margin: 20px 5px 10px 5px;"><i class="fa fa-trash-o"></i></button>
 
 
 				<div class="item-group-field" style="width: 20%;margin-left: 10px;">
 				</div>
-				<button  data-label="return" class="btn btn-default btn-xs btn btn-return-item-group" style="margin: 18px 3px;"><i class="fa fa-trash-o"></i></button>
+				<button  data-label="return" class="btn btn-default btn-xs btn btn-return-item-group" style="margin: 20px 5px 10px 5px;"><i class="fa fa-trash-o"></i></button>
 
 				
 				<div class="item-manufacturer-field" style="width: 20%;margin-left: 10px;">
 				</div>
-				<button  data-label="return" class="btn btn-default btn-xs btn btn-return-manufacturer" style="margin: 18px 3px;"><i class="fa fa-trash-o"></i></button>
+				<button  data-label="return" class="btn btn-default btn-xs btn btn-return-manufacturer" style="margin: 20px 5px 10px 5px;"><i class="fa fa-trash-o"></i></button>
 
 			</div>
 			<div class="items-wrapper">
