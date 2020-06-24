@@ -283,8 +283,8 @@ def get_items(start, page_length, price_list, item_group, search_value="", pos_p
 	if display_items_in_stock == 0:
 		res = frappe.db.sql("""select i.name as item_code,item_adr.adresse,item_adr.warehouse,i.nbr_variante ,i.designation_commerciale,i.variant_of,i.has_variants, i.item_name, i.image as item_image, i.idx as idx,i.clean_manufacturer_part_number, i.composant_text,i.articles_text,
 			i.is_stock_item, item_det.price_list_rate, item_det.currency, i.oem_text,i.titre_article,i.manufacturer,i.manufacturer_part_no,i.fabricant_logo,i.critere_text ,item_bin.actual_qty
-			from `tabItem` i LEFT JOIN (select item_code, price_list_rate, currency from
-					`tabItem Price`	where min_qty=0 and price_list=%(price_list)s  limit 1) item_det
+			from `tabItem` i LEFT JOIN (select item_code, price_list_rate,min_qty, currency from
+					`tabItem Price`	where min_qty=0 and price_list=%(price_list)s  ) item_det
 			ON
 				(item_det.item_code=i.name or item_det.item_code=i.variant_of)
 			LEFT JOIN (select item_code, actual_qty, warehouse from
@@ -312,8 +312,8 @@ def get_items(start, page_length, price_list, item_group, search_value="", pos_p
 		query = """select i.name as item_code,i.variant_of,item_adr.adresse,item_adr.warehouse,i.designation_commerciale,i.nbr_variante ,i.has_variants, i.item_name, i.image as item_image, i.idx as idx,i.clean_manufacturer_part_number,i.composant_text,i.articles_text,
 				i.is_stock_item, item_det.price_list_rate, item_det.currency, i.oem_text,i.titre_article,i.manufacturer,i.manufacturer_part_no,i.fabricant_logo , i.critere_text  
 				from `tabItem` i LEFT JOIN
-					(select item_code, price_list_rate, currency from
-						`tabItem Price`	where  min_qty=0 and price_list=%(price_list)s limit 1) item_det
+					(select item_code, price_list_rate,min_qty, currency from
+						`tabItem Price`	where  min_qty=0 and price_list=%(price_list)s  ) item_det
 				ON
 					(item_det.item_code=i.name or item_det.item_code=i.variant_of)  INNER JOIN
 				
@@ -391,7 +391,7 @@ def get_conditions(item_code, serial_no, batch_no, barcode):
 	if not item_code:
 		return ""," 1=1 "
 	item_code = item_code.replace("(","").replace(")","")
-	words = item_code.split()
+	words = item_code.split("  ")
 	
 	
 	keyword = '* *'.join(w.rstrip('-()#.').lstrip('-()#.') for w in words)
