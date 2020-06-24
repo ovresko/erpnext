@@ -239,9 +239,9 @@ def get_items(start, page_length, price_list, item_group, search_value="", pos_p
 	if parent_item_group:
 		lft, rgt = frappe.db.get_value('Item Group', parent_item_group, ['lft', 'rgt'])
 	
-	if not item_group or not frappe.db.exists('Item Group', item_group):
+	if item_group and not frappe.db.exists('Item Group', item_group):
 		item_group = get_root_of('Item Group')
-	else:
+	elif item_group:
 		lft, rgt = frappe.db.get_value('Item Group', item_group, ['lft', 'rgt'])
 
 	if search_value:
@@ -276,7 +276,9 @@ def get_items(start, page_length, price_list, item_group, search_value="", pos_p
 		condition += get_item_marque(vehicule_marque)
 	
 
-	
+	group_filter = ''
+	if item_group:
+		group_filter ="""and i.item_group in (select name from `tabItem Group` where lft >= {lft} and rgt <= {rgt})"""
 	# locate function is used to sort by closest match from the beginning of the value
 
 
@@ -296,12 +298,13 @@ def get_items(start, page_length, price_list, item_group, search_value="", pos_p
 				(item_adr.parent=i.name and  item_adr.warehouse=%(warehouse)s) 
 			where 
 				i.disabled = 0 and i.has_variants = 0 and i.is_sales_item = 1
-				and i.item_group in (select name from `tabItem Group` where lft >= {lft} and rgt <= {rgt})
+				%(group_filter)s
 		        	and {condition}  limit {start}, {page_length}""".format(start=start,page_length=page_length,lft=lft, rgt=rgt,condition=condition),
 			{
 				'item_code': item_code,
 				'price_list': price_list,
-				'warehouse':warehouse
+				'warehouse':warehouse,
+				'group_filter':group_filter
 			} , as_dict=1)
 
 		res = {
@@ -332,12 +335,13 @@ def get_items(start, page_length, price_list, item_group, search_value="", pos_p
 				(item_adr.parent=i.name and  item_adr.warehouse=%(warehouse)s) 
 			where
 				i.disabled = 0 and i.has_variants = 0 and i.is_sales_item = 1
-				and i.item_group in (select name from `tabItem Group` where lft >= {lft} and rgt <= {rgt})
+				%(group_filter)s				
 				and {condition}  limit {start}, {page_length}""".format(start=start,page_length=page_length,lft=lft, 	rgt=rgt, condition=condition),
 			{
 				'item_code': item_code,
 				'price_list': price_list,
-				'warehouse': warehouse
+				'warehouse': warehouse,
+				'group_filter':group_filter
 			} , as_dict=1)
 
 		res = {
