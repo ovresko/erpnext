@@ -313,9 +313,9 @@ def get_items(start, page_length, price_list, item_group, search_value="", pos_p
 				i.is_stock_item, item_det.price_list_rate, item_det.currency, i.oem_text,i.titre_article,i.manufacturer,i.manufacturer_part_no,i.fabricant_logo , i.critere_text  
 				from `tabItem` i LEFT JOIN
 					(select item_code, price_list_rate, currency from
-						`tabItem Price`	where price_list=%(price_list)s) item_det
+						`tabItem Price`	where  min_qty=0 and price_list=%(price_list)s) limit 1 item_det
 				ON
-					(item_det.item_code=i.name or item_det.item_code=i.variant_of) INNER JOIN
+					(item_det.item_code=i.name or item_det.item_code=i.variant_of)  INNER JOIN
 				
 					"""
 
