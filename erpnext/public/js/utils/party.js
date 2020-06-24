@@ -16,12 +16,12 @@ erpnext.utils.open_item_info =  function(item_code,me) {
 				var item = response.message; 
 
 				if (item) {
-					console.log("item",item);
+					//console.log("item",item);
 					if(me.msg_information)
 					{
 						//$(me.msg_information).remove();
 						//me.msg_information.hide();
-						me.msg_information = null;
+						//me.msg_information = null;
 					}
 
 					let image = '';
