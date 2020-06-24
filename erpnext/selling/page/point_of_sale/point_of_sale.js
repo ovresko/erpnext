@@ -1723,7 +1723,8 @@ class POSItems {
 			//this.last_oem = this.item_oem;
 			
 			 this.item_oem = e.target.value;
-				console.log("item_oem",this.item_oem);
+				me.item_modele = '';
+				 me.item_modele_field.set_value('');
 			  this.filter_items();
 			 
 			 
@@ -1751,7 +1752,8 @@ class POSItems {
 					//this.last_item_modele = this.item_modele;
 					//this.last_query['item_modele'] = this.item_modele;
 					this.item_modele = this.item_modele_field.get_value();
-					
+					me.item_oem = '';
+					me.item_oem_field.set_value(''); 
 					this.filter_items();
 				}, 
 			},
