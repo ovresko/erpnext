@@ -4,7 +4,7 @@
 frappe.provide("erpnext.utils");
 
 erpnext.utils.open_item_info =  function(item_code,me) {
-	 
+	
 	console.log("open_item_info");
 	frappe.call({
 			"method": "frappe.client.get",
@@ -34,8 +34,10 @@ erpnext.utils.open_item_info =  function(item_code,me) {
 					}
 
 					//me.msg_information = 
-						frappe.msgprint(
-						`
+						//frappe.msgprint(
+					var _modal =
+						`<div id="MyPopup" class="modal fade" role="dialog">
+
 						<button type="button" data-item-code="${item_code}" class="btn btn-primary btn-sm btn-versions-list" > 
 							<span class="hidden-xs">Véhicules Supportées</span>
 						</button>
@@ -96,9 +98,10 @@ erpnext.utils.open_item_info =  function(item_code,me) {
 						<div>${item.composant_text || ''}</div>
 						<hr>
 
+                        </div>
+                        `;
+                        $(_modal).modal();
 
-						`,"Détails Article"
-						);
 						//$(me.msg_information.body).find('.btn-versions-list').on('click', () => {
 						$('.btn-versions-list').on('click', () => {
 
