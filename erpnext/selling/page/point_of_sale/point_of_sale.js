@@ -2534,8 +2534,9 @@ class POSItems {
 			   && !this.item_group_parent
 			   && !this.vehicule_generation
 			   && !this.vehicule_version) {
+				console.log("hoing back");
 				this.items = this.all_items;
-				return this.render_items(this.all_items);
+				return this.render_items(this.all_items || []);
 			}
 		 
 		//console.log("filter_items2",this.item_manufacturer);
