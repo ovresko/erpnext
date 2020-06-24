@@ -725,10 +725,10 @@ class POSCart {
 					</div>
 				</div>
 				<div class="fields">
-					<div class="cart-search" style="width:60%">
+					<div class="cart-search" style="width:50%">
 					</div>
-					<div class="cart-search" style="width:40%">
-						<button  data-label="commander" class="btn btn-default btn btn-payer brand-primary" style="margin-right: 5px;">Payer</button>
+					<div   style="width:50%">
+						<button  data-label="commander" class="btn btn-primary  btn btn-payer brand-primary" style="margin: 22px 5px 0px 10px;">Payer</button>
 						<button  data-label="commander" class="btn btn-default btn btn-commander" style="margin-right: 5px;">Commander</button>
 				
 					</div>
@@ -1996,6 +1996,7 @@ class POSItems {
 				<div class="item-manufacturer-field" style="width: 20%;margin-left: 10px;">
 				</div>
 				<button  data-label="return" class="btn btn-default btn-xs btn btn-return-manufacturer" style="margin: 20px 5px 10px 5px;"><i class="fa fa-trash-o"></i></button>
+				<button  data-label="search" class="btn btn-primary  btn-xs btn btn-dosearch" style="margin: 20px 5px 10px 5px;"><i class="fa fa-search"></i> Chercher</button>
 
 			</div>
 			<div class="items-wrapper">
@@ -2624,7 +2625,13 @@ class POSItems {
 			
 		});
 		
-		
+		//btn-dosearch
+		this.wrapper.on('click', '.btn-dosearch', function(event) {
+			 
+			me.start = 0;
+			me.filter_items({start:me.start});
+			
+		});
 		//btn-remove-pagination
 		this.wrapper.on('click', '.btn-remove-pagination', function(event) {
 			 
