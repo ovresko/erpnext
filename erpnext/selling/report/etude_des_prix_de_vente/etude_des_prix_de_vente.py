@@ -354,7 +354,7 @@ def execute(filters=None):
 
 		row = [
 			mri.item_code,
-			"""<button   onClick="open_item_info('%s')" type='b'> info </button> &nbsp;&nbsp;&nbsp;""" % (mri.item_code),
+			"""<input type='button' onclick="erpnext.utils.open_item_info('%s', this)" value='info'>  </input>  &nbsp;&nbsp;&nbsp;""" % (mri.item_code),
 			mri.item_name,
 			mri.stock_uom,
 			mri.manufacturer,
@@ -373,7 +373,7 @@ def execute(filters=None):
 			last_valuation or 0,
 			taux_taxe or 0,
 			val_ttc or 0,
-			"""<button   onClick="open_item_info('%s')" type='b'> info </button> &nbsp;&nbsp;&nbsp;""" % (mri.item_code),
+			"""<input type='button' onclick="erpnext.utils.open_item_info('%s', this)" value='info'>  </input>  &nbsp;&nbsp;&nbsp;""" % (mri.item_code),
 			mri.manufacturer,
 			prix_traite or '',
 			btn_prix_traite
