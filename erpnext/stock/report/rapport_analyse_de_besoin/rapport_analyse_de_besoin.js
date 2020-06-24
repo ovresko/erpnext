@@ -5,7 +5,7 @@
 
 function open_item_info(item_code) {
 			var me  = this;
-			
+			console.log("open_item_info");
 			frappe.call({
 					"method": "frappe.client.get",
 					"args": {
@@ -16,11 +16,12 @@ function open_item_info(item_code) {
 						var item = response.message; 
 						
 						if (item) {
+							onsole.log("item",item);
 							if(me.msg_information)
 							{
 								//$(me.msg_information).remove();
 								//me.msg_information.hide();
-								//me.msg_information = null;
+								me.msg_information = null;
 							}
 							 
 							let image = '';
