@@ -20,7 +20,7 @@ erpnext.utils.open_item_info =  function(item_code,me) {
 					if(me.msg_information)
 					{
 						//$(me.msg_information).remove();
-						//me.msg_information.hide();
+						 frappe.hide_msgprint(true);
 						//me.msg_information = null;
 					}
 
