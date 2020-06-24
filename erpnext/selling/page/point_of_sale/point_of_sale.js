@@ -729,7 +729,7 @@ class POSCart {
 					</div>
 					<div   style="width:50%">
 						<button  data-label="commander" class="btn btn-primary  btn btn-payer brand-primary" style="margin: 22px 5px 0px 10px;">Payer</button>
-						<button  data-label="commander" class="btn btn-default btn btn-commander" style="margin-right: 5px;">Commander</button>
+						<button  data-label="commander" class="btn btn-default btn btn-commander" style="margin: 22px 5px 0px 10px;">Commander</button>
 				
 					</div>
 						
@@ -2439,8 +2439,7 @@ class POSItems {
 		   this.start = 0;
 		   //start=0;
 		}
-		console.log("filter_items start",start);
-		console.log("this.start",this.start);
+		 
 		if(!this.item_group && !this.item_group_parent){
 			this.item_group = this.parent_item_group;
 		}
@@ -2449,29 +2448,32 @@ class POSItems {
 
 			// memoize
 			this.search_index = this.search_index || {};
-			if (this.search_index[search_term]
-			    && this.frm.doc.customer.includes("COMPTOIR")
-			   && !this.item_manufacturer 
-			   && !this.vehicule_marque
-			   && !this.vehicule_modele
-			   && !this.vehicule_generation
-			   && !this.item_modele
-			   && !this.item_oem
-			   && !this.item_group_parent
-			   && !this.vehicule_version) {
-				const items = this.search_index[search_term];
-				this.items = items;
-				this.render_items(items);
-				this.set_item_in_the_cart(items);
-				return;
-				}
-			} else if (this.item_group == this.parent_item_group  
+			//if (this.search_index[search_term]
+			//    && this.frm.doc.customer.includes("COMPTOIR")
+			//   && !this.item_manufacturer 
+			//   && !this.vehicule_marque
+			//   && !this.vehicule_modele
+			//   && !this.vehicule_generation
+			//   && !this.item_modele
+			//   && !this.item_oem
+			//   && !this.item_group_parent
+			///   && !this.vehicule_version) {
+			//	const items = this.search_index[search_term];
+			//	this.items = items;
+			//	this.render_items(items);
+			//	this.set_item_in_the_cart(items);
+			//	return;
+			//	}
+			//} else 
+				
+			if (( this.item_group == this.parent_item_group  || !this.item_group )
 			   && this.frm.doc.customer.includes("COMPTOIR")
 			   && !this.item_manufacturer 
 			   && !this.vehicule_marque
 			   && !this.vehicule_modele
 			   && !this.item_modele
 			   && !this.item_oem
+			   && (!search_term || search_term == '')
 			   && !this.item_group_parent
 			   && !this.vehicule_generation
 			   && !this.vehicule_version) {
@@ -2480,11 +2482,13 @@ class POSItems {
 			}
 		 
 		//console.log("filter_items2",this.item_manufacturer);
+			   
+			   
 		this.get_items({search_value: search_term,start:start})
 			.then(({ items, serial_no, batch_no, barcode }) => {
-				if (search_term && !barcode) {
-					this.search_index[search_term] = items;
-				}
+				//if (search_term && !barcode) {
+				//	this.search_index[search_term] = items;
+				//}
 				this.last_last_last_items =this.last_last_items;
 				this.last_last_items =this.last_items;
 				this.last_items =this.items;
@@ -2958,50 +2962,83 @@ class POSItems {
 		this.item_group = this.parent_item_group;	
 		}
 		
-		 console.log("item_group",this.item_group);
+		// console.log("item_group",this.item_group);
 		if(start){
 			start = start * page_length;	
 		}
 		const item_group = this.item_group ;
-		console.log(item_group +" "+search_value +" "+this.item_manufacturer  +" "+this.vehicule_marque   +" "+  this.vehicule_modele+" "+ this.item_oem +" "+ this.item_modele +" "+this.vehicule_generation +" "+this.vehicule_version+" "+ this.item_group_parent);
+		//console.log(item_group +" "+search_value +" "+this.item_manufacturer  +" "+this.vehicule_marque   +" "+  this.vehicule_modele+" "+ this.item_oem +" "+ this.item_modele +" "+this.vehicule_generation +" "+this.vehicule_version+" "+ this.item_group_parent);
 		if(!search_value && !this.item_manufacturer && !this.vehicule_marque && !this.vehicule_modele
 		   && !this.item_oem && !this.item_modele && !this.vehicule_generation && !this.vehicule_version )
 			
 		{
-			console.log("ops nothing to search for");
+			//console.log("ops nothing to search for");
 			return new Promise(res => {
 				return [];
 			});
 		}
 		
+		if(!search_value || search_value == ''){
 		
-		return new Promise(res => {
-			frappe.call({
-				method: "erpnext.selling.page.point_of_sale.point_of_sale.get_items",
-				freeze: true,
-				args: {
-					start,
-					page_length,
-					price_list,
-					item_group,
-					search_value,
-					pos_profile: this.frm.doc.pos_profile,
-					item_manufacturer:this.item_manufacturer ,
-					vehicule_marque:this.vehicule_marque, 
-					vehicule_modele:this.vehicule_modele, 
-					item_oem: this.item_oem,
-					item_modele:this.item_modele,
-					vehicule_generation:this.vehicule_generation, 
-					vehicule_version:this.vehicule_version,
-					parent_item_group: this.item_group_parent
-				}
-			}).then(r => {
-				// const { items, serial_no, batch_no } = r.message;
+				return new Promise(res => {
+					frappe.call({
+						method: "erpnext.selling.page.point_of_sale.point_of_sale.get_items",
+						freeze: true,
+						args: {
+							start,
+							page_length,
+							price_list,
+							item_group,
+							search_value,
+							pos_profile: this.frm.doc.pos_profile,
+							item_manufacturer:this.item_manufacturer ,
+							vehicule_marque:this.vehicule_marque, 
+							vehicule_modele:this.vehicule_modele, 
+							item_oem: this.item_oem,
+							item_modele:this.item_modele,
+							vehicule_generation:this.vehicule_generation, 
+							vehicule_version:this.vehicule_version,
+							parent_item_group: this.item_group_parent
+						}
+					}).then(r => {
+						// const { items, serial_no, batch_no } = r.message;
 
-				// this.serial_no = serial_no || "";
-				res(r.message);
-			});
-		});
+						// this.serial_no = serial_no || "";
+						res(r.message);
+					});
+				});
+			
+			}else{
+			
+				return new Promise(res => {
+					frappe.call({
+						method: "erpnext.selling.page.point_of_sale.point_of_sale.get_items",
+						freeze: true,
+						args: {
+							start,
+							page_length,
+							price_list,
+							item_group,
+							search_value,
+							pos_profile: this.frm.doc.pos_profile,
+							//item_manufacturer:this.item_manufacturer ,
+							//vehicule_marque:this.vehicule_marque, 
+							//vehicule_modele:this.vehicule_modele, 
+							//item_oem: this.item_oem,
+							//item_modele:this.item_modele,
+							//vehicule_generation:this.vehicule_generation, 
+							//vehicule_version:this.vehicule_version,
+							//parent_item_group: this.item_group_parent
+						}
+					}).then(r => {
+						// const { items, serial_no, batch_no } = r.message;
+
+						// this.serial_no = serial_no || "";
+						res(r.message);
+					});
+				});
+				
+			}
 	}
 }
 
