@@ -203,6 +203,20 @@ erpnext.pos.PointOfSale = class PointOfSale {
 				}
 			}
 		});
+		
+		this.$btn_payer = this.wrapper.find('.btn-payer');
+		this.$btn_payer.on('click', () => {	
+			if (!this.payment) {
+				this.make_payment_modal();
+			} else {
+				this.frm.doc.payments.map(p => {
+					this.payment.dialog.set_value(p.mode_of_payment, p.amount);
+				});
+
+				this.payment.set_title();
+			}
+			this.payment.open_modal();
+		});
 
 		frappe.ui.form.on('Sales Invoice', 'selling_price_list', (frm) => {
 			if(this.items && frm.doc.pos_profile) {
@@ -796,7 +810,6 @@ class POSCart {
 		this.$btn_commander = this.wrapper.find('.btn-commander');
 		this.$btn_devis = this.wrapper.find('.btn-devis');
 		this.$btn_address_magasin = this.wrapper.find('.btn-address-magasin');
-		this.$btn_payer = this.wrapper.find('.btn-payer');
 
 		// this.$loyalty_button = this.wrapper.find('.loyalty-button');
 
@@ -827,18 +840,7 @@ class POSCart {
 			me.cree_commande();
 		});
 		
-		this.$btn_payer.on('click', () => {	
-			if (!this.payment) {
-				this.make_payment_modal();
-			} else {
-				this.frm.doc.payments.map(p => {
-					this.payment.dialog.set_value(p.mode_of_payment, p.amount);
-				});
-
-				this.payment.set_title();
-			}
-			this.payment.open_modal();
-		});
+		
 		
 		
 	}
