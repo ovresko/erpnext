@@ -2947,7 +2947,8 @@ class POSItems {
 						</button>
 						<button data-item-code="${item_code}" data-label="complement" class="btn btn-default btn-xs btn-complement" style="margin-right: 5px;">CPL
 						</button>
-						<button data-item-code="${item_code}" data-label="information" class="btn btn-default btn-xs btn-information" style="margin-right: 5px;"><i class="fa fa-question"></i>
+						<button data-item-code="${item_code}" data-label="information"   onclick="erpnext.utils.open_item_info('${item_code}', ${this})"
+						class="btn btn-default btn-xs  " style="margin-right: 5px;"><i class="fa fa-question"></i>
 						</button>
 						<button data-item-code="${item_code}" data-label="add" class="btn btn-success btn-xs btn-add" style="margin-right: 5px;"><i class="fa fa-shopping-cart"></i></button>
 					</div>
