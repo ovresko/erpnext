@@ -1199,6 +1199,7 @@ def set_item_demande(item_code,qty):
 		mr.schedule_date = nowdate()
 		mr.insert()
 		mr.submit()
+		return "Demande enregistree"
 
 @frappe.whitelist()
 def set_item_achat(item_code):
