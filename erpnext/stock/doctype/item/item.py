@@ -1200,6 +1200,8 @@ def set_item_demande(item_code,qty):
 		mr.insert()
 		mr.submit()
 		return "Demande enregistree"
+	else:
+		return "---- Verifier les donnees qts et article -----"
 
 @frappe.whitelist()
 def set_item_achat(item_code):
