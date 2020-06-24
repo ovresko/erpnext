@@ -664,7 +664,7 @@ def execute(filters=None):
 		if len(mri.item_code) == 11 and mri.item_code not in _models:
 			comp = None
 		if is_full:
-			row = [comp,
+			row = ["""<input type='button' onclick="erpnext.utils.open_item_info('%s', this)" value='info'>  </input>""" % (mri.item_code),
 			       mri.item_code,
 			       #date
 			       date,
@@ -756,7 +756,7 @@ def execute(filters=None):
 			       conf_cmd
 			      ]
 		else:
-			row = [comp,
+			row = ["""<input type='button' onclick="erpnext.utils.open_item_info('%s', this)" value='info'>  </input>""" % (mri.item_code),
 			       mri.item_code,
 			       #date
 			       date,
