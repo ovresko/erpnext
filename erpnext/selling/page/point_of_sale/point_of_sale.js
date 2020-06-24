@@ -2710,7 +2710,7 @@ class POSItems {
 				});
 			
 			}else{
-				
+				item_group = null;
 				return new Promise(res => {
 					frappe.call({
 						method: "erpnext.selling.page.point_of_sale.point_of_sale.get_items",
@@ -2719,7 +2719,7 @@ class POSItems {
 							start,
 							page_length,
 							price_list,
-							'',
+							item_group,
 							search_value,
 							pos_profile: this.frm.doc.pos_profile,
 							//item_manufacturer:this.item_manufacturer ,
