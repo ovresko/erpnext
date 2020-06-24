@@ -2439,6 +2439,8 @@ class POSItems {
 			const modele = item_code.substring(0,11);
 			console.log("modele",modele);
 			me.item_modele  = modele;
+			me.item_oem = '';
+			me.item_oem_field.set_value('');
 			//me.vehicule_modele = '';
 			//me.vehicule_generation = '';
 			//me.vehicule_marque = '';
@@ -2511,7 +2513,9 @@ class POSItems {
 			const item_code = unescape($item.attr('data-item-code'));
 			me.item_oem = oem;
 			me.item_oem_field.set_value(oem);
-			 
+			me.item_modele = '';
+			me.item_modele_field.set_value('');
+			
 			//me.search_field.set_value(oem);
 			me.search_field.set_value('');
 			me.filter_items();
