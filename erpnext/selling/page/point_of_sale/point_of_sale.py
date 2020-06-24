@@ -390,15 +390,16 @@ def get_conditions(item_code, serial_no, batch_no, barcode):
 		return frappe.db.escape(item_code), "i.name = %(item_code)s"
 	if not item_code:
 		return ""," 1=1 "
+	
 	item_code = item_code.replace("(","").replace(")","")
 	words = item_code.split("  ")
+	clean = item_code.replace(" ","")
 	
-	
-	keyword = '* *'.join(w.rstrip('-()#.').lstrip('-()#.') for w in words)
+	keyword = '* *'.join(w.rstrip('-()#. ').lstrip('-()#. ') for w in words)
 	keyword = "*%s*" % keyword
 
 	#condition = """ ( i.clean_manufacturer_part_number LIKE '%%{}%%' or i.oem_text LIKE '%%{}%%' or  MATCH(i.name,i.item_name,i.nom_generique_long,i.manufacturer_part_no,i.clean_manufacturer_part_number,i.oem_text) AGAINST('({})' IN NATURAL LANGUAGE MODE)  )""".format(item_code,item_code,item_code)
-	condition = """ (  i.item_code = '{}' or i.item_code LIKE '%%{}%%' or i.clean_manufacturer_part_number = '{}' or i.clean_manufacturer_part_number LIKE '%%{}%%' or  i.manufacturer_part_no = '{}' or  i.manufacturer_part_no LIKE '%%{}%%' or i.oem_text = '{}'  or i.oem_text LIKE '%%{}%%' or MATCH(i.nom_generique_long) AGAINST('{}' IN BOOLEAN MODE)  )""".format(item_code,item_code,item_code,item_code,item_code,item_code,item_code,item_code,keyword)
+	condition = """ (  i.item_code = '{}' or i.item_code LIKE '%%{}%%' or i.clean_manufacturer_part_number = '{}' or i.clean_manufacturer_part_number LIKE '%%{}%%' or  i.manufacturer_part_no = '{}' or  i.manufacturer_part_no LIKE '%%{}%%' or i.oem_text = '{}'  or i.oem_text LIKE '%%{}%%' or MATCH(i.nom_generique_long) AGAINST('{}' IN BOOLEAN MODE)  )""".format(item_code,item_code,clean,item_code,item_code,item_code,item_code,item_code,keyword)
 
 	return '%%%s%%'%(frappe.db.escape(item_code)), condition
 
