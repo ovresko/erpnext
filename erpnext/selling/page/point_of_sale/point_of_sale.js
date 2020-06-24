@@ -828,16 +828,16 @@ class POSCart {
 		});
 		
 		this.$btn_payer.on('click', () => {	
-			if (!me.payment) {
-				me.make_payment_modal();
+			if (!this.payment) {
+				this.make_payment_modal();
 			} else {
-				me.frm.doc.payments.map(p => {
-					me.payment.dialog.set_value(p.mode_of_payment, p.amount);
+				this.frm.doc.payments.map(p => {
+					this.payment.dialog.set_value(p.mode_of_payment, p.amount);
 				});
 
-				me.payment.set_title();
+				this.payment.set_title();
 			}
-			me.payment.open_modal();
+			this.payment.open_modal();
 		});
 		
 		
