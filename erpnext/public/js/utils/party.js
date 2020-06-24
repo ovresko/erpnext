@@ -17,12 +17,12 @@ erpnext.utils.open_item_info =  function(item_code,me) {
 
 				if (item) {
 					//console.log("item",item);
-					if(me.msg_information)
-					{
+					//if(me.msg_information)
+					//{
 						//$(me.msg_information).remove();
-						 frappe.hide_msgprint(true);
+					//	 frappe.hide_msgprint(true);
 						//me.msg_information = null;
-					}
+					//}
 
 					let image = '';
 					let fabricant_logo = '';
@@ -33,7 +33,8 @@ erpnext.utils.open_item_info =  function(item_code,me) {
 						image ='<img src="'+item.image+'">';
 					}
 
-					me.msg_information = frappe.msgprint(
+					//me.msg_information = 
+						frappe.msgprint(
 						`
 						<button type="button" data-item-code="${item_code}" class="btn btn-primary btn-sm btn-versions-list" > 
 							<span class="hidden-xs">Véhicules Supportées</span>
@@ -98,7 +99,8 @@ erpnext.utils.open_item_info =  function(item_code,me) {
 
 						`,"Détails Article"
 						);
-						$(me.msg_information.body).find('.btn-versions-list').on('click', () => {
+						//$(me.msg_information.body).find('.btn-versions-list').on('click', () => {
+						$('.btn-versions-list').on('click', () => {
 
 						frappe.call({
 							"method": "erpnext.selling.page.point_of_sale.point_of_sale.get_vehicule_details",
@@ -193,8 +195,8 @@ erpnext.utils.open_item_info =  function(item_code,me) {
 							});
 
 					});
-					me.msg_information.hide();
-					me.msg_information.show();
+					//me.msg_information.hide();
+					//me.msg_information.show();
 				}  
 			}
 		}); 	
