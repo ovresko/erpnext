@@ -2821,12 +2821,15 @@ class POSItems {
 			const item_code = unescape($item.attr('data-item-code'));
 			
 			let qts= prompt("Quantité");
-			if (qts == null || qts == "") {
+			if (qts == null ){
+				return;	
+			}
+			if ( qts == '') {
 			   qts = "+1";
 			}
-			
-			console.log("price_list",me.frm.doc.selling_price_list);
 			me.events.update_cart(item_code, 'qty', qts);
+			 
+			
 		});
 		
 		this.wrapper.on('click', '.btn-stock', function() {
