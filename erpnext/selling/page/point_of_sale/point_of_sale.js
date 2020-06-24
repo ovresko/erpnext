@@ -2631,7 +2631,7 @@ class POSItems {
 		
 		//btn-dosearch
 		this.wrapper.on('click', '.btn-dosearch', function(event) {
-			 var keyw = me.search_field.val();
+			 var keyw = me.search_field.find('input:text').val();
 			console.log("keyw",keyw);
 			me.start = 0;
 			me.filter_items({ start:me.start,search_term: keyw});
