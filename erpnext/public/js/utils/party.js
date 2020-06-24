@@ -37,11 +37,10 @@ erpnext.utils.open_item_info =  function(item_code,me) {
 						//frappe.msgprint(
 					var _modal =
 						`
-					<div class="modal fade in" style="overflow: auto; display: block; padding-right: 22px;" tabindex="-1" aria-hidden="false"><div class="modal-backdrop fade in" style="height: 485px;"></div>
-					<div class="modal-dialog">
-					    <div class="modal-content">
-
-					<div id="MyPopup" class="modal fade" role="dialog">
+					
+ 
+   
+<div id="MyPopup" class="modal fade" role="dialog" style="width:750px">
 
 						<button type="button" data-item-code="${item_code}" class="btn btn-primary btn-sm btn-versions-list" > 
 							<span class="hidden-xs">Véhicules Supportées</span>
@@ -102,8 +101,7 @@ erpnext.utils.open_item_info =  function(item_code,me) {
 						<label>Composants </label>
 						<div>${item.composant_text || ''}</div>
 						<hr>
-
-                        </div> </div></div></div>
+  			</div>
                         `;
                         $(_modal).modal();
 
