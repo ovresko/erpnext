@@ -40,7 +40,7 @@ erpnext.utils.open_item_info =  function(item_code,me) {
 					
  
    
-<div id="MyPopup" class="modal fade" role="dialog" style="width:750px">
+<div id="MyPopup" class="modal fade" role="dialog" style="width:750px;margin:auto;padding:20px">
 
 						<button type="button" data-item-code="${item_code}" class="btn btn-primary btn-sm btn-versions-list" > 
 							<span class="hidden-xs">Véhicules Supportées</span>
