@@ -199,7 +199,7 @@ frappe.query_reports["Rapport analyse devis fournisseur"] = {
 			}else if(data!= null && data["etat_confirmation"] == "En negociation"){
 				value = "<div style='color:#E97A13'>" + value + "</div>";
 			}else{
-				value = "<div style='color:black'>" + value + "</div>";
+				value =   value ;
 			}
 		}
 		return value
