@@ -397,9 +397,12 @@ def get_conditions(item_code, serial_no, batch_no, barcode):
 	
 	keyword = '* *'.join(w.rstrip('-()#. ').lstrip('-()#. ') for w in words)
 	keyword = "*%s*" % keyword
-
+	if len(words) > 1:
+		condition = """ (  i.item_code = '{}' or i.item_code LIKE '%%{}%%' or i.clean_manufacturer_part_number = '{}' or i.clean_manufacturer_part_number LIKE '%%{}%%' or  i.manufacturer_part_no = '{}' or  i.manufacturer_part_no LIKE '%%{}%%' or i.oem_text = '{}'  or i.oem_text LIKE '%%{}%%' or MATCH(i.nom_generique_long) AGAINST('{}' IN BOOLEAN MODE)  )""".format(item_code,item_code,clean,item_code,item_code,item_code,item_code,item_code,keyword)
+	else:
+		condition = """ (  i.item_code = '{}' or i.item_code LIKE '%%{}%%' or i.clean_manufacturer_part_number = '{}' or i.clean_manufacturer_part_number LIKE '%%{}%%' or  i.manufacturer_part_no = '{}' or  i.manufacturer_part_no LIKE '%%{}%%' or i.oem_text = '{}'  or i.oem_text LIKE '%%{}%%'   )""".format(item_code,item_code,clean,item_code,item_code,item_code,item_code,item_code)
+		
 	#condition = """ ( i.clean_manufacturer_part_number LIKE '%%{}%%' or i.oem_text LIKE '%%{}%%' or  MATCH(i.name,i.item_name,i.nom_generique_long,i.manufacturer_part_no,i.clean_manufacturer_part_number,i.oem_text) AGAINST('({})' IN NATURAL LANGUAGE MODE)  )""".format(item_code,item_code,item_code)
-	condition = """ (  i.item_code = '{}' or i.item_code LIKE '%%{}%%' or i.clean_manufacturer_part_number = '{}' or i.clean_manufacturer_part_number LIKE '%%{}%%' or  i.manufacturer_part_no = '{}' or  i.manufacturer_part_no LIKE '%%{}%%' or i.oem_text = '{}'  or i.oem_text LIKE '%%{}%%' or MATCH(i.nom_generique_long) AGAINST('{}' IN BOOLEAN MODE)  )""".format(item_code,item_code,clean,item_code,item_code,item_code,item_code,item_code,keyword)
 
 	return '%%%s%%'%(frappe.db.escape(item_code)), condition
 
