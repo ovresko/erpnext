@@ -14,7 +14,7 @@ erpnext.utils.open_item_info =  function(item_code,me) {
 			},
 			"callback": function(response) {
 				var item = response.message; 
-
+				 console.log("item",item);
 				if (item) {
 					//console.log("item",item);
 					//if(me.msg_information)
