@@ -2719,7 +2719,7 @@ class POSItems {
 							start,
 							page_length,
 							price_list,
-							null,
+							'',
 							search_value,
 							pos_profile: this.frm.doc.pos_profile,
 							//item_manufacturer:this.item_manufacturer ,
