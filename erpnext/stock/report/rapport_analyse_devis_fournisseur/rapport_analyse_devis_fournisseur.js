@@ -96,9 +96,7 @@ function open_item_info(item_code) {
 					frappe.msgprint(` 
 						<div>
 <br>
-						<button type="button" data-item-code="${item_code}" class="btn btn-primary btn-sm btn-versions-list" > 
-							<span class="hidden-xs">Véhicules Supportées</span>
-						</button>
+						TEST
 
 </div>
 						 `);
