@@ -17,10 +17,10 @@ function open_item_info(item_code) {
 				 
 				if (item) {
 					//console.log("item",item);
-					// if(me.msg_information)
-					// {
-					//	 me.msg_information.hide(); 
-					 //}
+					  if(me.info_box)
+					  {
+					 	frappe.hide_msgprint(me.info_box); 
+					  }
 					
 					let image = '';
 					let fabricant_logo = '';
@@ -95,7 +95,8 @@ function open_item_info(item_code) {
   			 
                         `;		 
 					 
-					 frappe.msgprint(_modal,"Details Article");
+					me.info_box = frappe.msgprint(_modal,"Details Article");
+					//frappe.hide_msgprint(me.info_box);
 					// msg_information.hide();
 					//msg_information.show();
                        			// $(_modal).modal();
