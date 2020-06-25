@@ -98,7 +98,8 @@ erpnext.utils.open_item_info =  function(item_code,me) {
 						<hr>
   			 
                         `;
-					 me.msg_information = frappe.msgprint(_modal,"Details Article");	
+					 me.msg_information = frappe.msgprint(_modal,"Details Article");
+					me.msg_information.hide();
                        			// $(_modal).modal();
 					//$(me.msg_information.body).find('.btn-versions-list').on('click', () => {
 					
@@ -196,7 +197,7 @@ erpnext.utils.open_item_info =  function(item_code,me) {
 							});
 
 					});
-					 //me.msg_information.hide();
+					 
 					 me.msg_information.show();
 				}  
 			}
