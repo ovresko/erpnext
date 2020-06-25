@@ -94,7 +94,8 @@ function open_item_info(item_code) {
   			 
                         `;		console.log("open_item_info");
 					frappe.msgprint( "aaaaaaaaaaaa azaaefaef \
-aa");
+aa\
+<div>zz</div>");
 					 //let msg_information = frappe.msgprint(_modal,"Details Article");
 					// msg_information.hide();
 					//msg_information.show();
