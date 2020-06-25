@@ -196,7 +196,7 @@ erpnext.utils.open_item_info =  function(item_code,me) {
 							});
 
 					});
-					 me.msg_information.hide();
+					 //me.msg_information.hide();
 					 me.msg_information.show();
 				}  
 			}
