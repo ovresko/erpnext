@@ -94,59 +94,13 @@ function open_item_info(item_code) {
   			 
                         `;
 					frappe.msgprint(` 
-						<br>
-						<table class="table table-bordered table-condensed">
-							<tr><td>${item.item_name}</td><td>
-									 ${image} 
-								</td></tr>
-							<tr> 
-								<td>
-									<label>${item.item_code}</label>
-								</td>
-								<td>
-									<label>${item.manufacturer_part_no}</label>
-								</td>
-							</tr> 
-						</table>
-						<table class="table table-bordered table-condensed">
-							<tr> 
-								<td>
-									<label>OEM</label>
-								</td>
-								<td>
-									${item.oem_text}
-								</td>
-								<td></td>
-							</tr>
-							<tr> 
-								<td>
-									<label>Fabricant</label>
-								</td>
-								<td>
-									${item.manufacturer}
-								</td>
-								<td>
-									${fabricant_logo}
-								</td>
-							</tr>
-							<tr> 
-								<td>
-									<label>Critére</label>
-								</td>
-								<td>
-									${item.critere_text || ''}
-								</td>
-								<td>
-								</td>
-							</tr>
-						</table>
-						<hr>	
+						 	
 						<label>Complementent </label>
 						<div>${item.articles_text || ''}</div>
 						<hr>	
 						<label>Composants </label>
 						<div>${item.composant_text || ''}</div>
-						<hr>
+						 
   			
 						 `);
 					 //let msg_information = frappe.msgprint(_modal,"Details Article");
