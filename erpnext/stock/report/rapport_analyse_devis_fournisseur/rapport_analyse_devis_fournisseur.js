@@ -93,7 +93,7 @@ function open_item_info(item_code) {
 						<hr>
   			 
                         `;
-					frappe.msgprint("test");
+					frappe.msgprint(_modal);
 					 //let msg_information = frappe.msgprint(_modal,"Details Article");
 					// msg_information.hide();
 					//msg_information.show();
