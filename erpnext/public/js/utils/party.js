@@ -23,7 +23,7 @@ erpnext.utils.open_item_info =  function(item_code,me) {
 					//	 frappe.hide_msgprint(true);
 						//me.msg_information = null;
 					//}
-
+					frappe.hide_msgprint(true);
 					let image = '';
 					let fabricant_logo = '';
 					if(item.fabricant_logo){
