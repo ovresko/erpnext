@@ -1,10 +1,7 @@
 // Copyright (c) 2016, Frappe Technologies Pvt. Ltd. and contributors
 // For license information, please see license.txt
 /* eslint-disable */
-
-function oopen(html){
-	 frappe.msgprint(html,"Details Article");
-}
+ 
 
 function open_item_info(item_code) {
 	var me = this;
@@ -97,7 +94,7 @@ function open_item_info(item_code) {
 						<hr>
   			 
                         `;		 
-					 me.oopen(_modal);
+					 
 					 frappe.msgprint(_modal,"Details Article");
 					// msg_information.hide();
 					//msg_information.show();
