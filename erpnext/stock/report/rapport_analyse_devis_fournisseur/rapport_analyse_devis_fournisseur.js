@@ -93,15 +93,9 @@ function open_item_info(item_code) {
 						<hr>
   			 
                         `;
-					frappe.msgprint(" 
-						 	
-						<label>Complementent </label>
-						<div>${item.articles_text || ''}</div>
-						<hr>	
-						<label>Composants </label>
-						<div>${item.composant_text || ''}</div>
-						 
-  						");
+					frappe.msgprint( `<label>Complementent </label>
+						<div>${item.articles_text || ''}</div> 
+  						`);
 					 //let msg_information = frappe.msgprint(_modal,"Details Article");
 					// msg_information.hide();
 					//msg_information.show();
