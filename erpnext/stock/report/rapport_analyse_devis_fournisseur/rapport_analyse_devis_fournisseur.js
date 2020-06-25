@@ -4,7 +4,7 @@
  
 function open_item_info(item_code) {
 	var me = this;
-	console.log("open_item_info");
+	
 	frappe.call({
 			"method": "frappe.client.get",
 			"args": {
@@ -92,9 +92,9 @@ function open_item_info(item_code) {
 						<div>${item.composant_text || ''}</div>
 						<hr>
   			 
-                        `;
+                        `;		console.log("open_item_info");
 					frappe.msgprint( ` 
-						<div>aaaaaaaaaaaa azaaefaef</div> 
+						 aaaaaaaaaaaa azaaefaef 
   						`);
 					 //let msg_information = frappe.msgprint(_modal,"Details Article");
 					// msg_information.hide();
