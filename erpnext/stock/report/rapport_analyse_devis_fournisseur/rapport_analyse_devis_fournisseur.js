@@ -93,7 +93,8 @@ function open_item_info(item_code) {
 						<hr>
   			 
                         `;		console.log("open_item_info");
-					frappe.msgprint( "aaaaaaaaaaaa azaaefaef ");
+					frappe.msgprint( "aaaaaaaaaaaa azaaefaef \
+<br>");
 					 //let msg_information = frappe.msgprint(_modal,"Details Article");
 					// msg_information.hide();
 					//msg_information.show();
