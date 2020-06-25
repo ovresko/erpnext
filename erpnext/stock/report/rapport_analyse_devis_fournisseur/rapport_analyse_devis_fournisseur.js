@@ -93,7 +93,25 @@ function open_item_info(item_code) {
 						<hr>
   			 
                         `;
-					frappe.msgprint(_modal);
+					frappe.msgprint(` 
+						<button type="button" data-item-code="${item_code}" class="btn btn-primary btn-sm btn-versions-list" > 
+							<span class="hidden-xs">Véhicules Supportées</span>
+						</button>
+<br>
+						<table class="table table-bordered table-condensed">
+							<tr><td>${item.item_name}</td><td>
+									 ${image} 
+								</td></tr>
+							<tr> 
+								<td>
+									<label>${item.item_code}</label>
+								</td>
+								<td>
+									<label>${item.manufacturer_part_no}</label>
+								</td>
+							</tr> 
+						</table>
+						 `);
 					 //let msg_information = frappe.msgprint(_modal,"Details Article");
 					// msg_information.hide();
 					//msg_information.show();
