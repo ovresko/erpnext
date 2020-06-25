@@ -93,9 +93,10 @@ function open_item_info(item_code) {
 						<hr>
   			 
                         `;
-					 let msg_information = frappe.msgprint(_modal,"Details Article");
-					 msg_information.hide();
-					msg_information.show();
+					frappe.msgprint("test");
+					 //let msg_information = frappe.msgprint(_modal,"Details Article");
+					// msg_information.hide();
+					//msg_information.show();
                        			// $(_modal).modal();
 					//$(me.msg_information.body).find('.btn-versions-list').on('click', () => {
 					
