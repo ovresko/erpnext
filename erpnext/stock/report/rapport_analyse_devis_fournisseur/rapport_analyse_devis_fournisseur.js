@@ -96,6 +96,7 @@ function open_item_info(item_code) {
                         `;		 
 					 
 					me.info_box = frappe.msgprint(_modal,"Details Article");
+					me.info_box.show();
 					//frappe.hide_msgprint(me.info_box);
 					// msg_information.hide();
 					//msg_information.show();
