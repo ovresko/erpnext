@@ -4,7 +4,7 @@
 frappe.provide("erpnext.utils");
 
 erpnext.utils.open_item_info =  function(item_code,me) {
-	
+	var me = me;
 	console.log("open_item_info");
 	frappe.call({
 			"method": "frappe.client.get",
@@ -14,15 +14,14 @@ erpnext.utils.open_item_info =  function(item_code,me) {
 			},
 			"callback": function(response) {
 				var item = response.message; 
-				 console.log("item",item);
+				 
 				if (item) {
 					//console.log("item",item);
-					 if(me.msg_information)
-					 {	 
-					 	 frappe.hide_msgprint(true);
-						 me.msg_information.hide(); 
-					 }
-					frappe.hide_msgprint(true);
+					// if(me.msg_information)
+					// {
+					//	 me.msg_information.hide(); 
+					 //}
+					
 					let image = '';
 					let fabricant_logo = '';
 					if(item.fabricant_logo){
@@ -98,12 +97,13 @@ erpnext.utils.open_item_info =  function(item_code,me) {
 						<hr>
   			 
                         `;
-					 me.msg_information = frappe.msgprint(_modal,"Details Article");
-					me.msg_information.hide();
+					 let msg_information = frappe.msgprint(_modal,"Details Article");
+						msg_information.hide();
                        			// $(_modal).modal();
 					//$(me.msg_information.body).find('.btn-versions-list').on('click', () => {
 					
 					$('.btn-versions-list').on('click', () => {
+						console.log("click");
 						frappe.call({
 							"method": "erpnext.selling.page.point_of_sale.point_of_sale.get_vehicule_details",
 							"args": {
@@ -198,7 +198,7 @@ erpnext.utils.open_item_info =  function(item_code,me) {
 
 					});
 					 
-					 me.msg_information.show();
+					 msg_information.show();
 				}  
 			}
 		}); 	
