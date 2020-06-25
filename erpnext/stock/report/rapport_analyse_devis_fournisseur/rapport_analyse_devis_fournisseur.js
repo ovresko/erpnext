@@ -94,7 +94,7 @@ function open_item_info(item_code) {
   			 
                         `;
 					frappe.msgprint( `<label>Complementent </label>
-						<div>${item.articles_text || ''}</div> 
+						<div>aaaaaaaaaaaa azaaefaef</div> 
   						`);
 					 //let msg_information = frappe.msgprint(_modal,"Details Article");
 					// msg_information.hide();
