@@ -17,12 +17,11 @@ erpnext.utils.open_item_info =  function(item_code,me) {
 				 console.log("item",item);
 				if (item) {
 					//console.log("item",item);
-					//if(me.msg_information)
-					//{
-						//$(me.msg_information).remove();
-					//	 frappe.hide_msgprint(true);
-						//me.msg_information = null;
-					//}
+					 if(me.msg_information)
+					 {	 
+					 	 frappe.hide_msgprint(true);
+						 me.msg_information.hide(); 
+					 }
 					frappe.hide_msgprint(true);
 					let image = '';
 					let fabricant_logo = '';
@@ -99,7 +98,7 @@ erpnext.utils.open_item_info =  function(item_code,me) {
 						<hr>
   			 
                         `;
-					frappe.msgprint(_modal,"Details Article");	
+					 me.msg_information = frappe.msgprint(_modal,"Details Article");	
                        			// $(_modal).modal();
 					//$(me.msg_information.body).find('.btn-versions-list').on('click', () => {
 					
@@ -197,8 +196,8 @@ erpnext.utils.open_item_info =  function(item_code,me) {
 							});
 
 					});
-					//me.msg_information.hide();
-					//me.msg_information.show();
+					 me.msg_information.hide();
+					 me.msg_information.show();
 				}  
 			}
 		}); 	
