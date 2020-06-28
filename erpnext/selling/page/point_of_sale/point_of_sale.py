@@ -88,11 +88,7 @@ def open_item_info(item_code):
 			'fields': [
 				{'fieldname': 'ht', 'fieldtype': 'HTML'},
 				{'fieldname': 'cars', 'fieldtype': 'Button', 'fieldlabel':'Vehicules'}
-			],
-			primary_action: function(){
-				d.hide();
-				show_alert(d.get_values());
-			}
+			]
 		});
 		d.fields_dict.ht.$wrapper.html(_modal);
 		d.show();
