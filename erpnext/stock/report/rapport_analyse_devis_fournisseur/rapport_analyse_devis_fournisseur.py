@@ -25,7 +25,7 @@ def execute(filters=None):
 	columns.append({
 			"fieldname": "commander",
 			"label": "Supprimer",
-			"width": 100
+			"width": 370
 		})
 	columns.append({
 			"fieldname": "item_code",
@@ -201,6 +201,16 @@ def execute(filters=None):
 			"fieldname": "resultat",
 			"label": "Resultat",
 			"width": 150
+		})
+	columns.append({
+			"fieldname": "fabric",
+			"label": "Fabricant",
+			"width": 150
+		})
+	columns.append({
+			"fieldname": "info2",
+			"label": "_",
+			"width": 50
 		})
 	columns.append({
 			"fieldname": "offre_init",
@@ -664,7 +674,7 @@ def execute(filters=None):
 		if len(mri.item_code) == 11 and mri.item_code not in _models:
 			comp = None
 		if is_full:
-			row = ["""<input type='button' onclick="erpnext.utils.open_item_info('%s')" value='info'>  </input>""" % (mri.item_code),
+			row = ["""<input type='button' onclick="erpnext.utils.open_item_info('%s', this)" value='info'>  </input> &nbsp;&nbsp;&nbsp; <button id='%s' onClick="demander_item('%s')" type='button'>Demander</button><input placeholder='Qts' id='input_%s' style='color:black'></input>""" % (mri.item_code,mri.item_code,mri.item_code,mri.item_code),
 			       mri.item_code,
 			       #date
 			       date,
@@ -728,6 +738,8 @@ def execute(filters=None):
 			       hist_offre_fournisseur,
 			       #prix_fournisseur
 			       resultat,
+			       mri.manufacturer,
+			       """<input type='button' onclick="erpnext.utils.open_item_info('%s', this)" value='info'>  </input> """ % (mri.item_code),
 			       offre_init,
 			       prix_fournisseur,
 			       #prix_de_revient
@@ -756,7 +768,7 @@ def execute(filters=None):
 			       conf_cmd
 			      ]
 		else:
-			row = ["""<input type='button' onclick="erpnext.utils.open_item_info('%s')" value='info'>  </input>""" % (mri.item_code),
+			row = ["""<input type='button' onclick="erpnext.utils.open_item_info('%s', this)" value='info'>  </input> &nbsp;&nbsp;&nbsp; <button id='%s' onClick="demander_item('%s')" type='button'>Demander</button><input placeholder='Qts' id='input_%s' style='color:black'></input>""" % (mri.item_code,mri.item_code,mri.item_code,mri.item_code),
 			       mri.item_code,
 			       #date
 			       date,
@@ -804,6 +816,8 @@ def execute(filters=None):
 			       qts_devis,
 			       #prix_fournisseur
 			       resultat,
+			       mri.manufacturer,
+			       """<input type='button' onclick="erpnext.utils.open_item_info('%s', this)" value='info'>  </input> """ % (mri.item_code),
 			       offre_init,
 			       prix_fournisseur,
 			       #prix_de_revient
