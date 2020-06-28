@@ -25,7 +25,7 @@ erpnext.utils.open_item_info =  function(item_code,me) {
 					// {
 					//	 me.msg_information.hide(); 
 					 //}
-					erpnext.utils.open_msg("test);
+					erpnext.utils.open_msg("test");
 					let image = '';
 					let fabricant_logo = '';
 					if(item.fabricant_logo){
