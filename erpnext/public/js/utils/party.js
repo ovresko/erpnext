@@ -13,7 +13,100 @@ erpnext.utils.open_item_info =  function(item_code,me) {
 				"item_code": item_code
 			},
 			"callback": function(response) {
-				  
+				  $('.btn-versions-list').on('click', () => {
+        console.log("click");
+        frappe.call({
+            "method": "erpnext.selling.page.point_of_sale.point_of_sale.get_vehicule_details",
+            "args": {
+                "item_code": item_code
+            },
+            "callback": function(response) {
+			var item = response.message;
+			if (item) {
+ 
+			    var versions = item[0];
+			    var generations = item[1];
+			    var modeles = item[2];
+			    var marques = item[3];
+
+			    var html = '';
+			    html += `<label>Versions: </label><table class="table table-bordered table-condensed">`;
+			    for (const _v in versions) {
+
+				let v = versions[_v];
+
+				html += `<tr>`;
+				html += ` 
+												<td> ${v.version_vehicule || ''}<br>${v.marque_vehicule || ''} </td>
+
+												<td> ${v.nom_version || ''}  </td>
+												<td  style="width:100px"> ${v.periode || ''}</td>
+												<td> ${v.critere || ''}  ${v.valeur_1 || ''} <br> ${v.critere_1 || ''}  ${v.valeur_2 || ''} <br> ${v.critere_2 || ''}  ${v.valeur_3 || ''} <br>  </td>
+											`;
+				html += `</tr>`;
+			    }
+			    html += `</table>`;
+
+			    var html_generations = '';
+			    html_generations += `<label>Generations: </label><table class="table table-bordered table-condensed">`;
+			    for (const _v in generations) {
+
+				let v = generations[_v];
+				let d = (v.date_debut || '').substring(5, 7) + '-' + (v.date_debut || '').substring(2, 4)
+				let f = (v.date_fin || '').substring(5, 7) + '-' + (v.date_fin || '').substring(2, 4)
+				html_generations += `<tr>`;
+				html_generations += ` 
+												<td> ${v.nom_marque || ''} </td>	
+												<td> ${v.nom_generation || ''} </td>
+												<td style="width:100px"> (${d || ''} ${f || ''}) </td>
+												<td> ${v.critere || ''}  ${v.valeur_1 || ''} <br> ${v.critere_1 || ''}  ${v.valeur_2 || ''} <br> ${v.critere_2 || ''}  ${v.valeur_3 || ''} <br>  </td>
+											`;
+				html_generations += `</tr>`;
+			    }
+			    html_generations += `</table>`;
+
+			    var html_modeles = '';
+			    html_modeles += `<label>Modeles: </label><table class="table table-bordered table-condensed">`;
+			    for (const _v in modeles) {
+
+				let v = modeles[_v];
+
+				html_modeles += `<tr>`;
+				html_modeles += ` 
+												<td> ${v.nom_modele || ''} </td>
+												<td> ${v.nom_marque || ''} </td>
+											`;
+				html_modeles += `</tr>`;
+			    }
+			    html_modeles += `</table>`;
+
+			    var html_marques = '';
+			    html_marques += `<label>Marques: </label><table class="table table-bordered table-condensed">`;
+			    for (const _v in marques) {
+
+				let v = marques[_v];
+
+				html_marques += `<tr>`;
+				html_marques += ` 
+												<td> ${v.marque || ''} </td>
+											`;
+				html_marques += `</tr>`;
+			    }
+			    html_marques += `</table>`;
+
+			    frappe.msgprint(`
+											${html}
+											${html_generations}
+											${html_modeles}
+											${html_marques}
+										`);
+
+			}
+		    }
+
+		});
+
+	    }); 
 			}
 	});
 }
