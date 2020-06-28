@@ -12,10 +12,9 @@ erpnext.utils.open_item_info =  function(item_code,me) {
 			"args": {
 				"item_code": item_code
 			},
-			"callback": function(response) {
-				var modal = response["message"];
-				console.log("btn",response);
-				  $(modal.body).find('.btn-versions-list').on('click', () => {
+			"callback": function(response) { 
+				  console.log("btn",response);
+				  $('.btn-versions-list').on('click', () => {
         console.log("click");
         frappe.call({
             "method": "erpnext.selling.page.point_of_sale.point_of_sale.get_vehicule_details",
