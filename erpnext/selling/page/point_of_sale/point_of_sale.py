@@ -64,7 +64,7 @@ def open_item_info(item_code):
 							</tr>
 							<tr> 
 								<td>
-									<label>Critére</label>
+									<label>Critere</label>
 								</td>
 								<td>
 									{critere_text}
