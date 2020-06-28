@@ -90,7 +90,7 @@ def open_item_info(item_code):
 				{'fieldname': 'cars', 'fieldtype': 'Button', 'fieldlabel':'Vehicules'}
 			]
 		});
-		d.fields_dict.ht.$wrapper.html(_modal);
+		#d.fields_dict.ht.$wrapper.html(_modal);
 		d.show();
 			
 
