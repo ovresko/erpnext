@@ -2,6 +2,28 @@
 // For license information, please see license.txt
 /* eslint-disable */
  
+function demander_item(data) {
+	console.log("code:",data);
+	var qty_id = 'input_'+data;
+	var qty = $('#'+qty_id).val();
+	console.log("qty:",qty);
+	var confirme = confirm("Confirmer l'operation ?");
+	if(!confirme){
+		return;
+	}
+	frappe.call({
+			method: "erpnext.stock.doctype.item.item.set_item_demande",
+			args: {
+				item_code: data,
+				qty: qty
+			},
+			callback: function(r) {
+				if (r.message) {
+					alert(r.message);
+				}
+			}
+		});
+}
 
 function open_item_info(item_code) {
 	var me = this;
