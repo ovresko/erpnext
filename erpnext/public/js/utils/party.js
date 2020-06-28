@@ -14,7 +14,7 @@ erpnext.utils.open_item_info =  function(item_code,me) {
 			},
 			"callback": function(response) { 
 				  console.log("btn",response);
-				$(document).off().on('click', '.btn-versions-list', function(){
+				$(document).off("click", ".btn-versions-list").on('click', '.btn-versions-list', function(){
 				//  $(me).find('.modal .btn-versions-list').on('click', () => {
 					console.log("click");
 					frappe.call({
