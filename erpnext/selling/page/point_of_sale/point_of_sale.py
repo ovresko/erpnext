@@ -24,7 +24,7 @@ def open_item_info(item_code):
 			image ='<img src="'+item.image+'">'
 		_modal =""" 
 						<button type="button" data-item-code="{item_code}" class="btn btn-primary btn-sm btn-versions-list" > 
-							<span class="hidden-xs">Véhicules Supportées</span>
+							<span class="hidden-xs">Vehicules Supportees</span>
 						</button>
 <br>
 						<table class="table table-bordered table-condensed">
