@@ -22,7 +22,7 @@ def open_item_info(item_code):
 			fabricant_logo ='<img src="'+item.fabricant_logo+'">'
 		if item.image:
 			image ='<img src="'+item.image+'">'
-		_modal =` 
+		_modal =""" 
 						<button type="button" data-item-code="{item_code}" class="btn btn-primary btn-sm btn-versions-list" > 
 							<span class="hidden-xs">Véhicules Supportées</span>
 						</button>
@@ -81,7 +81,7 @@ def open_item_info(item_code):
 						<hr>	
 						<label>Composants </label>
 						<div>{composant_text}</div>
-						<hr>`.format(item_name=item.item_name,image=image,item_code=item_code,manufacturer_part_no=item.manufacturer_part_no
+						<hr>""".format(item_name=item.item_name,image=image,item_code=item_code,manufacturer_part_no=item.manufacturer_part_no
 							    ,oem_text=item.oem_text,manufacturer=item.manufacturer,fabricant_logo=fabricant_logo,critere_text=item.critere_text,articles_text=item.articles_text,composant_text=item.composant_text)
 		var d = new frappe.ui.Dialog({
 			'fields': [
