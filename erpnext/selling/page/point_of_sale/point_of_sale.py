@@ -12,6 +12,91 @@ import os
 
 from six import string_types
 
+@frappe.whitelist()
+def open_item_info(item_code):
+	if item_code:
+		item = frappe.client.get("Item",item_code)
+		image = ''
+		fabricant_logo = ''
+		if item.fabricant_logo:
+			fabricant_logo ='<img src="'+item.fabricant_logo+'">'
+		if item.image:
+			image ='<img src="'+item.image+'">'
+		_modal =` 
+						<button type="button" data-item-code="{item_code}" class="btn btn-primary btn-sm btn-versions-list" > 
+							<span class="hidden-xs">Véhicules Supportées</span>
+						</button>
+<br>
+						<table class="table table-bordered table-condensed">
+							<tr><td>{item_name}</td><td>
+									 {image} 
+								</td></tr>
+							<tr> 
+								<td>
+									<label>{item_code}</label>
+								</td>
+								<td>
+									<label>{manufacturer_part_no}</label>
+								</td>
+							</tr> 
+						</table>
+
+						<table class="table table-bordered table-condensed">
+							<tr> 
+								<td>
+									<label>OEM</label>
+								</td>
+								<td>
+									{oem_text}
+								</td>
+								<td></td>
+							</tr>
+							<tr> 
+								<td>
+									<label>Fabricant</label>
+								</td>
+								<td>
+									{manufacturer}
+								</td>
+								<td>
+									{fabricant_logo}
+								</td>
+							</tr>
+							<tr> 
+								<td>
+									<label>Critére</label>
+								</td>
+								<td>
+									{critere_text}
+								</td>
+								<td>
+
+								</td>
+							</tr>
+						</table>
+
+						<hr>	
+						<label>Complementent </label>
+						<div>{articles_text}</div>
+						<hr>	
+						<label>Composants </label>
+						<div>{composant_text}</div>
+						<hr>`.format(item_name=item.item_name,image=image,item_code=item_code,manufacturer_part_no=item.manufacturer_part_no
+							    ,oem_text=item.oem_text,manufacturer=item.manufacturer,fabricant_logo=fabricant_logo,critere_text=item.critere_text,articles_text=item.articles_text,composant_text=item.composant_text)
+		var d = new frappe.ui.Dialog({
+			'fields': [
+				{'fieldname': 'ht', 'fieldtype': 'HTML'},
+				{'fieldname': 'cars', 'fieldtype': 'Button', 'fieldlabel':'Vehicules'}
+			],
+			primary_action: function(){
+				d.hide();
+				show_alert(d.get_values());
+			}
+		});
+		d.fields_dict.ht.$wrapper.html(_modal);
+		d.show();
+			
+
 
 @frappe.whitelist()
 def get_item_info(item_code,price_list):
