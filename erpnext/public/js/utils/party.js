@@ -8,7 +8,7 @@ erpnext.utils.open_item_info =  function(item_code,me) {
 	var me = me;
 	console.log("open_item_info");
 	frappe.call({
-			"method": "erpnext.selling.page.point_of_sale.point_of_sale.",
+			"method": "erpnext.selling.page.point_of_sale.point_of_sale.open_item_info",
 			"args": {
 				"item_code": item_code
 			},
