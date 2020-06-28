@@ -10,7 +10,7 @@ from frappe.utils import getdate, cstr, flt, fmt_money
 def execute(filters=None):
 	columns, data = [], []
 	if not filters.group and not filters.demande and not filters.confirmation and not filters.consultation_interne and not filters.consultation_externe and not filters.ref_fabricant and not filters.item_code and not filters.generation_v and not filters.marque_v and not filters.variant_of and not filters.modele_v and not filters.version and not filters.price_list and not filters.perfection and not filters.manufacturer:
-		frappe.msgprint("Appliquer un filtre")
+		#frappe.msgprint("Appliquer un filtre")
 		return columns, data
 	is_full = 1
 	if filters.get('is_light') and filters.get('is_light')==1:
