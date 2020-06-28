@@ -83,7 +83,7 @@ def open_item_info(item_code):
 						<div>{composant_text}</div>
 						<hr>""".format(item_name=item.item_name,image=image,item_code=item_code,manufacturer_part_no=item.manufacturer_part_no
 							    ,oem_text=item.oem_text,manufacturer=item.manufacturer,fabricant_logo=fabricant_logo,critere_text=item.critere_text,articles_text=item.articles_text,composant_text=item.composant_text)
-		var d = new frappe.ui.Dialog({
+		d = frappe.ui.Dialog({
 			'fields': [
 				{'fieldname': 'ht', 'fieldtype': 'HTML'},
 				{'fieldname': 'cars', 'fieldtype': 'Button', 'fieldlabel':'Vehicules'}
