@@ -3,6 +3,10 @@
 
 frappe.provide("erpnext.utils");
 
+erpnext.utils.open_msg = function(msg) {
+	frappe.msgprint(msg);
+}
+
 erpnext.utils.open_item_info =  function(item_code,me) {
 	var me = me;
 	console.log("open_item_info");
@@ -21,7 +25,7 @@ erpnext.utils.open_item_info =  function(item_code,me) {
 					// {
 					//	 me.msg_information.hide(); 
 					 //}
-					
+					erpnext.utils.open_msg("test);
 					let image = '';
 					let fabricant_logo = '';
 					if(item.fabricant_logo){
@@ -98,8 +102,8 @@ erpnext.utils.open_item_info =  function(item_code,me) {
   			 
                         `;
 					 let msg_information = frappe.msgprint(_modal,"Details Article");
-					 msg_information.hide();
-					msg_information.show();
+					 //msg_information.hide();
+					//msg_information.show();
                        			// $(_modal).modal();
 					//$(me.msg_information.body).find('.btn-versions-list').on('click', () => {
 					
