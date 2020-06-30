@@ -26,7 +26,7 @@ def open_item_info(item_code):
 						<button type="button" data-item-code="{item_code}" class="btn btn-primary btn-sm btn-versions-list" > 
 							<span class="hidden-xs">Vehicules Supportees</span>
 						</button>
-						<button  class="btn btn-default btn-sm  btn-open" data-item-code="{item_code}"  style="margin-right: 5px;"><i class="fa fa-eye">
+						<button  class="btn btn-danger btn-sm  btn-open" data-item-code="{item_code}"  style="margin-right: 5px;"><i class="fa fa-eye">
 						</i>  Editer Article</button>
 <br>
 						<table class="table table-bordered table-condensed">
