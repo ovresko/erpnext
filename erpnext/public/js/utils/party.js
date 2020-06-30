@@ -18,7 +18,7 @@ erpnext.utils.open_item_info =  function(item_code,me) {
 				
 				$(document).off("click", ".btn-open").on('click', '.btn-open', function(){
 					 event.stopPropagation(); 
-					window.open('#Form/Item/'+item_code , '_blank', 'location=yes,height=570,width=520,scrollbars=yes,status=yes'); 
+					window.open('#Form/Item/'+item_code , '_blank', 'toolbar=0,location=0,menubar=0,location=yes, scrollbars=yes,status=yes'); 
 				});
 				$(document).off("click", ".btn-versions-list").on('click', '.btn-versions-list', function(){
 				//  $(me).find('.modal .btn-versions-list').on('click', () => {
