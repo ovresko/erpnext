@@ -14,6 +14,12 @@ erpnext.utils.open_item_info =  function(item_code,me) {
 			},
 			"callback": function(response) { 
 				  console.log("btn",response);
+				
+				
+				$(document).off("click", ".btn-open").on('click', '.btn-open', function(){
+					 event.stopPropagation(); 
+					window.open('#Form/Item/'+item_code , '_blank', 'location=yes,height=570,width=520,scrollbars=yes,status=yes'); 
+				});
 				$(document).off("click", ".btn-versions-list").on('click', '.btn-versions-list', function(){
 				//  $(me).find('.modal .btn-versions-list').on('click', () => {
 					console.log("click");
