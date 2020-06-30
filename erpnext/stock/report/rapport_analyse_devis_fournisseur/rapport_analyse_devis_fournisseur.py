@@ -674,7 +674,7 @@ def execute(filters=None):
 		if len(mri.item_code) == 11 and mri.item_code not in _models:
 			comp = None
 		if is_full:
-			row = ["""<input type='button' onclick="erpnext.utils.open_item_info('%s', this)" value='info'>  </input> &nbsp;&nbsp;&nbsp; <button id='%s' onClick="demander_item('%s')" type='button'>Demander</button><input placeholder='Qts' id='input_%s' style='color:black'></input>""" % (mri.item_code,mri.item_code,mri.item_code,mri.item_code),
+			row = ["""<input type='button' onclick="erpnext.utils.open_item_info('%s', this)" value='info'>  </input> &nbsp;&nbsp;&nbsp; <button id='%s' onClick="demander_item_mr('%s')" type='button'>Demander</button><input placeholder='Qts' id='qtsdemande_%s' style='color:black'></input>""" % (mri.item_code,mri.item_code,mri.item_code,mri.item_code),
 			       mri.item_code,
 			       #date
 			       date,
@@ -768,7 +768,7 @@ def execute(filters=None):
 			       conf_cmd
 			      ]
 		else:
-			row = ["""<input type='button' onclick="erpnext.utils.open_item_info('%s', this)" value='info'>  </input> &nbsp;&nbsp;&nbsp; <button id='%s' onClick="demander_item('%s')" type='button'>Demander</button><input placeholder='Qts' id='input_%s' style='color:black'></input>""" % (mri.item_code,mri.item_code,mri.item_code,mri.item_code),
+			row = ["""<input type='button' onclick="erpnext.utils.open_item_info('%s', this)" value='info'>  </input> &nbsp;&nbsp;&nbsp; <button id='%s' onClick="demander_item_mr('%s')" type='button'>Demander</button><input placeholder='Qts' id='qtsdemande_%s' style='color:black'></input>""" % (mri.item_code,mri.item_code,mri.item_code,mri.item_code),
 			       mri.item_code,
 			       #date
 			       date,
