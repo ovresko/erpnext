@@ -2,9 +2,9 @@
 // For license information, please see license.txt
 /* eslint-disable */
  
-function demander_item(data) {
+function demander_item_mr(data) {
 	console.log("code:",data);
-	var qty_id = 'input_'+data;
+	var qty_id = 'qtsdemande_'+data;
 	var qty = $('#'+qty_id).val();
 	console.log("qty:",qty);
 	var confirme = confirm("Confirmer l'operation ?");
