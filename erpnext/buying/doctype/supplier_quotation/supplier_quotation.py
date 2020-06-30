@@ -30,6 +30,9 @@ class SupplierQuotation(BuyingController):
 		self.validate_uom_is_integer("uom", "qty")
 		_items = []
 		for item in self.items:
+			if item.material_request_item and !frappe.db.exists("Material Request Item", item.material_request_item):
+				frappe.msgprint("Attention l'article %s fait reference a une ligne demande %s deja supprimee!" % (item.item_code,item.material_request_item))
+				item.material_request_item = ''
 			if not item.oem:
 				oem = frappe.db.get_value('OEM',{'parent': item.item_code, 'important':1},'oem')
 				item.oem = oem
