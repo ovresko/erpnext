@@ -399,11 +399,8 @@ function demander_item(data) {
 
 frappe.query_reports["Rapport analyse devis fournisseur"] = {
 	"formatter": function (value, row, column, data, default_formatter) {
-		value = default_formatter(value, row, column, data);
-		
-		
-		if {
-			
+		value = default_formatter(value, row, column, data); 
+		 	
 			
 			if(data!= null && data["etat_confirmation"] == "Approuve"){
 				value = "<div style='color:green'>" + value + "</div>";
@@ -416,7 +413,7 @@ frappe.query_reports["Rapport analyse devis fournisseur"] = {
 			}else{
 				value =   value ;
 			}
-		}
+		 
 		return value
 	},
 	"filters": [
