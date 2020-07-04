@@ -18,10 +18,12 @@ frappe.ui.form.on('Supplier Quotation', {
 			var data = [];
 			var docfields = [];
 			//#	Num Consultation	Fabricant	Code Article	Designation	oem	Ref Article	Qts
-
 			//data.push(["Date",frm.doc.transaction_date,"","","","",""]);
 			//data.push(["Fournisseur",frm.doc.supplier_name,"","","","",""]);
-			data.push(["#" ,"Num Consultation","Fabricant","Code Article","OEM","Designation","Ref Article","Poids","Pays d'origine","Devise","Qts","Prix Offre","Prix Target","Qts Target","Remarque","Prix Final","Qts Final","Confirmation "]);
+			data.push(["#" ,"Num Consultation","Fabricant","Code Article","OEM"
+				   ,"Designation","Ref Article","Poids","Pays d'origine","Devise","Qts"
+				   ,"Prix Offre","Prix Target","Qts Target","Remarque","Prix Final","Qts Final","Confirmation"
+				   ,"Commentaire fournisseur","Reponse fournisseur"]);
 			
 			$.each(frm.doc.items || [], (i, d) => {
 				var row = [];
@@ -87,7 +89,7 @@ frappe.ui.form.on('Supplier Quotation', {
 						  ,'"'+d["item_name"]+'"'
 						  ,'"'+ref_fabricant+'"'
 						  ,'"'+d["weight_per_unit"]+'"'
-						   ,'"'+pays+'"' 
+						  ,'"'+pays+'"' 
 						  ,'"'+cur+'"'
 						  ,'"'+d["qts_original"]+'"'
 						  ,'"'+offre_fournisseur_initial+'"'
@@ -96,7 +98,9 @@ frappe.ui.form.on('Supplier Quotation', {
 						  ,'"'+d["remarque"]+'"'
 						  ,'"'+offre+'"'
 						  ,'"'+qts_final+'"'
-						  ,confirmation]);
+						  ,confirmation]
+						  ,'"'+d["commentaire_fournisseur"]+'"'
+						  ,'"'+d["reponse_fournisseur"]+'"');
 				 
 				data.push(row);
 			});
@@ -119,7 +123,7 @@ frappe.ui.form.on('Supplier Quotation', {
 
 			//data.push(["Date",frm.doc.transaction_date,"","","","",""]);
 			//data.push(["Fournisseur",frm.doc.supplier_name,"","","","",""]);
-			data.push(["#" ,"Num Consultation","Fabricant","Code Article","OEM","Designation","Ref Article","Poids","Pays d'origine","Devise","Qts","Prix Offre","Prix Target","Qts Target","Remarque","Offre Final","Prix Final","Qts Final","Confirmation "]);
+			data.push(["#" ,"Num Consultation","Fabricant","Code Article","OEM","Designation","Ref Article","Poids","Pays d'origine","Devise","Qts","Prix Offre","Prix Target","Qts Target","Remarque","Offre Final","Prix Final","Qts Final","Confirmation " ,"Commentaire fournisseur","Reponse fournisseur"]);
 			
 			$.each(frm.doc.items || [], (i, d) => {
 				var row = [];
@@ -190,7 +194,9 @@ frappe.ui.form.on('Supplier Quotation', {
 						  ,'"'+d["prix_fournisseur"]+'"'
 						  ,'"'+offre+'"'
 						  ,'"'+qts_final+'"'
-						  ,confirmation]);
+						  ,confirmation]  
+						 ,'"'+d["commentaire_fournisseur"]+'"'
+						  ,'"'+d["reponse_fournisseur"]+'"');
 				 
 				data.push(row);
 			});
