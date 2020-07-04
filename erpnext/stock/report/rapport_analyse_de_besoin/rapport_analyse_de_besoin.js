@@ -64,7 +64,7 @@ frappe.query_reports["Rapport analyse de besoin"] = {
 			 
 			 if(data["item_code"].length == 14)
 			 {
-				 value = "<div style='color: white;background-color: #865FC5;padding: 1px;'>" + ovalue + "</div>";
+				 value = "<div style='color: white;background-color: #ca4100;padding: 1px;'>" + ovalue + "</div>";
 			 }
 			  if(data["item_code"].length == 11)
 			 {
