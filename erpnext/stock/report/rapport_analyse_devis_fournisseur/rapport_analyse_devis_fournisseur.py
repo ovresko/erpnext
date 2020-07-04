@@ -303,11 +303,21 @@ def execute(filters=None):
 						"label": "%s (%s)" % (pl.name,pl.currency),
 						"width": 150
 					})
+				columns.append({
+						"fieldname": "all_space",
+						"label": "___",
+						"width": 200
+					})
 		else:
 			columns.append({
 						"fieldname": "all_prices",
 						"label": "Prix article",
-						"width": 450
+						"width": 550
+					})
+			columns.append({
+						"fieldname": "all_space",
+						"label": "___",
+						"width": 200
 					})
 	mris = []
 
