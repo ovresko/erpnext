@@ -1160,9 +1160,9 @@ class POSCart {
 								var sinv = response.message; 
 								
 								frappe.call({
-										"method": "erpnext.accounts.party.get_default_price_list",
+										"method": "erpnext.accounts.party.get_default_price_list_api",
 										"args": {
-											"party": sinv
+											"party": sinv.name
 										},
 										"callback": function(response) {
 											if(response.message)
