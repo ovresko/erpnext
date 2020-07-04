@@ -138,6 +138,7 @@ def set_other_values(out, party, party_type):
 		if party.get("default_" + f):
 			out[f] = party.get("default_" + f)
 
+@frappe.whitelist()
 def get_default_price_list(party):
 	"""Return default price list for party (Document object)"""
 	if party.get("default_price_list"):
