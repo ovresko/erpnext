@@ -312,6 +312,14 @@ def get_items(start, page_length, price_list, item_group, search_value="", pos_p
 	display_items_in_stock = 0
 	lft = ''
 	rgt = ''
+	
+	if item_oem or search_value or item_modele:
+		vehicule_version = None
+		vehicule_generation = None
+		vehicule_marque = None
+		vehicule_modele=None
+		item_group = None
+		item_manufacturer = None
 
 	if pos_profile:
 		warehouse, display_items_in_stock = frappe.db.get_value('POS Profile', pos_profile, ['warehouse', 'display_items_in_stock'])
