@@ -400,23 +400,32 @@ function demander_item(data) {
 frappe.query_reports["Rapport analyse devis fournisseur"] = {
 	"formatter": function (value, row, column, data, default_formatter) {
 		value = default_formatter(value, row, column, data); 
-		 	
+		 	 var ovalue = value;
+			if(data != null && data != undefined){
 			
-			if(data!= null && data["etat_confirmation"] == "Approuve"){
-				value = "<div style='color:green'>" + value + "</div>";
-			}else if(data!= null && data["etat_confirmation"] == "Annule"){
-				value = "<div style='color:#f5372a;font-weight:bold'>" + value + "</div>";
-			}else if(data!= null && data["etat_confirmation"] == "En cours"){
-				value = "<div style='color:blue'>" + value + "</div>";
-			}else if(data!= null && data["etat_confirmation"] == "En negociation"){
-				value = "<div style='color:#E97A13'>" + value + "</div>";
-			}else{
-				value =   value ;
-			}
-		
-			if (row && row != null && row[2] && row[2].content.length == 11) {
-				value = "<div style='color: white;background-color: #43458e;padding: 1px;'>" + value + "</div>";
+				if(data!= null && data["etat_confirmation"] == "Approuve"){
+					value = "<div style='color:green'>" + ovalue + "</div>";
 				}
+				
+				if(data!= null && data["etat_confirmation"] == "Annule"){
+					value = "<div style='color:#f5372a;font-weight:bold'>" + ovalue + "</div>";
+				}
+				if(data!= null && data["etat_confirmation"] == "En cours"){
+					value = "<div style='color:blue'>" + ovalue + "</div>";
+				}
+				if(data!= null && data["etat_confirmation"] == "En negociation"){
+					value = "<div style='color:#E97A13'>" + ovalue + "</div>";
+				}
+				 if(data["item_code"].length == 14)
+				 {
+					 value = "<div style='color: white;background-color: #865FC5;padding: 1px;'>" + ovalue + "</div>";
+				 }
+				  if(data["item_code"].length == 11)
+				 {
+					 value = "<div style='color: white;background-color: #383484;padding: 1px;'>" + ovalue + "</div>";
+				 }
+
+			} 
 		 
 		return value
 	},
