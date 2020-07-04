@@ -171,7 +171,7 @@ def execute(filters=None):
 		filters, as_dict=1)
 	all_items = []
 	item_dc = {}
-	
+	mcomplements = []
 	models = []
 	_models = {item.variant_of for item in items if item.variant_of}
 	models_copy = []
@@ -192,6 +192,7 @@ def execute(filters=None):
 						if t in models:
 							models.remove(t)
 						models.insert(len(models),t)
+						mcomplements.append(t)
 						comp_items = frappe.db.sql(
 								"""
 								select
@@ -201,8 +202,8 @@ def execute(filters=None):
 								
 								""".format(lids),
 								(t), as_dict=1)
-						for ci in comp_items:
-							ci.update({"item_code":"%s CP" % ci.item_code})
+						#for ci in comp_items:
+						#	ci.update({"item_code":"%s CP" % ci.item_code})
 						items.extend(comp_items)
 						
 	if not models or len(models) <= 0:
@@ -269,9 +270,9 @@ def execute(filters=None):
 			if sqllast_qty:
 				last_qty = sqllast_qty[0].actual_qty
 				last_valuation = sqllast_qty[0].incoming_rate
-				
+			cmp = "%s CP" % mri.item_code if (mri.has_variants and mri.item_code in mcomplements) else mri.item_code
 			row = ["""<input type='button' onclick="erpnext.utils.open_item_info('%s', this)" value='info'>  </input> &nbsp;&nbsp;&nbsp; <button id='%s' onClick="demander_item('%s')" type='button'>Demander</button><input placeholder='Qts' id='input_%s' style='color:black'></input><button   onClick="achat_item('%s')" type='button'>ACHAT %s</button>""" % (mri.item_code,mri.item_code,mri.item_code,mri.item_code,mri.item_code,mri.is_purchase_item),
-			       mri.item_code,
+			       cmp,
 			       #date
 			       date,
 			       mri.item_name,
