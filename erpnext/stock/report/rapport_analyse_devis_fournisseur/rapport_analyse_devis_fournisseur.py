@@ -368,7 +368,7 @@ def execute(filters=None):
 	item_dc = {}
 	mitems=[]
 	
-	complement = []
+	mcomplements = []
 	models = []
 	_models= {item.variant_of for item in items if item.variant_of}
 	models_copy = []
@@ -387,7 +387,7 @@ def execute(filters=None):
 						if t in models:
 							models.remove(t)
 						models.insert(len(models),t)
-						complement.append(t)
+						mcomplements.append(t)
 						
 	if not models or len(models) <= 0:
 		frappe.msgprint("Aucune resultat")
@@ -675,10 +675,11 @@ def execute(filters=None):
 		comp = """<input type='button' onclick="erpnext.utils.open_item_info('%s', this)" value='info'>  </input>""" % (mri.item_code)
 		if len(mri.item_code) == 11 and mri.item_code not in _models:
 			comp = None
-		cmp = "CP" if mri.variant_of in complement else ""
+		#cmp = "CP" if mri.variant_of in complement else ""
+		cmp = "%s CP" % mri.item_code if (mri.has_variants and mri.item_code in mcomplements) else mri.item_code
 		if is_full:
 			row = ["""<input type='button' onclick="erpnext.utils.open_item_info('%s', this)" value='info'>  </input> &nbsp;&nbsp;&nbsp; <button id='%s' onClick="demander_item_mr('%s')" type='button'>Demander</button><input placeholder='Qts' id='qtsdemande_%s' style='color:black'></input>""" % (mri.item_code,mri.item_code,mri.item_code,mri.item_code),
-			       "%s %s" %( mri.item_code,cmp),
+			       cmp,
 			       #date
 			       date,
 			       mri.item_name,
@@ -772,7 +773,7 @@ def execute(filters=None):
 			      ]
 		else:
 			row = ["""<input type='button' onclick="erpnext.utils.open_item_info('%s', this)" value='info'>  </input> &nbsp;&nbsp;&nbsp; <button id='%s' onClick="demander_item_mr('%s')" type='button'>Demander</button><input placeholder='Qts' id='qtsdemande_%s' style='color:black'></input>""" % (mri.item_code,mri.item_code,mri.item_code,mri.item_code),
-			       "%s %s" %( mri.item_code,cmp),
+			       cmp,
 			       #date
 			       date,
 			       mri.item_name,
