@@ -1129,7 +1129,7 @@ class POSCart {
 				}
 			
 		});
-		
+		var me = this;
 		this.customer_field = frappe.ui.form.make_control({
 			df: {
 				fieldtype: 'Link',
