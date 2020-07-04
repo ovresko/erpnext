@@ -208,6 +208,7 @@ def execute(filters=None):
 	all_items = []
 	item_dc = {}
 	mitems=[]
+	mcomplements = []
 	
 	models = []
 	_models= {item.variant_of for item in items if item.variant_of}
@@ -227,6 +228,7 @@ def execute(filters=None):
 						if t in models:
 							models.remove(t)
 						models.insert(len(models),t)
+						mcomplements.append(t)
 						
 	if not models or len(models) <= 0:
 		frappe.msgprint("Aucune resultat")
@@ -350,10 +352,11 @@ def execute(filters=None):
 		if pondere:
 			pond_valuation = round(pondere or 0)
 			pond_valuation_ttc = round(pond_valuation*1.19)
+		cmp = "%s CP" % mri.item_code if (mri.has_variants and mri.item_code in mcomplements) else mri.item_code
 
 
 		row = [
-			mri.item_code,
+			cmp,
 			"""<input type='button' onclick="erpnext.utils.open_item_info('%s', this)" value='info'>  </input>  &nbsp;&nbsp;&nbsp;""" % (mri.item_code),
 			mri.item_name,
 			mri.stock_uom,
