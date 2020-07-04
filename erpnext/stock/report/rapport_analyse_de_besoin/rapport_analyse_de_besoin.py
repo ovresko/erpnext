@@ -202,7 +202,7 @@ def execute(filters=None):
 								""".format(lids),
 								(t), as_dict=1)
 						for ci in comp_items:
-							ci.update({"item_code":"%s C" % ci.item_code})
+							ci.update({"item_code":"%s CP" % ci.item_code})
 						items.extend(comp_items)
 						
 	if not models or len(models) <= 0:
