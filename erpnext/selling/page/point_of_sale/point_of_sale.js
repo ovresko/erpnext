@@ -1147,6 +1147,7 @@ class POSCart {
 					
 					this.events.on_customer_change(customer);
 					this.events.get_loyalty_details();
+					
 					if(customer){
 						
 						frappe.call({
@@ -1157,12 +1158,25 @@ class POSCart {
 							},
 							"callback": function(response) {
 								var sinv = response.message; 
-								if (sinv) {
-									 
-									wr.find('.customer-info').html('[ Profile : '+pr+' ]<br>' +'Nom : '+(sinv.customer_name || '')+'<br>'+(sinv.customer_group || '')+'<br>'+(sinv.territory || '')+'<br>'+(sinv.mobile_no || '')+ ' -  '+(sinv.email_id || '') + '<br>' +  me.frm.doc.selling_price_list);                                  
-								}  else{
-									   wr.find('.customer-info').html('');
-								   }
+								
+								frappe.call({
+										"method": "erpnext.accounts.party.get_default_price_list",
+										"args": {
+											"party": sinv
+										},
+										"callback": function(response) {
+											if(response.message)
+												me.frm.doc.selling_price_list = response.message
+											
+											if (sinv) {									 
+												wr.find('.customer-info').html('[ Profile : '+pr+' ]<br>' +'Nom : '+(sinv.customer_name || '')+'<br>'+(sinv.customer_group || '')+'<br>'+(sinv.territory || '')+'<br>'+(sinv.mobile_no || '')+ ' -  '+(sinv.email_id || '') + '<br>' +  me.frm.doc.selling_price_list);                                  
+											}  else{
+												   wr.find('.customer-info').html('');
+											}
+										
+										});
+								
+								
 							}
 							}); 
 						
