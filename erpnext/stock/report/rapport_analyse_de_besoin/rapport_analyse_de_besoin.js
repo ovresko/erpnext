@@ -49,25 +49,26 @@ function demander_item(data) {
 frappe.query_reports["Rapport analyse de besoin"] = {
 	"formatter": function (value, row, column, data, default_formatter) {
 		value = default_formatter(value, row, column, data);
+		var ovalue = value;
 		
 		 if(data != null && data != undefined){
 			 if(data["qts_demande"] > 0){
-			value = "<div style='color: #2E7FF8;padding: 1px;'>" + value + "</div>";
+			value = "<div style='color: #2E7FF8;padding: 1px;'>" + ovalue + "</div>";
 			}
 			if(data["qts_consulte"] > 0){
-				value = "<div style='color: #D75F00;padding: 1px;'>" + value + "</div>";
+				value = "<div style='color: #D75F00;padding: 1px;'>" + ovalue + "</div>";
 			}
 			if(data["qts_comm"] +data["qts_non_recue"] + data["qts"] > 0){
-				value = "<div style='color: #11AF22;padding: 1px;'>" + value + "</div>";
+				value = "<div style='color: #11AF22;padding: 1px;'>" + ovalue + "</div>";
 			}
 			 
 			 if(data["item_code"].length == 14)
 			 {
-				 value = "<div style='color: white;background-color: #865FC5;padding: 1px;'>" + value + "</div>";
+				 value = "<div style='color: white;background-color: #865FC5;padding: 1px;'>" + ovalue + "</div>";
 			 }
 			  if(data["item_code"].length == 11)
 			 {
-				 value = "<div style='color: white;background-color: #383484;padding: 1px;'>" + value + "</div>";
+				 value = "<div style='color: white;background-color: #383484;padding: 1px;'>" + ovalue + "</div>";
 			 }
 		 }
 		
