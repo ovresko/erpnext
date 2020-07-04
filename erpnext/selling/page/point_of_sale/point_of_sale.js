@@ -1173,8 +1173,9 @@ class POSCart {
 											}  else{
 												   wr.find('.customer-info').html('');
 											}
+										}
 										
-										});
+									});
 								
 								
 							}
