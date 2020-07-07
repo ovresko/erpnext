@@ -909,7 +909,10 @@ def get_conditions(filters):
 		
 	#consultation_interne
 	if filters.get('consultation_interne'):
-		conditions.append("""sqi.parent=%(consultation_interne)s""")
+		if filters.get('history'):
+			conditions.append(""" sqi.parent in (select distinct parent from `tabSupplier Quotation Item` where item_code== it.item_code)""")
+		else:
+			conditions.append("""sqi.parent=%(consultation_interne)s""")
 	#consultation_externe
 	if filters.get('consultation_externe'):
 		conditions.append("""sqi.parent=%(consultation_externe)s""")
