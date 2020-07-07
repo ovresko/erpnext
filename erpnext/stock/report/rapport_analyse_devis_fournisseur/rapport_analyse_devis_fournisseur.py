@@ -476,7 +476,7 @@ def execute(filters=None):
 		from `tabSupplier Quotation Item` sqi left join `tabItem` it
 		ON sqi.item_code = it.item_code
 		where sqi.docstatus{1} and it.variant_of = %s and sqi.item_code not in ('{0}')
-		""".format(lids, '<=1' if filters.get('history') else '=0'),
+		""".format([""] if filters.get('history') else lids, '<=1' if filters.get('history') else '=0'),
 		(model), as_dict=1)
 		mitems.extend(other_sq)
 		oids = {o.item_code for o in mitems if item.item_code}
@@ -909,16 +909,10 @@ def get_conditions(filters):
 		
 	#consultation_interne
 	if filters.get('consultation_interne'):
-		if filters.get('history'):
-			conditions.append(""" sqi.parent in (select distinct parent from `tabSupplier Quotation Item` qt2 where qt2.item_code== it.item_code)""")
-		else:
-			conditions.append("""sqi.parent=%(consultation_interne)s""")
+		conditions.append("""sqi.parent=%(consultation_interne)s""")
 	#consultation_externe
 	if filters.get('consultation_externe'):
-		if filters.get('history'):
-			conditions.append(""" sqi.parent in (select distinct parent from `tabSupplier Quotation Item` qt2 where qt2.item_code== it.item_code)""")
-		else:
-			conditions.append("""sqi.parent=%(consultation_externe)s""")
+		conditions.append("""sqi.parent=%(consultation_externe)s""")
 	
 	#perfection
 	if filters.get('perfection'):
