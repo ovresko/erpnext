@@ -424,7 +424,9 @@ def execute(filters=None):
 			models = models[3*sm:]
 			
 	for model in models:
-		_mitems = [item for item in items if item.variant_of == model]
+		_mitems = []
+		if not filters.get('history'):
+			_mitems = [item for item in items if item.variant_of == model]
 		origin_model = frappe.get_doc("Item",model)
 
 		mitems.append(origin_model)
