@@ -481,7 +481,7 @@ def execute(filters=None):
 		""".format([""] if filters.get('history') else lids, '<=1' if filters.get('history') else '=0'),
 		(model), as_dict=1)
 		mitems.extend(other_sq)
-		oids = {o.item_code for o in mitems if item.item_code}
+		oids = {o.item_code for o in mitems if o.item_code}
 		others = frappe.get_all("Item",filters={"variant_of":model,"item_code":("not in",oids)},fields=[
 		"variant_of",
 		"stock_uom", 
