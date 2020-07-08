@@ -425,13 +425,14 @@ def execute(filters=None):
 			
 	for model in models:
 		_mitems = []
-		if not filters.get('history'):
-			_mitems = [item for item in items if item.variant_of == model]
+		#if not filters.get('history'):
+		_mitems = [item for item in items if item.variant_of == model]
 		origin_model = frappe.get_doc("Item",model)
 
 		mitems.append(origin_model)
 		mitems.extend(_mitems)
 		ids = {o.item_code for o in mitems if o.item_code}
+		sqnames = "','".join({item.name for item in _mitems if hasattr(item, 'material_request')})
 		lids = "','".join(ids)
 		other_sq =  frappe.db.sql(
 		"""
@@ -477,8 +478,8 @@ def execute(filters=None):
 		it.max_ordered_variante
 		from `tabSupplier Quotation Item` sqi left join `tabItem` it
 		ON sqi.item_code = it.item_code
-		where sqi.docstatus{1} and it.variant_of = %s and sqi.item_code not in ('{0}')
-		""".format([""] if filters.get('history') else lids, '<=1' if filters.get('history') else '=0'),
+		where sqi.docstatus{1} and it.variant_of = %s and sqi.item_code not in ('{0}') and sqi.name not in ('{2}')
+		""".format([""] if filters.get('history') else lids, '<=1' if filters.get('history') else '=0',sqnames),
 		(model), as_dict=1)
 		mitems.extend(other_sq)
 		oids = {o.item_code for o in mitems if o.item_code}
