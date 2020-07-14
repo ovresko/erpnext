@@ -503,7 +503,7 @@ def negociation_item(item_code):
 			sq = frappe.get_doc("Supplier Quotation",item.parent)
 			if sq:
 				sq.set_resultat()
-			return "Article Annule"
+			return "Article en negociation"
 @frappe.whitelist()
 def prix_target_item(item_code,qty):
 	if item_code and qty:
