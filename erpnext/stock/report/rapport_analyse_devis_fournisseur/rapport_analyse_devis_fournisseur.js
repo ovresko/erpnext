@@ -663,7 +663,7 @@ frappe.query_reports["Rapport analyse devis fournisseur"] = {
 			"fieldname": "history",
 			"label": "Historique",
 			"fieldtype": "Check",
-			"default": 0
+			"default": 1
 		}
 	]
 }
