@@ -1318,7 +1318,7 @@ class POSCart {
 		const $item = this.$cart_items.find(item_selector);
 
 		if(item.qty > 0) {
-			const _item =this.get_item_details_cart(item.item_code);
+			const _item =this.get_item_details_cart(item.item_code,item.qty);
 			const is_stock_item = _item.is_stock_item;
 			const indicator_class = (!is_stock_item || item.actual_qty >= item.qty) ? 'green' : 'red';
 			const remove_class = indicator_class == 'green' ? 'red' : 'green';
@@ -1423,8 +1423,8 @@ class POSCart {
 		return this.item_data[item_code];
 	}
 	
-	get_item_details_cart(item_code) {
-		
+	get_item_details_cart(item_code,qty) {
+		var me = this;
 		if (!this.item_data[item_code]) {
 			this.item_data[item_code] = this.events.get_item_details(item_code);
 		}
@@ -1432,7 +1432,26 @@ class POSCart {
 		var result = this.item_data[item_code];
 		
 		// update price
-		
+		//price_list_rate
+		frappe.call({
+			"method": "erpnext.stock.get_item_details.get_price_list_rate_for",
+			"args": {
+				args:   {
+					"price_list": me.frm.doc.selling_price_list,
+					"customer": me.frm.doc.customer, 
+					"min_qty": qty,
+					"transaction_date": me.frm.doc.posting_date
+					},
+				"item_code":item_code
+			},
+			"callback": function(response) {
+				if(response.message)
+				{
+					result['price_list_rate'] = response.message;
+				}
+			}
+
+		}); 
 		console.log(result);
 		return result;
 		
