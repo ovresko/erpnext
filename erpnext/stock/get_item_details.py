@@ -483,8 +483,8 @@ def get_item_price(args, item_code, ignore_party=False):
 		conditions += """ and %(transaction_date)s between
 			ifnull(valid_from, '2000-01-01') and ifnull(valid_upto, '2500-12-31')"""
 		
-	frappe.msgprint(conditions)
-	frappe.msgprint("%s" % args)
+	#frappe.msgprint(conditions)
+	#frappe.msgprint("%s" % args)
 
 	return frappe.db.sql(""" select name, price_list_rate, uom
 		from `tabItem Price` {conditions}
@@ -516,7 +516,7 @@ def get_price_list_rate_for(args, item_code):
 
 	item_price_data = 0
 	price_list_rate = get_item_price(item_price_args, item_code)
-	frappe.msgprint(" item_price_args %s --- %s" % (item_price_args,price_list_rate))
+	#frappe.msgprint(" item_price_args %s --- %s" % (item_price_args,price_list_rate))
 	
 	if price_list_rate:
 		desired_qty = args.get("qty")
