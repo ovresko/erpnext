@@ -535,7 +535,7 @@ def get_price_list_rate_for(args, item_code):
 		if general_price_list_rate:
 			item_price_data = general_price_list_rate
 			
-	frappe.msgprint("item_price_args %s" % item_price_args)
+	frappe.msgprint("item_price_args %s --- %s" % (item_price_args,item_price_data))
 	if item_price_data:
 		if item_price_data[0][2] == args.get("uom"):
 			return item_price_data[0][1]
