@@ -516,6 +516,8 @@ def get_price_list_rate_for(args, item_code):
 
 	item_price_data = 0
 	price_list_rate = get_item_price(item_price_args, item_code)
+	frappe.msgprint(" item_price_args %s --- %s" % (item_price_args,price_list_rate))
+	
 	if price_list_rate:
 		desired_qty = args.get("qty")
 		if desired_qty and check_packing_list(price_list_rate[0][0], desired_qty, item_code):
