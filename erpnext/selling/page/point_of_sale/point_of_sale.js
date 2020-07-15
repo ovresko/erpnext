@@ -1447,12 +1447,13 @@ class POSCart {
 			"callback": function(response) {
 				if(response.message)
 				{
+					console.log(response);
 					result['price_list_rate'] = response.message;
 				}
 			}
 
 		}); 
-		console.log(result);
+		
 		return result;
 		
 	}
