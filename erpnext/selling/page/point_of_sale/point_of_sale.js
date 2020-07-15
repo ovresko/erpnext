@@ -1435,13 +1435,14 @@ class POSCart {
 		//price_list_rate
 		frappe.call({
 			"method": "erpnext.stock.get_item_details.get_item_details",
-			"args": { 
-				"customer":me.frm.doc.customer, 
-				"price_list":me.frm.doc.selling_price_list,
-				"transaction_date": me.frm.doc.posting_date,
-				"min_qty": qty,
-				"item_code":item_code
-			},
+			"args" :{
+				"args": { 
+					"customer":me.frm.doc.customer, 
+					"price_list":me.frm.doc.selling_price_list,
+					"transaction_date": me.frm.doc.posting_date,
+					"min_qty": qty,
+					"item_code":item_code
+				}},
 			"callback": function(response) {
 				if(response.message)
 				{
