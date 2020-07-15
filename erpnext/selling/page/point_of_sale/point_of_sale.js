@@ -1451,12 +1451,13 @@ class POSCart {
 			"callback": function(response) { 
 				if(response.message)
 				{ 
-					result['price_list_rate'] = response.message;
+					result.price_list_rate  = response.message;
+					console.log("new price ",result.price_list_rate);
 				}
 			}
 
 		}); 
-		console.log(result);
+		
 		return result;
 		
 	}
