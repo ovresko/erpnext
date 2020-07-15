@@ -15,11 +15,12 @@ from six import string_types
 
 
 @frappe.whitelist()
-def get_price_info(customer,price_list,transaction_date,qty,item_code):
+def get_price_info(customer,price_list,transaction_date,qty,item_code,uom):
 	args = {
 		"price_list":price_list,
 		"customer":customer,
 		"qty":qty,
+		"uom" : uom,
 		"transaction_date":transaction_date
 	}
 	return get_price_list_rate_for(args,item_code)
