@@ -1442,7 +1442,7 @@ class POSCart {
 					"price_list":me.frm.doc.selling_price_list,
 					"transaction_date": me.frm.doc.posting_date,
 					"qty": qty,
-					"uom": result["uom"],
+					"uom": "Unite",
 					"item_code":item_code
 				} ,
 			"callback": function(response) {
