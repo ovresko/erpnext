@@ -490,6 +490,7 @@ def get_item_price(args, item_code, ignore_party=False):
 		from `tabItem Price` {conditions}
 		order by uom desc, min_qty desc """.format(conditions=conditions), args)
 
+@frappe.whitelist()
 def get_price_list_rate_for(args, item_code):
 	"""
 		Return Price Rate based on min_qty of each Item Price Rate.\
