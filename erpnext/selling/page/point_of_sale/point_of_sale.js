@@ -1318,7 +1318,7 @@ class POSCart {
 		const $item = this.$cart_items.find(item_selector);
 
 		if(item.qty > 0) {
-			const _item =this.get_item_details(item.item_code);
+			const _item =this.get_item_details_cart(item.item_code);
 			const is_stock_item = _item.is_stock_item;
 			const indicator_class = (!is_stock_item || item.actual_qty >= item.qty) ? 'green' : 'red';
 			const remove_class = indicator_class == 'green' ? 'red' : 'green';
@@ -1327,9 +1327,7 @@ class POSCart {
 			$item.find('.discount input').val(item.discount_percentage);
 			if(item.rate != _item.price_list_rate){ 
 				$item.find('.remise').text("Ancien : "+format_currency(item.rate, this.frm.doc.currency,0));
-				item.rate = _item.price_list_rate;
-				 
-				
+				item.rate = _item.price_list_rate; 
 			}else{
 				$item.find('.remise').text('');
 			}
@@ -1423,6 +1421,21 @@ class POSCart {
 		}
 
 		return this.item_data[item_code];
+	}
+	
+	get_item_details_cart(item_code) {
+		
+		if (!this.item_data[item_code]) {
+			this.item_data[item_code] = this.events.get_item_details(item_code);
+		}
+
+		var result = this.item_data[item_code];
+		
+		// update price
+		
+		console.log(result);
+		return result;
+		
 	}
 
 	exists(item_code, batch_no) {
