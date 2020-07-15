@@ -1436,7 +1436,7 @@ class POSCart {
 		frappe.call({
 			"method": "erpnext.stock.get_item_details.get_price_list_rate_for",
 			"args": {
-				args:   {
+				"args":   {
 					"price_list": me.frm.doc.selling_price_list,
 					"customer": me.frm.doc.customer, 
 					"min_qty": qty,
