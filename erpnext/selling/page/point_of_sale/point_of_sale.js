@@ -1322,9 +1322,9 @@ class POSCart {
 			const is_stock_item = _item.is_stock_item;
 			const indicator_class = (!is_stock_item || item.actual_qty >= item.qty) ? 'green' : 'red';
 			const remove_class = indicator_class == 'green' ? 'red' : 'green';
-			console.log("update_item",_item);
-			if(item.rate != _item.price_list_rate){ 
-				
+			console.log("item update_item",item.rate);
+			console.log("_item update_item",_item.price_list_rate);
+			if(item.rate != _item.price_list_rate){  
 				$item.find('.remise').text("Ancien : "+format_currency(item.rate, this.frm.doc.currency,0));
 				item.rate = _item.price_list_rate; 
 				console.log("update rate",item.rate);
