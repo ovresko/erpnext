@@ -1319,21 +1319,21 @@ class POSCart {
 
 		if(item.qty > 0) {
 			var me = this;
-			if (!this.item_data[item_code]) {
-				this.item_data[item_code] = this.events.get_item_details(item_code);
+			if (!this.item_data[item.item_code]) {
+				this.item_data[item.item_code] = this.events.get_item_details(item.item_code);
 			}
 
-			var result = this.item_data[item_code];
-			console.log("call get_price_info qty",qty);
+			var result = this.item_data[item.item_code];
+			 
 			frappe.call({
 				"method": "erpnext.selling.page.point_of_sale.point_of_sale.get_price_info",
 				"args" : { 
 						"customer":me.frm.doc.customer, 
 						"price_list":me.frm.doc.selling_price_list,
 						"transaction_date": me.frm.doc.posting_date,
-						"qty": qty,
+						"qty": item.qty,
 						"uom": "Unite",
-						"item_code":item_code
+						"item_code":item.item_code
 					} ,
 				"callback": function(response) { 
 					if(response.message)
