@@ -1322,15 +1322,16 @@ class POSCart {
 			const is_stock_item = _item.is_stock_item;
 			const indicator_class = (!is_stock_item || item.actual_qty >= item.qty) ? 'green' : 'red';
 			const remove_class = indicator_class == 'green' ? 'red' : 'green';
-			const amount = item.rate * item.qty;
-			$item.find('.quantity input').val(item.qty);
-			$item.find('.discount input').val(item.discount_percentage);
+			
 			if(item.rate != _item.price_list_rate){ 
 				$item.find('.remise').text("Ancien : "+format_currency(item.rate, this.frm.doc.currency,0));
 				item.rate = _item.price_list_rate; 
 			}else{
 				$item.find('.remise').text('');
 			}
+			const amount = item.rate * item.qty;
+			$item.find('.quantity input').val(item.qty);
+			$item.find('.discount input').val(item.discount_percentage);
 			$item.find('.rate').text(format_currency(item.rate, this.frm.doc.currency,0));
 			$item.find('.item-amount').text(format_currency(amount || 0, this.frm.doc.currency,0));
 			
@@ -1445,8 +1446,7 @@ class POSCart {
 					"uom": "Unite",
 					"item_code":item_code
 				} ,
-			"callback": function(response) {
-				console.log("response ",response);
+			"callback": function(response) { 
 				if(response.message)
 				{ 
 					result['price_list_rate'] = response.message;
@@ -1454,7 +1454,7 @@ class POSCart {
 			}
 
 		}); 
-		
+		console.log(result);
 		return result;
 		
 	}
