@@ -22,7 +22,6 @@ def get_price_info(customer,price_list,transaction_date,qty,item_code):
 		"qty":qty,
 		"transaction_date":transaction_date
 	}
-	frappe.msgprint("%s" % args)
 	return get_price_list_rate_for(args,item_code)
 	
 	
