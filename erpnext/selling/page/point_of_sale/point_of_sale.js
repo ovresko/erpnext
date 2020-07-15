@@ -1318,28 +1318,57 @@ class POSCart {
 		const $item = this.$cart_items.find(item_selector);
 
 		if(item.qty > 0) {
-			const _item =this.get_item_details_cart(item.item_code,item.qty);
-			const is_stock_item = _item.is_stock_item;
-			const indicator_class = (!is_stock_item || item.actual_qty >= item.qty) ? 'green' : 'red';
-			const remove_class = indicator_class == 'green' ? 'red' : 'green';
-			console.log("item update_item",item.rate);
-			console.log("_item update_item",_item.price_list_rate);
-			if(item.rate != _item.price_list_rate){  
-				$item.find('.remise').text("Ancien : "+format_currency(item.rate, this.frm.doc.currency,0));
-				item.rate = _item.price_list_rate; 
-				console.log("update rate",item.rate);
-			}else{
-				$item.find('.remise').text('');
+			var me = this;
+			if (!this.item_data[item_code]) {
+				this.item_data[item_code] = this.events.get_item_details(item_code);
 			}
-			const amount = item.rate * item.qty;
-			$item.find('.quantity input').val(item.qty);
-			$item.find('.discount input').val(item.discount_percentage);
-			$item.find('.rate').text(format_currency(item.rate, this.frm.doc.currency,0));
-			$item.find('.item-amount').text(format_currency(amount || 0, this.frm.doc.currency,0));
-			
 
-			$item.addClass(indicator_class);
-			$item.removeClass(remove_class);
+			var result = this.item_data[item_code];
+			console.log("call get_price_info qty",qty);
+			frappe.call({
+				"method": "erpnext.selling.page.point_of_sale.point_of_sale.get_price_info",
+				"args" : { 
+						"customer":me.frm.doc.customer, 
+						"price_list":me.frm.doc.selling_price_list,
+						"transaction_date": me.frm.doc.posting_date,
+						"qty": qty,
+						"uom": "Unite",
+						"item_code":item_code
+					} ,
+				"callback": function(response) { 
+					if(response.message)
+					{ 
+						result.price_list_rate  = response.message;
+						console.log("new price ",result.price_list_rate);
+						const _item =result;//this.get_item_details_cart(item.item_code,item.qty);
+						const is_stock_item = _item.is_stock_item;
+						const indicator_class = (!is_stock_item || item.actual_qty >= item.qty) ? 'green' : 'red';
+						const remove_class = indicator_class == 'green' ? 'red' : 'green';
+						console.log("item update_item",item.rate);
+						console.log("_item update_item",_item.price_list_rate);
+						if(item.rate != _item.price_list_rate){  
+							$item.find('.remise').text("Ancien : "+format_currency(item.rate, this.frm.doc.currency,0));
+							item.rate = _item.price_list_rate; 
+							console.log("update rate",item.rate);
+						}else{
+							$item.find('.remise').text('');
+						}
+						const amount = item.rate * item.qty;
+						$item.find('.quantity input').val(item.qty);
+						$item.find('.discount input').val(item.discount_percentage);
+						$item.find('.rate').text(format_currency(item.rate, this.frm.doc.currency,0));
+						$item.find('.item-amount').text(format_currency(amount || 0, this.frm.doc.currency,0));
+
+
+						$item.addClass(indicator_class);
+						$item.removeClass(remove_class);
+					}
+				}
+
+			}); 
+
+			 
+			
 		} else {
 			$item.remove();
 		}
@@ -1427,38 +1456,12 @@ class POSCart {
 	}
 	
 	get_item_details_cart(item_code,qty) {
-		var me = this;
-		if (!this.item_data[item_code]) {
-			this.item_data[item_code] = this.events.get_item_details(item_code);
-		}
-
-		var result = this.item_data[item_code];
+		
 		
 		// update price
 		//price_list_rate
 		
-		console.log("call get_price_info qty",qty);
-		frappe.call({
-			"method": "erpnext.selling.page.point_of_sale.point_of_sale.get_price_info",
-			"args" : { 
-					"customer":me.frm.doc.customer, 
-					"price_list":me.frm.doc.selling_price_list,
-					"transaction_date": me.frm.doc.posting_date,
-					"qty": qty,
-					"uom": "Unite",
-					"item_code":item_code
-				} ,
-			"callback": function(response) { 
-				if(response.message)
-				{ 
-					result.price_list_rate  = response.message;
-					console.log("new price ",result.price_list_rate);
-				}
-			}
-
-		}); 
 		
-		return result;
 		
 	}
 
