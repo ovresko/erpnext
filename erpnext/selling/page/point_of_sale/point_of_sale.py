@@ -6,7 +6,7 @@ import frappe, json
 from frappe.utils.nestedset import get_root_of
 from frappe.utils import cint
 from erpnext.accounts.doctype.pos_profile.pos_profile import get_item_groups
-from erpnext.stock.doctype.get_item_details import get_price_list_rate_for
+from erpnext.stock.get_item_details import get_price_list_rate_for
 from frappe.utils.pdf import get_pdf
 import pdfkit
 import os
