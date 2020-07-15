@@ -483,7 +483,7 @@ def get_item_price(args, item_code, ignore_party=False):
 		conditions += """ and %(transaction_date)s between
 			ifnull(valid_from, '2000-01-01') and ifnull(valid_upto, '2500-12-31')"""
 		
-	frappe.msgprint(conditions)
+	frappe.msgprint(conditions.format(args))
 
 	return frappe.db.sql(""" select name, price_list_rate, uom
 		from `tabItem Price` {conditions}
