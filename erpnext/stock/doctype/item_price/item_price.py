@@ -47,7 +47,7 @@ class ItemPrice(Document):
 			if self.get(field) or self.get(field) == 0:
 				conditions += " and {0} = %({1})s".format(field, field)
 		if not self.get("min_qty"):
-			conditions += " and (min_qty is null or min_qty == 0)"
+			conditions += " and (min_qty is null or min_qty = '0') "
 
 		price_list_rate = frappe.db.sql("""
 			SELECT price_list_rate
