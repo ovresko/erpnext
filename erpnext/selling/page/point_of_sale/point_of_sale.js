@@ -1434,7 +1434,7 @@ class POSCart {
 		// update price
 		//price_list_rate
 		
-		
+		console.log("call get_price_info qty",qty);
 		frappe.call({
 			"method": "erpnext.selling.page.point_of_sale.point_of_sale.get_price_info",
 			"args" : { 
@@ -1445,9 +1445,9 @@ class POSCart {
 					"item_code":item_code
 				} ,
 			"callback": function(response) {
+				console.log("response ",response);
 				if(response.message)
-				{
-					console.log(response);
+				{ 
 					result['price_list_rate'] = response.message;
 				}
 			}
