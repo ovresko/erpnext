@@ -289,6 +289,11 @@ class Item(WebsiteGenerator):
 		self.update_item_price()
 		self.update_template_item()
 		self.sync_comp()
+		# update qts
+		if not self.has_variants:
+			stotal = frappe.db.sql("""select sum(actual_qty) from `tabBin` where item_code=%s""" % self.item_code)
+			if stotal:
+				self.qts_total = stotal[0][0]
 		
 		
 
