@@ -360,6 +360,9 @@ def get_items(start, page_length, price_list, item_group, search_value="", pos_p
 	display_items_in_stock = 0
 	lft = ''
 	rgt = ''
+	# modification temporaire a modifier
+	if search_value:
+		search_value = search_value.replace(" ","").replace("-","")
 	
 	if item_oem or search_value or item_modele:
 		vehicule_version = None
