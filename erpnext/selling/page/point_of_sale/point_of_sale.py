@@ -121,6 +121,7 @@ def get_item_info(item_code,price_list):
 @frappe.whitelist()
 def print_address_magasin(items,qts,pos_profile,customer):
 	items = items.split(",")
+	qts = qts.split(",")
 	warehouse = frappe.get_value("POS Profile",pos_profile,"warehouse")
 	result = {}
 	failed = ""
