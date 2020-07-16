@@ -40,7 +40,8 @@ def open_item_info(item_code):
 						<button type="button" data-item-code="{item_code}" class="btn btn-primary btn-sm btn-versions-list" > 
 							<span class="hidden-xs">Vehicules Supportees</span>
 						</button>
-						<button  class="btn btn-danger btn-sm  btn-open" data-item-code="{item_code}"  style="margin-right: 5px;"><i class="fa fa-eye">
+						<button  class="btn btn-default btn-sm  btn-info-price" data-item-code="{item_code}"  style="margin-right: 5px;">Afficher les prix</button>
+						<button  class="btn btn-default btn-sm  btn-open" data-item-code="{item_code}"  style="margin-right: 5px;"><i class="fa fa-eye">
 						</i>  Editer Article</button>
 <br>
 						<table class="table table-bordered table-condensed">
@@ -104,6 +105,19 @@ def open_item_info(item_code):
 		
 			
 
+
+@frappe.whitelist()
+def get_item_prices(item_code,selling=1):
+	res = {}
+	item = frappe.client.get("Item",item_code)
+	res.update({'item':item})
+	text = ''
+	prices = frappe.db.get_all("Item Price",filters={"item_code":item_code,"selling":selling},fields=["currency","name","price_list_rate","min_qty","price_list"])
+	if prices:
+		for p in prices:
+			text += "<li>%s		Qts Min: +%s	Prix: %s %s </li>" % ((p.price_list or '').ljust(20,str("_")),(str(p.min_qty) or '').ljust(5,str(" ")),(str(p.price_list_rate) or ''),p.currency)
+	res.update({'price':text})
+	return res
 
 @frappe.whitelist()
 def get_item_info(item_code,price_list):
