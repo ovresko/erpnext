@@ -981,7 +981,7 @@ class POSCart {
 
 	get_total_template(label, class_name) {
 		return `
-			<div class="list-item">
+			<div class="list-item" style="height: 39px;background: #dcffa6;color: black;">
 				<div class="list-item__content text-muted">${__(label)}</div>
 				<div class="list-item__content list-item__content--flex-2 ${class_name}">0.00</div>
 			</div>
