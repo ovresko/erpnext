@@ -744,13 +744,16 @@ class POSCart {
 
 					</div>
 				</div>
+				${this.get_grand_total()}
 				<div class="fields">
-					<div class="cart-search" style="width:50%">
+					<div class="cart-search" style="width:25%">
 					</div>
-					<div   style="width:50%">
-						<button  data-label="commander" class="btn btn-primary  btn btn-payer brand-primary" style="margin: 22px 5px 0px 10px;">Payer</button>
+					<div   style="width:75%">
+						<button  data-label="payer" class="btn btn-primary  btn btn-payer brand-primary" style="margin: 22px 5px 0px 10px;">Payer</button>
 						<button  data-label="commander" class="btn btn-default btn btn-commander" style="margin: 22px 5px 0px 10px;">Commander</button>
-				
+						 <button  data-label="devis" class="btn btn-default btn btn-devis" style="margin-right: 5px;">Devis</button>
+						<button  data-label="address_magasin" class="btn btn-default btn btn-address-magasin" style="margin-right: 5px;">@</button>
+
 					</div>
 						
 				</div>
