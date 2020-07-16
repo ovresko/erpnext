@@ -247,10 +247,10 @@ def get_complements(item_code):
 	for version in versions:
 		_size = len(version.item)
 		if _size == 11:
-			item = frappe.get_all("Item",filters={"manufacturer":manufacturer,"variant_of":version.item},fields=["*","item_image"])
+			item = frappe.get_all("Item",filters={"manufacturer":manufacturer,"variant_of":version.item},fields=["*"])
 			items.extend(item)
 		else:
-			item = frappe.get_all("Item",filters={"manufacturer":manufacturer,"item_code":version.item},fields=["*","item_image"])
+			item = frappe.get_all("Item",filters={"manufacturer":manufacturer,"item_code":version.item},fields=["*"])
 			items.extend(item)
 	return items
 
@@ -265,10 +265,10 @@ def get_composants(item_code):
 	for version in versions:
 		_size = len(version.item)
 		if _size == 11:
-			item = frappe.get_all("Item",filters={"manufacturer":manufacturer,"variant_of":version.item},fields=["*","item_image"])
+			item = frappe.get_all("Item",filters={"manufacturer":manufacturer,"variant_of":version.item},fields=["*"])
 			items.extend(item)
 		else:
-			item = frappe.get_all("Item",filters={"manufacturer":manufacturer,"item_code":version.item},fields=["*","item_image"])
+			item = frappe.get_all("Item",filters={"manufacturer":manufacturer,"item_code":version.item},fields=["*"])
 			items.extend(item)
 	return items
 
@@ -421,7 +421,7 @@ def get_items(start, page_length, price_list, item_group, search_value="", pos_p
 
 
 	if display_items_in_stock == 0:
-		res = frappe.db.sql("""select i.name as item_code,item_adr.adresse,item_adr.warehouse,i.nbr_variante ,i.qts_total,i.designation_commerciale,i.variant_of,i.has_variants, i.item_name, i.image as item_image, i.idx as idx,i.clean_manufacturer_part_number, i.composant_text,i.articles_text,
+		res = frappe.db.sql("""select i.name as item_code,item_adr.adresse,item_adr.warehouse,i.nbr_variante ,i.qts_total,i.designation_commerciale,i.variant_of,i.has_variants, i.item_name, i.image , i.idx as idx,i.clean_manufacturer_part_number, i.composant_text,i.articles_text,
 			i.is_stock_item, item_det.price_list_rate, item_det.currency, i.oem_text,i.titre_article,i.manufacturer,i.manufacturer_part_no,i.fabricant_logo,i.critere_text ,item_bin.actual_qty
 			from `tabItem` i LEFT JOIN (select item_code, price_list_rate,min_qty, currency from
 					`tabItem Price`	where min_qty=0 and price_list=%(price_list)s  ) item_det
@@ -449,7 +449,7 @@ def get_items(start, page_length, price_list, item_group, search_value="", pos_p
 		}
 
 	elif display_items_in_stock == 1:
-		query = """select i.name as item_code,i.variant_of,item_adr.adresse,item_adr.warehouse,i.qts_total,i.designation_commerciale,i.nbr_variante ,i.has_variants, i.item_name, i.image as item_image, i.idx as idx,i.clean_manufacturer_part_number,i.composant_text,i.articles_text,
+		query = """select i.name as item_code,i.variant_of,item_adr.adresse,item_adr.warehouse,i.qts_total,i.designation_commerciale,i.nbr_variante ,i.has_variants, i.item_name, i.image , i.idx as idx,i.clean_manufacturer_part_number,i.composant_text,i.articles_text,
 				i.is_stock_item, item_det.price_list_rate, item_det.currency, i.oem_text,i.titre_article,i.manufacturer,i.manufacturer_part_no,i.fabricant_logo , i.critere_text  
 				from `tabItem` i LEFT JOIN
 					(select item_code, price_list_rate,min_qty, currency from
