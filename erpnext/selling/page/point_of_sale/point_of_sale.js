@@ -1408,8 +1408,7 @@ class POSCart {
 					<div>${item.item_name}</div>
 					<div> ${fabricant} ${ref_fabricant}   [ ${adresse} ]    </div>
 					<div style="margin-top:5px">
-						<button data-item-code="${escape(item.item_code)}" data-label="open" class="btn btn-default btn-xs btn-open" style="margin-right: 5px;"><i class="fa fa-eye"></i>
-						</button>
+						 
 						
 						<button data-item-code="${escape(item.item_code)}" data-label="information" class="btn btn-default btn-xs btn-information" style="margin-right: 5px;"><i class="fa fa-question"></i>
 						</button>
@@ -2708,8 +2707,7 @@ class POSItems {
 						 
 						OEM: <span style="font-weight:800"><a data-item-code="${item_code}" class="oem-text">${oem}</a></span>
 						<br>
-						<button data-item-code="${item_code}" data-label="open" class="btn btn-default btn-xs btn-open" style="margin-right: 5px;"><i class="fa fa-eye"></i>
-						</button>
+						 
 						<button data-item-code="${item_code}" data-label="composant" class="btn btn-default btn-xs btn-composant" style="margin-right: 5px;">CPS
 						</button>
 						<button data-item-code="${item_code}" data-label="complement" class="btn btn-default btn-xs btn-complement" style="margin-right: 5px;">CPL
