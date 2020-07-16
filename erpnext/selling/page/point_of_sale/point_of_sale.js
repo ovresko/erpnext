@@ -2610,7 +2610,7 @@ class POSItems {
 
 	get_item_html(item) {
 		const price_list_rate = format_currency(item.price_list_rate, this.currency,0);
-		const { item_code, item_name, item_image} = item;
+		const { item_code, item_name, image} = item;
 		const item_title =  item_name || item_code;
 		const critere_text = (item.critere_text || '').split("/").join("<br>");
 		const composant_text =  (item.composant_text || '').split("/").join("<br>");
@@ -2669,12 +2669,12 @@ class POSItems {
 						title="${item_title}"
 					>
 						<div class="image-field"
-							style="${!item_image ? 'background-color: #fafbfc;' : ''} border: 0px ;padding:5px"
+							style="${!image ? 'background-color: #fafbfc;' : ''} border: 0px ;padding:5px"
 						>
-							${!item_image ? `<span class="placeholder-text">
+							${!image ? `<span class="placeholder-text">
 									${frappe.get_abbr(item_title)}
 								</span>` : '' }
-							${item_image ? `<img src="${item_image}" alt="${item_title}">` : '' }
+							${image ? `<img src="${image}" alt="${item_title}">` : '' }
 						</div>
 						${price}
 					</a>
