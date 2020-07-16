@@ -1093,7 +1093,10 @@ class POSCart {
 		});
 		
 		this.cart_search.$input.on('keyup', (e) => {
-			 
+			 if(this.$cart_items.length <= 0 && this.original_items.length <= 0)
+			 {
+				 return ;
+			 }
 			e.stopPropagation();
 			var keycode = (e.keyCode ? e.keyCode : e.which);
 			
