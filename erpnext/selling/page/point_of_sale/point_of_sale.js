@@ -2630,7 +2630,7 @@ class POSItems {
 		}
 		
 		if((item.actual_qty || 0) == 0 && item.qts_total && (item.qts_total || 0) != (item.actual_qty || 0)){
-			actual_qty = '<span class="strong" style="color:#02AF22">Qts: '+(item.actual_qty || 0)+'  / '+item.qts_total || 0 +' </span>   <button data-item-code="'+item.item_code+'" data-label="stock" class="btn btn-default btn-xs btn-stock" style="margin-right: 5px;"><i class="fa fa-cubes"></i></button>';
+			actual_qty = '<span class="strong" style="color:#02AF22">Qts: '+(item.actual_qty || 0)+' / '+(item.qts_total || 0)+' </span>   <button data-item-code="'+item.item_code+'" data-label="stock" class="btn btn-default btn-xs btn-stock" style="margin-right: 5px;"><i class="fa fa-cubes"></i></button>';
 		}else{			
 			actual_qty = '<span class="strong" style="color:#02AF22">Qts: '+(item.actual_qty || 0)+'   </span>  ';
 				
