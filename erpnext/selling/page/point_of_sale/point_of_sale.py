@@ -129,11 +129,15 @@ def print_address_magasin(items,qts,pos_profile,customer):
 		for idx, item in enumerate(items):
 			q = qts[idx]
 			adr = frappe.db.get_value("Adresse Magasin", {"parent": item,"warehouse":warehouse}, 'adresse')
+			fabricant = frappe.db.get_value("Item", {"item_code": item, 'manufacturer')
+			ref = frappe.db.get_value("Item", {"item_code": item, 'manufacturer_part_no')
 			if adr:
 				result.update({
 						item:{
 					       		"qts":q,
-					       		"adr":adr
+					       		"adr":adr,
+							"fabricant": fabricant,
+							"ref":ref
 						}
 					      })
 	else:
@@ -164,14 +168,14 @@ def print_address_magasin(items,qts,pos_profile,customer):
 		
 def prepare_bulk_print_html(names,customer,warehouse):
 	final_html = frappe.render_template("""
-	
-	<strong style="text-align:center">MON VEHICULE</strong>
+	<div style="font-size:10px">
+	<p style="text-align:center;font-weight:bold">MON VEHICULE</p>
 	<p style="text-align:center">{{warehouse}}</p>
 	<p style="text-align:center">Client : {{customer}}</p>
 	
-	{% for sc in names %}<small>{{sc}} --- {{names[sc].qts}} {{names[sc].adr}}</small><br>{% endfor %}
-	
-	""", {"names":names})
+	{% for sc in names %}<small>{{sc}} : {{names[sc].qts}} ----- <span>{{names[sc].adr}}<span></small><br>{{names[sc].fabricant}} / {{names[sc].ref}}<br>-----------------------------<br>{% endfor %}
+	</div>
+	""", {"names":names,"warehouse":warehouse,"customer":customer})
 	return final_html
 
 def dignity_get_pdf(html, options=None):
