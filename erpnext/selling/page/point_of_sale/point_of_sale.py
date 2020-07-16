@@ -159,7 +159,7 @@ def print_address_magasin(items,qts,pos_profile,customer):
 
 		frappe.local.response.filename = "{filename}.pdf".format(filename="catalogue_address")
 		frappe.local.response.filecontent = dignity_get_pdf(final_html, options=pdf_options) #get_pdf(final_html, pdf_options)
-		frappe.local.response.type = "print"
+		frappe.local.response.type = "download"
 	else:
 		failed = "no result %s %s %s" % (result,items,warehouse)
 		
