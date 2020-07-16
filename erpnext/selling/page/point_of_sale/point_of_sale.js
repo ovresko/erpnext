@@ -1347,7 +1347,7 @@ class POSCart {
 						console.log("item update_item",item.rate);
 						console.log("_item update_item",_item.price_list_rate);
 						if(item.rate != _item.price_list_rate){  
-							$item.find('.remise').text("Ancien : "+format_currency(item.rate, this.frm.doc.currency,0));
+							$item.find('.remise').text("Ancien : "+format_currency(item.rate, me.frm.doc.currency,0));
 							item.rate = _item.price_list_rate; 
 							console.log("update rate",item.rate);
 						}else{
@@ -1356,8 +1356,8 @@ class POSCart {
 						const amount = item.rate * item.qty;
 						$item.find('.quantity input').val(item.qty);
 						$item.find('.discount input').val(item.discount_percentage);
-						$item.find('.rate').text(format_currency(item.rate, this.frm.doc.currency,0));
-						$item.find('.item-amount').text(format_currency(amount || 0, this.frm.doc.currency,0));
+						$item.find('.rate').text(format_currency(item.rate, me.frm.doc.currency,0));
+						$item.find('.item-amount').text(format_currency(amount || 0, me.frm.doc.currency,0));
 
 
 						$item.addClass(indicator_class);
