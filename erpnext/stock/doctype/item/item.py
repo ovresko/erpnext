@@ -292,7 +292,7 @@ class Item(WebsiteGenerator):
 		# update qts
 		if not self.has_variants:
 			stotal = frappe.db.sql("""select sum(actual_qty) from  tabBin  where item_code=%s""",[self.item_code])
-			frappe.msgprint("stotal: %s" % stotal)
+			#frappe.msgprint("stotal: %s" % stotal)
 			if stotal:
 				self.qts_total = stotal[0][0]
 		
