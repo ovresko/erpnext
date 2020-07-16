@@ -744,7 +744,9 @@ class POSCart {
 
 					</div>
 				</div>
-				${this.get_grand_total()}
+				<div class="grand-total">
+							${this.get_grand_total()}
+				 </div>
 				<div class="fields">
 					<div class="cart-search" style="width:25%">
 					</div>
@@ -776,9 +778,7 @@ class POSCart {
 						<div class="discount-amount">`+
 						(!this.frm.allow_edit_discount ? `` : `${this.get_discount_amount()}`)+
 						`</div>
-						<div class="grand-total">
-							${this.get_grand_total()}
-						</div>
+						
 						<div class="quantity-total">
 							${this.get_item_qty_total()}
 						</div>
