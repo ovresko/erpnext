@@ -17,7 +17,8 @@ erpnext.utils.open_item_info =  function(item_code,me) {
 				
 				
 				$(document).off("click", ".btn-info-price").on('click', '.btn-info-price', function(){
-					 event.stopPropagation(); 
+					event.stopPropagation(); 
+					$('.info-price').remove();
 					 frappe.call({
 					    "method": "erpnext.selling.page.point_of_sale.point_of_sale.get_item_prices",
 					    "args": {
@@ -25,7 +26,7 @@ erpnext.utils.open_item_info =  function(item_code,me) {
 					    },
 					    "callback": function(response) {
 						    if(response.message){
-						    	frappe.msgprint(response.message['price']);
+							frappe.msgprint("<div class='info-price'> "+response.message['price']+" <div>");
 						    }
 					    }
 					 });
@@ -35,6 +36,8 @@ erpnext.utils.open_item_info =  function(item_code,me) {
 					window.open('#Form/Item/'+item_code , '_blank', 'toolbar=0,location=0,menubar=0,location=yes, scrollbars=yes,status=yes'); 
 				});
 				$(document).off("click", ".btn-versions-list").on('click', '.btn-versions-list', function(){
+					$('.info-vehicule').remove();
+					
 				//  $(me).find('.modal .btn-versions-list').on('click', () => {
 					console.log("click");
 					frappe.call({
@@ -116,12 +119,12 @@ erpnext.utils.open_item_info =  function(item_code,me) {
 							    }
 							    html_marques += `</table>`;
 
-							    frappe.msgprint(`
+							    frappe.msgprint(`<div class='info-vehicule'> 
 															${html}
 															${html_generations}
 															${html_modeles}
 															${html_marques}
-														`);
+														</div>`);
 
 							}
 						    }
