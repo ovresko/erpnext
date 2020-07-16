@@ -119,21 +119,27 @@ def get_item_info(item_code,price_list):
 	return res
 	
 @frappe.whitelist()
-def print_address_magasin(items,pos_profile):
+def print_address_magasin(items,qts,pos_profile,customer):
 	items = items.split(",")
 	warehouse = frappe.get_value("POS Profile",pos_profile,"warehouse")
 	result = {}
 	failed = ""
 	if items:
-		for item in items:
+		for idx, item in enumerateitems:
+			q = qts[idx]
 			adr = frappe.db.get_value("Adresse Magasin", {"parent": item,"warehouse":warehouse}, 'adresse')
 			if adr:
-				result.update({item:adr})
+				result.update({
+						item:{
+					       		"qts":q,
+					       		"adr":adr
+						}
+					      })
 	else:
 		failed = "no items %s %s %s" % (result,items,warehouse)
 		
 	if result:
-		final_html = prepare_bulk_print_html(result)
+		final_html = prepare_bulk_print_html(result,customer,warehouse)
 		pdf_options = { 
 						"page-height" : "15.0cm",
 						"page-width" : "8.0cm",
@@ -155,8 +161,16 @@ def print_address_magasin(items,pos_profile):
 	if failed:
 		return failed
 		
-def prepare_bulk_print_html(names):
-	final_html = frappe.render_template("""{% for sc in names %}<small>{{sc}} ----- {{names[sc]}}</small><br>{% endfor %}""", {"names":names})
+def prepare_bulk_print_html(names,customer,warehouse):
+	final_html = frappe.render_template("""
+	
+	<strong style="text-align:center">MON VEHICULE</strong>
+	<p style="text-align:center">{{warehouse}}</p>
+	<p style="text-align:center">Client : {{customer}}</p>
+	
+	{% for sc in names %}<small>{{sc}} --- {{names[sc].qts}} {{names[sc].adr}}</small><br>{% endfor %}
+	
+	""", {"names":names})
 	return final_html
 
 def dignity_get_pdf(html, options=None):
