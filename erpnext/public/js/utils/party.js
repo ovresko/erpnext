@@ -19,6 +19,7 @@ erpnext.utils.open_item_info =  function(item_code,me) {
 				$(document).off("click", ".btn-info-price").on('click', '.btn-info-price', function(){
 					event.stopPropagation(); 
 					$('.info-price').remove();
+					$('.info-vehicule').remove();
 					 frappe.call({
 					    "method": "erpnext.selling.page.point_of_sale.point_of_sale.get_item_prices",
 					    "args": {
@@ -37,7 +38,7 @@ erpnext.utils.open_item_info =  function(item_code,me) {
 				});
 				$(document).off("click", ".btn-versions-list").on('click', '.btn-versions-list', function(){
 					$('.info-vehicule').remove();
-					
+					$('.info-price').remove();
 				//  $(me).find('.modal .btn-versions-list').on('click', () => {
 					console.log("click");
 					frappe.call({
@@ -66,7 +67,7 @@ erpnext.utils.open_item_info =  function(item_code,me) {
 
 																<td> ${v.nom_version || ''}  </td>
 																<td  style="width:100px"> ${v.periode || ''}</td>
-																<td> ${v.critere || ''}  ${v.valeur_1 || ''} <br> ${v.critere_1 || ''}  ${v.valeur_2 || ''} <br> ${v.critere_2 || ''}  ${v.valeur_3 || ''} <br>  </td>
+																<td> ${v.critere || ''}  ${v.valeur_1 || ''}  ${v.critere_1 || ''}  ${v.valeur_2 || ''}   ${v.critere_2 || ''}  ${v.valeur_3 || ''}   </td>
 															`;
 								html += `</tr>`;
 							    }
@@ -84,7 +85,7 @@ erpnext.utils.open_item_info =  function(item_code,me) {
 																<td> ${v.nom_marque || ''} </td>	
 																<td> ${v.nom_generation || ''} </td>
 																<td style="width:100px"> (${d || ''} ${f || ''}) </td>
-																<td> ${v.critere || ''}  ${v.valeur_1 || ''} <br> ${v.critere_1 || ''}  ${v.valeur_2 || ''} <br> ${v.critere_2 || ''}  ${v.valeur_3 || ''} <br>  </td>
+																<td> ${v.critere || ''}  ${v.valeur_1 || ''}   ${v.critere_1 || ''}  ${v.valeur_2 || ''}   ${v.critere_2 || ''}  ${v.valeur_3 || ''}    </td>
 															`;
 								html_generations += `</tr>`;
 							    }
