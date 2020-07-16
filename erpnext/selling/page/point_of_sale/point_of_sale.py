@@ -247,10 +247,10 @@ def get_complements(item_code):
 	for version in versions:
 		_size = len(version.item)
 		if _size == 11:
-			item = frappe.get_all("Item",filters={"manufacturer":manufacturer,"variant_of":version.item},fields=["*"])
+			item = frappe.get_all("Item",filters={"manufacturer":manufacturer,"variant_of":version.item},fields=["*","item_image"])
 			items.extend(item)
 		else:
-			item = frappe.get_all("Item",filters={"manufacturer":manufacturer,"item_code":version.item},fields=["*"])
+			item = frappe.get_all("Item",filters={"manufacturer":manufacturer,"item_code":version.item},fields=["*","item_image"])
 			items.extend(item)
 	return items
 
@@ -265,10 +265,10 @@ def get_composants(item_code):
 	for version in versions:
 		_size = len(version.item)
 		if _size == 11:
-			item = frappe.get_all("Item",filters={"manufacturer":manufacturer,"variant_of":version.item},fields=["*"])
+			item = frappe.get_all("Item",filters={"manufacturer":manufacturer,"variant_of":version.item},fields=["*","item_image"])
 			items.extend(item)
 		else:
-			item = frappe.get_all("Item",filters={"manufacturer":manufacturer,"item_code":version.item},fields=["*"])
+			item = frappe.get_all("Item",filters={"manufacturer":manufacturer,"item_code":version.item},fields=["*","item_image"])
 			items.extend(item)
 	return items
 
