@@ -129,8 +129,8 @@ def print_address_magasin(items,qts,pos_profile,customer):
 		for idx, item in enumerate(items):
 			q = qts[idx]
 			adr = frappe.db.get_value("Adresse Magasin", {"parent": item,"warehouse":warehouse}, 'adresse')
-			fabricant = frappe.db.get_value("Item", {"item_code": item, 'manufacturer')
-			ref = frappe.db.get_value("Item", {"item_code": item, 'manufacturer_part_no')
+			fabricant = frappe.db.get_value("Item", {"item_code": item}, 'manufacturer')
+			ref = frappe.db.get_value("Item", {"item_code": item}, 'manufacturer_part_no')
 			if adr:
 				result.update({
 						item:{
