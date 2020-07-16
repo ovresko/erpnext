@@ -2455,7 +2455,9 @@ class POSItems {
 				"callback": function(response) {
 					var items = response.message; 
 					if(items){
-						 
+						 me.last_last_last_items =me.last_last_items;
+						me.last_last_items =me.last_items;
+						me.last_items =me.items; 
 						me.items = items;
 						me.render_items(items);	
 					}
@@ -2484,7 +2486,9 @@ class POSItems {
 				"callback": function(response) {
 					var items = response.message; 
 					if(items){
-						 
+						me.last_last_last_items =me.last_last_items;
+						me.last_last_items =me.last_items;
+						me.last_items =me.items; 
 						me.items = items;
 						me.render_items(items);	
 					}
