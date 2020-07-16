@@ -2629,10 +2629,10 @@ class POSItems {
 			price = '<span class="price-info" style="margin:0px;background-color: rgba(10, 154, 7, 0.8);border-radius: 0px;font-weight: bold;">' +price_list_rate +'</span>';
 		}
 		
-		if(item.qts_total && (item.qts_total || 0) != (item.actual_qty || 0)){
-			actual_qty = '<span class="strong" style="color:#02AF22">Qts: '+item.actual_qty || 0+'  / '+item.qts_total || 0 +' </span>   <button data-item-code="'+item.item_code+'" data-label="stock" class="btn btn-default btn-xs btn-stock" style="margin-right: 5px;"><i class="fa fa-cubes"></i></button>';
+		if((item.actual_qty || 0) == 0 && item.qts_total && (item.qts_total || 0) != (item.actual_qty || 0)){
+			actual_qty = '<span class="strong" style="color:#02AF22">Qts: '+(item.actual_qty || 0)+'  / '+item.qts_total || 0 +' </span>   <button data-item-code="'+item.item_code+'" data-label="stock" class="btn btn-default btn-xs btn-stock" style="margin-right: 5px;"><i class="fa fa-cubes"></i></button>';
 		}else{			
-			actual_qty = '<span class="strong" style="color:#02AF22">Qts: '+item.actual_qty || 0+'   </span>  ';
+			actual_qty = '<span class="strong" style="color:#02AF22">Qts: '+(item.actual_qty || 0)+'   </span>  ';
 				
 		}
 		let variantes = '';
