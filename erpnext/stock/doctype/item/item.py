@@ -259,6 +259,12 @@ class Item(WebsiteGenerator):
 			self.old_website_item_groups = frappe.db.sql_list("""select item_group
 					from `tabWebsite Item Group`
 					where parentfield='website_item_groups' and parenttype='Item' and parent=%s""", self.name)
+		# update qts
+		if not self.has_variants:
+			stotal = frappe.db.sql("""select sum(actual_qty) from  tabBin  where item_code=%s""",[self.item_code])
+			#frappe.msgprint("stotal: %s" % stotal)
+			if stotal:
+				self.qts_total = stotal[0][0]
 
 	def sync_comp(self):
 		if self.variant_of:
@@ -289,12 +295,7 @@ class Item(WebsiteGenerator):
 		self.update_item_price()
 		self.update_template_item()
 		self.sync_comp()
-		# update qts
-		if not self.has_variants:
-			stotal = frappe.db.sql("""select sum(actual_qty) from  tabBin  where item_code=%s""",[self.item_code])
-			#frappe.msgprint("stotal: %s" % stotal)
-			if stotal:
-				self.qts_total = stotal[0][0]
+		
 		
 		
 
