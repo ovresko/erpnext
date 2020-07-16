@@ -851,11 +851,14 @@ class POSCart {
 	cree_address_magasin()
 	{
 		var names = this.frm.doc.items.map(a => a.item_code);
+		var qts = this.frm.doc.items.map(a => a.qty);
 		if(!names || !this.frm.doc.pos_profile){
 			return;
 		}
 		var w = window.open("/api/method/erpnext.selling.page.point_of_sale.point_of_sale.print_address_magasin?"
 				    			+"pos_profile="+this.frm.doc.pos_profile
+				    			+"&qts="+encodeURIComponent(qts)
+				    			+"&customer="+this.frm.doc.customer_name
 							+"&items="+encodeURIComponent(names));
 	
 		if(!w) {
