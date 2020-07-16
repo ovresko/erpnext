@@ -790,13 +790,7 @@ class POSCart {
 						<div class="loyalty-program-section">
 							<div class="loyalty-program-field"> </div>
 						</div>
-						<button  data-label="commander" class="btn btn-default btn btn-commander" style="margin-right: 5px;">Créer Commande</button>
-						<button  data-label="devis" class="btn btn-default btn btn-devis" style="margin-right: 5px;">Créer Devis</button>
 						
-
-						<br>
-						<button  data-label="address_magasin" class="btn btn-default btn btn-address-magasin" style="margin-right: 5px;">Impr. Adresse</button>
-
 						
 					</div>
 				</div>
