@@ -159,7 +159,7 @@ def print_address_magasin(items,qts,pos_profile,customer):
 
 		frappe.local.response.filename = "{filename}.pdf".format(filename="catalogue_address")
 		frappe.local.response.filecontent = dignity_get_pdf(final_html, options=pdf_options) #get_pdf(final_html, pdf_options)
-		frappe.local.response.type = "download"
+		frappe.local.response.type = "print"
 	else:
 		failed = "no result %s %s %s" % (result,items,warehouse)
 		
@@ -173,7 +173,8 @@ def prepare_bulk_print_html(names,customer,warehouse):
 	<p style="text-align:center">{{warehouse}}</p>
 	<p style="text-align:center">Client : {{customer}}</p>
 	
-	{% for sc in names %}<small>{{sc}} : {{names[sc].qts}} ----- <span>{{names[sc].adr}}<span></small><br>{{names[sc].fabricant}} / {{names[sc].ref}}<br>-----------------------------<br>{% endfor %}
+	{% for sc in names %}<small>{{sc}} : <span style="font-weight:bold"">{{names[sc].qts}} <span> ************************ <span>{{names[sc].adr}}<span>
+	</small><br>{{names[sc].fabricant}} / {{names[sc].ref}}<br>----------------------------------------------------------<br>{% endfor %}
 	</div>
 	""", {"names":names,"warehouse":warehouse,"customer":customer})
 	return final_html
