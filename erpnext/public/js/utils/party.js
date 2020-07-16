@@ -16,6 +16,20 @@ erpnext.utils.open_item_info =  function(item_code,me) {
 				  console.log("btn",response);
 				
 				
+				$(document).off("click", ".btn-info-price").on('click', '.btn-info-price', function(){
+					 event.stopPropagation(); 
+					 frappe.call({
+					    "method": "erpnext.selling.page.point_of_sale.point_of_sale.get_item_prices",
+					    "args": {
+						"item_code": item_code
+					    },
+					    "callback": function(response) {
+						    if(response.message){
+						    	frappe.msgprint(response.message['price']);
+						    }
+					    }
+					 });
+				});
 				$(document).off("click", ".btn-open").on('click', '.btn-open', function(){
 					 event.stopPropagation(); 
 					window.open('#Form/Item/'+item_code , '_blank', 'toolbar=0,location=0,menubar=0,location=yes, scrollbars=yes,status=yes'); 
