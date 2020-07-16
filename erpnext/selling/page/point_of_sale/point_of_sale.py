@@ -125,7 +125,7 @@ def print_address_magasin(items,qts,pos_profile,customer):
 	result = {}
 	failed = ""
 	if items:
-		for idx, item in enumerateitems:
+		for idx, item in enumerate(items):
 			q = qts[idx]
 			adr = frappe.db.get_value("Adresse Magasin", {"parent": item,"warehouse":warehouse}, 'adresse')
 			if adr:
