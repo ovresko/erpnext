@@ -1701,7 +1701,7 @@ class POSItems {
 				<button  data-label="return" class="btn btn-default btn-xs btn btn-pagination-return" ><i class="fa fa-arrow-left"></i></button>
  				<span class="pagination"></span>
 				<button  data-label="return" class="btn btn-default btn-xs btn btn-pagination" ><i class="fa fa-arrow-right"></i></button>
-				<button  data-label="return" class="btn btn-default btn-xs btn btn-vente-perdue" >Vente perdue</button>
+				<!-- <button  data-label="return" class="btn btn-default btn-xs btn btn-vente-perdue" >Vente perdue</button>  -->
 				
 				</div>
 
