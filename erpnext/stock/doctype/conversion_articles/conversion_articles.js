@@ -6,8 +6,12 @@ frappe.ui.form.on('Conversion Articles', {
 
 	},
 	convertir: function(frm){
+		
+		 
+		
 		var lines = frm.doc.refs.split("\n");
 		var old = "";
+		 
 		for(var i = 0;i < lines.length;i++){
 		    	//code here using lines[i] which will give you each line
 			var ref = lines[i];
@@ -19,15 +23,16 @@ frappe.ui.form.on('Conversion Articles', {
 				
 				if(clean){
 					
-					frappe.db.get_value('Item', {clean_manufacturer_part_number: clean}, ['item_code'], (r) => {
-					if (r) {							
-						old += r.item_code+"\n";  
-						frm.set_value('codes', old); 
-					}else{
-					
-						old += "\n";  
-						frm.set_value('codes', old); 
-					}
+						frappe.db.get_value('Item', {clean_manufacturer_part_number: clean}, ['item_code'], (r) => {
+						if (r) {							
+							old += r.item_code+"\n"; 
+						}else{ 
+							old += "\n";   
+						}
+							
+						if(i+1 >= lines.length){
+							frm.set_value('codes', old); 
+						}
 					});
 				}
 				
