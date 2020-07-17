@@ -14,8 +14,9 @@ frappe.ui.form.on('Conversion Articles', {
 			console.log("red",ref);
 			if(ref){
 				var clean = ref.replace(/ /g,"").replace(/-/g,"").replace(/_/g,"").replace(/\//g,"").replace(/./g,"");
+				console.log("clean",clean);
 				if(clean){
-					console.log("clean",clean);
+					
 					frappe.db.get_value('Item', {clean_manufacturer_part_number: clean}, ['item_code'], (r) => {
 					if (r) {							
 						old += "\n"+r.item_code; 
