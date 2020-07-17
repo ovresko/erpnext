@@ -31,6 +31,9 @@ frappe.ui.form.on('Conversion Articles', {
 			}
 			
 		}
+		
+		console.log("old",old);
 		frm.set_value('codes', old);
+		frm.refresh_fields();
 	}
 });
