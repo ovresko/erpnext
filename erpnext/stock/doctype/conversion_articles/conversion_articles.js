@@ -21,9 +21,11 @@ frappe.ui.form.on('Conversion Articles', {
 					
 					frappe.db.get_value('Item', {clean_manufacturer_part_number: clean}, ['item_code'], (r) => {
 					if (r) {							
-						old += "\n"+r.item_code; 
-						console.log("item_code",r.item_code);
-						console.log("old",old);
+						old += r.item_code+"\n";  
+						frm.set_value('codes', old); 
+					}else{
+					
+						old += "\n";  
 						frm.set_value('codes', old); 
 					}
 					});
