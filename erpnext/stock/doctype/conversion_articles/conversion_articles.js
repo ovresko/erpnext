@@ -4,5 +4,26 @@
 frappe.ui.form.on('Conversion Articles', {
 	refresh: function(frm) {
 
+	},
+	convertir: function(frm){
+		var lines = frm.doc.refs.split("\n");
+		var old = "";
+		for(var i = 0;i < lines.length;i++){
+		    	//code here using lines[i] which will give you each line
+			var ref = lines[i];
+			
+			if(ref){
+				var clean = ref.replaceAll(" ","").replaceAll("-","").replaceAll("_","").replaceAll("/","").replaceAll(".","");
+				frappe.db.get_value('Item', {clean_manufacturer_part_number: clean}, ['item_code'], (r) => {
+					if (r) {	
+						var old = frm.doc.codes;
+						old += "\n"+r.item_code; 
+					}
+				});
+			
+			}
+			
+		}
+		frm.set_value('codes', old);
 	}
 });
