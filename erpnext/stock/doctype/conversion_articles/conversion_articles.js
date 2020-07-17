@@ -13,13 +13,16 @@ frappe.ui.form.on('Conversion Articles', {
 			var ref = lines[i];
 			
 			if(ref){
-				var clean = ref.replaceAll(" ","").replaceAll("-","").replaceAll("_","").replaceAll("/","").replaceAll(".","");
-				frappe.db.get_value('Item', {clean_manufacturer_part_number: clean}, ['item_code'], (r) => {
+				var clean = ref.replace(/ /g,"").replace(/-/g,"").replace(/_/g,"").replace(/\//g,"").replace(/./g,"");
+				if(clean){
+					frappe.db.get_value('Item', {clean_manufacturer_part_number: clean}, ['item_code'], (r) => {
 					if (r) {	
 						var old = frm.doc.codes;
 						old += "\n"+r.item_code; 
 					}
-				});
+					});
+				}
+				
 			
 			}
 			
