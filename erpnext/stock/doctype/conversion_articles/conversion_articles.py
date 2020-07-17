@@ -9,6 +9,7 @@ from frappe.model.document import Document
 class ConversionArticles(Document):
 	pass
 
+@frappe.whitelist()
 def get_converstion(refs):
 	result = ""
 	if refs:
