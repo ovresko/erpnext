@@ -1,45 +1,29 @@
 // Copyright (c) 2020, Frappe Technologies Pvt. Ltd. and contributors
 // For license information, please see license.txt
 
+
+
 frappe.ui.form.on('Conversion Articles', {
 	refresh: function(frm) {
 
 	},
 	convertir: function(frm){
 		
-		 
-		
-		var lines = frm.doc.refs.split("\n");
-		var old = "";
-		 
-		for(var i = 0;i < lines.length;i++){
-		    	//code here using lines[i] which will give you each line
-			var ref = lines[i];
-			console.log("red",ref);
-			if(ref){
-				var clean = ref.replace(/ /g,"").replace(/-/g,"").replace(/_/g,"").replace(/\//g,"").replace(/\./g,"");
-				 
-				console.log("clean",clean);
-				
-				if(clean){
-					
-						frappe.db.get_value('Item', {clean_manufacturer_part_number: clean}, ['item_code'], (r) => {
-						if (r) {							
-							old += r.item_code+"\n"; 
-						}else{ 
-							old += "\n";   
-						}
-							
-						if(i+1 >= lines.length){
-							frm.set_value('codes', old); 
-						}
-					});
+		 //frm.set_value('codes', old); 
+		frappe.call({
+			method: 'erpnext.stock.doctype.conversion_articles.conversion_articles.get_converstion',
+			freeze: true,
+			freeze_message: __("Converting..."),
+			args: {
+				refs: frm.doc.refs,
+			},
+			callback: function (r) {
+				if(r.message){
+					frm.set_value('codes', r.message); 				
 				}
-				
-			
+				frm.reload_doc();
 			}
-			
-		}
+		});
 		
 		
 	}
