@@ -21,7 +21,6 @@ frappe.ui.form.on('Conversion Articles', {
 				if(r.message){
 					frm.set_value('codes', r.message); 				
 				}
-				frm.reload_doc();
 			}
 		});
 		
