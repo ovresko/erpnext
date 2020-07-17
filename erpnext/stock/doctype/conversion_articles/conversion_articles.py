@@ -18,7 +18,7 @@ def get_converstion(refs):
 			for c in clean:
 				if c:
 					c = c.replace(" ","").replace("-","").replace("_","").replace("/","").replace(".","")
-					code = frappe.db.get_value('Item', {clean_manufacturer_part_number: c}, ['item_code'])
+					code = frappe.db.get_value('Item', {"clean_manufacturer_part_number": c}, ['item_code'])
 					result += "%s\n" % (code or '')
 				else:
 					
