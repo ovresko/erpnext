@@ -23,6 +23,8 @@ frappe.ui.form.on('Conversion Articles', {
 					if (r) {							
 						old += "\n"+r.item_code; 
 						console.log("item_code",r.item_code);
+						console.log("old",old);
+						frm.set_value('codes', old); 
 					}
 					});
 				}
@@ -32,8 +34,6 @@ frappe.ui.form.on('Conversion Articles', {
 			
 		}
 		
-		console.log("old",old);
-		frm.set_value('codes', old);
-		frm.refresh_fields();
+		
 	}
 });
