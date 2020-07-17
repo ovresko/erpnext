@@ -13,8 +13,17 @@ frappe.ui.form.on('Conversion Articles', {
 			var ref = lines[i];
 			console.log("red",ref);
 			if(ref){
-				var clean = ref.replace(/ /g,"").replace(/-/g,"").replace(/_/g,"").replace(/\//g,"").replace(/./g,"");
+				var clean = ref.replace(/ /g,"");
 				console.log("clean",clean);
+				clean = clean.replace(/-/g,"");
+				console.log("clean",clean);
+				clean = clean.replace(/_/g,"");
+				console.log("clean",clean);
+				clean = clean.replace(/\//g,"");
+				console.log("clean",clean);
+				clean = clean.replace(/./g,"");				
+				console.log("clean",clean);
+				
 				if(clean){
 					
 					frappe.db.get_value('Item', {clean_manufacturer_part_number: clean}, ['item_code'], (r) => {
