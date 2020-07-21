@@ -633,6 +633,7 @@ erpnext.pos.PointOfSale = class PointOfSale {
 					this.frm.cscript.calculate_taxes_and_totals();
 
 					if (r.message) {
+						console.log("m",r.message);
 						this.frm.allow_devis = r.message.allow_devis;
 						this.frm.meta.default_print_format = r.message.print_format || "";
 						this.frm.allow_edit_rate = r.message.allow_edit_rate;
