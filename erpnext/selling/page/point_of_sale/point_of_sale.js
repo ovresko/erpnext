@@ -633,7 +633,7 @@ erpnext.pos.PointOfSale = class PointOfSale {
 					this.frm.cscript.calculate_taxes_and_totals();
 
 					if (r.message) {
-						this.allow_devis = r.message.allow_devis;
+						this.frm.allow_devis = r.message.allow_devis;
 						this.frm.meta.default_print_format = r.message.print_format || "";
 						this.frm.allow_edit_rate = r.message.allow_edit_rate;
 						this.frm.allow_edit_discount = r.message.allow_edit_discount;
@@ -733,7 +733,7 @@ class POSCart {
 
 	make_dom() {
 		var dv = '';
-		if(this.allow_devis){
+		if(this.frm.allow_devis){
 			dv = `<button  data-label="devis" class="btn btn-default btn btn-devis" style="margin: 20px 2px 0px 2px;">Devis</button>`;
 	
 		}
