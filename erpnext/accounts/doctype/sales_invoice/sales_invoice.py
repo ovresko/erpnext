@@ -323,6 +323,7 @@ class SalesInvoice(SellingController):
 		if pos:
 			return {
 				"print_format": print_format,
+				"allow_devis " : pos.get("allow_devis"),
 				"allow_edit_rate": pos.get("allow_user_to_edit_rate"),
 				"allow_edit_discount": pos.get("allow_user_to_edit_discount"),
 				"campaign": pos.get("campaign")
