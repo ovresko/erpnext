@@ -210,21 +210,22 @@ def print_address_magasin(items,qts,pos_profile,customer):
 		
 	if result:
 		final_html = prepare_bulk_print_html(result,customer,warehouse)
-		pdf_options = { 
-						"page-height" : "15.0cm",
-						"page-width" : "8.0cm",
-						"margin-top": "10mm",
-						"margin-bottom": "10mm",
-						"margin-left": "5mm",
-						"margin-right": "5mm",
-						"no-outline": None,
-						"encoding": "UTF-8",
-						"title": "ADRESSE",
-					}
+		return final_html
+		#pdf_options = { 
+		#				"page-height" : "15.0cm",
+		#				"page-width" : "8.0cm",
+		#				"margin-top": "10mm",
+		#				"margin-bottom": "10mm",
+		#				"margin-left": "5mm",
+		#				"margin-right": "5mm",
+		#				"no-outline": None,
+		#				"encoding": "UTF-8",
+		#				"title": "ADRESSE",
+		#			}
 
-		frappe.local.response.filename = "{filename}.pdf".format(filename="catalogue_address")
-		frappe.local.response.filecontent = dignity_get_pdf(final_html, options=pdf_options) #get_pdf(final_html, pdf_options)
-		frappe.local.response.type = "download"
+		#frappe.local.response.filename = "{filename}.pdf".format(filename="catalogue_address")
+		#frappe.local.response.filecontent = dignity_get_pdf(final_html, options=pdf_options) #get_pdf(final_html, pdf_options)
+		#frappe.local.response.type = "download"
 	else:
 		failed = "no result %s %s %s" % (result,items,warehouse)
 		
@@ -232,7 +233,7 @@ def print_address_magasin(items,qts,pos_profile,customer):
 		return failed
 		
 def prepare_bulk_print_html(names,customer,warehouse):
-	final_html = frappe.render_template("""
+	final_html = frappe.render_template("""<div style="max-width:80mm">
 	<div style="font-size:10px">
 	<p style="text-align:center;font-weight:bold">MON VEHICULE</p>
 	<p style="text-align:center">{{warehouse}}</p>
@@ -240,7 +241,7 @@ def prepare_bulk_print_html(names,customer,warehouse):
 	
 	{% for sc in names %}<small>{{sc}} : <span style="font-weight:bold"">{{names[sc].qts}} <span> ************************ <span>{{names[sc].adr}}<span>
 	</small><br>{{names[sc].fabricant}} / {{names[sc].ref}}<br>----------------------------------------------------------<br>{% endfor %}
-	</div>
+	</div><div>
 	""", {"names":names,"warehouse":warehouse,"customer":customer})
 	return final_html
 
