@@ -1707,7 +1707,9 @@ class POSItems {
 				<span class="strong">Date </span>: <br> <span class="vehicule-date"></span>  
 
 				<br>
-	 			<button  data-label="return" class="btn btn-danger btn-xs btn btn-back-result">Retour</button>
+	 			<button  data-label="return" class="btn btn-danger btn-xs btn btn-delete">Effacer tous</button>
+
+	 			<button  data-label="return" class="btn btn-info btn-xs btn btn-back-result">Retour</button>
 				
  				<button  data-label="return" class="btn btn-default btn-xs btn btn-remove-pagination" ><i class="fa fa-trash-o"></i></button>
 				<button  data-label="return" class="btn btn-default btn-xs btn btn-pagination-return" ><i class="fa fa-arrow-left"></i></button>
