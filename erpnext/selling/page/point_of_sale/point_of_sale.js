@@ -2370,6 +2370,27 @@ class POSItems {
 			me.render_items(me.items);
 		});
 		
+		//btn-delete
+		this.wrapper.on('click', '.btn-delete', function(event) {
+			me.items = [];
+			me.vehicule_version_field.set_value('');
+			me.vehicule_generation_field.set_value('');
+			me.vehicule_modele_field.set_value('');
+			me.vehicule_marque_field.set_value('');
+			me.item_group_parent = '';
+			me.item_group_parent_field.set_value('');
+			me.item_group = '';
+			me.item_group_field.set_value('');
+			me.item_modele = '';
+			me.item_modele_field.set_value('');
+			//me.item_group_field.set_value(me.last_query.item_group || '');
+			me.item_oem = '';
+			me.item_oem_field.set_value(''); 
+			me.item_manufacturer = '';
+			me.item_manufacturer_field.set_value('');
+			me.render_items(me.items);
+		});
+		
 		//btn-vente-perdue
 		this.wrapper.on('click', '.btn-vente-perdue', function(event) {
 			let value = prompt("Cause de vente perdue?");
