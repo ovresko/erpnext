@@ -407,7 +407,7 @@ def get_material_requests_based_on_supplier(supplier):
 def get_mr_items(manufacturer):
 	if not manufacturer:
 		return []
-	_ids = frappe.db.sql("""select item_code, pays, name, model, consultation, consulted, parent, item_name, qty, ref_fabricant, fabricant from `tabMaterial Request Item` where consulted=0 and docstatus=1 and fabricant=%s """,(manufacturer), as_dict=1)
+	_ids = frappe.db.sql("""select item_code, pays, name, model, consultation, consulted, parent, item_name, qty, ref_fabricant, fabricant from `tabMaterial Request Item` where warehouse='GLOBAL - MV' and consulted=0 and docstatus=1 and fabricant=%s """,(manufacturer), as_dict=1)
 	if not _ids:
 		_ids = []
 	return _ids
