@@ -13,6 +13,48 @@ import os
 
 from six import string_types
 
+@frappe.whitelist()
+def add_demande(item_code,qty,profile):
+	warehouse = frappe.get_value("POS Profile",profile,"warehouse")
+	if item_code and qty and warehouse:
+		qty = flt(qty)
+		company = frappe.db.get_single_value('Global Defaults', 'default_company')
+		mr = frappe.new_doc("Material Request")
+		mr.update({
+			"company": company,
+			"transaction_date": nowdate(),
+			"material_request_type": "Material Transfer",
+			"warehouse": warehouse
+		})
+		item = frappe.get_doc("Item",item_code)
+		uom = item.stock_uom
+		conversion_factor = 1.0
+
+		uom = item.purchase_uom or item.stock_uom
+		if uom != item.stock_uom:
+			conversion_factor = frappe.db.get_value("UOM Conversion Detail",
+				{'parent': item.name, 'uom': uom}, 'conversion_factor') or 1.0
+
+		mr.append("items", {
+			"doctype": "Material Request Item",
+			"item_code": item.item_code,
+			"schedule_date": nowdate(),
+			"qty": qty / conversion_factor,
+			"uom": uom,
+			"stock_uom": item.stock_uom,
+			"warehouse": warehouse,
+			"item_name": item.item_name,
+			"description": item.description,
+			"item_group": item.item_group,
+			"brand": item.brand,
+		})
+
+		mr.schedule_date = nowdate()
+		mr.insert()
+		mr.submit()
+		return "Demande enregistree"
+	else:
+		return "---- Verifier les donnees qts et article -----"
 
 @frappe.whitelist()
 def get_price_info(customer,price_list,transaction_date,qty,item_code,uom):
