@@ -635,6 +635,7 @@ erpnext.pos.PointOfSale = class PointOfSale {
 					if (r.message) {
 						//console.log("m",r.message);
 						this.frm.allow_devis = r.message.allow_devis;
+						this.frm.allow_pay = r.message.allow_pay;
 						this.frm.meta.default_print_format = r.message.print_format || "";
 						this.frm.allow_edit_rate = r.message.allow_edit_rate;
 						this.frm.allow_edit_discount = r.message.allow_edit_discount;
@@ -734,8 +735,13 @@ class POSCart {
 
 	make_dom() {
 		var dv = '';
+		var payer = '';
 		if(this.frm.allow_devis){
 			dv = `<button  data-label="devis" class="btn btn-default btn btn-devis" style="margin: 20px 2px 0px 2px;">Devis</button>`;
+	
+		}
+		if(this.frm.allow_pay){
+			payer = `<button  data-label="payer" class="btn btn-primary  btn btn-payer brand-primary" style="margin: 20px 2px 0px 2px;">Payer</button>`;
 	
 		}
 		this.wrapper.append(`
@@ -758,7 +764,7 @@ class POSCart {
 					<div class="cart-search" style="width:25%">
 					</div>
 					<div   style="width:75%">
-						<button  data-label="payer" class="btn btn-primary  btn btn-payer brand-primary" style="margin: 20px 2px 0px 2px;">Payer</button>
+						${payer}
 						<button  data-label="commander" class="btn btn-default btn btn-commander" style="margin: 20px 2px 0px 2px;">Commander</button>
 						${dv}
 						<button  data-label="address_magasin" class="btn btn-default btn btn-address-magasin" style="margin: 20px 2px 0px 2px;">@</button>
