@@ -401,7 +401,7 @@ def info_modele(model, warehouse=None):
 		values.append(warehouse)
 		condition += " AND warehouse = %s"
 
-	actual_qty = frappe.db.sql("""select sum(actual_qty), sum(indented_qty), sum(projected_qty), sum(ordered_qty) from tabBin
+	actual_qty = frappe.db.sql("""select sum(actual_qty), sum(IF(warehouse = "GLOBAL - MV", indented_qty, 0)), sum(projected_qty), sum(ordered_qty) from tabBin
 		where model=%s {0}""".format(condition), values)[0]
 
 	return actual_qty
@@ -412,7 +412,7 @@ def info_variante(model, warehouse=None):
 		values.append(warehouse)
 		condition += " AND warehouse = %s"
 
-	actual_qty = frappe.db.sql("""select sum(actual_qty), sum(indented_qty), sum(projected_qty), sum(ordered_qty) from tabBin
+	actual_qty = frappe.db.sql("""select sum(actual_qty), sum(IF(warehouse = "GLOBAL - MV", indented_qty, 0)), sum(projected_qty), sum(ordered_qty) from tabBin
 		where item_code=%s {0}""".format(condition), values)[0]
 
 	return actual_qty
