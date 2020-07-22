@@ -872,8 +872,9 @@ class POSCart {
 		if(!w) {
 			frappe.msgprint(__("Please enable pop-ups")); return;
 		}else{
+			console.log(w);
 			var lw=window.open();
-			lw.document.write(w);
+			lw.document.write(w.message);
 			lw.print();
 			lw.close();
 		}
