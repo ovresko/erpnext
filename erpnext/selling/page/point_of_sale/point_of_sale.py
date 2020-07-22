@@ -20,10 +20,8 @@ from six import string_types
 def get_customer(customer):
 	cs = frappe.get_doc("Customer",customer)
 	bl = get_balance_on(party_type="Customer",party=customer)
-	
-	cs.update({"balance":bl or '0.00'})
-	frappe.msgprint("%s" % cs)
-	return cs
+	#cs.update({"balance":bl or '0.00'})
+	return {"customer":cs,"balance":bl}
 	
 @frappe.whitelist()
 def add_demande(item_code,qty,profile):
