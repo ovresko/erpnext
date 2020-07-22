@@ -21,6 +21,7 @@ def get_customer(customer):
 	cs = frappe.get_doc("Customer",customer)
 	bl = get_balance_on(party_type="Customer",party=customer)
 	cs.update({"balance":bl})
+	return cs
 	
 @frappe.whitelist()
 def add_demande(item_code,qty,profile):
