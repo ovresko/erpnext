@@ -4,7 +4,8 @@
 from __future__ import unicode_literals
 import frappe, json
 from frappe.utils.nestedset import get_root_of
-from frappe.utils import (cint, flt)
+from frappe.utils import (nowdate, cint, cstr, flt, formatdate, get_timestamp, getdate,
+						  now_datetime, random_string, strip)
 from erpnext.accounts.doctype.pos_profile.pos_profile import get_item_groups
 from erpnext.stock.get_item_details import get_price_list_rate_for
 from frappe.utils.pdf import get_pdf
