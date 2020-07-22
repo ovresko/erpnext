@@ -1173,7 +1173,8 @@ class POSCart {
 								"customer": customer
 							},
 							"callback": function(response) {
-								var sinv = response.message; 
+								var sinv = response.message["customer"]; 
+								var bl = response.message["balance"]; 
 								
 								frappe.call({
 										"method": "erpnext.accounts.party.get_default_price_list_api",
@@ -1187,7 +1188,7 @@ class POSCart {
 											
 											if (sinv) {
 												console.log(sinv)
-												wr.find('.customer-info').html('[ Profile : '+pr+' ]<br>' +'Nom : '+(sinv.customer_name || '')+'<br>'+(sinv.customer_group || '')+'<br>'+(sinv.territory || '')+'<br>'+(sinv.mobile_no || '')+ ' -  '+(sinv.email_id || '') + '<br>' +  me.frm.doc.selling_price_list)+'<br>Solde : '+sinv.balance;                                  
+												wr.find('.customer-info').html('[ Profile : '+pr+' ]<br>' +'Nom : '+(sinv.customer_name || '')+'<br>'+(sinv.customer_group || '')+'<br>'+(sinv.territory || '')+'<br>'+(sinv.mobile_no || '')+ ' -  '+(sinv.email_id || '') + '<br>' +  me.frm.doc.selling_price_list)+'<br>Solde : '+bl;                                  
 											}  else{
 												   wr.find('.customer-info').html('');
 											}
