@@ -251,7 +251,7 @@ def execute(filters=None):
 			qts_consulte = frappe.db.sql("""select sum(qty) from `tabSupplier Quotation Item` 
 			where item_code=%s and docstatus=0""", (mri.item_code))[0][0]
 			qts_demande = frappe.db.sql("""select sum(qty) from `tabMaterial Request Item` 
-			where item_code=%s and docstatus=1 and consulted=0""", (mri.item_code))[0][0]
+			where item_code=%s and docstatus=1 and consulted=0 and warehouse='GLOBAL - MV'""", (mri.item_code))[0][0]
 			r_qts_bloque="Bloque" if mri.item_bloque else ""
 			#qts_bloque = frappe.db.sql("""select sum(qty) from `tabMaterial Request Item` 
 			#where item_code=%s and docstatus=1 and ordered_qty=0 and consulted=1""", (mri.item_code))[0][0]
