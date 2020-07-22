@@ -1681,7 +1681,7 @@ class POSItems {
 	reset_items() {
 		this.wrapper.find('.pos-items').empty();
 		this.init_clusterize();
-		this.load_items_data();
+		//this.load_items_data();
 	}
 	 
 
