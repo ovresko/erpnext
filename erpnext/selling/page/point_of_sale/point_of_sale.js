@@ -2436,6 +2436,39 @@ class POSItems {
 				
 		});
 		
+		//btn-demande
+		this.wrapper.on('click', '.btn-demande', function(event) {
+			 event.stopPropagation();
+			const $item = $(this);
+			const item_code = unescape($item.attr('data-item-code'));
+			if(!item_code)
+			{
+				return;
+			}
+			let qts= prompt("Quantité");
+			if (qts == null ){
+				return;	
+			}
+			if ( qts == '') {
+			   qts = "+1";
+			}
+			frappe.call({
+				"method": "erpnext.selling.page.point_of_sale.point_of_sale.add_demande",
+				"args": {
+					"item_code": item_code,
+					"qty":qts,
+					"profile": me.frm.doc.pos_profile
+				},
+				"callback": function(response) {
+					var items = response.message; 
+					if(items){
+						 alert(items);
+					}
+					
+				}
+			}); 	
+		});
+		
 		
 		//btn-complement
 		this.wrapper.on('click', '.btn-complement', function(event) {
@@ -2721,6 +2754,7 @@ class POSItems {
 						class="btn btn-default btn-xs  " style="margin-right: 5px;"><i class="fa fa-question"></i>
 						</button>
 						<button data-item-code="${item_code}" data-label="add" class="btn btn-success btn-xs btn-add" style="margin-right: 5px;"><i class="fa fa-shopping-cart"></i></button>
+						<button data-item-code="${item_code}" data-label="demande" class="btn btn-default btn-xs btn-demande" style="margin-right: 5px;"><i class="fa fa-cube"></i></button>
 					</div>
 				</div>
 				
