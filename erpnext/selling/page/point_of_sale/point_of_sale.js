@@ -2388,6 +2388,7 @@ class POSItems {
 			me.item_oem_field.set_value(''); 
 			me.item_manufacturer = '';
 			me.item_manufacturer_field.set_value('');
+			me.search_field.set_value('');
 			me.render_items(me.items);
 		});
 		
