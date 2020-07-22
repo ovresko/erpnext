@@ -863,22 +863,41 @@ class POSCart {
 		if(!names || !this.frm.doc.pos_profile){
 			return;
 		}
-		var w = window.open("/api/method/erpnext.selling.page.point_of_sale.point_of_sale.print_address_magasin?"
-				    			+"pos_profile="+this.frm.doc.pos_profile
-				    			+"&qts="+encodeURIComponent(qts)
-				    			+"&customer="+this.frm.doc.customer_name
-							+"&items="+encodeURIComponent(names));
-	
-		if(!w) {
-			frappe.msgprint(__("Please enable pop-ups")); return;
-		}else{
-			console.log(w);
-			var lw=window.open();
-			lw.document.write(w.message);
-			lw.print();
-			lw.close();
-		}
-		
+		frappe.call({
+			method: "erpnext.selling.page.point_of_sale.point_of_sale.print_address_magasin",
+			args: {
+				"items":names,
+				"qts":qts,
+				"pos_profile":this.frm.doc.pos_profile,
+				"customer": this.frm.doc.customer,
+			},
+			callback: function(r) {
+				if (r.message) {
+					let cmd = r.message;
+					console.log(w);
+					var lw=window.open();
+					lw.document.write(cmd);
+					lw.print();
+					lw.close();
+				} 
+			}
+		});
+		//var w = window.open("/api/method/erpnext.selling.page.point_of_sale.point_of_sale.print_address_magasin?"
+		//		    			+"pos_profile="+this.frm.doc.pos_profile
+		//		    			+"&qts="+encodeURIComponent(qts)
+		//		    			+"&customer="+this.frm.doc.customer_name
+		//					+"&items="+encodeURIComponent(names));
+		//
+		//	if(!w) {
+		//		frappe.msgprint(__("Please enable pop-ups")); return;
+		//	}else{
+		//		console.log(w);
+		//		var lw=window.open();
+		//		lw.document.write(w.message);
+		//		lw.print();
+		//		lw.close();
+		//	}
+		//	
 		 
 	}
 	
