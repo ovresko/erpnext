@@ -9,11 +9,19 @@ from frappe.utils import (nowdate, cint, cstr, flt, formatdate, get_timestamp, g
 from erpnext.accounts.doctype.pos_profile.pos_profile import get_item_groups
 from erpnext.stock.get_item_details import get_price_list_rate_for
 from frappe.utils.pdf import get_pdf
+from erpnext.accounts.utils import get_balance_on, get_account_currency
+
 import pdfkit
 import os
 
 from six import string_types
 
+@frappe.whitelist()
+def get_customer(customer):
+	cs = frappe.get_doc("Customer",customer)
+	bl = get_balance_on(party_type="Customer",party=customer)
+	cs.update({"balance":bl})
+	
 @frappe.whitelist()
 def add_demande(item_code,qty,profile):
 	warehouse = frappe.get_value("POS Profile",profile,"warehouse")
