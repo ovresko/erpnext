@@ -51,6 +51,11 @@ class SalesOrder(SellingController):
 
 		if not self.billing_status: self.billing_status = 'Not Billed'
 		if not self.delivery_status: self.delivery_status = 'Not Delivered'
+		for item in self.items:
+			adr = frappe.get_list("Adresse Magasin",fields=['adresse'],
+					      filters={"parent":item.item_code,"warehouse":self.set_warehouse})
+			if adr and adr[-1]:
+				item.adresse_magasin = adr[-1].adresse
 
 	def validate_po(self):
 		# validate p.o date v/s delivery date
