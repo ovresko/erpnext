@@ -863,6 +863,7 @@ class POSCart {
 		if(!names || !this.frm.doc.pos_profile){
 			return;
 		}
+		console.log(names);console.log(qts);
 		frappe.call({
 			method: "erpnext.selling.page.point_of_sale.point_of_sale.print_address_magasin",
 			args: {
