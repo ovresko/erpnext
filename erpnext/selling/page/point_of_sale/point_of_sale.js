@@ -635,6 +635,7 @@ erpnext.pos.PointOfSale = class PointOfSale {
 					if (r.message) {
 						//console.log("m",r.message);
 						this.frm.allow_devis = r.message.allow_devis;
+						this.frm.show_qts_btn = r.message.show_qts_btn;
 						this.frm.allow_pay = r.message.allow_pay;
 						this.frm.meta.default_print_format = r.message.print_format || "";
 						this.frm.allow_edit_rate = r.message.allow_edit_rate;
@@ -2684,6 +2685,7 @@ class POSItems {
 		const critere_text = (item.critere_text || '').split("/").join("<br>");
 		const composant_text =  (item.composant_text || '').split("/").join("<br>");
 		const articles_text = (item.articles_text || '').split("/").join("<br>");
+		const show_qts_btn = this.frm.show_qts_btn;
 		
 		const oem = item.oem_text.slice(0, item.oem_text.indexOf('-'));
 		let designation_commerciale = '';
@@ -2697,7 +2699,7 @@ class POSItems {
 			price = '<span class="price-info" style="margin:0px;background-color: rgba(10, 154, 7, 0.8);border-radius: 0px;font-weight: bold;">' +price_list_rate +'</span>';
 		}
 		
-		if((item.actual_qty || 0) == 0 && item.qts_total && (item.qts_total || 0) != (item.actual_qty || 0)){
+		if(show_qts_btn || ((item.actual_qty || 0) == 0 && item.qts_total && (item.qts_total || 0) != (item.actual_qty || 0))){
 			actual_qty = '<span class="strong" style="color:#02AF22">Qts: '+(item.actual_qty || 0)+' / '+(item.qts_total || 0)+' </span>   <button data-item-code="'+item.item_code+'" data-label="stock" class="btn btn-default btn-xs btn-stock" style="margin-right: 5px;"><i class="fa fa-cubes"></i></button>';
 		}else{			
 			actual_qty = '<span class="strong" style="color:#02AF22">Qts: '+(item.actual_qty || 0)+'   </span>  ';
