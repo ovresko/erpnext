@@ -205,6 +205,15 @@ def print_address_magasin(items,qts,pos_profile,customer):
 							"ref":ref
 						}
 					      })
+			else:
+				result.update({
+						item:{
+					       		"qts":q,
+					       		"adr":"Introuvable",
+							"fabricant": fabricant,
+							"ref":ref
+						}
+					      })
 	else:
 		failed = "no items %s %s %s" % (result,items,warehouse)
 		
@@ -227,13 +236,13 @@ def print_address_magasin(items,qts,pos_profile,customer):
 		#frappe.local.response.filecontent = dignity_get_pdf(final_html, options=pdf_options) #get_pdf(final_html, pdf_options)
 		#frappe.local.response.type = "download"
 	else:
-		failed = "no result %s %s %s" % (result,items,warehouse)
+		failed = "AUCUNE ADRESSE TROUVE %s %s" % (items,warehouse)
 		
 	if failed:
 		return failed
 		
 def prepare_bulk_print_html(names,customer,warehouse):
-	final_html = frappe.render_template("""<div style="max-width:80mm">
+	final_html = frappe.render_template("""<div style="max-width:80mm;width:80mm; @media print{max-width:80mm;width:80mm}">
 	<div style="font-size:10px">
 	<p style="text-align:center;font-weight:bold">MON VEHICULE</p>
 	<p style="text-align:center">{{warehouse}}</p>
@@ -241,7 +250,7 @@ def prepare_bulk_print_html(names,customer,warehouse):
 	
 	{% for sc in names %}<small>{{sc}} : <span style="font-weight:bold"">{{names[sc].qts}} <span> ************************ <span>{{names[sc].adr}}<span>
 	</small><br>{{names[sc].fabricant}} / {{names[sc].ref}}<br>----------------------------------------------------------<br>{% endfor %}
-	</div><div>
+	</div></div>
 	""", {"names":names,"warehouse":warehouse,"customer":customer})
 	return final_html
 
