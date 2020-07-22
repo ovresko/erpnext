@@ -2869,10 +2869,8 @@ class NumberPad {
 		this.disable_highlight = disable_highlight;
 		this.reset_btns = reset_btns;
 		this.del_btn = del_btn;
-		this.disable_btns = disable_btns || [];
-		if(this.frm.allow_pay){
-		this.make_dom();
-		}
+		this.disable_btns = disable_btns || [];		 
+		this.make_dom();		 
 		this.bind_events();
 		this.value = '';
 	}
