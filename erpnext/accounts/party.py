@@ -139,7 +139,11 @@ def set_other_values(out, party, party_type):
 			out[f] = party.get("default_" + f)
 
 @frappe.whitelist()
-def get_default_price_list_api(party):
+def get_default_price_list_api(party,pos_profile):
+	if pos_profile:
+		pl = frappe.get_value("POS Profile",pos_profile,"selling_price_list")
+		if pl:
+			return pl
 	cl = frappe.get_doc("Customer",party)
 	if cl:
 		return get_default_price_list(cl)
