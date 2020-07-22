@@ -1437,6 +1437,10 @@ class POSCart {
 		if(item.rate!=item.price_list_rate)
 			remise = '(${price_list_rate})';
 		
+		var rm ="";
+		if(this.frm.allow_edit_discount)
+		rm = `Rem <input class="form-control" type="number" value="${item.discount_percentage}"> %`
+		
 		return `
 			<div style="border-bottom: solid 1px #d1d8dd;" class="list-item indicator ${indicator_class}" data-item-code="${escape(item.item_code)}"
 				data-batch-no="${batch_no}" title="Item: ${item.item_name.toLowerCase()} ${fabricant.toLowerCase()} ${ref_fabricant.toLowerCase()} Available Qty: ${item.actual_qty}" >
@@ -1457,7 +1461,7 @@ class POSCart {
 					${get_quantity_html(item.qty)}
 				</div>
 				<div class="discount list-item__content text-right">
-					Rem <input class="form-control" type="number" value="${item.discount_percentage}"> %
+					${rm}
 					
 				</div>
 				<div class="rate list-item__content text-right">
