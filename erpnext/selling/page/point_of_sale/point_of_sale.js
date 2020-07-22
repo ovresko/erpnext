@@ -1188,7 +1188,7 @@ class POSCart {
 											
 											if (sinv) {
 												
-												wr.find('.customer-info').html('[ Profile : '+pr+' ]<br>' +'Nom : '+(sinv.customer_name || '')+'<br>'+(sinv.customer_group || '')+'<br>'+(sinv.territory || '')+'<br>'+(sinv.mobile_no || '')+ ' -  '+(sinv.email_id || '') + '<br>' +  me.frm.doc.selling_price_list+'<br>Solde : '+bl);                                  
+												wr.find('.customer-info').html('[ Profile : '+pr+' ]<br>' +'Nom : '+(sinv.customer_name || '')+'<br>'+(sinv.customer_group || '')+'<br>'+(sinv.territory || '')+'<br>'+(sinv.mobile_no || '')+ ' -  '+(sinv.email_id || '') + '<br>' +  me.frm.doc.selling_price_list+'<br>Solde : '+format_currency(bl, me.frm.doc.currency,0)+' / Limite : '+format_currency(sinv.credit_limit, me.frm.doc.currency,0));                                  
 											}  else{
 												   wr.find('.customer-info').html('');
 											}
