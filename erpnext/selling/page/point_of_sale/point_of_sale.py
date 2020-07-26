@@ -486,12 +486,12 @@ def get_items(start, page_length, price_list, item_group, search_value="", pos_p
 
 	if display_items_in_stock == 0:
 		res = frappe.db.sql("""select i.name as item_code,item_adr.adresse,item_adr.warehouse,i.nbr_variante ,i.qts_total,i.designation_commerciale,i.variant_of,i.has_variants, i.item_name, i.image , i.idx as idx,i.clean_manufacturer_part_number, i.composant_text,i.articles_text,
-			i.is_stock_item, item_det.price_list_rate, item_det.currency, i.oem_text,i.titre_article,i.manufacturer,i.manufacturer_part_no,i.fabricant_logo,i.critere_text ,item_bin.disp_qty
+			i.is_stock_item, item_det.price_list_rate, item_det.currency, i.oem_text,i.titre_article,i.manufacturer,i.manufacturer_part_no,i.fabricant_logo,i.critere_text ,sum(item_bin.actual_qty - item_bin.reserved_qty) as actual_qty
 			from `tabItem` i LEFT JOIN (select item_code, price_list_rate,min_qty, currency from
 					`tabItem Price`	where min_qty=0 and price_list=%(price_list)s  ) item_det
 			ON
 				(item_det.item_code=i.name or item_det.item_code=i.variant_of)
-			LEFT JOIN (select item_code, sum(actual_qty-reserved_qty) as disp_qty, warehouse from
+			LEFT JOIN (select item_code,  actual_qty, reserved_qty , warehouse from
 					`tabBin` where warehouse=%(warehouse)s) item_bin
 			ON
 				(item_bin.item_code=i.name or item_bin.item_code=i.variant_of) 
@@ -524,9 +524,9 @@ def get_items(start, page_length, price_list, item_group, search_value="", pos_p
 					"""
 
 		if warehouse is not None:
-			query = query +  """ (select item_code, sum(actual_qty-reserved_qty) as actual_qty from `tabBin` where warehouse=%(warehouse)s and actual_qty > 0 group by item_code) item_se"""
+			query = query +  """ (select item_code,  actual_qty , reserved_qty  from `tabBin` where warehouse=%(warehouse)s and actual_qty > 0 group by item_code) item_se"""
 		else:
-			query = query +  """ (select item_code,sum(actual_qty-reserved_qty) as actual_qty from `tabBin` group by item_code) item_se"""
+			query = query +  """ (select item_code, actual_qty , reserved_qty  from `tabBin` group by item_code) item_se"""
 
 		res = frappe.db.sql(query +  """
 			ON
