@@ -5,7 +5,8 @@ from __future__ import unicode_literals
 import frappe
 import json
 import frappe.utils
-from frappe.utils import cstr, flt, getdate, comma_and, cint, nowdate, add_days
+from datetime import date
+from frappe.utils import today,cstr, flt, getdate, comma_and, cint, nowdate, add_days
 from frappe import _
 from six import string_types
 from frappe.model.utils import get_fetch_values
@@ -971,3 +972,13 @@ def make_raw_material_request(items, company, sales_order, project=None):
 	material_request.run_method("set_missing_values")
 	material_request.submit()
 	return material_request
+
+@frappe.whitelist()
+def cancel_old_orders():
+	today = getdate(add_days(nowdate(), -15))
+	orders = frappe.get_all("Sales Order",fields=["name"],filters={"per_billed":0,"per_delivered":0,"docstatus": "1","delivery_date":("<", today)})
+	if orders:
+		for or in orders:
+			order  = frappe.get_doc('Sales Order', or.name)
+			order.cancel()
+	
