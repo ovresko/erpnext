@@ -976,9 +976,11 @@ def make_raw_material_request(items, company, sales_order, project=None):
 @frappe.whitelist()
 def cancel_old_orders():
 	today = getdate(add_days(nowdate(), -15))
+	print(today)
 	orders = frappe.get_all("Sales Order",fields=["name"],filters={"per_billed":0,"per_delivered":0,"docstatus": "1","delivery_date":("<", today)})
 	if orders:
-		for or in orders:
-			order  = frappe.get_doc('Sales Order', or.name)
+		for ord in orders:
+			print(ord.name)
+			order  = frappe.get_doc('Sales Order', ord.name)
 			order.cancel()
 	
