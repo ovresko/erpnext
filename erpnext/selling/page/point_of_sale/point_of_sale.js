@@ -1133,7 +1133,7 @@ class POSCart {
 		});
 		
 		this.cart_search.$input.on('keyup', (e) => {
-			 if(this.$cart_items.length <= 0 && this.original_items.length <= 0)
+			 if(this.$cart_items.length <= 0  )
 			 {
 				 return ;
 			 }
@@ -1144,17 +1144,17 @@ class POSCart {
 				 
 				const wr = this.wrapper;
 				 
-				if(!this.original_items){
-					this.original_items = this.$cart_items.clone( true );
-					console.log("set original");
-				}
+				//if(!this.original_items){
+				//	this.original_items = this.$cart_items.clone( true );
+				//	console.log("set original");
+				//}
 
 				if(!search_term || search_term == "" || keycode == '8' || keycode == '46'){
-					console.log("reset",this.original_items);
-					this.$cart_items.find('.list-item').remove();
-					this.$cart_items = this.original_items; 
-					$(".cart-items").replaceWith(this.$cart_items);
-					this.original_items = null;
+					//console.log("reset",this.original_items);
+					this.$cart_items.find('.list-item').show();
+					//this.$cart_items = this.original_items; 
+					//$(".cart-items").replaceWith(this.$cart_items);
+					//this.original_items = null;
 				}else{
 					
 					if(keycode == '13'){
@@ -1163,10 +1163,11 @@ class POSCart {
 
 						if(!$items)
 							return;
-						this.$cart_items.find('.list-item').remove();
-						$items.each(function( index ) { 
-						    $(this).appendTo(".cart-items");
-						});
+						this.$cart_items.find('.list-item').hide();
+						$($items).show();
+						//$items.each(function( index ) { 
+						 //   $(this).appendTo(".cart-items");
+						//});
 					}
 
 				}
