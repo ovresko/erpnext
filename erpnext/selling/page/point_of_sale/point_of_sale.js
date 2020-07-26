@@ -1353,7 +1353,7 @@ class POSCart {
 			const $item = $(this.get_item_html(item));
 			//$item.appendTo(this.$cart_items);
 			//prependTo
-			item.prependTo(this.$cart_items);
+			$item.prependTo(this.$cart_items);
 		}
 		this.highlight_item(item.item_code);
 		this.scroll_to_item(item.item_code);
