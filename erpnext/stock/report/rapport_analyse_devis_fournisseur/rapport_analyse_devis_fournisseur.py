@@ -642,9 +642,9 @@ def execute(filters=None):
 
 
 			hist_offre_fournisseur = ahist
-			commentaire = mri.commentaire
-			reponse = mri.reponse_fournisseur
-			remarque = mri.remarque
+			commentaire = mri.commentaire or ''
+			reponse = mri.reponse_fournisseur or ''
+			remarque = mri.remarque or ''
 			
 			if etat_mail and etat_mail != "Email Envoye" and resultat != "A Envoyer P1" :
 				s_prix_target = """<input placeholder='Prix target' id='prix_target_%s' value='%s' style='color:black'></input><a  onClick="prix_target_item('%s')" type='a'> OK </a>""" % (mri.name,prix_target,mri.name)
