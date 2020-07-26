@@ -1351,7 +1351,9 @@ class POSCart {
 		} else if (flt(item.qty) > 0.0) {
 			// add to cart
 			const $item = $(this.get_item_html(item));
-			$item.appendTo(this.$cart_items);
+			//$item.appendTo(this.$cart_items);
+			//prependTo
+			item.prependTo(this.$cart_items);
 		}
 		this.highlight_item(item.item_code);
 		this.scroll_to_item(item.item_code);
