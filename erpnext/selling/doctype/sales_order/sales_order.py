@@ -983,4 +983,9 @@ def cancel_old_orders():
 			print(ord.name)
 			order  = frappe.get_doc('Sales Order', ord.name)
 			order.cancel()
-	
+	#partials
+	orders = frappe.get_all("Sales Order",fields=["name"],filters={"per_billed":(">",0),"per_delivered":("<",100),"per_delivered":(">",0),"docstatus": "1","delivery_date":("<", today)})
+	if orders:
+		for ord in orders:
+			print(ord.name)
+			update_status("Closed",ord.name)
