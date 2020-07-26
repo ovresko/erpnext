@@ -2727,7 +2727,7 @@ class POSItems {
 			designation_commerciale = '<br>'+item.designation_commerciale+	 '<br>';
 		}
 		let price = '';
-		console.log("item.actual_qty",item);
+		 
 		let actual_qty = '0';
 		if(item.actual_qty || item.qts_total){
 			price = '<span class="price-info" style="margin:0px;background-color: rgba(10, 154, 7, 0.8);border-radius: 0px;font-weight: bold;">' +price_list_rate +'</span>';
