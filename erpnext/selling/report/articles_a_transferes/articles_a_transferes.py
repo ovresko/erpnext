@@ -57,6 +57,11 @@ def execute(filters=None):
 			"width": 150
 		})
 	columns.append({
+			"fieldname": "date",
+			"label": "Date de transfere",
+			"width": 200
+		})
+	columns.append({
 			"fieldname": "traite",
 			"label": "Qts transferee",
 			"width": 150
@@ -74,6 +79,7 @@ def execute(filters=None):
 			item.qty,
 			item.actual_qty,
 			(item.qty - item.actual_qty),
+			"",
 			"",
 			"",
 			""
