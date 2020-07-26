@@ -491,7 +491,7 @@ def get_items(start, page_length, price_list, item_group, search_value="", pos_p
 					`tabItem Price`	where min_qty=0 and price_list=%(price_list)s  ) item_det
 			ON
 				(item_det.item_code=i.name or item_det.item_code=i.variant_of)
-			LEFT JOIN (select item_code, sum(actual_qty-reserved_qty) as actual_qty, warehouse from
+			LEFT JOIN (select item_code, (sum(actual_qty)-sum(reserved_qty)) as actual_qty, warehouse from
 					`tabBin` where warehouse=%(warehouse)s) item_bin
 			ON
 				(item_bin.item_code=i.name or item_bin.item_code=i.variant_of) 
