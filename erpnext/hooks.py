@@ -251,7 +251,8 @@ scheduler_events = {
 		"erpnext.assets.doctype.asset.asset.make_post_gl_entry",
 		"erpnext.crm.doctype.contract.contract.update_status_for_contracts",
 		"erpnext.projects.doctype.project.project.update_project_sales_billing",
-		"erpnext.projects.doctype.project.project.send_project_status_email_to_users"
+		"erpnext.projects.doctype.project.project.send_project_status_email_to_users",
+		"erpnext.selling.doctype.sales_order.sales_order.cancel_old_orders"
 	],
 	"daily_long": [
 		"erpnext.manufacturing.doctype.bom_update_tool.bom_update_tool.update_latest_price_in_all_boms"
