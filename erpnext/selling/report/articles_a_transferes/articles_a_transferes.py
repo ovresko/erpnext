@@ -53,7 +53,7 @@ def execute(filters=None):
 		})
 	columns.append({
 			"fieldname": "qty_disp",
-			"label": "Qts disponible maintenant"
+			"label": "Qts disponible maintenant",
 			"width": 220
 		})
 	columns.append({
