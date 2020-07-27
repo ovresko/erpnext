@@ -43,10 +43,9 @@ class MaterialRequest(BuyingController):
 		result = float(per * 100)
 		self.per_consulted = result
 		if result > 0:
-			self.status = "Consultation"
-			frappe.db.sql("""update `tabMaterial Request` set per_consulted = %s,status = %s where name = %s""", (result,"Consultation", self.name))
+			frappe.db.sql("""update `tabMaterial Request` set per_consulted = %s,where name = %s""", (result, self.name))
 		else:
-			frappe.db.sql("""update `tabMaterial Request` set per_consulted = %s,status = %s where name = %s""", (result,"Non consulte", self.name))
+			frappe.db.sql("""update `tabMaterial Request` set per_consulted = %s where name = %s""", (result, self.name))
 
 	def validate_qty_against_so(self):
 		so_items = {} # Format --> {'SO/00001': {'Item/001': 120, 'Item/002': 24}}
