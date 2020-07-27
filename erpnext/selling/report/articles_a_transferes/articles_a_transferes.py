@@ -83,11 +83,17 @@ def execute(filters=None):
 		})
 	
 	items = []
-	#orders_items = frappe.db.sql(""" select * from `tabSales Order Item` soi where soi.docstatus=1 and soi.delivered_qty=0 and soi.actual_qty < soi.qty 
-	#and  soi.parent is not null and soi.parent in (select so.name from `tabSales Order` so where so.docstatus = 1 and so.workflow_state='Reservation' and so.status not in ('Closed','Cancelled','Draft')) """,as_dict=1)
+	orders_items = frappe.db.sql(""" select * from `tabSales Order Item` soi   
+	left join (select name from `tabSales Order` ) so  
+	on (soi.parent = so.name)
+	where so.status not in ('Closed','Cancelled','Draft')) 
+	and so.docstatus = 1 and so.workflow_state='Reservation' 
+	and soi.docstatus=1 and soi.delivered_qty=0 and soi.actual_qty < soi.qty 
+	and soi.parent is not null	
+	""",as_dict=1)
 	
 	
-	#items.extend(orders_items)
+	items.extend(orders_items)
 	dm_items = frappe.db.sql(""" select * from `tabMaterial Request Item` mri 
 	left join (select docstatus,name,material_request_type from `tabMaterial Request`) mrd
 	on (mrd.name = mri.parent) 
