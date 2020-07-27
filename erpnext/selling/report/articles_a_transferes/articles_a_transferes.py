@@ -6,7 +6,7 @@ import frappe
 
 def execute(filters=None):	
 	columns, data = [], []
-	if filters.get("grouped") and not filters.get("warehouse"):
+	if filters.get("grouped")==1 and not filters.get("warehouse"):
 		frappe.msgprint("Appliquer un entrepot cible pour regrouper")
 		return columns, data
 	columns.append({
@@ -109,7 +109,7 @@ def execute(filters=None):
 	for item in items:
 		if filters.get("warehouse") and item.warehouse and item.warehouse !=  filters.get("warehouse"):
 			continue
-		if filters.get("grouped") and filters.get("warehouse"):
+		if filters.get("grouped")==1 and filters.get("warehouse"):
 			if item.item_code in added:
 				continue
 		qty = frappe.db.sql("""select sum(actual_qty) from `tabBin` where item_code=%s and warehouse=%s""",(item.item_code,item.warehouse))[0]
@@ -136,7 +136,7 @@ def execute(filters=None):
 			parent = item.parent
 			
 		total_qty = 0
-		if filters.get("grouped") and filters.get("warehouse"):
+		if filters.get("grouped")==1 and filters.get("warehouse"):
 			total_qty = sum(item.qty for item in items if item.qty)
 			parent =  ', '.join({item.parent for item in items if item.parent})
 			client =  ', '.join({item.customer_name for item in items if ("customer_name" in item and item.customer_name)})
