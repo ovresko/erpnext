@@ -94,7 +94,7 @@ status_map = {
 		["Non consulte","eval:self.status == 'Non consulte'"],
 		["Stopped", "eval:self.status == 'Stopped'"],
 		["Cancelled", "eval:self.docstatus == 2"],
-		["Pending", "eval:self.status != 'Stopped'and self.status !='Consultation' and self.per_ordered == 0 and self.docstatus == 1"],
+		["Pending", "eval:self.status != 'Stopped'and self.status !='Consultation' and self.status !='Non consulte' and self.per_ordered == 0 and self.docstatus == 1"],
 		["Partially Ordered", "eval:self.status != 'Stopped' and self.per_ordered < 100 and self.per_ordered > 0 and self.docstatus == 1"],
 		["Ordered", "eval:self.status != 'Stopped' and self.per_ordered == 100 and self.docstatus == 1 and self.material_request_type == 'Purchase'"],
 		["Transferred", "eval:self.status != 'Stopped' and self.per_ordered == 100 and self.docstatus == 1 and self.material_request_type == 'Material Transfer'"],
