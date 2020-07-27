@@ -104,6 +104,8 @@ def execute(filters=None):
 	items.extend(dm_items)
 	
 	for item in items:
+		if filters.get("warehouse") and item.warehouse and item.warehouse !=  filters.get("warehouse"):
+			continue
 		qty = frappe.db.sql("""select sum(actual_qty) from `tabBin` where item_code=%s and warehouse=%s""",(item.item_code,item.warehouse))[0]
 		if qty and qty[0]:
 			qty = qty[0]
@@ -136,7 +138,7 @@ def execute(filters=None):
 			item.warehouse,
 			item.qty,
 			item.actual_qty,
-			qty or 'NA',
+			qty,
 			qts_transfere,
 			"",
 			"",
