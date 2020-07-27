@@ -138,16 +138,6 @@ def execute(filters=None):
 		total_qty = 0
 		total_qty_cmd = sum(_item.qty for _item in items if (_item.qty and _item.item_code == item.item_code))
 		qts_transfere = total_qty_cmd - qty
-		if filters.grouped==1 and filters.warehouse:
-			total_qty = total_qty_cmd
-			parent =  ', '.join({_item.parent for _item in items if (_item.parent  and _item.item_code == item.item_code)})
-			client =  ', '.join({_item.customer_name for _item in items if ("customer_name" in _item and _item.customer_name   and _item.item_code == item.item_code)})
-			actual_qty  = '0'
-			qts_transfere = total_qty - qty
-			delivery_date = min(_item.schedule_date for _item in items if (_item.schedule_date  and _item.item_code == item.item_code)) if "consulted" in item else  min(_item.delivery_date for _item in items if _item.delivery_date  and _item.item_code == item.item_code)
-		else:
-			total_qty = item.qty
-		added.append(item.item_code)
 		qts_stock_source = 0
 		suggere_qty = frappe.db.sql("""select warehouse,actual_qty from `tabBin` where item_code=%s and actual_qty>%s  and warehouse!=%s limit 1""",(item.item_code,qts_transfere,item.warehouse),as_dict=1)
 		if not suggere_qty :
@@ -160,6 +150,8 @@ def execute(filters=None):
 				suggere_qty = "Qts Insufisante | %s" % (suggere_qty.warehouse)
 				qts_stock_source = suggere_qty.actual_qty
 			else:
+				if filters.disp==1:
+					continue
 				suggere_qty = "Non disponible"
 		else:
 			suggere_qty = suggere_qty[0]
@@ -168,6 +160,17 @@ def execute(filters=None):
 			
 			suggere_qty = "%s" % (suggere_qty.warehouse)
 			qts_stock_source = suggere_qty.actual_qty
+		if filters.grouped==1 and filters.warehouse:
+			total_qty = total_qty_cmd
+			parent =  ', '.join({_item.parent for _item in items if (_item.parent  and _item.item_code == item.item_code)})
+			client =  ', '.join({_item.customer_name for _item in items if ("customer_name" in _item and _item.customer_name   and _item.item_code == item.item_code)})
+			actual_qty  = '0'
+			qts_transfere = total_qty - qty
+			delivery_date = min(_item.schedule_date for _item in items if (_item.schedule_date  and _item.item_code == item.item_code)) if "consulted" in item else  min(_item.delivery_date for _item in items if _item.delivery_date  and _item.item_code == item.item_code)
+		else:
+			total_qty = item.qty
+		added.append(item.item_code)
+		
 			
 				
 		row = [
