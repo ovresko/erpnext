@@ -81,7 +81,8 @@ def execute(filters=None):
 	and soi.parent in (select so.name from `tabSales Order` so where so.docstatus = 1 and so.workflow_state='Reservation' and so.status not in ('Closed','Cancelled','Draft')) """,as_dict=1)
 	
 	for item in orders_items:
-		qty = frappe.db.sql("""select sum(actual_qty) from `tabBin` where item_code=%s and warehouse=%s""",(item.item_code,item.warehouse),as_dict=1)
+		qty = frappe.db.sql("""select sum(actual_qty) from `tabBin` where item_code=%s and warehouse=%s""",(item.item_code,item.warehouse))[0]
+		frappe.msgprint(qty)
 		row = [
 			item.delivery_date,
 			item.item_code,
