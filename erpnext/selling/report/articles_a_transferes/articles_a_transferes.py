@@ -117,7 +117,7 @@ def execute(filters=None):
 		parent = ''
 		client = ''
 		#material request
-		if hasattr(item, 'rate') and item.rate:			
+		if item.doctype == "Sales Order Item":			
 			delivery_date = item.delivery_date or 'NC'
 			client = item.customer_name
 			parent = item.parent
