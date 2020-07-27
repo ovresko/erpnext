@@ -111,8 +111,8 @@ def execute(filters=None):
 		delivery_date = ''
 		parent = ''
 		#material request
-		if hasattr(item, 'schedule_date'):
-			delivery_date = item.schedule_date or 'ND'
+		if not hasattr(item, 'rate'):
+			delivery_date = item.schedule_date or 'NA'
 			parent = item.parent
 		else:
 			delivery_date = item.delivery_date or 'NC'
