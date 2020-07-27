@@ -97,8 +97,8 @@ status_map = {
 		["Ordered", "eval:self.status != 'Stopped' and self.per_ordered == 100 and self.docstatus == 1 and self.material_request_type == 'Purchase'"],
 		["Transferred", "eval:self.status != 'Stopped' and self.per_ordered == 100 and self.docstatus == 1 and self.material_request_type == 'Material Transfer'"],
 		["Issued", "eval:self.status != 'Stopped' and self.per_ordered == 100 and self.docstatus == 1 and self.material_request_type == 'Material Issue'"],
-		["Consultation","eval:self.status == 'Consultation' and self.material_request_type == 'Purchase'"],
-		["Non consulte","eval:self.status == 'Non consulte' and self.material_request_type == 'Purchase'"]
+		["Consultation","eval:self.status == 'Consultation' or (self.material_request_type == 'Purchase'  and self.per_consulted > 0)"],
+		["Non consulte","eval:self.status == 'Non consulte' or (self.material_request_type == 'Purchase' and self.per_ordered == 0 and self.per_consulted == 0)"]
 	],
 	"Bank Transaction": [
 		["Unreconciled", "eval:self.docstatus == 1 and self.unallocated_amount>0"],
