@@ -149,9 +149,9 @@ def execute(filters=None):
 			total_qty = item.qty
 		added.append(item.item_code)
 		
-		suggere_qty = frappe.db.sql("""select warehouse,actual_qty from `tabBin` where item_code=%s and actual_qty>%s  and warehouse!=%s""",(item.item_code,qts_transfere,item.warehouse))
+		suggere_qty = frappe.db.sql("""select warehouse,actual_qty from `tabBin` where item_code=%s and actual_qty>%s  and warehouse!=%s""",(item.item_code,qts_transfere,item.warehouse),as_dict=1)
 		if not suggere_qty and not suggere_qty.actual_qty :
-			suggere_qty = frappe.db.sql("""select warehouse,actual_qty from `tabBin` where item_code=%s    and warehouse!=%s order by actual_qty desc""",(item.item_code, item.warehouse))
+			suggere_qty = frappe.db.sql("""select warehouse,actual_qty from `tabBin` where item_code=%s    and warehouse!=%s order by actual_qty desc""",(item.item_code, item.warehouse),as_dict=1)
 			if suggere_qty and suggere_qty[0]:
 				suggere_qty = suggere_qty[0]
 				suggere_qty = "Qts Insufisante | %s %s" % (suggere_qty.warehouse,suggere_qty.actual_qty)
