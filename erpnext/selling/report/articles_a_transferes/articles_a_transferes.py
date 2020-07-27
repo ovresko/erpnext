@@ -137,12 +137,12 @@ def execute(filters=None):
 			
 		total_qty = 0
 		if filters.get("grouped")==1 and filters.get("warehouse"):
-			total_qty = sum(item.qty for item in items if item.qty)
-			parent =  ', '.join({item.parent for item in items if item.parent})
-			client =  ', '.join({item.customer_name for item in items if ("customer_name" in item and item.customer_name)})
-			actual_qty  = sum(item.actual_qty for item in items if item.actual_qty)
+			total_qty = sum(_item.qty for _item in items if _item.qty and _item.item_code == item.item_code)
+			parent =  ', '.join({_item.parent for _item in items if _item.parent  and _item.item_code == item.item_code})
+			client =  ', '.join({_item.customer_name for _item in items if ("customer_name" in _item and _item.customer_name)  and _item.item_code == item.item_code})
+			actual_qty  = sum(_item.actual_qty for _item in items if _item.actual_qty  and _item.item_code == item.item_code)
 			qts_transfere = total_qty - qty
-			delivery_date = min(item.schedule_date for item in items if item.schedule_date) if "consulted" in item else  min(item.delivery_date for item in items if item.delivery_date)
+			delivery_date = min(_item.schedule_date for _item in items if _item.schedule_date  and _item.item_code == item.item_code) if "consulted" in _item else  min(_item.delivery_date for _item in items if _item.delivery_date  and _item.item_code == item.item_code)
 		else:
 			total_qty = item.qty
 		added.append(item.item_code)
