@@ -66,8 +66,8 @@ def execute(filters=None):
 		})
 	columns.append({
 			"fieldname": "qty",
-			"label": "Qts a transferee",
-			"width": 150
+			"label": "Qts total a transferee",
+			"width": 200
 		})
 	columns.append({
 			"fieldname": "source",
@@ -121,7 +121,7 @@ def execute(filters=None):
 		#if item.qty <= qty:
 		#	continue
 		#qts a transfere
-		qts_transfere = item.qty - qty
+		
 		delivery_date = ''
 		parent = ''
 		client = ''
@@ -136,8 +136,10 @@ def execute(filters=None):
 			parent = item.parent
 			
 		total_qty = 0
+		total_qty_cmd = sum(_item.qty for _item in items if (_item.qty and _item.item_code == item.item_code))
+		qts_transfere = total_qty_cmd - qty
 		if filters.grouped==1 and filters.warehouse:
-			total_qty = sum(_item.qty for _item in items if (_item.qty and _item.item_code == item.item_code))
+			total_qty = total_qty_cmd
 			parent =  ', '.join({_item.parent for _item in items if (_item.parent  and _item.item_code == item.item_code)})
 			client =  ', '.join({_item.customer_name for _item in items if ("customer_name" in _item and _item.customer_name   and _item.item_code == item.item_code)})
 			actual_qty  = '0'
