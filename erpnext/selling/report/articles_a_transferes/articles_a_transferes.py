@@ -7,7 +7,7 @@ import frappe
 def execute(filters=None):	
 	columns, data = [], []
 	if  not filters.get("warehouse"):
-		frappe.msgprint("Appliquer un entrepot cible ")
+		frappe.throw("Appliquer un entrepot cible ")
 		return columns, data
 	columns.append({
 			"fieldname": "date",
