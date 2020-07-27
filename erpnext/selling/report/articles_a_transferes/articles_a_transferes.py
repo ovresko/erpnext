@@ -100,8 +100,8 @@ def execute(filters=None):
 			qty = qty[0]
 		else:
 			qty = 0
-		if item.qty <= qty:
-			continue
+		#if item.qty <= qty:
+		#	continue
 		#qts a transfere
 		qts_transfere = item.qty - qty
 		delivery_date = ''
