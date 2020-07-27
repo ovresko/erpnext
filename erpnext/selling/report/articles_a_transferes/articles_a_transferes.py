@@ -91,7 +91,7 @@ def execute(filters=None):
 			item.warehouse,
 			item.qty,
 			item.actual_qty,
-			qty[0] or '',
+			qty or '',
 			(item.qty - item.actual_qty),
 			"",
 			"",
