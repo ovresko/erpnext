@@ -142,6 +142,7 @@ def execute(filters=None):
 			client =  ', '.join({item.customer_name for item in items if ("customer_name" in item and item.customer_name)})
 			actual_qty  = sum(item.actual_qty for item in items if item.actual_qty)
 			qts_transfere = total_qty - qty
+			delivery_date = min(item.schedule_date for item in items if item.schedule_date) if "consulted" in item else  min(item.delivery_date for item in items if item.delivery_date)
 		else:
 			total_qty = item.qty
 		added.append(item.item_code)
