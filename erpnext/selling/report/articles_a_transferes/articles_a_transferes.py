@@ -88,9 +88,9 @@ def execute(filters=None):
 	
 	
 	items.extend(orders_items)
-	dm_items = frappe.db.sql(""" select * from `tabMaterial Request Item` mri where mri.docstatus=1 and mri.ordered_qty=0 
+	dm_items = frappe.db.sql(""" select * from `tabMaterial Request Item` mri 
 	left join (select mr.name,mr.material_request_type from `tabMaterial Request` mr where mr.docstatus = 1 and mr.material_request_type='Material Transfer') mrd
-	on (mrd.name = mri.parent)  """,as_dict=1)
+	on (mrd.name = mri.parent) where mri.docstatus=1 and mri.ordered_qty=0""",as_dict=1)
 	
 	items.extend(dm_items)
 	
