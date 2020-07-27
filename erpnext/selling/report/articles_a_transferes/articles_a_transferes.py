@@ -6,8 +6,8 @@ import frappe
 
 def execute(filters=None):	
 	columns, data = [], []
-	if filters.get("grouped")==1 and not filters.get("warehouse"):
-		frappe.msgprint("Appliquer un entrepot cible pour regrouper")
+	if  not filters.get("warehouse"):
+		frappe.msgprint("Appliquer un entrepot cible ")
 		return columns, data
 	columns.append({
 			"fieldname": "date",
