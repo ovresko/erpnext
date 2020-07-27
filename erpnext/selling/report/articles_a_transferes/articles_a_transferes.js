@@ -9,6 +9,12 @@ frappe.query_reports["Articles a transferes"] = {
 			"label": "Stock Cible",
 			fieldtype: "Link",
 			options: "Warehouse"
+		},
+		{
+			"fieldname": "source_warehouse",
+			"label": "Stock Source",
+			fieldtype: "Link",
+			options: "Warehouse"
 		}
 		,{
 			"fieldname": "grouped",
