@@ -77,7 +77,7 @@ def execute(filters=None):
 	columns.append({
 			"fieldname": "qty_source",
 			"label": "Qts dans Stock Source",
-			"width": 150
+			"width": 210
 		})
 	columns.append({
 			"fieldname": "datet",
@@ -148,18 +148,26 @@ def execute(filters=None):
 		else:
 			total_qty = item.qty
 		added.append(item.item_code)
-		
+		qts_stock_source = 0
 		suggere_qty = frappe.db.sql("""select warehouse,actual_qty from `tabBin` where item_code=%s and actual_qty>%s  and warehouse!=%s limit 1""",(item.item_code,qts_transfere,item.warehouse),as_dict=1)
 		if not suggere_qty :
 			suggere_qty = frappe.db.sql("""select warehouse,actual_qty from `tabBin` where item_code=%s and  actual_qty>0  and warehouse!=%s  order by actual_qty desc  limit 1""",(item.item_code, item.warehouse),as_dict=1)
 			if suggere_qty and suggere_qty[0]:
 				suggere_qty = suggere_qty[0]
-				suggere_qty = "Qts Insufisante | %s %s" % (suggere_qty.warehouse,suggere_qty.actual_qty)
+				if filters.source_warehouse and filters.source_warehouse != suggere_qty.warehouse:
+					continue
+				
+				suggere_qty = "Qts Insufisante | %s" % (suggere_qty.warehouse)
+				qts_stock_source = suggere_qty.actual_qty
 			else:
 				suggere_qty = "Non disponible"
 		else:
 			suggere_qty = suggere_qty[0]
-			suggere_qty = "%s | %s" % (suggere_qty.warehouse,suggere_qty.actual_qty)
+			if filters.source_warehouse and filters.source_warehouse != suggere_qty.warehouse:
+					continue
+			
+			suggere_qty = "%s" % (suggere_qty.warehouse)
+			qts_stock_source = suggere_qty.actual_qty
 			
 				
 		row = [
@@ -176,7 +184,7 @@ def execute(filters=None):
 			qty,
 			qts_transfere,
 			suggere_qty,
-			"",
+			qts_stock_source,
 			"",
 			""
 		]
