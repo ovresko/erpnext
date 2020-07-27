@@ -82,8 +82,8 @@ class MaterialRequest(BuyingController):
                 
                 if self.warehouse:
                     for i in self.get("items"):
-                        if not i.warehouse:
-                            i.warehouse = self.warehouse
+			i.warehouse = self.warehouse
+                        #if not i.warehouse:
 		self.validate_schedule_date()
 		self.validate_uom_is_integer("uom", "qty")
 		self.handle_per_consulted()
