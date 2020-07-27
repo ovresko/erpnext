@@ -4,8 +4,11 @@
 from __future__ import unicode_literals
 import frappe
 
-def execute(filters=None):
+def execute(filters=None):	
 	columns, data = [], []
+	if filters.get("grouped") and not filters.get("warehouse"):
+		frappe.msgprint("Appliquer un entrepot cible pour regrouper")
+		return columns, data
 	columns.append({
 			"fieldname": "date",
 			"label": "Date",
@@ -102,15 +105,19 @@ def execute(filters=None):
 	where  mrd.docstatus = 1 and mrd.material_request_type='Material Transfer' and mrd.status in ('Submitted','Pending') and mri.parent is not null and mri.docstatus=1 and mri.ordered_qty=0""",as_dict=1)
 	
 	items.extend(dm_items)
-	
+	added = []
 	for item in items:
 		if filters.get("warehouse") and item.warehouse and item.warehouse !=  filters.get("warehouse"):
 			continue
+		if filters.get("grouped") and filters.get("warehouse"):
+			if item.item_code in added:
+				continue
 		qty = frappe.db.sql("""select sum(actual_qty) from `tabBin` where item_code=%s and warehouse=%s""",(item.item_code,item.warehouse))[0]
 		if qty and qty[0]:
 			qty = qty[0]
 		else:
 			qty = 0
+		
 		#if item.qty <= qty:
 		#	continue
 		#qts a transfere
@@ -118,6 +125,7 @@ def execute(filters=None):
 		delivery_date = ''
 		parent = ''
 		client = ''
+		actual_qty = item.actual_qty
 		#material request
 		if "consulted" in item:
 			delivery_date = item.schedule_date or 'NA'
@@ -126,7 +134,17 @@ def execute(filters=None):
 			delivery_date = item.delivery_date or 'NC'
 			client = item.customer_name
 			parent = item.parent
-		
+			
+		total_qty = 0
+		if filters.get("grouped") and filters.get("warehouse"):
+			total_qty = sum(item.qty for item in items if item.qty)
+			parent =  ', '.join({item.parent for item in items if item.parent})
+			client =  ', '.join({item.customer_name for item in items if ("customer_name" in item and item.customer_name)})
+			actual_qty  = sum(item.actual_qty for item in items if item.actual_qty)
+			qts_transfere = total_qty - qty
+		else:
+			total_qty = item.qty
+		added.append(item.item_code)
 		row = [
 			delivery_date,
 			item.item_code,
@@ -136,8 +154,8 @@ def execute(filters=None):
 			parent,
 			client,
 			item.warehouse,
-			item.qty,
-			item.actual_qty,
+			total_qty,
+			actual_qty,
 			qty,
 			qts_transfere,
 			"",
