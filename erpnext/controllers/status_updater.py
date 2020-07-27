@@ -90,8 +90,8 @@ status_map = {
 	],
 	"Material Request": [
 		["Draft", None],
-                ["Consultation","eval:self.status == 'Consultation'"],
-		["Non consulte","eval:self.status == 'Non consulte'"],
+                ["Consultation","eval:self.status == 'Consultation' and self.status !='Stopped' and self.material_request_type != 'Material Transfer'"],
+		["Non consulte","eval:self.status == 'Non consulte' and self.status !='Stopped' and self.material_request_type != 'Material Transfer'"],
 		["Stopped", "eval:self.status == 'Stopped'"],
 		["Cancelled", "eval:self.docstatus == 2"],
 		["Pending", "eval:self.status != 'Stopped'and self.status !='Consultation' and self.status !='Non consulte' and self.per_ordered == 0 and self.docstatus == 1"],
