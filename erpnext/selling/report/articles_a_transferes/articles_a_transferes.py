@@ -7,6 +7,11 @@ import frappe
 def execute(filters=None):
 	columns, data = [], []
 	columns.append({
+			"fieldname": "date",
+			"label": "Date",
+			"width": 200
+		})
+	columns.append({
 			"fieldname": "item",
 			"label": "Article",
 			"width": 200
@@ -37,9 +42,14 @@ def execute(filters=None):
 			"width": 150
 		})
 	columns.append({
+			"fieldname": "qty_dispc",
+			"label": "Qts disponible a la commande",
+			"width": 220
+		})
+	columns.append({
 			"fieldname": "qty_disp",
 			"label": "Qts disponible",
-			"width": 150
+			"width": 220
 		})
 	columns.append({
 			"fieldname": "qty",
@@ -57,7 +67,7 @@ def execute(filters=None):
 			"width": 150
 		})
 	columns.append({
-			"fieldname": "date",
+			"fieldname": "datet",
 			"label": "Date de transfere",
 			"width": 200
 		})
@@ -68,9 +78,12 @@ def execute(filters=None):
 		})
 	
 	orders_items = frappe.db.sql(""" select * from `tabSales Order Item` soi where soi.docstatus=1 and soi.delivered_qty=0 and soi.actual_qty < soi.qty 
-	and soi.parent in (select so.name from `tabSales Order` so where so.docstatus = 1 and so.workflow_state=="Reservation" and so.status not in ('Closed','Cancelled','Draft')) """,as_dict=1)
+	and soi.parent in (select so.name from `tabSales Order` so where so.docstatus = 1 and so.workflow_state='Reservation' and so.status not in ('Closed','Cancelled','Draft')) """,as_dict=1)
+	
 	for item in orders_items:
+		qty = frappe.db.sql("""select sum(actual_qty) from `tabBin` where item_code='%s' and warehouse='%s'""" % (item.item_code,item.warehouse),as_dict=1)
 		row = [
+			item.delivery_date,
 			item.item_code,
 			item.ref_fabricant,
 			item.fabricant,
@@ -78,6 +91,7 @@ def execute(filters=None):
 			item.warehouse,
 			item.qty,
 			item.actual_qty,
+			qty[0] or '',
 			(item.qty - item.actual_qty),
 			"",
 			"",
