@@ -21,6 +21,11 @@ frappe.query_reports["Articles a transferes"] = {
 			"label": "Grouper les qts",
 			"fieldtype": "Check",
 			"default": 0
+		},{
+			"fieldname": "disp",
+			"label": "Disponible seulement",
+			"fieldtype": "Check",
+			"default": 1
 		}
 	]
 }
