@@ -84,7 +84,7 @@ def execute(filters=None):
 	
 	items = []
 	orders_items = frappe.db.sql(""" select * from `tabSales Order Item` soi   
-	left join (select name,status,docstatus,workflow_state,delivery_date from `tabSales Order` ) so  
+	left join (select name,status,docstatus,workflow_state,delivery_date as delivery_date from `tabSales Order` ) so  
 	on (soi.parent = so.name)
 	where so.status not in ('Closed','Cancelled','Draft') and so.docstatus = 1 and so.workflow_state='Reservation' and soi.docstatus=1 and soi.delivered_qty=0 and soi.actual_qty < soi.qty and soi.parent is not null	
 	""",as_dict=1)
@@ -112,10 +112,10 @@ def execute(filters=None):
 		parent = ''
 		#material request
 		if hasattr(item, 'schedule_date'):
-			delivery_date = item.schedule_date
+			delivery_date = item.schedule_date or 'ND'
 			parent = item.parent
 		else:
-			delivery_date = item.delivery_date
+			delivery_date = item.delivery_date or 'NC'
 			parent = item.parent
 		
 		row = [
