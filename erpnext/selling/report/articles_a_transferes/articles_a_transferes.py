@@ -117,12 +117,12 @@ def execute(filters=None):
 		parent = ''
 		client = ''
 		#material request
-		if not hasattr(item,"consulted"):			
+		if hasattr(item,"consulted"):	
+			delivery_date = item.schedule_date or 'NA'
+			parent = item.parent			
+		else:
 			delivery_date = item.delivery_date or 'NC'
 			client = item.customer_name
-			parent = item.parent
-		else:
-			delivery_date = item.schedule_date or 'NA'
 			parent = item.parent
 		
 		row = [
