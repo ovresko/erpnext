@@ -6,7 +6,7 @@ import frappe
 
 def execute(filters=None):	
 	columns, data = [], []
-	if  not filters.get("warehouse"):
+	if  not filters.warehouse:
 		frappe.throw("Appliquer un entrepot cible ")
 		return columns, data
 	columns.append({
@@ -107,9 +107,9 @@ def execute(filters=None):
 	items.extend(dm_items)
 	added = []
 	for item in items:
-		if filters.get("warehouse") and item.warehouse and item.warehouse !=  filters.get("warehouse"):
+		if filters.warehouse  and item.warehouse and item.warehouse !=  filters.warehouse:
 			continue
-		if filters.get("grouped")==1:
+		if filters.grouped ==1:
 			if item.item_code in added:
 				continue
 		qty = frappe.db.sql("""select sum(actual_qty) from `tabBin` where item_code=%s and warehouse=%s""",(item.item_code,item.warehouse))[0]
@@ -136,8 +136,8 @@ def execute(filters=None):
 			parent = item.parent
 			
 		total_qty = 0
-		if filters.get("grouped")==1 and filters.get("warehouse"):
-			total_qty = sum(_item.qty for _item in items if _item.qty and _item.item_code == item.item_code)
+		if filters.grouped==1 and filters.warehouse:
+			total_qty = sum(_item.qty for _item in items if (_item.qty and _item.item_code == item.item_code))
 			parent =  ', '.join({_item.parent for _item in items if (_item.parent  and _item.item_code == item.item_code)})
 			client =  ', '.join({_item.customer_name for _item in items if ("customer_name" in _item and _item.customer_name   and _item.item_code == item.item_code)})
 			actual_qty  = sum(_item.actual_qty for _item in items if (_item.actual_qty  and _item.item_code == item.item_code))
