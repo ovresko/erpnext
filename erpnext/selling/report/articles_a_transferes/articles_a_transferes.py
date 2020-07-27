@@ -117,7 +117,7 @@ def execute(filters=None):
 		parent = ''
 		client = ''
 		#material request
-		if item.doctype == "Sales Order Item":			
+		if not hasattr(item,"consultation"):			
 			delivery_date = item.delivery_date or 'NC'
 			client = item.customer_name
 			parent = item.parent
