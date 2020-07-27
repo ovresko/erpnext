@@ -3,11 +3,16 @@
   
 <p>Stock Cible {%= filters.warehouse %}</p>
 <p>Stock Source {%= filters.source_warehouse %}</p>
-{% if (filters.grouped) { %}
+{% if (filters.grouped ) { %}
 		<strong> [Quantites Groupees]</strong>
+	{% } else { %}
+		<strong> [Quantites Non Groupees]</strong>
 	{% } %}
+	
   {% if (filters.disp) { %}
 	     	<strong> [Disponible Seulement]</strong>
+	{% } else { %}
+		<strong> [Disponible & Non Disponible]</strong>
 	{% } %}
 <p>{%= frappe.session.user %}</p>
   
@@ -16,13 +21,12 @@
 	<thead>
 		<tr>
 			<th style="width: 5%">Article</th>
-			<th style="width: 20%">Designation</th>
+			<th style="width: 23%">Designation</th>
 			<th style="width: 10%">Code</th>
 			<th style="width: 10%">Fabricant</th>
-			<th style="width: 20%">Stock</th>
-			<th style="width: 5%">Qts Besoin Total</th>
-			<th style="width: 10%">Source</th>
-			<th style="width: 10%">Qts à transferee</th>
+			<th style="width: 20%">Stock</th>			 
+			<th style="width: 15%">Source</th>
+			<th style="width: 7%">Qts à transferee</th>
 			<th style="width: 5%">Date Ops</th>
 			<th style="width: 5%">Qts Traitee</th>
 		</tr>
@@ -35,7 +39,7 @@
 				<td>{%= data[i].item %}</td>
 				<td>{%= data[i].fabricant %}</td>
 				<td>{%= data[i].warehouse %}</td>
-				<td>{%= data[i].qty_total %}</td>
+				 
 				<td>{%= data[i].source %}</td>
 				<td>{%= data[i].qty %}</td>
 				<td> </td>
