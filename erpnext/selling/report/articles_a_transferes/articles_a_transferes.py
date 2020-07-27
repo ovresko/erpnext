@@ -84,13 +84,13 @@ def execute(filters=None):
 	
 	items = []
 	orders_items = frappe.db.sql(""" select * from `tabSales Order Item` soi where soi.docstatus=1 and soi.delivered_qty=0 and soi.actual_qty < soi.qty 
-	and soi.parent in (select so.name from `tabSales Order` so where so.docstatus = 1 and so.workflow_state='Reservation' and so.status not in ('Closed','Cancelled','Draft')) """,as_dict=1)
+	and  soi.parent is not null and soi.parent in (select so.name from `tabSales Order` so where so.docstatus = 1 and so.workflow_state='Reservation' and so.status not in ('Closed','Cancelled','Draft')) """,as_dict=1)
 	
 	
 	items.extend(orders_items)
 	dm_items = frappe.db.sql(""" select * from `tabMaterial Request Item` mri 
-	left join (select mr.name,mr.material_request_type from `tabMaterial Request` mr where mr.docstatus = 1 and mr.material_request_type='Material Transfer') mrd
-	on (mrd.name = mri.parent) where mri.docstatus=1 and mri.ordered_qty=0""",as_dict=1)
+	left join (select name,material_request_type from `tabMaterial Request` mr where mr.docstatus = 1 and mr.material_request_type='Material Transfer') mrd
+	on (mrd.name = mri.parent) where mri.parent is not null and mri.docstatus=1 and mri.ordered_qty=0""",as_dict=1)
 	
 	items.extend(dm_items)
 	
@@ -105,12 +105,14 @@ def execute(filters=None):
 		#qts a transfere
 		qts_transfere = item.qty - qty
 		delivery_date = ''
+		parent = ''
 		#material request
 		if hasattr(item, 'schedule_date'):
 			delivery_date = item.schedule_date
-			
+			parent = item.parent
 		else:
 			delivery_date = item.delivery_date
+			parent = item.parent
 		
 		row = [
 			delivery_date,
@@ -118,7 +120,7 @@ def execute(filters=None):
 			item.item_name,
 			item.ref_fabricant,
 			item.fabricant,
-			item.parent,
+			parent,
 			item.warehouse,
 			item.qty,
 			item.actual_qty,
