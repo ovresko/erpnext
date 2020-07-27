@@ -148,6 +148,13 @@ def execute(filters=None):
 		else:
 			total_qty = item.qty
 		added.append(item.item_code)
+		
+		suggere_qty = frappe.db.sql("""select warehouse,actual_qty from `tabBin` where item_code=%s and actual_qty>%s  and warehouse!=%s""",(item.item_code,qts_transfere,item.warehouse))[0]
+		if not suggere_qty :
+			suggere_qty = frappe.db.sql("""select warehouse,actual_qty from `tabBin` where item_code=%s    and warehouse!=%s order by actual_qty desc""",(item.item_code, item.warehouse))[0]
+			if suggere_qty:
+				suggere_qty = "Qts Insufisante | %s %s" % (suggere_qty.warehouse,suggere_qty.actual_qty)
+				
 		row = [
 			delivery_date,
 			item.item_code,
@@ -161,7 +168,7 @@ def execute(filters=None):
 			actual_qty,
 			qty,
 			qts_transfere,
-			"",
+			suggere_qty,
 			"",
 			"",
 			""
