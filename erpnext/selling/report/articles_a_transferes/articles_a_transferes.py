@@ -140,7 +140,7 @@ def execute(filters=None):
 			total_qty = sum(_item.qty for _item in items if (_item.qty and _item.item_code == item.item_code))
 			parent =  ', '.join({_item.parent for _item in items if (_item.parent  and _item.item_code == item.item_code)})
 			client =  ', '.join({_item.customer_name for _item in items if ("customer_name" in _item and _item.customer_name   and _item.item_code == item.item_code)})
-			actual_qty  = sum(_item.actual_qty for _item in items if (_item.actual_qty  and _item.item_code == item.item_code))
+			actual_qty  = '0'
 			qts_transfere = total_qty - qty
 			delivery_date = min(_item.schedule_date for _item in items if (_item.schedule_date  and _item.item_code == item.item_code)) if "consulted" in item else  min(_item.delivery_date for _item in items if _item.delivery_date  and _item.item_code == item.item_code)
 		else:
