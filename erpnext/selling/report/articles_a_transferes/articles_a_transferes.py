@@ -37,6 +37,11 @@ def execute(filters=None):
 			"width": 150
 		})
 	columns.append({
+			"fieldname": "client",
+			"label": "Client",
+			"width": 150
+		})
+	columns.append({
 			"fieldname": "warehouse",
 			"label": "Stock",
 			"width": 150
@@ -84,7 +89,7 @@ def execute(filters=None):
 	
 	items = []
 	orders_items = frappe.db.sql(""" select * from `tabSales Order Item` soi   
-	left join (select name,status,docstatus,workflow_state,delivery_date as delivery_date from `tabSales Order` ) so  
+	left join (select customer_name as customer_name, name,status,docstatus,workflow_state,delivery_date as delivery_date from `tabSales Order` ) so  
 	on (soi.parent = so.name)
 	where so.status not in ('Closed','Cancelled','Draft') and so.docstatus = 1 and so.workflow_state='Reservation' and soi.docstatus=1 and soi.delivered_qty=0 and soi.actual_qty < soi.qty and soi.parent is not null	
 	""",as_dict=1)
@@ -110,12 +115,14 @@ def execute(filters=None):
 		qts_transfere = item.qty - qty
 		delivery_date = ''
 		parent = ''
+		client = ''
 		#material request
-		if not hasattr(item, 'rate'):
-			delivery_date = item.schedule_date or 'NA'
+		if hasattr(item, 'rate') and item.rate:			
+			delivery_date = item.delivery_date or 'NC'
+			client = item.customer_name
 			parent = item.parent
 		else:
-			delivery_date = item.delivery_date or 'NC'
+			delivery_date = item.schedule_date or 'NA'
 			parent = item.parent
 		
 		row = [
@@ -125,6 +132,7 @@ def execute(filters=None):
 			item.ref_fabricant,
 			item.fabricant,
 			parent,
+			client,
 			item.warehouse,
 			item.qty,
 			item.actual_qty,
