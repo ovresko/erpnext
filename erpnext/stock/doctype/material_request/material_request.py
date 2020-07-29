@@ -406,7 +406,7 @@ def get_material_requests_based_on_supplier(supplier):
 def get_mr_items(manufacturer):
 	if not manufacturer:
 		return []
-	_ids = frappe.db.sql("""select item_code, pays, name, model, consultation, consulted, parent, item_name, qty, ref_fabricant, fabricant from `tabMaterial Request Item` mri left join (select name,material_request_type from `tabMaterial Request` ) mr on (mr.name = mri.parent)  where mri.warehouse='GLOBAL - MV' and mri.consulted=0 and mri.docstatus=1 and mri.fabricant=%s and mr.material_request_type="Purchase" """,(manufacturer), as_dict=1)
+	_ids = frappe.db.sql("""select mri.item_code, mri.pays, mri.name, mri.model, mri.consultation, mri.consulted, mri.parent, mri.item_name, mri.qty, mri.ref_fabricant, mri.fabricant from `tabMaterial Request Item` mri left join (select name,material_request_type from `tabMaterial Request`  ) mr on (mr.name = mri.parent)  where mri.warehouse='GLOBAL - MV' and mri.consulted=0 and mri.docstatus=1 and mri.fabricant=%s and mr.material_request_type="Purchase" """,(manufacturer), as_dict=1)
 	if not _ids:
 		_ids = []
 	return _ids
