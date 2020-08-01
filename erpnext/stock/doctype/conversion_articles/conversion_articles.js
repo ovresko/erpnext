@@ -31,6 +31,11 @@ frappe.ui.form.on('Conversion Articles', {
 		frappe.call({
 			method: 'erpnext.stock.doctype.conversion_articles.conversion_articles.set_address',
 			freeze: true,
+			args: {
+				refs2: frm.doc.refs2,
+				stock: frm.doc.stock,
+				ads:  frm.doc.ads
+			},
 			freeze_message: __("Saving..."), 
 			callback: function (r) {
 				if(r.message){
