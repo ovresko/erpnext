@@ -27,6 +27,7 @@ def get_converstion(refs):
 
 @frappe.whitelist()
 def set_address(refs2,stock,ads):
+	res = "%s, %s, %s" % (refs2,stock,ads)
 	if refs2 and stock and ads:
 		refs = refs2
 		ads = ads.splitlines()
@@ -42,4 +43,4 @@ def set_address(refs2,stock,ads):
 						"adresse": addr
 					})
 					mr.insert()
-				
+	return res
