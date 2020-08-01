@@ -24,4 +24,22 @@ def get_converstion(refs):
 					
 					result += "\n"
 	return result
-					
+
+@frappe.whitelist()
+def set_address():
+	if self.refs2 and self.stock and self.ads:
+		refs = self.refs2
+		ads = self.ads.splitlines()
+		clean = refs.splitlines()
+		if clean:
+			for idx,c in enumerate(clean):
+				addr= ads[idx]
+				if addr and c:
+					mr = frappe.new_doc("Adresse Magasin")
+					mr.update({
+						"parent": c,
+						"warehouse": self.stock,
+						"adresse": addr
+					})
+					mr.insert()
+				
