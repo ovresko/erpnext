@@ -39,7 +39,7 @@ frappe.ui.form.on('Conversion Articles', {
 			freeze_message: __("Saving..."), 
 			callback: function (r) {
 				if(r.message){
-					frappe.msgprint("Done") 				
+					frappe.msgprint(r.message) 				
 				}
 			}
 		});
