@@ -25,5 +25,20 @@ frappe.ui.form.on('Conversion Articles', {
 		});
 		
 		
+	},
+	enregistrer: function(frm){
+		 
+		frappe.call({
+			method: 'erpnext.stock.doctype.conversion_articles.conversion_articles.set_address',
+			freeze: true,
+			freeze_message: __("Saving..."), 
+			callback: function (r) {
+				if(r.message){
+					frappe.msgprint("Done") 				
+				}
+			}
+		});
+		
+		
 	}
 });
