@@ -26,10 +26,10 @@ def get_converstion(refs):
 	return result
 
 @frappe.whitelist()
-def set_address():
-	if self.refs2 and self.stock and self.ads:
-		refs = self.refs2
-		ads = self.ads.splitlines()
+def set_address(refs2,stock,ads):
+	if refs2 and stock and ads:
+		refs = refs2
+		ads = ads.splitlines()
 		clean = refs.splitlines()
 		if clean:
 			for idx,c in enumerate(clean):
@@ -38,7 +38,7 @@ def set_address():
 					mr = frappe.new_doc("Adresse Magasin")
 					mr.update({
 						"parent": c,
-						"warehouse": self.stock,
+						"warehouse": stock,
 						"adresse": addr
 					})
 					mr.insert()
