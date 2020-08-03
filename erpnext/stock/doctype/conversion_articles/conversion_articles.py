@@ -8,6 +8,7 @@ from frappe.model.document import Document
 
 class ConversionArticles(Document):
 	def save_items(self):
+		saved = 0
 		if self.articles:
 			for item in self.articles:
 				if item and item.ref and item.adr and item.publique and item.gros:
@@ -47,8 +48,9 @@ class ConversionArticles(Document):
 								so.price_list = "PRIX EN GROS"
 								so.price_list_rate = item.gros
 								so.save()
+						saved = saved+1
 						article.save()
-		frappe.msgprint("Done")
+		frappe.msgprint("Done %d " % saved)
 		
 
 @frappe.whitelist()
