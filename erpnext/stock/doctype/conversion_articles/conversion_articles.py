@@ -11,7 +11,7 @@ class ConversionArticles(Document):
 		saved = 0
 		if self.articles:
 			for item in self.articles:
-				if item and item.ref and item.adr and item.publique and item.gros:
+				if item and item.ref:
 					c = item.ref.replace(" ","").replace("-","").replace("_","").replace("/","").replace(".","")
 					code = frappe.db.get_value('Item', {"clean_manufacturer_part_number": c}, ['item_code'])
 					article = frappe.get_doc("Item",code)
@@ -51,6 +51,7 @@ class ConversionArticles(Document):
 								so.save()
 						saved = saved+1
 						#article.save()
+						frappe.db.commit()
 		frappe.msgprint("Done %d " % saved)
 		
 
