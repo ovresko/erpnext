@@ -21,6 +21,7 @@ class ConversionArticles(Document):
 							row = article.append('table_adresse_magasin',{})
 							row.warehouse = self.stock
 							row.adresse = item.adr
+							article.save()
 						# prix
 						if item.publique:
 							price = frappe.get_all("Item Price",fields=["name"],filters={"min_qty":0,"item_code":article.item_code,"price_list":"PRIX PUBLIQUE"})
@@ -49,7 +50,7 @@ class ConversionArticles(Document):
 								so.price_list_rate = item.gros
 								so.save()
 						saved = saved+1
-						article.save()
+						#article.save()
 		frappe.msgprint("Done %d " % saved)
 		
 
