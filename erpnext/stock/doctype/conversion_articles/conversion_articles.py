@@ -7,7 +7,7 @@ import frappe
 from frappe.model.document import Document
 
 class ConversionArticles(Document):
-	save_items(self):
+	def save_items(self):
 		if self.articles:
 			for item in self.articles:
 				if item and item.ref and item.adr and item.publique and item.gros:
