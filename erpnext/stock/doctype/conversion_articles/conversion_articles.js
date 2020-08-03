@@ -7,6 +7,15 @@ frappe.ui.form.on('Conversion Articles', {
 	refresh: function(frm) {
 
 	},
+	save: function(frm){
+		frappe.call({
+                        doc: frm.doc,
+                        method: "save_items",
+                        callback: function (data) {
+                            frappe.show_alert('Done !');
+                        }
+                    })
+	},
 	convertir: function(frm){
 		
 		 //frm.set_value('codes', old); 
