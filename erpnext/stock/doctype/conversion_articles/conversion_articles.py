@@ -7,7 +7,49 @@ import frappe
 from frappe.model.document import Document
 
 class ConversionArticles(Document):
-	pass
+	save_items(self):
+		if self.articles:
+			for item in self.articles:
+				if item and item.ref and item.adr and item.publique and item.gros:
+					c = item.ref.replace(" ","").replace("-","").replace("_","").replace("/","").replace(".","")
+					code = frappe.db.get_value('Item', {"clean_manufacturer_part_number": c}, ['item_code'])
+					article = frappe.get_doc("Item",code)
+					if article:
+						# adresse magasin
+						if not article.table_adresse_magasin or (item.adr not in {a.adresse for a in article.table_adresse_magasin}):
+							row = article.append('table_adresse_magasin',{})
+							row.warehouse = self.stock
+							row.adresse = item.adr
+						# prix
+						if item.publique:
+							price = frappe.get_all("Item Price",fields=["name"],filters={"min_qty":0,"item_code":article.item_code,"price_list":"PRIX PUBLIQUE"})
+							if price:
+								price = frappe.get_doc("Item Price",price[0].name)
+								price.price_list_rate = item.publique
+								price.min_qty = 0
+								price.save()
+							else:
+								so = frappe.new_doc("Item Price")
+								so.item_code = article.item_code
+								so.price_list = "PRIX PUBLIQUE"
+								so.price_list_rate = item.publique
+								so.save()
+						if item.gros:
+							price = frappe.get_all("Item Price",fields=["name"],filters={"min_qty":0,"item_code":article.item_code,"price_list":"PRIX EN GROS"})
+							if price:
+								price = frappe.get_doc("Item Price",price[0].name)
+								price.price_list_rate = item.gros
+								price.min_qty = 0
+								price.save()
+							else:
+								so = frappe.new_doc("Item Price")
+								so.item_code = article.item_code
+								so.price_list = "PRIX EN GROS"
+								so.price_list_rate = item.gros
+								so.save()
+						article.save()
+		frappe.msgprint("Done")
+		
 
 @frappe.whitelist()
 def get_converstion(refs):
