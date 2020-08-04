@@ -9,6 +9,7 @@ from frappe.model.document import Document
 class ConversionArticles(Document):
 	def save_items(self):
 		saved = 0
+		line = 0
 		nothan = []
 		errors = ''
 		if not self.stock:
@@ -16,6 +17,7 @@ class ConversionArticles(Document):
 			return
 		if self.articles:
 			for item in self.articles:
+				line = line +1
 				if item and item.ref:
 					c = item.ref.replace(" ","").replace("-","").replace("_","").replace("/","").replace(".","")
 					code = frappe.db.get_value('Item', {"clean_manufacturer_part_number": c}, ['item_code'])
@@ -30,7 +32,7 @@ class ConversionArticles(Document):
 								article.save()
 							except:
 								nothan.append(item)
-								errors += "Erreur article %d %s" % (item.idx, item.ref)
+								errors += "Erreur article %d %s" % (line, item.ref)
 								
 						# prix
 						if item.publique:
@@ -43,7 +45,7 @@ class ConversionArticles(Document):
 									price.save()
 								except:
 									nothan.append(item)
-									errors += "Erreur article %d %s" % (item.idx, item.ref)
+									errors += "Erreur article %d %s" % (line, item.ref)
 								#price.save()
 							else:
 								so = frappe.new_doc("Item Price")
@@ -54,7 +56,7 @@ class ConversionArticles(Document):
 									so.save()
 								except:
 									nothan.append(item)
-									errors += "Erreur article %d %s" % (item.idx, item.ref)
+									errors += "Erreur article %d %s" % (line, item.ref)
 						if item.gros:
 							price = frappe.get_all("Item Price",fields=["name"],filters={"min_qty":0,"item_code":article.item_code,"price_list":"PRIX EN GROS"})
 							if price:
@@ -65,7 +67,7 @@ class ConversionArticles(Document):
 									price.save()
 								except:
 									nothan.append(item)
-									errors += "Erreur article %d %s" % (item.idx, item.ref)
+									errors += "Erreur article %d %s" % (line, item.ref)
 							else:
 								so = frappe.new_doc("Item Price")
 								so.item_code = article.item_code
@@ -75,7 +77,7 @@ class ConversionArticles(Document):
 									so.save()
 								except:
 									nothan.append(item)
-									errors += "Erreur article %d %s" % (item.idx, item.ref)
+									errors += "Erreur article %d %s" % (line, item.ref)
 						saved = saved+1
 						#article.save()
 						frappe.db.commit()
