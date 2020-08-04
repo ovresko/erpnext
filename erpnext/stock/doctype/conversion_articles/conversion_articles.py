@@ -9,6 +9,7 @@ from frappe.model.document import Document
 class ConversionArticles(Document):
 	def save_items(self):
 		saved = 0
+		nothan = []
 		errors = ''
 		if not self.stock:
 			frappe.msgprint("Champ Stock est vide")
@@ -28,6 +29,7 @@ class ConversionArticles(Document):
 							try:
 								article.save()
 							except Exception as e:
+								nothan.append(item)
 								errors += e
 								
 						# prix
@@ -40,6 +42,7 @@ class ConversionArticles(Document):
 								try:
 									price.save()
 								except Exception as e:
+									nothan.append(item)
 									errors += e
 								#price.save()
 							else:
@@ -50,6 +53,7 @@ class ConversionArticles(Document):
 								try:
 									so.save()
 								except Exception as e:
+									nothan.append(item)
 									errors += e
 						if item.gros:
 							price = frappe.get_all("Item Price",fields=["name"],filters={"min_qty":0,"item_code":article.item_code,"price_list":"PRIX EN GROS"})
@@ -60,6 +64,7 @@ class ConversionArticles(Document):
 								try:
 									price.save()
 								except Exception as e:
+									nothan.append(item)
 									errors += e
 							else:
 								so = frappe.new_doc("Item Price")
@@ -69,10 +74,12 @@ class ConversionArticles(Document):
 								try:
 									so.save()
 								except Exception as e:
+									nothan.append(item)
 									errors += e
 						saved = saved+1
 						#article.save()
 						frappe.db.commit()
+		self.articles = nothan
 		frappe.msgprint("Done %d   <br>%s" % (saved,errors))
 		
 
