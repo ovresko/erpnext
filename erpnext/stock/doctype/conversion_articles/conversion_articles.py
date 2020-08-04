@@ -33,7 +33,7 @@ class ConversionArticles(Document):
 									article.save()
 								except:
 									nothan.append(item)
-									errors += "Erreur article %d %s" % (line, item.ref)
+									errors += "<br>Erreur article %d %s" % (line, item.ref)
 
 							# prix
 							if item.publique:
@@ -46,7 +46,7 @@ class ConversionArticles(Document):
 										price.save()
 									except:
 										nothan.append(item)
-										errors += "Erreur article %d %s" % (line, item.ref)
+										errors += "<br>Erreur article %d %s" % (line, item.ref)
 									#price.save()
 								else:
 									so = frappe.new_doc("Item Price")
@@ -57,7 +57,7 @@ class ConversionArticles(Document):
 										so.save()
 									except:
 										nothan.append(item)
-										errors += "Erreur article %d %s" % (line, item.ref)
+										errors += "<br>Erreur article %d %s" % (line, item.ref)
 							if item.gros:
 								price = frappe.get_all("Item Price",fields=["name"],filters={"min_qty":0,"item_code":article.name,"price_list":"PRIX EN GROS"})
 								if price:
@@ -68,7 +68,7 @@ class ConversionArticles(Document):
 										price.save()
 									except:
 										nothan.append(item)
-										errors += "Erreur article %d %s" % (line, item.ref)
+										errors += "<br>Erreur article %d %s" % (line, item.ref)
 								else:
 									so = frappe.new_doc("Item Price")
 									so.item_code = article.item_code
@@ -78,7 +78,7 @@ class ConversionArticles(Document):
 										so.save()
 									except:
 										nothan.append(item)
-										errors += "Erreur article %d %s" % (line, item.ref)
+										errors += "<br>Erreur article %d %s" % (line, item.ref)
 							saved = saved+1
 							#article.save()
 							frappe.db.commit()
