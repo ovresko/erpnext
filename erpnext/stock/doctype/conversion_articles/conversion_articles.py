@@ -28,9 +28,9 @@ class ConversionArticles(Document):
 							row.adresse = item.adr
 							try:
 								article.save()
-							except Exception as e:
+							except:
 								nothan.append(item)
-								errors += e
+								errors += "Erreur article %d %s" % (item.idx, item.ref)
 								
 						# prix
 						if item.publique:
@@ -41,9 +41,9 @@ class ConversionArticles(Document):
 								price.min_qty = 0
 								try:
 									price.save()
-								except Exception as e:
+								except:
 									nothan.append(item)
-									errors += e
+									errors += "Erreur article %d %s" % (item.idx, item.ref)
 								#price.save()
 							else:
 								so = frappe.new_doc("Item Price")
@@ -52,9 +52,9 @@ class ConversionArticles(Document):
 								so.price_list_rate = item.publique
 								try:
 									so.save()
-								except Exception as e:
+								except:
 									nothan.append(item)
-									errors += e
+									errors += "Erreur article %d %s" % (item.idx, item.ref)
 						if item.gros:
 							price = frappe.get_all("Item Price",fields=["name"],filters={"min_qty":0,"item_code":article.item_code,"price_list":"PRIX EN GROS"})
 							if price:
@@ -63,9 +63,9 @@ class ConversionArticles(Document):
 								price.min_qty = 0
 								try:
 									price.save()
-								except Exception as e:
+								except:
 									nothan.append(item)
-									errors += e
+									errors += "Erreur article %d %s" % (item.idx, item.ref)
 							else:
 								so = frappe.new_doc("Item Price")
 								so.item_code = article.item_code
@@ -73,9 +73,9 @@ class ConversionArticles(Document):
 								so.price_list_rate = item.gros
 								try:
 									so.save()
-								except Exception as e:
+								except:
 									nothan.append(item)
-									errors += e
+									errors += "Erreur article %d %s" % (item.idx, item.ref)
 						saved = saved+1
 						#article.save()
 						frappe.db.commit()
