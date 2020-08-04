@@ -9,6 +9,10 @@ from frappe.model.document import Document
 class ConversionArticles(Document):
 	def save_items(self):
 		saved = 0
+		errors = ''
+		if not self.stock:
+			frappe.msgprint("Champ Stock est vide")
+			return
 		if self.articles:
 			for item in self.articles:
 				if item and item.ref:
@@ -21,7 +25,11 @@ class ConversionArticles(Document):
 							row = article.append('table_adresse_magasin',{})
 							row.warehouse = self.stock
 							row.adresse = item.adr
-							article.save()
+							try:
+								article.save()
+							except Exception as e:
+								errors += e
+								
 						# prix
 						if item.publique:
 							price = frappe.get_all("Item Price",fields=["name"],filters={"min_qty":0,"item_code":article.item_code,"price_list":"PRIX PUBLIQUE"})
@@ -29,30 +37,43 @@ class ConversionArticles(Document):
 								price = frappe.get_doc("Item Price",price[0].name)
 								price.price_list_rate = item.publique
 								price.min_qty = 0
-								price.save()
+								try:
+									price.save()
+								except Exception as e:
+									errors += e
+								#price.save()
 							else:
 								so = frappe.new_doc("Item Price")
 								so.item_code = article.item_code
 								so.price_list = "PRIX PUBLIQUE"
 								so.price_list_rate = item.publique
-								so.save()
+								try:
+									so.save()
+								except Exception as e:
+									errors += e
 						if item.gros:
 							price = frappe.get_all("Item Price",fields=["name"],filters={"min_qty":0,"item_code":article.item_code,"price_list":"PRIX EN GROS"})
 							if price:
 								price = frappe.get_doc("Item Price",price[0].name)
 								price.price_list_rate = item.gros
 								price.min_qty = 0
-								price.save()
+								try:
+									price.save()
+								except Exception as e:
+									errors += e
 							else:
 								so = frappe.new_doc("Item Price")
 								so.item_code = article.item_code
 								so.price_list = "PRIX EN GROS"
 								so.price_list_rate = item.gros
-								so.save()
+								try:
+									so.save()
+								except Exception as e:
+									errors += e
 						saved = saved+1
 						#article.save()
 						frappe.db.commit()
-		frappe.msgprint("Done %d " % saved)
+		frappe.msgprint("Done %d   <br>%s" % (saved,errors))
 		
 
 @frappe.whitelist()
