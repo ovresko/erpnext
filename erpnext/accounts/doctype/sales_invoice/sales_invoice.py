@@ -134,6 +134,10 @@ class SalesInvoice(SellingController):
 
 		if self.redeem_loyalty_points and self.loyalty_program and self.loyalty_points:
 			validate_loyalty_points(self, self.loyalty_points)
+			
+		so = {item.sales_order for item in self.items if item.sales_order}
+		if so:
+			self.sales_order_id = " ,".join(so)
 
 
 	def before_save(self):
