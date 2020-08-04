@@ -36,7 +36,7 @@ class ConversionArticles(Document):
 								
 						# prix
 						if item.publique:
-							price = frappe.get_all("Item Price",fields=["name"],filters={"min_qty":0,"item_code":article.item_code,"price_list":"PRIX PUBLIQUE"})
+							price = frappe.get_all("Item Price",fields=["name"],filters={"min_qty":0,"item_code":article.name,"price_list":"PRIX PUBLIQUE"})
 							if price:
 								price = frappe.get_doc("Item Price",price[0].name)
 								price.price_list_rate = item.publique
@@ -58,7 +58,7 @@ class ConversionArticles(Document):
 									nothan.append(item)
 									errors += "Erreur article %d %s" % (line, item.ref)
 						if item.gros:
-							price = frappe.get_all("Item Price",fields=["name"],filters={"min_qty":0,"item_code":article.item_code,"price_list":"PRIX EN GROS"})
+							price = frappe.get_all("Item Price",fields=["name"],filters={"min_qty":0,"item_code":article.name,"price_list":"PRIX EN GROS"})
 							if price:
 								price = frappe.get_doc("Item Price",price[0].name)
 								price.price_list_rate = item.gros
