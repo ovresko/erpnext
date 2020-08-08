@@ -162,7 +162,6 @@ def execute(filters=None):
 		r = filters.get("recu")
 		rec_items = frappe.get_all("Purchase Receipt Item", fields=["item_code"], filters={"parent":r})
 		rec_items_str = ", ".join("'%s'" % re.item_code for re in rec_items)
-		frappe.msgprint(rec_items_str)
 		items = frappe.db.sql(
 			"""
 			select
