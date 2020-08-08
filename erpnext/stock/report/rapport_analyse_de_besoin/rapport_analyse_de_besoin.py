@@ -168,7 +168,7 @@ def execute(filters=None):
 			select
 				stock_uom,item_bloque, perfection,is_purchase_item,weight_per_unit,variant_of,has_variants,item_name, item_code, manufacturer,last_purchase_rate , manufacturer_part_no, item_group,last_purchase_devise,max_order_qty,max_ordered_variante
 			from `tabItem`
-			where disabled=0 and has_variants=0 {conditions} and item_code in [{rec}]
+			where disabled=0 and has_variants=0 {conditions} and item_code in ({rec})
 			{order_by_statement}
 			""".format(
 				conditions=get_conditions(filters),
