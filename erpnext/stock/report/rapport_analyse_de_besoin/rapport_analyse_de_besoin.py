@@ -160,7 +160,7 @@ def execute(filters=None):
 	items = []
 	if filters.get("recu"):
 		r = filters.get("recu")
-		rec_items = frappe.get_all("Materiel Receipt Item", fields=["item_code"], filters={"parent":r})
+		rec_items = frappe.get_all("Purchase Receipt Item", fields=["item_code"], filters={"parent":r})
 		rec_items_str = " ,".join(re.item_code for re in rec_items if re.item_code)
 		items = frappe.db.sql(
 			"""
