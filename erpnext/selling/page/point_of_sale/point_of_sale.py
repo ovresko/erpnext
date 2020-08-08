@@ -97,7 +97,7 @@ def open_item_info(item_code):
 						<button  class="btn btn-default btn-sm  btn-etat-stock" data-item-code="{item_code}"  style="margin-right: 5px;">Etat Stock</button>
 <br>
 						<div class="etat-stock"></div>
-						<div class="etat-prix"></div>
+						<div class="etat-price"></div>
 						<table class="table table-bordered table-condensed">
 							<tr><td>{item_name}</td><td>
 									 {image} 
