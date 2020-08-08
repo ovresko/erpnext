@@ -33,7 +33,7 @@ erpnext.utils.open_item_info =  function(item_code,me) {
 						    "callback": function(response) {
 							    if(response.message){
 								console.log("printing prices");
-								$('.etat-price').html("<br><div class='info-price'> "+response.message['price']+" <div>");							 
+								$('.etat-price').html("<br><br><br><div class='info-price'> "+response.message['price']+" <div><br><br>");							 
 							    }
 						    }
 					 });
