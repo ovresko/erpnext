@@ -32,6 +32,8 @@ class Customer(TransactionBase):
 			self.name = self.get_customer_name()
 		else:
 			set_name_by_naming_series(self)
+		self.credit_limit = 1
+		self.bypass_credit_limit_check_at_sales_order = 1
 
 	def get_customer_name(self):
 		if frappe.db.get_value("Customer", self.customer_name):
