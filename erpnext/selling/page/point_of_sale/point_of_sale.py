@@ -344,34 +344,30 @@ def get_vehicule_details(item_code):
 	return versions,generations,modeles,marques
 
 @frappe.whitelist()
-def get_stock_details(item_code,pos_profile):
-	
-	my_warehouses = frappe.get_all("Entrepot Pofile PDV",fields=['*'],filters={"parent":pos_profile})
-	pwh = frappe.get_value("POS Profile",pos_profile,"warehouse")
+def get_stock_details(item_code,pos_profile=None):
 	aw = []
-	if pwh:
-		aw.append(pwh)
+	my_warehouses = []
+	if pos_profile:
+		my_warehouses = frappe.get_all("Entrepot Pofile PDV",fields=['*'],filters={"parent":pos_profile})
+		pwh = frappe.get_value("POS Profile",pos_profile,"warehouse")		
+		if pwh:
+			aw.append(pwh)
+		if my_warehouses:
+			aw.extend([x.warehouse for x in my_warehouses if x.warehouse not in aw])
+	else:
+		all_warehouses = frappe.get_all("Warehouse",fields=['*'])
+		if all_warehouses:
+			aw.extend([x.name for x in all_warehouses if x.name not in aw])
+		
 	
-	if my_warehouses:
-		aw.extend([x.warehouse for x in my_warehouses if x.warehouse not in aw])
-	#aw = set(aw)
-	#magasin = frappe.db.get_single_value("Stock Settings", "entrepot_magasin")
-	#if magasin:
-	#	allmagasin = frappe.get_all("Warehouse",fields=['name'],filters={"parent_warehouse":magasin})
-	#	if allmagasin:
-	#		aw.extend([x.name for x in allmagasin])
-	#depot = frappe.db.get_single_value("Stock Settings", "entrepot_depot")
-	#if depot:
-	#	alldepot = frappe.get_all("Warehouse",fields=['name'],filters={"parent_warehouse":depot})
-	#	if alldepot:
-	#		aw.extend([x.name for x in alldepot])
+
 	rest = frappe.db.sql(''' select warehouse, actual_qty,reserved_qty from `tabBin` where item_code='{item_code}' and warehouse in ({wr})'''.format(item_code=item_code,   wr=", ".join(['%s']*len(aw))), tuple(aw), as_dict=1 )
 	#res_depots = frappe.db.sql(""" select warehouse, actual_qty from `tabBin` where item_code=%s  and warehouse in (%s)   """,(item_code, ', '.join(['"%s"' % d for d in aw])) , as_dict=1)
 	for r in rest:
 		_item = next(w for w in my_warehouses if w.warehouse==r.warehouse)
 		if _item and not _item.voir_qts:
 			r.actual_qty = "Disponible" if r.actual_qty > 0 else "Non Disponible"
-		elif _item:
+		else:
 			r.actual_qty = r.actual_qty - r.reserved_qty
 	return rest,aw
 
