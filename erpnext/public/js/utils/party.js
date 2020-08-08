@@ -26,15 +26,16 @@ erpnext.utils.open_item_info =  function(item_code,me) {
 					
 					$('.info-vehicule').remove();
 					 frappe.call({
-					    "method": "erpnext.selling.page.point_of_sale.point_of_sale.get_item_prices",
-					    "args": {
-						"item_code": item_code
-					    },
-					    "callback": function(response) {
-						    if(response.message){
-							$('.etat-price').html("<div class='info-price'> "+response.message['price']+" <div>");							 
+						    "method": "erpnext.selling.page.point_of_sale.point_of_sale.get_item_prices",
+						    "args": {
+							"item_code": item_code
+						    },
+						    "callback": function(response) {
+							    if(response.message){
+								console.log("printing prices");
+								$('.etat-price').html("<br><div class='info-price'> "+response.message['price']+" <div>");							 
+							    }
 						    }
-					    }
 					 });
 				});
 				$(document).off("click", ".btn-open").on('click', '.btn-open', function(){
