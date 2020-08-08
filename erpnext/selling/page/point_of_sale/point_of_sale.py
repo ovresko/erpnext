@@ -95,6 +95,7 @@ def open_item_info(item_code):
 						<button  class="btn btn-default btn-sm  btn-info-price" data-item-code="{item_code}"  style="margin-right: 5px;">Infos prix de vente</button>
 						<button  class="btn btn-default btn-sm  btn-open" data-item-code="{item_code}"  style="margin-right: 5px;">Editer Article</button>
 						<button  class="btn btn-default btn-sm  btn-etat-stock" data-item-code="{item_code}"  style="margin-right: 5px;">Etat Stock</button>
+						<button  class="btn btn-default btn-sm  btn-print" data-item-code="{item_code}"  style="margin-right: 5px;">Exporter</button>
 <br>
 						<div class="etat-stock"></div>
 						<div class="etat-price"></div>
