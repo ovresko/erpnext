@@ -162,12 +162,13 @@ def execute(filters=None):
 		r = filters.get("recu")
 		rec_items = frappe.get_all("Purchase Receipt Item", fields=["item_code"], filters={"parent":r})
 		rec_items_str = ", ".join(re.item_code for re in rec_items)
+		frappe.msgprint(rec_items_str)
 		items = frappe.db.sql(
 			"""
 			select
 				stock_uom,item_bloque, perfection,is_purchase_item,weight_per_unit,variant_of,has_variants,item_name, item_code, manufacturer,last_purchase_rate , manufacturer_part_no, item_group,last_purchase_devise,max_order_qty,max_ordered_variante
 			from `tabItem`
-			where disabled=0 and has_variants=0 {conditions} and item_code in  ({rec})
+			where disabled=0 and has_variants=0 {conditions} and item_code in [{rec}]
 			{order_by_statement}
 			""".format(
 				conditions=get_conditions(filters),
