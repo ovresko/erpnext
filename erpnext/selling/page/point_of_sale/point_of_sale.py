@@ -94,6 +94,7 @@ def open_item_info(item_code):
 						</button>
 						<button  class="btn btn-default btn-sm  btn-info-price" data-item-code="{item_code}"  style="margin-right: 5px;">Infos prix de vente</button>
 						<button  class="btn btn-default btn-sm  btn-open" data-item-code="{item_code}"  style="margin-right: 5px;">Editer Article</button>
+						<button  class="btn btn-default btn-sm  btn-etat-stock" data-item-code="{item_code}"  style="margin-right: 5px;">Etat Stock</button>
 <br>
 						<table class="table table-bordered table-condensed">
 							<tr><td>{item_name}</td><td>
