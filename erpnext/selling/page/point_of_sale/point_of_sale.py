@@ -497,7 +497,7 @@ def get_items(start, page_length, price_list, item_group, search_value="", pos_p
 					`tabBin` where warehouse=%(warehouse)s) item_bin
 			ON
 				(item_bin.item_code=i.name or item_bin.item_code=i.variant_of) 
-			LEFT JOIN (select parent, warehouse, adresse from `tabAdresse Magasin`) item_adr
+			LEFT JOIN (select DISTINCT parent, warehouse, adresse from `tabAdresse Magasin`) item_adr
 			ON
 				(item_adr.parent=i.name and  item_adr.warehouse=%(warehouse)s) 
 			where 
@@ -533,7 +533,7 @@ def get_items(start, page_length, price_list, item_group, search_value="", pos_p
 		res = frappe.db.sql(query +  """
 			ON
 				((item_se.item_code=i.name or item_det.item_code=i.variant_of) and item_se.actual_qty>0)
-			LEFT JOIN (select parent, warehouse, adresse from `tabAdresse Magasin`) item_adr
+			LEFT JOIN (select DISTINCT parent, warehouse, adresse from `tabAdresse Magasin`) item_adr
 			ON
 				(item_adr.parent=i.name and  item_adr.warehouse=%(warehouse)s) 
 			where
