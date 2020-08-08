@@ -16,6 +16,13 @@ erpnext.utils.open_item_info =  function(item_code,me) {
 				  console.log("btn",response);
 				
 				
+				//btn-print
+				$(document).off("click", ".btn-print").on('click', '.btn-print', function(){
+					 event.stopPropagation();  
+					var url = "http://192.168.100.20/printview?doctype=Item&name="+item_code+"&trigger_print=1&format=Format%20Article%20Publique&no_letterhead=0&_lang=fr"
+					window.open(url , '_blank', 'toolbar=0,location=0,menubar=0,location=yes, scrollbars=yes,status=yes'); 
+				});
+				
 				$(document).off("click", ".btn-info-price").on('click', '.btn-info-price', function(){
 					event.stopPropagation(); 
 					
