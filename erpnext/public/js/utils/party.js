@@ -58,13 +58,13 @@ erpnext.utils.open_item_info =  function(item_code,me) {
 					    "callback": function(response) {
 						    var item = response.message; 
 							if (item) {
-								var html  ='Qts disponible dans le réseau <br>';
+								var html  ='<br><br>Qts disponible dans le réseau <br>';
 								$.each(item[0], function(i, d) {
 
-									html+='<hr><label>'+d['warehouse']+'</label>'+' :&nbsp;&nbsp;&nbsp;&nbsp;'+d['actual_qty']+'<br>';
+									html+='<br><label>'+d['warehouse']+'</label>'+' :&nbsp;&nbsp;&nbsp;&nbsp;'+d['actual_qty']+'<br>';
 								});
 								
-								$('.etat-stock').html(html);
+								$('.etat-stock').html(html+'<br><br>');
 						    	}
 					    }
 					 });
