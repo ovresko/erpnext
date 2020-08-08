@@ -200,6 +200,12 @@ frappe.query_reports["Rapport analyse de besoin"] = {
 			
 		},
 		{
+			"fieldname": "recu",
+			"label": __("Purchase Receipt"),
+			fieldtype: "Link",
+			options: "Purchase Receipt"			
+		},
+		{
 			"fieldname":"manufacturer_lp",
 			"label": "Fabricant LP",
 			"fieldtype": "MultiSelect",
