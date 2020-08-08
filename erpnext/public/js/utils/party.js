@@ -36,6 +36,33 @@ erpnext.utils.open_item_info =  function(item_code,me) {
 					 event.stopPropagation(); 
 					window.open('#Form/Item/'+item_code , '_blank', 'toolbar=0,location=0,menubar=0,location=yes, scrollbars=yes,status=yes'); 
 				});
+				
+				//btn-etat-stock
+				$(document).off("click", ".btn-etat-stock").on('click', '.btn-etat-stock', function(){
+					
+					$('.etat-stock').empty();
+					 frappe.call({
+					    "method": "erpnext.selling.page.point_of_sale.point_of_sale.get_stock_details",
+					    "args": {
+						"item_code": item_code,
+					    },
+					    "callback": function(response) {
+						    var item = response.message; 
+							if (item) {
+								var html  ='Qts disponible dans le réseau <br>';
+								$.each(item[0], function(i, d) {
+
+									html+='<hr><label>'+d['warehouse']+'</label>'+' :&nbsp;&nbsp;&nbsp;&nbsp;'+d['actual_qty']+'<br>';
+								});
+								
+								$('.etat-stock').html(html);
+						    	}
+					    }
+					 });
+					
+				});
+				
+				
 				$(document).off("click", ".btn-versions-list").on('click', '.btn-versions-list', function(){
 					$('.info-vehicule').remove();
 					$('.info-price').remove();
