@@ -18,7 +18,12 @@ erpnext.utils.open_item_info =  function(item_code,me) {
 				
 				$(document).off("click", ".btn-info-price").on('click', '.btn-info-price', function(){
 					event.stopPropagation(); 
-					$('.info-price').remove();
+					
+					if (!$('.etat-price').is(':empty')){
+					 	$('.etat-price').empty();
+						return;
+					}
+					
 					$('.info-vehicule').remove();
 					 frappe.call({
 					    "method": "erpnext.selling.page.point_of_sale.point_of_sale.get_item_prices",
@@ -27,7 +32,7 @@ erpnext.utils.open_item_info =  function(item_code,me) {
 					    },
 					    "callback": function(response) {
 						    if(response.message){
-							frappe.msgprint("<div class='info-price'> "+response.message['price']+" <div>");
+							$('.etat-price').html("<div class='info-price'> "+response.message['price']+" <div>");							 
 						    }
 					    }
 					 });
@@ -40,7 +45,11 @@ erpnext.utils.open_item_info =  function(item_code,me) {
 				//btn-etat-stock
 				$(document).off("click", ".btn-etat-stock").on('click', '.btn-etat-stock', function(){
 					
-					$('.etat-stock').empty();
+					if (!$('.etat-stock').is(':empty')){
+					 	$('.etat-stock').empty();
+						return;
+					}
+					 
 					 frappe.call({
 					    "method": "erpnext.selling.page.point_of_sale.point_of_sale.get_stock_details",
 					    "args": {
