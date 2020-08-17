@@ -66,7 +66,12 @@ erpnext.utils.open_item_info =  function(item_code,me) {
 					    "callback": function(response) {
 						    var item = response.message; 
 							if (item) {
-								var html  ='<br><br>Qts disponible dans le réseau <br>';
+								var orderd = item[2];
+								
+								var html  =`<br><br>Qts disponible dans le réseau <br>`;
+								if(orderd){
+									html+= "<strong>Article Commandé</strong>"
+								}
 								$.each(item[0], function(i, d) {
 
 									html+='<br><label>'+d['warehouse']+'</label>'+' :&nbsp;&nbsp;&nbsp;&nbsp;'+d['actual_qty']+'<br>';
