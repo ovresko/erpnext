@@ -351,7 +351,7 @@ def get_vehicule_details(item_code):
 def get_stock_details(item_code,pos_profile=None):
 	aw = []
 	my_warehouses = []
-	show_ordered = 0
+	show_ordered = False
 	if pos_profile:
 		my_warehouses = frappe.get_all("Entrepot Pofile PDV",fields=['*'],filters={"parent":pos_profile})
 		pwh = frappe.get_value("POS Profile",pos_profile,"warehouse")	
