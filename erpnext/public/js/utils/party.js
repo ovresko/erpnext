@@ -6,14 +6,14 @@ frappe.provide("erpnext.utils");
 
 erpnext.utils.open_item_info =  function(item_code,me) {
 	var me = me;
-	console.log("open_item_info");
+	
 	frappe.call({
 			"method": "erpnext.selling.page.point_of_sale.point_of_sale.open_item_info",
 			"args": {
 				"item_code": item_code
 			},
 			"callback": function(response) { 
-				  console.log("btn",response);
+				  
 				
 				
 				//btn-print
@@ -39,7 +39,7 @@ erpnext.utils.open_item_info =  function(item_code,me) {
 						    },
 						    "callback": function(response) {
 							    if(response.message){
-								console.log("printing prices");
+								
 								$('.etat-price').html("<br><br><br><div class='info-price'> "+response.message['price']+" <div><br><br>");							 
 							    }
 						    }
@@ -67,14 +67,14 @@ erpnext.utils.open_item_info =  function(item_code,me) {
 						    var item = response.message; 
 							if (item) {
 								var orderd = item[2];
-								
-								var html  =`<br><br>Qts disponible dans le réseau <br>`;
+								console.log(orderd);
+								var html  =`<br><br>Qts disponible dans le réseau <br><br>`;
 								if(orderd){
-									html+= "<strong>Article Commandé</strong>"
+									html+= "<strong>Article Commandé</strong><br><br>"
 								}
 								$.each(item[0], function(i, d) {
 
-									html+='<br><label>'+d['warehouse']+'</label>'+' :&nbsp;&nbsp;&nbsp;&nbsp;'+d['actual_qty']+'<br>';
+									html+='<label>'+d['warehouse']+'</label>'+' :&nbsp;&nbsp;&nbsp;&nbsp;'+d['actual_qty']+'<br>';
 								});
 								
 								$('.etat-stock').html(html+'<br><br>');
@@ -89,7 +89,7 @@ erpnext.utils.open_item_info =  function(item_code,me) {
 					$('.info-vehicule').remove();
 					$('.info-price').remove();
 				//  $(me).find('.modal .btn-versions-list').on('click', () => {
-					console.log("click");
+					
 					frappe.call({
 					    "method": "erpnext.selling.page.point_of_sale.point_of_sale.get_vehicule_details",
 					    "args": {
