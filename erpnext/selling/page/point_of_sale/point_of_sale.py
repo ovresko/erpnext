@@ -376,7 +376,9 @@ def get_stock_details(item_code,pos_profile=None):
 				r.actual_qty = r.actual_qty - r.reserved_qty
 		else:
 			r.actual_qty = r.actual_qty - r.reserved_qty
-	return rest,aw
+	order = frappe.db.sql(''' select sum(ordered_qty) from `tabBin` where item_code='{item_code}' '''.format(item_code=item_code), as_dict=1 )
+	order = order[0] or None
+	return rest,aw,order
 
 @frappe.whitelist()
 def make_devis(customer,items):
