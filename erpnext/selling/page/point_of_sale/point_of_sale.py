@@ -351,9 +351,12 @@ def get_vehicule_details(item_code):
 def get_stock_details(item_code,pos_profile=None):
 	aw = []
 	my_warehouses = []
+	show_ordered = 0
 	if pos_profile:
 		my_warehouses = frappe.get_all("Entrepot Pofile PDV",fields=['*'],filters={"parent":pos_profile})
-		pwh = frappe.get_value("POS Profile",pos_profile,"warehouse")		
+		pwh = frappe.get_value("POS Profile",pos_profile,"warehouse")	
+		#show_ordered
+		show_ordered = frappe.get_value("POS Profile",pos_profile,"show_ordered")	
 		if pwh:
 			aw.append(pwh)
 		if my_warehouses:
@@ -376,8 +379,10 @@ def get_stock_details(item_code,pos_profile=None):
 				r.actual_qty = r.actual_qty - r.reserved_qty
 		else:
 			r.actual_qty = r.actual_qty - r.reserved_qty
-	order = frappe.db.sql(''' select sum(ordered_qty) from `tabBin` where item_code='{item_code}' '''.format(item_code=item_code), as_dict=1 )
-	order = order[0] or None
+	order = None
+	if show_ordered:
+		order = frappe.db.sql(''' select sum(ordered_qty) from `tabBin` where item_code='{item_code}' '''.format(item_code=item_code), as_dict=1 )
+		order = order[0] or None
 	return rest,aw,order
 
 @frappe.whitelist()
