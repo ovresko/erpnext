@@ -917,6 +917,8 @@ def make_pr(source_name,target_doc=None):
                         "doctype": "Purchase Receipt Item",
                         "field_map": {
                             "qty":"received_qty",
+			    "rate": "rate",
+			    "price_list_rate": "price_list_rate",
 			    "pays": "pays",
 			    "parent": "against_puchase_invoice",
 			    "name": "facture_item",
