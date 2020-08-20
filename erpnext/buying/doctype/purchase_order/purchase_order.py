@@ -56,6 +56,9 @@ class PurchaseOrder(BuyingController):
 		self.validate_bom_for_subcontracting_items()
 		self.create_raw_materials_supplied("supplied_items")
 		self.set_received_qty_for_drop_ship_items()
+		zeroz = (item.item_code for item in self.items if item.qty == 0)
+		if zeoz:
+			frappe.msgprint("Attention, Il existe des articles avec prix 0")
 
 	def validate_with_previous_doc(self):
 		super(PurchaseOrder, self).validate_with_previous_doc({
