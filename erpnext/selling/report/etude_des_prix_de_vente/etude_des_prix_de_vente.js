@@ -22,7 +22,7 @@ function switch_etat(item_code,etat) {
 	});
 }
  
-function set_price_item(pl,item) {
+function set_price_item(pl,item,valuation) {
 	  
 	var val_id = 'price_'+item+'_'+pl.replace(/ /g,'');
  
@@ -33,6 +33,7 @@ function set_price_item(pl,item) {
 	var qts = $('#'+qts_id).val();
 
  	var btn_id = 'btn_'+item+'_'+pl.replace(/ /g,'');
+	var price_id = 'price_'+item+'_'+pl.replace(/ /g,'');
 	  
 	frappe.call({
 		method: "erpnext.stock.doctype.price_list.price_list.update_price",
@@ -40,12 +41,13 @@ function set_price_item(pl,item) {
 			item_code: item,
 			price_list:pl,
 			_price: val,
-			qts:qts
+			qts:qts,
+			valuation : valuation
 		},
 		callback: function(r) {
 			if (r.message) {
 				alert(r.message);
-				$('#'+btn_id).css('color', 'green');
+				$('#'+price_id).css('background', '#81ff81');
 				$('.prix_traite_text_'+item).text("En cours");
 			}
 		}
