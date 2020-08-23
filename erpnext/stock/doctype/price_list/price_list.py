@@ -7,6 +7,7 @@ from frappe import _, throw
 from frappe.utils import cint
 from frappe.model.document import Document
 import frappe.defaults
+from frappe.utils import cint, flt
 import json
 
 class PriceList(Document):
@@ -58,8 +59,13 @@ def switch_etat(item_code,etat):
 @frappe.whitelist()
 def update_price(item_code,price_list,_price,qts,valuation):
 	if item_code and price_list and _price:
+		_price = flt(_price)
+		if valuation:
+			valuation = flt(valuation)
 		if not qts:
 			qts = 0
+		else:
+			qts = flt(qts)
 		price = frappe.get_all("Item Price",fields=["name"],filters={"min_qty":qts,"item_code":item_code,"price_list":price_list})
 		if price:
 			if (not _price or _price == '0' or _price == 0 ) and price[0].name:
@@ -71,6 +77,7 @@ def update_price(item_code,price_list,_price,qts,valuation):
 				price.min_qty = qts
 				price.save()
 				if _price and valuation:
+					
 					ben = _price - valuation
 					perv = (ben / _price) * 100
 					return "modifie - done - \n PRIX :  %s \nBenifice: %s \nTaux Benifice: %s %" % (price_list_rate,ben,perv)
