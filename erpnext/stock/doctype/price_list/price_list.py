@@ -56,7 +56,7 @@ def switch_etat(item_code,etat):
 			return "Approuve"
 
 @frappe.whitelist()
-def update_price(item_code,price_list,_price,qts):
+def update_price(item_code,price_list,_price,qts,valuation):
 	if item_code and price_list and _price:
 		if not qts:
 			qts = 0
@@ -70,7 +70,12 @@ def update_price(item_code,price_list,_price,qts):
 				price.price_list_rate = _price
 				price.min_qty = qts
 				price.save()
-				return "modifie - done -"
+				if _price and valuation:
+					ben = _price - valuation
+					perv = (ben / _price) * 100
+					return "modifie - done - \n PRIX :  %s \nBenifice: %s \nTaux Benifice: %s %" % (price_list_rate,ben,perv)
+				else:
+					return "modifie - done"
 		elif _price:
 			so = frappe.new_doc("Item Price")
 			so.item_code = item_code
