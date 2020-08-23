@@ -418,7 +418,7 @@ def execute(filters=None):
 					if (not info or info[0] <= 0):
 						itr = """%s""" % (_price)
 					else:
-						itr = """[ %s %% ]&nbsp;&nbsp;<input placeholder='Prix %s' id='price_%s_%s' value='%s' style='color:black'></input>&nbsp;<input placeholder='Qts' id='qts_%s_%s' style='color:black;width:60px'></input><a  onClick="set_price_item('%s','%s')" type='a'  id='btn_%s_%s'> OK </a>&nbsp;	&nbsp;   %s	""" % (benefice,pl.name,mri.item_code,pl.name.replace(" ",""),new_taux,mri.item_code,pl.name.replace(" ",""),pl.name,mri.item_code,mri.item_code,pl.name.replace(" ",""),_price)
+						itr = """[ %s %% ]&nbsp;&nbsp;<input placeholder='Prix %s' id='price_%s_%s' value='%s' style='color:black'></input>&nbsp;<input placeholder='Qts' id='qts_%s_%s' style='color:black;width:60px'></input><a  onClick="set_price_item('%s','%s','%s')" type='a'  id='btn_%s_%s'> OK </a>&nbsp;	&nbsp;   %s	""" % (benefice,pl.name,mri.item_code,pl.name.replace(" ",""),new_taux,mri.item_code,pl.name.replace(" ",""),pl.name,mri.item_code,val_ttc,mri.item_code,pl.name.replace(" ",""),_price)
 				if itr:
 					row.append(itr)
 				else:
