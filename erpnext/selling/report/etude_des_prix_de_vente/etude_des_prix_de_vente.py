@@ -122,6 +122,16 @@ def execute(filters=None):
 			"width": 50
 		})
 	columns.append({
+			"fieldname": "last_qty",
+			"label": "Derniere Qts achetee",
+			"width": 130
+		})
+	columns.append({
+			"fieldname": "stock_info",
+			"label": "Qts Stock",
+			"width": 100
+		})
+	columns.append({
 			"fieldname": "manufacturer2",
 			"label": "Fabricant",
 			"width": 180
@@ -377,6 +387,8 @@ def execute(filters=None):
 			taux_taxe or 0,
 			val_ttc or 0,
 			"""<input type='button' onclick="erpnext.utils.open_item_info('%s', this)" value='info'>  </input>  &nbsp;&nbsp;&nbsp;""" % (mri.item_code),
+			last_qty,
+			info[0] or 0,
 			mri.manufacturer,
 			prix_traite or '',
 			btn_prix_traite
