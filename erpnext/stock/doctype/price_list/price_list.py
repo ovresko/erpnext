@@ -80,7 +80,7 @@ def update_price(item_code,price_list,_price,qts,valuation):
 					
 					ben = _price - valuation
 					perv = (ben / _price) * 100
-					return "modifie - done - \n PRIX :  %s DA \n Benifice: %s DA \n Taux Benifice: %s %%" % (_price,ben,perv)
+					return "modifie - done - \n\n\n COUT: %s DA \n PRIX :  %s DA \n Benifice: %s DA \n Taux Benifice: %s %%" % (valuation or 'NA',_price,ben,perv)
 				else:
 					return "modifie - done"
 		elif _price:
