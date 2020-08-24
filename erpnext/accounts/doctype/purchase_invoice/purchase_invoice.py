@@ -928,6 +928,7 @@ def make_pr(source_name,target_doc=None):
                         },
                 }
         },target_doc)
+	doc.conversion_rate = frappe.db.get_value("Purchase Invoice",source_name,"conversion_rate") or 0
         return doc
 
 
