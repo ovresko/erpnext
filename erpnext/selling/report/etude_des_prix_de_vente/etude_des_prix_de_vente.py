@@ -327,6 +327,10 @@ def execute(filters=None):
 			pondere = sqllast_qty[0].valuation_rate
 			if last_valuation:
 				last_valuation = round(last_valuation)
+		if not pondere:
+			pondere = frappe.db.get_value("Item",mri.item_code,"valuation_rate") or 0
+		if not last_valuation:
+			last_valuation = pondere
 		taux_change = 0
 		if mri.last_purchase_devise and mri.last_purchase_rate:
 			taux_change = mri.last_purchase_rate / mri.last_purchase_devise
