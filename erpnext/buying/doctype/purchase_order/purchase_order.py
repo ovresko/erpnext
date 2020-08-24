@@ -58,7 +58,7 @@ class PurchaseOrder(BuyingController):
 		self.set_received_qty_for_drop_ship_items()
 		zeroz = [item.item_code for item in self.items if (item.qty == 0 or item.rate == 0)]
 		if zeroz:
-			frappe.msgprint("Attention, Il existe %s articles avec qty/prix = 0" % zeroz.count())
+			frappe.msgprint("Attention, Il existe %s articles avec qty/prix = 0" % len(zeroz))
 
 	def validate_with_previous_doc(self):
 		super(PurchaseOrder, self).validate_with_previous_doc({
