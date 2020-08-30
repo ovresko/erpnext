@@ -60,6 +60,10 @@ class PaymentEntry(AccountsController):
 		self.validate_duplicate_entry()
 		self.validate_allocated_amount()
 		self.ensure_supplier_is_not_blocked()
+		if self.docstatus == 0 and self.ref_recu and not self.taux_de_change_de_transaction:
+			conversion_rate  = frappe.db.get_value("Purchase Invoice",self.ref_recu,"conversion_rate") or 0
+			if conversion_rate:
+				self.taux_de_change_de_transaction = conversion_rate
 
 	def on_submit(self):
 		self.setup_party_account_field()
