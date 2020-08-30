@@ -908,7 +908,9 @@ def make_pr(source_name,target_doc=None):
                         "doctype": "Purchase Receipt",
 			"field_map": {
 				"name": "ref_facture",
-				"plc_conversion_rate": "plc_conversion_rate"
+				"plc_conversion_rate": "plc_conversion_rate",
+				"conversion_rate": "conversion_rate",
+				"ignore_pricing_rule": "ignore_pricing_rule"
 			},
                         "validation": {
                                 "docstatus":["=",1]
@@ -926,7 +928,11 @@ def make_pr(source_name,target_doc=None):
                             "po_detail":"purchase_order_item",
                             "purchase_order":"purchase_order"
                         },
-                }
+                },
+		"Purchase Taxes and Charges": {
+			"doctype": "Purchase Taxes and Charges",
+			"add_if_empty": True
+		}
         },target_doc)
 	#doc.conversion_rate = frappe.db.get_value("Purchase Invoice",source_name,"conversion_rate") or 0
         return doc
