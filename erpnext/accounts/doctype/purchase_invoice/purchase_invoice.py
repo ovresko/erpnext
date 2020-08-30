@@ -930,7 +930,8 @@ def make_pr(source_name,target_doc=None):
                 "Purchase Taxes and Charges": {
                         "doctype": "Purchase Taxes and Charges",
                         "field_map": {
-                            "tax_amount":"tax_amount"
+                            "tax_amount":"tax_amount",
+			    "base_tax_amount": "base_tax_amount"
                         },
                 }
         },target_doc)
