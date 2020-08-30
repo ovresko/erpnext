@@ -907,8 +907,7 @@ def make_pr(source_name,target_doc=None):
                 "Purchase Invoice": {
                         "doctype": "Purchase Receipt",
 			"field_map": {
-				"name": "ref_facture",
-				"conversion_rate":"conversion_rate"
+				"name": "ref_facture"
 			},
                         "validation": {
                                 "docstatus":["=",1]
