@@ -926,6 +926,12 @@ def make_pr(source_name,target_doc=None):
                             "po_detail":"purchase_order_item",
                             "purchase_order":"purchase_order"
                         },
+                },
+                "Purchase Taxes and Charges": {
+                        "doctype": "Purchase Taxes and Charges",
+                        "field_map": {
+                            "tax_amount":"tax_amount"
+                        },
                 }
         },target_doc)
 	doc.conversion_rate = frappe.db.get_value("Purchase Invoice",source_name,"conversion_rate") or 0
