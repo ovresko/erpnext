@@ -72,6 +72,10 @@ class PurchaseReceipt(BuyingController):
 
 		self.check_for_closed_status()	
 		if self.docstatus == 0:
+			if self.ref_facture:
+				conversion_rate  = frappe.db.get_value("Purchase Invoice",self.ref_facture,"conversion_rate") or 0
+				if conversion_rate:
+					self.conversion_rate = conversion_rate
 			for item in self.items:
 				if self.pays:
 					item.pays = self.pays
