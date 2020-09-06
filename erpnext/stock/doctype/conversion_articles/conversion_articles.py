@@ -29,11 +29,11 @@ class ConversionArticles(Document):
 								row = article.append('table_adresse_magasin',{})
 								row.warehouse = self.stock
 								row.adresse = item.adr
-								try:
-									article.save()
-								except Exception as e:
-									nothan.append(item)
-									errors += "<br>Erreur adresse magasin article %d %s <br> %s" % (line, item.ref,e)
+								#try:
+								article.save()
+								#except Exception as e:
+								#	nothan.append(item)
+								#	errors += "<br>Erreur adresse magasin article %d %s <br> %s" % (line, item.ref,e)
 
 							# prix
 							if item.publique:
