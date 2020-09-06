@@ -17,7 +17,7 @@ class ConversionArticles(Document):
 			return
 		if self.articles:
 			for item in self.articles:
-				try:
+				#try:
 					line = line +1
 					if item and item.ref:
 						c = item.ref.replace(" ","").replace("-","").replace("_","").replace("/","").replace(".","")
@@ -82,8 +82,8 @@ class ConversionArticles(Document):
 							saved = saved+1
 							#article.save()
 							frappe.db.commit()
-				except:
-					errors += "<br>Erreurs"
+				#except:
+				#	errors += "<br>Erreurs"
 
 		self.articles = nothan
 		frappe.msgprint("Traite: %d   <br>%s" % (saved,errors))
