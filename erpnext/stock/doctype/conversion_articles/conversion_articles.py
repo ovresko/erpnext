@@ -31,9 +31,9 @@ class ConversionArticles(Document):
 								row.adresse = item.adr
 								try:
 									article.save()
-								except:
+								except Exception as e:
 									nothan.append(item)
-									errors += "<br>Erreur adresse magasin article %d %s" % (line, item.ref)
+									errors += "<br>Erreur adresse magasin article %d %s <br> %s" % (line, item.ref,e)
 
 							# prix
 							if item.publique:
