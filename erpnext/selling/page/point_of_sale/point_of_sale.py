@@ -505,7 +505,7 @@ def get_items(start, page_length, price_list, item_group, search_value="", pos_p
 					`tabBin` where warehouse=%(warehouse)s) item_bin
 			ON
 				(item_bin.item_code=i.name or item_bin.item_code=i.variant_of) 
-			LEFT JOIN (select DISTINCT parent, warehouse, adresse from `tabAdresse Magasin`) item_adr
+			LEFT JOIN (select DISTINCT parent, warehouse, adresse from `tabAdresse Magasin` LIMIT 1 ) item_adr
 			ON
 				(item_adr.parent=i.name and  item_adr.warehouse=%(warehouse)s) 
 			where 
