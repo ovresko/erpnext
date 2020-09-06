@@ -17,7 +17,7 @@ class ConversionArticles(Document):
 			return
 		if self.articles:
 			for item in self.articles:
-				#try:
+				try:
 					line = line +1
 					if item and item.ref:
 						c = item.ref.replace(" ","").replace("-","").replace("_","").replace("/","").replace(".","")
@@ -29,11 +29,11 @@ class ConversionArticles(Document):
 								row = article.append('table_adresse_magasin',{})
 								row.warehouse = self.stock
 								row.adresse = item.adr
-								#try:
-								article.save()
-								#except Exception as e:
-								#	nothan.append(item)
-								#	errors += "<br>Erreur adresse magasin article %d %s <br> %s" % (line, item.ref,e)
+								try:
+									article.save()
+								except Exception as e:
+									nothan.append(item)
+									errors += "<br>Erreur adresse magasin article %d %s <br> %s" % (line, item.ref,e)
 
 							# prix
 							if item.publique:
@@ -82,8 +82,8 @@ class ConversionArticles(Document):
 							saved = saved+1
 							#article.save()
 							frappe.db.commit()
-				#except:
-				#	errors += "<br>Erreurs"
+				except:
+					errors += "<br>Erreurs"
 
 		self.articles = nothan
 		frappe.msgprint("Traite: %d   <br>%s" % (saved,errors))
