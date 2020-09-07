@@ -14,7 +14,7 @@
 	{% } else { %}
 		<strong> [Disponible & Non Disponible]</strong>
 	{% } %}
-<p>Générer par {%= frappe.session.user %} Le {%= frappe.utils.now() %}</p>
+<p>Générer par {%= frappe.session.user %} Le {%=  frappe.utils.formatdate(frappe.utils.today(), ‘dd-MM-YYYY’)  %}</p>
   
   <hr>
   <table class="table table-bordered" style="font-size:8px">
