@@ -120,8 +120,8 @@ def execute(filters=None):
 		
 	added = []
 	for item in items:
-		if filters.warehouse  and item.warehouse and item.warehouse !=  filters.warehouse:
-			continue
+		#if filters.warehouse  and item.warehouse and item.warehouse !=  filters.warehouse:
+		#	continue
 		if filters.grouped ==1:
 			if item.item_code in added:
 				continue
