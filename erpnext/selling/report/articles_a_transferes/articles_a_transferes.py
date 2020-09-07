@@ -95,16 +95,28 @@ def execute(filters=None):
 	left join (select customer_name as customer_name, name,status,docstatus,workflow_state,delivery_date as delivery_date from `tabSales Order` ) so  
 	on (soi.parent = so.name)
 	where so.status not in ('Closed','Cancelled','Draft') and so.docstatus = 1 and so.workflow_state='Reservation' and soi.docstatus=1 and soi.delivered_qty=0 and soi.actual_qty < soi.qty and soi.parent is not null	
-	""",as_dict=1)
+	and soi.warehouse=%s""",(filters.warehouse),as_dict=1)
 	
 	
 	items.extend(orders_items)
 	dm_items = frappe.db.sql(""" select * from `tabMaterial Request Item` mri 
 	left join (select docstatus,name,material_request_type,status from `tabMaterial Request`) mrd
 	on (mrd.name = mri.parent) 
-	where  mrd.docstatus = 1 and mrd.material_request_type='Material Transfer' and mrd.status in ('Submitted','Pending') and mri.parent is not null and mri.docstatus=1 and mri.ordered_qty=0""",as_dict=1)
-	
+	where  mrd.docstatus = 1 and mrd.material_request_type='Material Transfer' and mrd.status in ('Submitted','Pending') and mri.parent is not null and mri.docstatus=1 and mri.ordered_qty=0 and mri.warehouse=%s""",(filters.warehouse),as_dict=1)
+		
 	items.extend(dm_items)
+	
+	entrepot_magasin = frappe.db.get_value('Stock Settings', None, 'entrepot_magasin')
+	if entrepot_magasin:
+		warehouses= frappe.db.sql("""select name from `tabWarehouse` where parent_warehouse=%s""",(filters.warehouse))
+		if warehouses:
+			for wr in warehouses:
+				dm_items = frappe.db.sql(""" select * from `tabMaterial Request Item` mri 
+				left join (select docstatus,name,material_request_type,status from `tabMaterial Request`) mrd
+				on (mrd.name = mri.parent) 
+				where  mrd.docstatus = 1 and mrd.material_request_type='Material Transfer' and mrd.status in ('Submitted','Pending') and mri.parent is not null and mri.docstatus=1 and mri.ordered_qty=0 and mri.warehouse=%s""",(wr),as_dict=1)
+				items.extend(dm_items)
+		
 	added = []
 	for item in items:
 		if filters.warehouse  and item.warehouse and item.warehouse !=  filters.warehouse:
