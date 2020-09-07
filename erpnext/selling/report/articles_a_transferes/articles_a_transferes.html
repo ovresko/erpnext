@@ -1,8 +1,8 @@
 <div style="font-size:8px">
 	<h5>TRANSFERT D'ARTICLES</h5>
   
-<p>Stock Cible {%= filters.warehouse %}</p>
-<p>Stock Source {%= filters.source_warehouse %}</p>
+<p>Stock Cible : <strong> {%= filters.warehouse %}</strong></p>
+<p>Stock Source : <strong>{%= filters.source_warehouse %}</strong></p>
 {% if (filters.grouped ) { %}
 		<strong> [Quantites Groupees]</strong>
 	{% } else { %}
@@ -14,7 +14,7 @@
 	{% } else { %}
 		<strong> [Disponible & Non Disponible]</strong>
 	{% } %}
-<p>{%= frappe.session.user %}</p>
+<p>Générer par {%= frappe.session.user %} Le {{ frappe.utils.today() }}</p>
   
   <hr>
   <table class="table table-bordered" style="font-size:8px">
