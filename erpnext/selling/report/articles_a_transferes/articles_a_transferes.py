@@ -107,8 +107,9 @@ def execute(filters=None):
 	items.extend(dm_items)
 	
 	entrepot_magasin = frappe.db.get_value('Stock Settings', None, 'entrepot_magasin')
-	if entrepot_magasin:
-		warehouses= frappe.db.sql("""select name from `tabWarehouse` where parent_warehouse=%s""",(filters.warehouse))
+	entrepot_depot  = frappe.db.get_value('Stock Settings', None, 'entrepot_depot')
+	if entrepot_depot == filters.warehouse:
+		warehouses= frappe.db.sql("""select name from `tabWarehouse` where parent_warehouse=%s""",(entrepot_magasin))
 		if warehouses:
 			for wr in warehouses:
 				dm_items = frappe.db.sql(""" select * from `tabMaterial Request Item` mri 
