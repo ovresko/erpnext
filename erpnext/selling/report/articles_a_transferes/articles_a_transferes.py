@@ -147,8 +147,9 @@ def execute(filters=None):
 				if filters.source_warehouse and filters.source_warehouse != suggere_qty.warehouse:
 					continue
 				
-				suggere_qty = "Qts Insufisante | %s" % (suggere_qty.warehouse)
 				qts_stock_source = suggere_qty.actual_qty
+				suggere_qty = "Qts Insufisante | %s" % (suggere_qty.warehouse)
+				
 			else:
 				if filters.disp==1:
 					continue
@@ -158,8 +159,9 @@ def execute(filters=None):
 			if filters.source_warehouse and filters.source_warehouse != suggere_qty.warehouse:
 					continue
 			
-			suggere_qty = "%s" % (suggere_qty.warehouse)
 			qts_stock_source = suggere_qty.actual_qty
+			suggere_qty = "%s" % (suggere_qty.warehouse)
+			
 		if filters.grouped==1 and filters.warehouse:
 			total_qty = total_qty_cmd
 			parent =  ', '.join({_item.parent for _item in items if (_item.parent  and _item.item_code == item.item_code)})
