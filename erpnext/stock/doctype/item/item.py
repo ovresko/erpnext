@@ -267,9 +267,9 @@ class Item(WebsiteGenerator):
 				self.qts_total = stotal[0][0]
 			depot_parent  = frappe.db.get_value('Stock Settings', None, 'depot_parent')
 			if depot_parent:
-				warehouses= frappe.db.sql("""select name from `tabWarehouse` where parent_warehouse=%s""",(depot_parent))
+				warehouses= frappe.db.sql("""select name from `tabWarehouse` where parent_warehouse=%s""",(depot_parent),as_dict=True)
 				if warehouses:
-					qtotal = frappe.db.sql("""select sum(actual_qty) from  tabBin  where item_code=%s and warehouse in ('%s')""",(self.item_code, "', '".join(warehouses)))
+					qtotal = frappe.db.sql("""select sum(actual_qty) from  tabBin  where item_code=%s and warehouse in (%s)""" % ', '.join(['%s']*len(warehouses)),(self.item_code, tuple([w.name for w in warehouses])))
 					if qtotal:
 						self.qts_depot = qtotal[0][0]
 
