@@ -270,7 +270,7 @@ class Item(WebsiteGenerator):
 				warehouses= frappe.db.sql("""select name from `tabWarehouse` where parent_warehouse=%s""",(depot_parent),as_dict=True)
 				if warehouses:
 					qtotal = frappe.db.sql("""select sum(actual_qty) from  tabBin  where item_code=%s and warehouse in (%s)""" % (self.item_code,', '.join(['%s']*len(warehouses))),tuple([w.name for w in warehouses]))
-					frappe.msgprint("%s" % qtotal)
+					frappe.msgprint("%s" % warehouses)
 					if qtotal:
 						self.qts_depot = qtotal[0][0]
 
