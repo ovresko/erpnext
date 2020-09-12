@@ -39,7 +39,8 @@ def get_valorisation(item_code):
 			text += "<br><li>%s +%s   __________   <strong>%s</strong> %s </li>" % (p.price_list,p.min_qty,p.price_list_rate,p.currency)
 			text += "- Cout : ____________________ %s DA<br>" % (valuation)
 			if p.price_list_rate:
-				taux = (1 - (valuation/p.price_list_rate)) * 100
+				bn = p.price_list_rate - valuation
+				taux = (bn/valuation) * 100
 				text += "- Benefice : ____________________ %s %% <br>" % (round(taux))
 	
 	return text
