@@ -65,7 +65,7 @@ erpnext.utils.open_item_info =  function(item_code,me) {
 					    },
 					    "callback": function(response) {
 						var item = response.message; 
-						//console.log("val :"+item);
+						console.log("val :"+item);
 						if (item) {
 
 							var html  =`<br><strong>Valorisation</strong><br>`+item;
