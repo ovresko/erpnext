@@ -36,11 +36,11 @@ def get_valorisation(item_code):
 	prices = frappe.db.get_all("Item Price",filters={"item_code":item_code,"selling":1},fields=["currency","name","price_list_rate","min_qty","price_list"])
 	if prices and valuation:
 		for p in prices:
-			text += "<li>%s +%s      <strong>%s</strong> %s </li>" % (p.price_list,p.min_qty,p.price_list_rate,p.currency)
-			text += "<br>Cout : %s DA<br>" % (valuation)
+			text += "<br><li>%s +%s   __________   <strong>%s</strong> %s </li>" % (p.price_list,p.min_qty,p.price_list_rate,p.currency)
+			text += "- Cout : ____________________ %s DA<br>" % (valuation)
 			if p.price_list_rate:
-				taux = (1 - (p.price_list_rate/valuation)) * 100
-				text += "<br>Benefice %s %% <br>" % (taux)
+				taux = (1 - (valuation/p.price_list_rate)) * 100
+				text += "- Benefice : ____________________ %s %% <br>" % (round(taux))
 	
 	return text
 
