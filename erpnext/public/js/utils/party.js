@@ -50,6 +50,31 @@ erpnext.utils.open_item_info =  function(item_code,me) {
 					window.open('#Form/Item/'+item_code , '_blank', 'toolbar=0,location=0,menubar=0,location=yes, scrollbars=yes,status=yes'); 
 				});
 				
+				//btn-val
+				$(document).off("click", ".btn-etat-val").on('click', '.btn-etat-val', function(){
+					event.stopPropagation(); 
+					if (!$('.etat-val').is(':empty')){
+					 	$('.etat-val').empty();
+						return;
+					}
+					var html = `<br><strong>Valorisation</strong><br>`;
+					frappe.call({
+					    "method": "erpnext.selling.page.point_of_sale.point_of_sale.get_valorisation",
+					    "args": {
+						"item_code": item_code,
+					    },
+					    "callback": function(response) {
+						    var item = response.message; 
+							if (item) {
+								
+								var html  =`<br><strong>Valorisation</strong><br>`;
+								$('.etat-val').html(html+'<br><br>');
+							}
+					    }
+					 });
+					
+				});
+				
 				//btn-etat-stock
 				$(document).off("click", ".btn-etat-stock").on('click', '.btn-etat-stock', function(){
 					
