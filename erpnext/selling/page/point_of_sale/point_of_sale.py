@@ -31,6 +31,8 @@ def get_valuation_rate(item_code):
 
 @frappe.whitelist()
 def get_valorisation(item_code):
+	if not frappe.has_permission("Item", "create"):
+		raise frappe.PermissionError
 	text = ''
 	valuation = flt(get_valuation_rate(item_code)) or 0
 	prices = frappe.db.get_all("Item Price",filters={"item_code":item_code,"selling":1},fields=["currency","name","price_list_rate","min_qty","price_list"])
