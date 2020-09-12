@@ -23,7 +23,7 @@ def get_valuation_rate(item_code):
 
 	d= frappe.db.sql("""select item_code,
 		sum(actual_qty*valuation_rate)/sum(actual_qty) as val_rate
-		from tabBin where actual_qty > 0 and item_code=%s group by item_code """ , (item_code), as_dict=1)[0]
+		from tabBin where actual_qty > 0 and item_code=%s group by item_code """ , (item_code), as_dict=1)
 	if d:
 		val =  d[0].val_rate or 0
 
