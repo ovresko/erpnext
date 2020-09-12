@@ -30,7 +30,7 @@ def get_valorisation(item_code):
 			text += "<br>Cout : %s DA<br>" % (valuation)
 			if p.price_list_rate:
 				taux = (1 - (p.price_list_rate/valuation)) * 100
-				text += "<br>Bénéfice %s %% <br>" % (taux)
+				text += "<br>Benefice %s %% <br>" % (taux)
 	
 	return text
 
