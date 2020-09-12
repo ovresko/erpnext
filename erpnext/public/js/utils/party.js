@@ -64,12 +64,13 @@ erpnext.utils.open_item_info =  function(item_code,me) {
 						"item_code": item_code,
 					    },
 					    "callback": function(response) {
-						    var item = response.message; 
-							if (item) {
-								
-								var html  =`<br><strong>Valorisation</strong><br>`;
-								$('.etat-val').html(html+'<br><br>');
-							}
+						var item = response.message; 
+						//console.log("val :"+item);
+						if (item) {
+
+							var html  =`<br><strong>Valorisation</strong><br>`+item;
+							$('.etat-val').html(html+'<br><br>');
+						}
 					    }
 					 });
 					
