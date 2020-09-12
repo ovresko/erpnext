@@ -10,11 +10,29 @@ from erpnext.accounts.doctype.pos_profile.pos_profile import get_item_groups
 from erpnext.stock.get_item_details import get_price_list_rate_for
 from frappe.utils.pdf import get_pdf
 from erpnext.accounts.utils import get_balance_on, get_account_currency
+from erpnext.stock.get_item_details import get_valuation_rate
 
 import pdfkit
 import os
 
 from six import string_types
+
+
+@frappe.whitelist()
+def get_valorisation(item_code):
+	text = ''
+	company = frappe.db.get_single_value('Global Defaults', 'default_company')
+	valuation = flt(get_valuation_rate(item_code, company).get("valuation_rate")) or 0
+	prices = frappe.db.get_all("Item Price",filters={"item_code":item_code,"selling":1},fields=["currency","name","price_list_rate","min_qty","price_list"])
+	if prices and valuation:
+		for p in prices:
+			text += "<li>%s +%s      <strong>%s</strong> %s </li>" % (p.price_list,p.min_qty,p.price_list_rate,p.currency)
+			text += "<br>Cout : %s DA<br>" % (valuation)
+			if p.price_list_rate:
+				taux = (1 - (p.price_list_rate/valuation)) * 100
+				text += "<br>Bénéfice %s %% <br>" % (taux)
+	
+	return text
 
 @frappe.whitelist()
 def get_customer(customer):
@@ -95,10 +113,12 @@ def open_item_info(item_code):
 						<button  class="btn btn-default btn-sm  btn-info-price" data-item-code="{item_code}"  style="margin-right: 5px;">Infos prix de vente</button>
 						<button  class="btn btn-default btn-sm  btn-open" data-item-code="{item_code}"  style="margin-right: 5px;">Editer Article</button>
 						<button  class="btn btn-default btn-sm  btn-etat-stock" data-item-code="{item_code}"  style="margin-right: 5px;">Etat Stock</button>
+						<button  class="btn btn-default btn-sm  btn-etat-val" data-item-code="{item_code}"  style="margin-right: 5px;">Valorisation</button>
 						<button  class="btn btn-default btn-sm  btn-print" data-item-code="{item_code}"  style="margin-right: 5px;">Exporter</button>
 <br>
 						<div class="etat-stock"></div>
 						<div class="etat-price"></div>
+						<div class="etat-val"></div>
 						<table class="table table-bordered table-condensed">
 							<tr><td>{item_name}</td><td>
 									 {image} 
