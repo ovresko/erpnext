@@ -10,19 +10,29 @@ from erpnext.accounts.doctype.pos_profile.pos_profile import get_item_groups
 from erpnext.stock.get_item_details import get_price_list_rate_for
 from frappe.utils.pdf import get_pdf
 from erpnext.accounts.utils import get_balance_on, get_account_currency
-from erpnext.stock.get_item_details import get_valuation_rate
 
 import pdfkit
 import os
 
 from six import string_types
 
+def get_valuation_rate(item_code):
+	"""Get an average valuation rate of an item from all warehouses"""
+
+	val = 0
+
+	d= frappe.db.sql("""select item_code,
+		sum(actual_qty*valuation_rate)/sum(actual_qty) as val_rate
+		from tabBin where actual_qty > 0 group by item_code where item_code='%s'""",item_code, as_dict=1)[0]
+	if d:
+		val =  d[0].val_rate or 0
+
+	return val
 
 @frappe.whitelist()
 def get_valorisation(item_code):
 	text = ''
-	company = frappe.db.get_single_value('Global Defaults', 'default_company')
-	valuation = flt(get_valuation_rate(item_code, company).get("valuation_rate")) or 0
+	valuation = flt(get_valuation_rate(item_code)) or 0
 	prices = frappe.db.get_all("Item Price",filters={"item_code":item_code,"selling":1},fields=["currency","name","price_list_rate","min_qty","price_list"])
 	if prices and valuation:
 		for p in prices:
