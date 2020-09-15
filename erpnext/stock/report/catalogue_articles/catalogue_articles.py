@@ -151,24 +151,24 @@ def execute(filters=None):
 		for mri in mitems:
 			global info
 			qts_max_achat = 0
-			if mri.variant_of:
+			#if mri.variant_of:
 				#variante
-				info = info_variante(mri.item_code)
-				qts_max_achat = mri.max_ordered_variante
-			elif mri.has_variants:
-				info = info_modele(mri.item_code)
-				qts_max_achat = mri.max_order_qty
-			sqllast_qty = frappe.db.sql("""select actual_qty,valuation_rate,incoming_rate from `tabStock Ledger Entry` 
-			where item_code=%s and voucher_type=%s 
-			order by posting_date desc, posting_time desc limit 1""", (mri.item_code,"Purchase Receipt"), as_dict=1)
-			relq = frappe.db.sql("""select sum(ordered_qty) - sum(qty) from `tabPurchase Invoice Item` 
-			where item_code=%s and docstatus=1 and ordered_qty>0""", (mri.item_code))[0][0]
-			last_qty = 0
-			qts_consulte = frappe.db.sql("""select sum(qty) from `tabSupplier Quotation Item` 
-			where item_code=%s and docstatus=0""", (mri.item_code))[0][0]
-			qts_demande = frappe.db.sql("""select sum(qty) from `tabMaterial Request Item` 
-			where item_code=%s and docstatus=1 and consulted=0 and warehouse='GLOBAL - MV'""", (mri.item_code))[0][0]
-			r_qts_bloque="Bloque" if mri.item_bloque else ""
+			#	info = info_variante(mri.item_code)
+			#	qts_max_achat = mri.max_ordered_variante
+			#elif mri.has_variants:
+			#	info = info_modele(mri.item_code)
+			#	qts_max_achat = mri.max_order_qty
+			#sqllast_qty = frappe.db.sql("""select actual_qty,valuation_rate,incoming_rate from `tabStock Ledger Entry` 
+			#where item_code=%s and voucher_type=%s 
+			#order by posting_date desc, posting_time desc limit 1""", (mri.item_code,"Purchase Receipt"), as_dict=1)
+			#relq = frappe.db.sql("""select sum(ordered_qty) - sum(qty) from `tabPurchase Invoice Item` 
+			#where item_code=%s and docstatus=1 and ordered_qty>0""", (mri.item_code))[0][0]
+			#last_qty = 0
+			#qts_consulte = frappe.db.sql("""select sum(qty) from `tabSupplier Quotation Item` 
+			#where item_code=%s and docstatus=0""", (mri.item_code))[0][0]
+			#qts_demande = frappe.db.sql("""select sum(qty) from `tabMaterial Request Item` 
+			#where item_code=%s and docstatus=1 and consulted=0 and warehouse='GLOBAL - MV'""", (mri.item_code))[0][0]
+			#r_qts_bloque="Bloque" if mri.item_bloque else ""
 			#qts_bloque = frappe.db.sql("""select sum(qty) from `tabMaterial Request Item` 
 			#where item_code=%s and docstatus=1 and ordered_qty=0 and consulted=1""", (mri.item_code))[0][0]
 			
@@ -178,14 +178,14 @@ def execute(filters=None):
 			recom = 0
 			_date = ""
 			date =""
-			_recom = frappe.get_all("Item Reorder",fields=["warehouse_reorder_qty","modified"],filters=[{"parent":mri.item_code},{"warehouse":"GLOBAL - MV"}])
-			if _recom:
-				recom = _recom[0].warehouse_reorder_qty
-				_date = _recom[0].modified
-				date = frappe.utils.get_datetime(date).strftime("%d/%m/%Y")
-			if sqllast_qty:
-				last_qty = sqllast_qty[0].actual_qty
-				last_valuation = sqllast_qty[0].incoming_rate
+			#_recom = frappe.get_all("Item Reorder",fields=["warehouse_reorder_qty","modified"],filters=[{"parent":mri.item_code},{"warehouse":"GLOBAL - MV"}])
+			#if _recom:
+			#	recom = _recom[0].warehouse_reorder_qty
+			#	_date = _recom[0].modified
+			#	date = frappe.utils.get_datetime(date).strftime("%d/%m/%Y")
+			#if sqllast_qty:
+			#	last_qty = sqllast_qty[0].actual_qty
+			#	last_valuation = sqllast_qty[0].incoming_rate
 			cmp = "%s CP" % mri.item_code if (mri.has_variants and mri.item_code in mcomplements) else mri.item_code
 			row = [
 			      cmp,
