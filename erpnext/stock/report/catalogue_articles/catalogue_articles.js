@@ -209,16 +209,23 @@ frappe.query_reports["Catalogue Articles"] = {
 				
 			});
 			
-			
-			//$.each(listview.get_checked_items(), function(key, value){
-			//	names.push(value._name);
-			//});
-			var w = window.open("/api/method/erpnext.stock.doctype.item.item.bulk_print_memberships?"
-							+"names="+encodeURIComponent(items));
+			frappe.call({
+				method: "erpnext.stock.doctype.item.item.bulk_print_memberships",
+				args: {
+					names: items
+				},
+				callback: function(r) {
+					if (r.message) {
+						
+					}
+				}
+			});
+			//var w = window.open("/api/method/erpnext.stock.doctype.item.item.bulk_print_memberships?"
+			//				+"names="+encodeURIComponent(items));
 	
-			if(!w) {
-				frappe.msgprint(__("Please enable pop-ups")); return;
-			}
+			//if(!w) {
+			frappe.msgprint("Operation encours, vous pouvez fermer cette fenetre"); return;
+			//}
 			//console.log(report);
 			
 		});
