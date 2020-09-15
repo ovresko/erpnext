@@ -2,7 +2,10 @@
 # For license information, please see license.txt
 
 from __future__ import unicode_literals
-import frappe
+import frappe, erpnext, json
+from frappe import _, _dict
+from erpnext.stock.get_item_details import get_item_details
+from frappe.utils import getdate, cstr, flt, fmt_money
 
 def execute(filters=None):
 	columns, data = [], []
@@ -257,8 +260,8 @@ def get_conditions(filters):
 		conditions.append("perfection=%(perfection)s")
 	if filters.get('variant_of'):
 		conditions.append("(item_code=%(variant_of)s or variant_of=%(variant_of)s)")
-	if filters.get('is_purchase'):	
-		conditions.append("is_purchase_item=1")
+	#if filters.get('is_purchase'):	
+	#	conditions.append("is_purchase_item=1")
 	if filters.get('version'):
 		conditions.append("""(item_code in (select parent from `tabVersion vehicule item` vv
 		where vv.version_vehicule=%(version)s))"""  )
