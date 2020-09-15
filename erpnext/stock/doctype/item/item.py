@@ -1281,13 +1281,14 @@ def bulk_print_memberships(names):
 def prepare_bulk_print_html(names):
 	if isinstance(names, str):
 		names = names.split(",")
+		names.sort()
 
 	#if len(names) > 4:
 	#	frappe.throw("The system cannot print more than 4 Senior Citizen records at a time.")
 
 	html = ""
 	sc_list = []
-	names.sort()
+	
 	data = {}
 	items = []
 	
