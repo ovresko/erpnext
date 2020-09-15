@@ -1279,7 +1279,7 @@ def bulk_print_memberships(names):
 	frappe.local.response.type = "download"
 	
 def prepare_bulk_print_html(names):
-	if isinstance(names, str):
+	if isinstance(names, str) and "[" not in names:
 		names = names.split(",")
 		names.sort()
 
