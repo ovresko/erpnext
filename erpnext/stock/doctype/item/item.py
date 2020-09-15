@@ -1279,7 +1279,7 @@ def bulk_print_memberships(names):
 	frappe.local.response.type = "download"
 	
 def prepare_bulk_print_html(names):
-	frappe.msgprint(names)
+	#frappe.msgprint(names)
 	#if isinstance(names, str):
 	#	names = json.loads(names)
 	#	frappe.msgprint(names)
@@ -1296,6 +1296,7 @@ def prepare_bulk_print_html(names):
 	
 	# get items
 	for name in names:
+		frappe.msgprint(name)
 		items.append(frappe.get_doc("Item", name))
 	
 	fabricants = {o.manufacturer for o in items if not o.has_variants}
