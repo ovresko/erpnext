@@ -1279,7 +1279,8 @@ def bulk_print_memberships(names):
 	frappe.local.response.type = "download"
 	
 def prepare_bulk_print_html(names):
-	names = names.split(",")
+	if isinstance(names, str):
+		names = names.split(",")
 
 	#if len(names) > 4:
 	#	frappe.throw("The system cannot print more than 4 Senior Citizen records at a time.")
