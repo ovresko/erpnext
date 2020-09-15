@@ -1279,8 +1279,9 @@ def bulk_print_memberships(names):
 	frappe.local.response.type = "download"
 	
 def prepare_bulk_print_html(names):
-	if isinstance(names, str):
-		names = json.loads(names)
+	#if isinstance(names, str):
+	#	names = json.loads(names)
+	#	frappe.msgprint(names)
 		#names.sort()
 
 	#if len(names) > 4:
