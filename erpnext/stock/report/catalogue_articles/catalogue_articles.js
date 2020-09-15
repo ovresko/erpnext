@@ -194,5 +194,33 @@ frappe.query_reports["Catalogue Articles"] = {
 			"default": ""
 		}
 
-	]
+	],
+	onload: function(report) {
+		var me = this;
+		report.page.add_inner_button("Exporter Catalogue PDF", function() {
+			var data = report.data;
+			items = [];
+			data.forEach( (item) => {
+				var item_code = item['item_code'];
+				if(item_code && item_code!="Total"){
+					items.push(item_code);
+					 
+				}
+				
+			});
+			
+			
+			//$.each(listview.get_checked_items(), function(key, value){
+			//	names.push(value._name);
+			//});
+			var w = window.open("/api/method/erpnext.stock.doctype.item.item.bulk_print_memberships?"
+							+"names="+encodeURIComponent(items));
+	
+			if(!w) {
+				frappe.msgprint(__("Please enable pop-ups")); return;
+			}
+			//console.log(report);
+			
+		});
+	}
 }
