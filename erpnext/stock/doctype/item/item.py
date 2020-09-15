@@ -1255,6 +1255,7 @@ def update_variants(variants, template, publish_progress=True):
 
 @frappe.whitelist()
 def bulk_print_memberships(names):
+	names = json.loads(names)
 	if len(names) == 0:
 		frappe.msgprint("No rows selected.")
 	
@@ -1296,7 +1297,7 @@ def prepare_bulk_print_html(names):
 	
 	# get items
 	for name in names:
-		frappe.msgprint(name)
+		#frappe.msgprint(name)
 		items.append(frappe.get_doc("Item", name))
 	
 	fabricants = {o.manufacturer for o in items if not o.has_variants}
