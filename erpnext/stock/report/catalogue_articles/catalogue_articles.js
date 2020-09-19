@@ -245,7 +245,7 @@ frappe.query_reports["Catalogue Articles"] = {
 			data.forEach( (item) => {
 				var item_code = item['item_code'];
 				if(item_code && item_code!="Total"){
-					items += "item_code,";
+					items += item_code+",";
 				}
 				
 			});
