@@ -12,7 +12,7 @@ frappe.listview_settings['Item'] = {
 			//$.each(listview.get_checked_items(), function(key, value){
 			//	names.push(value._name);
 			//});
-			var w = window.open("/api/method/erpnext.stock.doctype.item.item.bulk_print_memberships?"
+			var w = window.open("/api/method/erpnext.stock.doctype.item.item.bulk_print_list?"
 							+"names="+encodeURIComponent(names));
 	
 			if(!w) {
