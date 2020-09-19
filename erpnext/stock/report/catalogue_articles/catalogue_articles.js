@@ -201,6 +201,12 @@ frappe.query_reports["Catalogue Articles"] = {
 			"label": "Avec Prix",
 			"fieldtype": "Check",
 			"default": 1
+		},
+		{
+			"fieldname": "only_fabricant",
+			"label": "Fabricant selec. seul.",
+			"fieldtype": "Check",
+			"default": 1
 		}
 
 	],
