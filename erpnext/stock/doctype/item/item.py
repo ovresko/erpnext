@@ -1262,6 +1262,7 @@ def bulk_print_list(names):
 	
 @frappe.whitelist()
 def bulk_print_memberships(names):
+	frappe.msgprint(names)
 	names = json.loads(names)
 	if names and 'names' in names:
 		names = names['names']
