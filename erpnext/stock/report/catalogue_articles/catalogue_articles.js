@@ -256,8 +256,8 @@ frappe.query_reports["Catalogue Articles"] = {
 				args: {
 					names: {"names":items}
 				},
-				callback: function(data) {					
-					return;
+				callback: function() {					
+					
 				}
 			});
 			//var w = window.open("/api/method/erpnext.stock.doctype.item.item.bulk_print_memberships?"
