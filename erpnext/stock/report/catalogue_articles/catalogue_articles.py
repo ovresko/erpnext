@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 import frappe, erpnext, json
 from frappe import _, _dict
 from erpnext.stock.get_item_details import get_item_details
-from frappe.utils import getdate, cstr, flt, fmt_money
+from frappe.utils import getdate, cstr, flt, fmt_money,cint
 
 def execute(filters=None):
 	columns, data = [], []
@@ -208,6 +208,7 @@ def execute(filters=None):
 			#	last_qty = sqllast_qty[0].actual_qty
 			#	last_valuation = sqllast_qty[0].incoming_rate
 			cmp = "%s CP" % mri.item_code if (mri.has_variants and mri.item_code in mcomplements) else mri.item_code
+			qts_magasin = cint(mri.qts_total or 0) - cint(mri.qts_depot or 0)
 			row = ["""<input type='button' onclick="erpnext.utils.open_item_info('%s', this)" value='info'>  </input>""",
 			      cmp,
 			       mri.item_name,
@@ -215,7 +216,7 @@ def execute(filters=None):
 			       mri.manufacturer_part_no,
 			       mri.qts_total,
 			       mri.qts_depot,
-			       (mri.qts_total or 0) - (mri.qts_depot or 0)
+			       qts_magasin
 				
 			      ]
 
