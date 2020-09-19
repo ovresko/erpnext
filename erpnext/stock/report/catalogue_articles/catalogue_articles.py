@@ -224,7 +224,7 @@ def get_conditions(filters):
 		conditions.append("item_group=%(group)s")
 	#has_price
 	if filters.get('has_price'):
-		conditions.append("0 < (select count(ip.item_code) as ct from `tabItem Price` ip where ip.item_code=item_code and ip.selling=1) ")
+		conditions.append("0 < (select count(ip.item_code) as ct from `tabItem Price` ip where ip.item_code=item_code and ip.buying=0 and ip.selling=1) ")
 		
 	#perfection
 	if filters.get('perfection'):
