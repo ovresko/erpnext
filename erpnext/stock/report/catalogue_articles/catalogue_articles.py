@@ -45,6 +45,23 @@ def execute(filters=None):
 			"label": "Ref Fabricant",
 			"width": 150
 		})
+	
+
+
+	
+	price_lists= frappe.get_all("Price List",filters={"selling":1,"enabled":1,"buying":0},fields=["name","currency"])
+	if price_lists:
+		for pl in price_lists:
+			columns.append({
+				"fieldname": pl.name,
+				"label": "%s (%s)" % (pl.name,pl.currency),
+				"width": 150
+			})
+	columns.append({
+			"fieldname": "oem",
+			"label": "OEM",
+			"width": 150
+		})
 	columns.append({
 			"fieldname": "qts_total",
 			"label": "Qts Total",
@@ -60,17 +77,6 @@ def execute(filters=None):
 			"label": "Qts Magasin",
 			"width": 150
 		})
-
-
-	
-	price_lists= frappe.get_all("Price List",filters={"selling":1,"enabled":1,"buying":0},fields=["name","currency"])
-	if price_lists:
-		for pl in price_lists:
-			columns.append({
-				"fieldname": pl.name,
-				"label": "%s (%s)" % (pl.name,pl.currency),
-				"width": 150
-			})
 	mris = []
 
 	order_by_statement = "order by item_code"
@@ -82,7 +88,7 @@ def execute(filters=None):
 		items = frappe.db.sql(
 			"""
 			select
-				stock_uom,item_bloque,qts_total,qts_depot, perfection,is_purchase_item,weight_per_unit,variant_of,has_variants,item_name, item_code, manufacturer,last_purchase_rate , manufacturer_part_no, item_group,last_purchase_devise,max_order_qty,max_ordered_variante
+				stock_uom,item_bloque,oem_text,qts_total,qts_depot, perfection,is_purchase_item,weight_per_unit,variant_of,has_variants,item_name, item_code, manufacturer,last_purchase_rate , manufacturer_part_no, item_group,last_purchase_devise,max_order_qty,max_ordered_variante
 			from `tabItem`
 			where disabled=0 and has_variants=0 {conditions} and item_code in ({rec})
 			{order_by_statement}
@@ -97,7 +103,7 @@ def execute(filters=None):
 		items = frappe.db.sql(
 			"""
 			select
-				stock_uom,item_bloque, perfection,qts_total,qts_depot,is_purchase_item,weight_per_unit,variant_of,has_variants,item_name, item_code, manufacturer,last_purchase_rate , manufacturer_part_no, item_group,last_purchase_devise,max_order_qty,max_ordered_variante
+				stock_uom,item_bloque,oem_text, perfection,qts_total,qts_depot,is_purchase_item,weight_per_unit,variant_of,has_variants,item_name, item_code, manufacturer,last_purchase_rate , manufacturer_part_no, item_group,last_purchase_devise,max_order_qty,max_ordered_variante
 			from `tabItem`
 			where disabled=0 and has_variants=0 {conditions}
 			{order_by_statement}
@@ -133,7 +139,7 @@ def execute(filters=None):
 						comp_items = frappe.db.sql(
 								"""
 								select
-									stock_uom,item_bloque,qts_total,qts_depot, perfection,is_purchase_item,weight_per_unit,variant_of,has_variants,item_name, item_code, manufacturer,last_purchase_rate , manufacturer_part_no, item_group,last_purchase_devise,max_order_qty,max_ordered_variante
+									stock_uom,oem_text,item_bloque,qts_total,qts_depot, perfection,is_purchase_item,weight_per_unit,variant_of,has_variants,item_name, item_code, manufacturer,last_purchase_rate , manufacturer_part_no, item_group,last_purchase_devise,max_order_qty,max_ordered_variante
 								from `tabItem`
 								where disabled=0 and has_variants=0  and variant_of=%s and  item_code not in ('{0}')
 								
@@ -157,7 +163,7 @@ def execute(filters=None):
 		exitems = frappe.db.sql(
 		"""
 		select
-			stock_uom,item_bloque, perfection,is_purchase_item,qts_total,qts_depot,weight_per_unit,variant_of,has_variants,item_name, item_code, manufacturer,last_purchase_rate , manufacturer_part_no, item_group,last_purchase_devise,max_order_qty,max_ordered_variante
+			stock_uom,item_bloque,oem_text, perfection,is_purchase_item,qts_total,qts_depot,weight_per_unit,variant_of,has_variants,item_name, item_code, manufacturer,last_purchase_rate , manufacturer_part_no, item_group,last_purchase_devise,max_order_qty,max_ordered_variante
 		from `tabItem`
 		where disabled=0 and has_variants=0 and variant_of = %s and item_code not in ('{0}')
 		""".format(lids),
@@ -172,52 +178,18 @@ def execute(filters=None):
 		for mri in mitems:
 			global info
 			qts_max_achat = 0
-			#if mri.variant_of:
-				#variante
-			#	info = info_variante(mri.item_code)
-			#	qts_max_achat = mri.max_ordered_variante
-			#elif mri.has_variants:
-			#	info = info_modele(mri.item_code)
-			#	qts_max_achat = mri.max_order_qty
-			#sqllast_qty = frappe.db.sql("""select actual_qty,valuation_rate,incoming_rate from `tabStock Ledger Entry` 
-			#where item_code=%s and voucher_type=%s 
-			#order by posting_date desc, posting_time desc limit 1""", (mri.item_code,"Purchase Receipt"), as_dict=1)
-			#relq = frappe.db.sql("""select sum(ordered_qty) - sum(qty) from `tabPurchase Invoice Item` 
-			#where item_code=%s and docstatus=1 and ordered_qty>0""", (mri.item_code))[0][0]
-			#last_qty = 0
-			#qts_consulte = frappe.db.sql("""select sum(qty) from `tabSupplier Quotation Item` 
-			#where item_code=%s and docstatus=0""", (mri.item_code))[0][0]
-			#qts_demande = frappe.db.sql("""select sum(qty) from `tabMaterial Request Item` 
-			#where item_code=%s and docstatus=1 and consulted=0 and warehouse='GLOBAL - MV'""", (mri.item_code))[0][0]
-			#r_qts_bloque="Bloque" if mri.item_bloque else ""
-			#qts_bloque = frappe.db.sql("""select sum(qty) from `tabMaterial Request Item` 
-			#where item_code=%s and docstatus=1 and ordered_qty=0 and consulted=1""", (mri.item_code))[0][0]
-			
-			#if qts_bloque and qts_bloque > 0:
-			#	r_qts_bloque = "Bloque au recommande auto"
 			last_valuation = 0
 			recom = 0
 			_date = ""
 			date =""
-			#_recom = frappe.get_all("Item Reorder",fields=["warehouse_reorder_qty","modified"],filters=[{"parent":mri.item_code},{"warehouse":"GLOBAL - MV"}])
-			#if _recom:
-			#	recom = _recom[0].warehouse_reorder_qty
-			#	_date = _recom[0].modified
-			#	date = frappe.utils.get_datetime(date).strftime("%d/%m/%Y")
-			#if sqllast_qty:
-			#	last_qty = sqllast_qty[0].actual_qty
-			#	last_valuation = sqllast_qty[0].incoming_rate
+			
 			cmp = "%s CP" % mri.item_code if (mri.has_variants and mri.item_code in mcomplements) else mri.item_code
 			qts_magasin = cint(mri.qts_total or 0) - cint(mri.qts_depot or 0)
 			row = ["""<input type='button' onclick="erpnext.utils.open_item_info('%s', this)" value='info'>  </input>""" % mri.item_code,
 			      cmp,
 			       mri.item_name,
 			       mri.manufacturer,
-			       mri.manufacturer_part_no,
-			       mri.qts_total,
-			       mri.qts_depot,
-			       qts_magasin
-				
+			       mri.manufacturer_part_no
 			      ]
 
 			# get prices in each price list
@@ -234,6 +206,12 @@ def execute(filters=None):
 							row.append("_")
 					else:
 						row.append("_")
+						
+			row.append(mri.oem_text or '')
+			row.append(mri.qts_total)
+			row.append(mri.qts_depot)
+			row.append(qts_magasin)
+			
 
 			data.append(row)
 		
@@ -244,6 +222,9 @@ def get_conditions(filters):
 	# group, modele, manufacturer, age_plus, age_minus
 	if filters.get('group'):
 		conditions.append("item_group=%(group)s")
+	#has_price
+	if filters.get('has_price'):
+		conditions.append("0 < (select count(ip.item_code) as ct from `tabItam Price` ip where ip.item_code=mri.item_code and ip.selling=1) ")
 		
 	#perfection
 	if filters.get('perfection'):
