@@ -1256,6 +1256,8 @@ def update_variants(variants, template, publish_progress=True):
 @frappe.whitelist()
 def bulk_print_memberships(names):
 	names = json.loads(names)
+	if names:
+		names = names['names']
 	if len(names) == 0:
 		frappe.msgprint("No rows selected.")
 	
