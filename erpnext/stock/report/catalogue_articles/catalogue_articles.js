@@ -195,6 +195,12 @@ frappe.query_reports["Catalogue Articles"] = {
 			"label": "Disponible Magasin",
 			"fieldtype": "Check",
 			"default": 1
+		},
+		{
+			"fieldname": "has_price",
+			"label": "Avec Prix",
+			"fieldtype": "Check",
+			"default": 1
 		}
 
 	],
