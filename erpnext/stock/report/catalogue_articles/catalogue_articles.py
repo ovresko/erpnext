@@ -199,12 +199,12 @@ def execute(filters=None):
 
 			# get prices in each price list
 			has_atleast_price = 0
-			if price_lists and not mri.has_variants:
+			if price_lists:
 				all_prices = ""
 				for pl in price_lists:
 					if filters.price_list and pl.name not in filters.price_list:
 						continue
-					if pl.name:
+					if pl.name and not mri.has_variants:						
 						price = frappe.db.sql("""select price_list_rate from `tabItem Price` where  price_list=%s and (  item_code=%s) ORDER BY min_qty ASC LIMIT 1;""",(pl.name,mri.item_code))
 						if price:
 							all_prices = "%.2f %s" % (price[0][0] or 0,pl.currency)
