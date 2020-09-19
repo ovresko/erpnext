@@ -1258,7 +1258,7 @@ def update_variants(variants, template, publish_progress=True):
 def bulk_print_list(names):
 	if names:
 		names = {"names":names.split(",")}
-		bulk_print_memberships(names)
+		bulk_print_memberships(json.dumps(names))
 	
 @frappe.whitelist()
 def bulk_print_memberships(names):
