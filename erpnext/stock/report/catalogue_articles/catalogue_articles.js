@@ -257,7 +257,7 @@ frappe.query_reports["Catalogue Articles"] = {
 					names: {"names":items}
 				}
 				callback: function(data) {					
-					
+					return;
 				}
 			});
 			//var w = window.open("/api/method/erpnext.stock.doctype.item.item.bulk_print_memberships?"
