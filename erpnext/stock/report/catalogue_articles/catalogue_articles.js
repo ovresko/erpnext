@@ -256,10 +256,18 @@ frappe.query_reports["Catalogue Articles"] = {
 				args: {
 					names: items
 				},
-				callback: function(r) {
-					if (r.message) {
-						
-					}
+				xhrFields: {
+				    responseType: 'blob'
+				},
+				callback: function(data) {
+					var a = document.createElement('a');
+					    var url = window.URL.createObjectURL(data);
+					    a.href = url;
+					    a.download = 'myfile.pdf';
+					    document.body.append(a);
+					    a.click();
+					    a.remove();
+					    window.URL.revokeObjectURL(url);
 				}
 			});
 			//var w = window.open("/api/method/erpnext.stock.doctype.item.item.bulk_print_memberships?"
