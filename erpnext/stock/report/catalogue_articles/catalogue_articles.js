@@ -7,22 +7,13 @@ frappe.query_reports["Catalogue Articles"] = {
 		value = default_formatter(value, row, column, data);
 		var ovalue = value;
 		
-		 if(data != null && data != undefined){
-			 if(data["qts_demande"] > 0){
-			value = "<div style='color: #2E7FF8;padding: 1px;'>" + ovalue + "</div>";
-			}
-			if(data["qts_consulte"] > 0){
-				value = "<div style='color: #D75F00;padding: 1px;'>" + ovalue + "</div>";
-			}
-			if(data["qts_comm"] +data["qts_non_recue"] + data["qts"] > 0){
-				value = "<div style='color: #11AF22;padding: 1px;'>" + ovalue + "</div>";
-			}
+		 if(data != null && data != undefined){			
 			 
-			 if(data["item_code"].length == 14)
+			 if(data["item_code"] && data["item_code"].length == 14)
 			 {
 				 value = "<div style='color: white;background-color: #ca4100;padding: 1px;'>" + ovalue + "</div>";
 			 }
-			  if(data["item_code"].length == 11)
+			  if(data["item_code"] &&  data["item_code"].length == 11)
 			 {
 				 value = "<div style='color: white;background-color: #383484;padding: 1px;'>" + ovalue + "</div>";
 			 }
@@ -192,6 +183,18 @@ frappe.query_reports["Catalogue Articles"] = {
 			"fieldtype": "Select",
 			"options": ["","Modele en repture"],
 			"default": ""
+		},
+		{
+			"fieldname": "depot_qty",
+			"label": "Disponible Depot",
+			"fieldtype": "Check",
+			"default": 1
+		},
+		{
+			"fieldname": "magasin_qty",
+			"label": "Disponible Magasin",
+			"fieldtype": "Check",
+			"default": 1
 		}
 
 	],
