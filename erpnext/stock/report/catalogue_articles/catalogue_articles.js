@@ -251,15 +251,7 @@ frappe.query_reports["Catalogue Articles"] = {
 				
 			});
 			
-			frappe.call({
-				method: "erpnext.stock.doctype.item.item.bulk_print_memberships",
-				args: {
-					names: {"names":items}
-				},
-				callback: function() {					
-					
-				}
-			});
+			frappe.xcall("erpnext.stock.doctype.item.item.bulk_print_memberships",{names: {"names":items}});
 			//var w = window.open("/api/method/erpnext.stock.doctype.item.item.bulk_print_memberships?"
 			//				+"names="+encodeURIComponent(items));
 	
