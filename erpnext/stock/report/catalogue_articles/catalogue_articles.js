@@ -255,7 +255,7 @@ frappe.query_reports["Catalogue Articles"] = {
 				method: "erpnext.stock.doctype.item.item.bulk_print_memberships",
 				args: {
 					names: {"names":items}
-				}
+				},
 				callback: function(data) {					
 					return;
 				}
