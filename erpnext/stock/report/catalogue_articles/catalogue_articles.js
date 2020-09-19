@@ -241,16 +241,17 @@ frappe.query_reports["Catalogue Articles"] = {
 		var me = this;
 		report.page.add_inner_button("Exporter Catalogue PDF", function() {
 			var data = report.data;
-			items = "";
+			items = [];
 			data.forEach( (item) => {
 				var item_code = item['item_code'];
 				if(item_code && item_code!="Total"){
-					items += item_code+",";
+					items.push(item_code);
 				}
 				
 			});
-			console.log(items);
-			frappe.xcall("erpnext.stock.doctype.item.item.bulk_print_list",{names: items});
+			names = items.join()
+			console.log(names);
+			frappe.xcall("erpnext.stock.doctype.item.item.bulk_print_list",{names: names});
 			//var w = window.open("/api/method/erpnext.stock.doctype.item.item.bulk_print_memberships?"
 			//				+"names="+encodeURIComponent(items));
 	
