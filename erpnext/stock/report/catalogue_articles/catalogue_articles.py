@@ -16,6 +16,9 @@ def execute(filters=None):
 	if filters.get('manufacturer'):
 		manufacturers = cstr(filters.get("manufacturer")).strip()
 		filters.manufacturer = [d.strip() for d in manufacturers.split(',') if d]
+	if filters.get('price_list'):
+		price_list = cstr(filters.get("price_list")).strip()
+		filters.price_list = [d.strip() for d in price_list.split(',') if d]
 	if filters.get('manufacturer_lp'):
 		manufacturer_lp = cstr(filters.get("manufacturer_lp")).strip()
 		filters.manufacturer_lp = [d.strip() for d in manufacturer_lp.split(',') if d]
@@ -33,7 +36,7 @@ def execute(filters=None):
 	columns.append({
 			"fieldname": "item_name",
 			"label": _("Item Name"),
-			"width": 150
+			"width": 250
 		})
 	columns.append({
 			"fieldname": "fabricant",
@@ -52,6 +55,8 @@ def execute(filters=None):
 	price_lists= frappe.get_all("Price List",filters={"selling":1,"enabled":1,"buying":0},fields=["name","currency"])
 	if price_lists:
 		for pl in price_lists:
+			if filters.price_list and pl.name not in filters.price_list:
+				continue
 			columns.append({
 				"fieldname": pl.name,
 				"label": "%s (%s)" % (pl.name,pl.currency),
@@ -197,6 +202,8 @@ def execute(filters=None):
 			if price_lists and not mri.has_variants:
 				all_prices = ""
 				for pl in price_lists:
+					if filters.price_list and pl.name not in filters.price_list:
+						continue
 					if pl.name:
 						price = frappe.db.sql("""select price_list_rate from `tabItem Price` where  price_list=%s and (  item_code=%s) ORDER BY min_qty ASC LIMIT 1;""",(pl.name,mri.item_code))
 						if price:
@@ -211,7 +218,7 @@ def execute(filters=None):
 			if filters.get('has_price') and not has_atleast_price and not mri.has_variants:
 				continue
 				
-			if filters.get('manufacturer') and filters.get('only_fabricant')  and not mri.has_variants and mri.manufacturer not in filters.get('manufacturer'):
+			if filters.get('manufacturer') and filters.get('only_fabricant')  and mri.manufacturer not in filters.get('manufacturer'):
 				continue
 						
 			row.append(mri.oem_text or '')
@@ -273,8 +280,8 @@ def get_conditions(filters):
 		if filters.get('manufacturer_lp'):
 			req = " and vpr.fabricant in  %(manufacturer_lp)s )"
 		conditions.append(""" (item_code in (select item_code from `tabItem Price` vpr 
-		where vpr.price_list=%(price_list)s"""+  (req)+""" or variant_of in (select item_model from `tabItem Price` vpr 
-		where vpr.price_list=%(price_list)s """+  (req)+""")""")
+		where vpr.price_list in %(price_list)s"""+  (req)+""" or variant_of in (select item_model from `tabItem Price` vpr 
+		where vpr.price_list in %(price_list)s """+  (req)+""")""")
 
 	#if filters.get('modele'):
 	#	conditions.append("(variant_of=%(modele)s or item_code=%(modele)s)")
