@@ -193,6 +193,7 @@ def execute(filters=None):
 			      ]
 
 			# get prices in each price list
+			has_atleast_price = 0
 			if price_lists and not mri.has_variants:
 				all_prices = ""
 				for pl in price_lists:
@@ -201,11 +202,14 @@ def execute(filters=None):
 						if price:
 							all_prices = "%.2f %s" % (price[0][0] or 0,pl.currency)
 							row.append(all_prices)
+							has_atleast_price = 1
 							#row.append(price[0][0])
 						else:
 							row.append("_")
 					else:
 						row.append("_")
+			if filters.get('has_price') and not has_atleast_price:
+				continue
 						
 			row.append(mri.oem_text or '')
 			row.append(mri.qts_total)
@@ -223,8 +227,8 @@ def get_conditions(filters):
 	if filters.get('group'):
 		conditions.append("item_group=%(group)s")
 	#has_price
-	if filters.get('has_price'):
-		conditions.append("0 < (select count(ip.item_code) as ct from `tabItem Price` ip where ip.item_code=item_code and ip.buying=0 and ip.selling=1) ")
+	#if filters.get('has_price'):
+	#	conditions.append("0 < (select count(ip.item_code) as ct from `tabItem Price` ip where ip.item_code=item_code and ip.buying=0 and ip.selling=1) ")
 		
 	#perfection
 	if filters.get('perfection'):
