@@ -249,7 +249,7 @@ frappe.query_reports["Catalogue Articles"] = {
 				}
 				
 			});
-			console.log(names);
+			console.log(items);
 			frappe.xcall("erpnext.stock.doctype.item.item.bulk_print_list",{names: items});
 			//var w = window.open("/api/method/erpnext.stock.doctype.item.item.bulk_print_memberships?"
 			//				+"names="+encodeURIComponent(items));
