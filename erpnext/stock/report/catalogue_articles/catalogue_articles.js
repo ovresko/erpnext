@@ -137,8 +137,35 @@ frappe.query_reports["Catalogue Articles"] = {
 		{
 			"fieldname": "price_list",
 			"label": "Liste de prix",
-			fieldtype: "Link",
-			options: "Price List"
+			"fieldtype": "MultiSelect",
+			get_data: function() {
+				var pl = frappe.query_report.get_filter_value("price_list") || "";
+				//Price List
+
+				const values = pl.split(/\s*,\s*/).filter(d => d);
+				const txt = pl.match(/[^,\s*]*$/)[0] || '';
+				let data = [];
+
+				frappe.call({
+					type: "GET",
+					method:'frappe.desk.search.search_link',
+					async: false,
+					no_spinner: true,
+					args: {
+						doctype: "Price List",
+						txt: txt,
+						filters: {
+							"name": ["not in", values],
+							"selling": 1,
+							"buying": 0
+						}
+					},
+					callback: function(r) {
+						data = r.results;
+					}
+				});
+				return data;
+			} 
 			
 		},
 		{
