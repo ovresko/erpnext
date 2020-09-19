@@ -209,7 +209,7 @@ def execute(filters=None):
 			#	last_valuation = sqllast_qty[0].incoming_rate
 			cmp = "%s CP" % mri.item_code if (mri.has_variants and mri.item_code in mcomplements) else mri.item_code
 			qts_magasin = cint(mri.qts_total or 0) - cint(mri.qts_depot or 0)
-			row = [f"""<input type='button' onclick="erpnext.utils.open_item_info('{mri.item_code}', this)" value='info'>  </input>""",
+			row = ["""<input type='button' onclick="erpnext.utils.open_item_info('%s', this)" value='info'>  </input>""" % mri.item_code,
 			      cmp,
 			       mri.item_name,
 			       mri.manufacturer,
