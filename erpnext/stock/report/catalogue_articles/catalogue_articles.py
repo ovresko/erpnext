@@ -196,7 +196,7 @@ def execute(filters=None):
 			desg = ""
 			if mri.has_variants:
 				#Version vehicule item
-				desg_version = frappe.db.sql("""select GROUP_CONCAT(distinct generation_vehicule ORDER BY generation_vehicule ASC SEPARATOR ', ') from `tabVersion vehicule iteme` where  parent=%s ;""",(mri.item_code))
+				desg_version = frappe.db.sql("""select GROUP_CONCAT(distinct generation_vehicule ORDER BY generation_vehicule ASC SEPARATOR ', ') from `tabVersion vehicule item` where  parent=%s ;""",(mri.item_code))
 				desg_generation = frappe.db.sql("""select GROUP_CONCAT(distinct nom_generation ORDER BY nom_generation ASC SEPARATOR ', ') from `tabGeneration vehicule item` where  parent=%s ;""",(mri.item_code))
 				desg_modele = frappe.db.sql("""select GROUP_CONCAT(distinct CONCAT(nom_marque,' ',nom_modele) SEPARATOR ', ') from `tabModele vehicule item` where  parent=%s ;""",(mri.item_code))
 				desg_marque = frappe.db.sql("""select GROUP_CONCAT(distinct marque ORDER BY marque ASC SEPARATOR ', ') from `tabMarque vehicule item` where  parent=%s ;""",(mri.item_code))
