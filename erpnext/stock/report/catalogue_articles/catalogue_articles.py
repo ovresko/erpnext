@@ -201,7 +201,7 @@ def execute(filters=None):
 				desg_modele = frappe.db.sql("""select GROUP_CONCAT(distinct CONCAT(IFNULL(nom_marque,''),' ',IFNULL(nom_modele,'')) SEPARATOR ', ') as name from `tabModele vehicule item` where  parent=%s ;""",(mri.item_code), as_dict=1)
 				desg_marque = frappe.db.sql("""select GROUP_CONCAT(distinct IFNULL(marque,'') SEPARATOR ', ') as name from `tabMarque vehicule item` where  parent=%s ;""",(mri.item_code), as_dict=1)
 				
-				frappe.msgprint(desg_version[0])
+				frappe.msgprint("data: %s" % desg_version)
 				#generique = [desg_marque,desg_modele, desg_generation,desg_version]
 				#desg = " - ".join(generique)
 
