@@ -196,14 +196,14 @@ def execute(filters=None):
 			desg = ""
 			if mri.has_variants:
 				#Version vehicule item
-				desg_version = frappe.db.sql("""select GROUP_CONCAT(distinct IFNULL(generation_vehicule,'A') SEPARATOR ', ') from `tabVersion vehicule item` where  parent='%s' ;""" % (mri.item_code), as_dict=1)
-				desg_generation = frappe.db.sql("""select GROUP_CONCAT(distinct IFNULL(nom_generation,'') SEPARATOR ', ') as name from `tabGeneration vehicule item` where  parent=%s ;""",(mri.item_code), as_dict=1)
-				desg_modele = frappe.db.sql("""select GROUP_CONCAT(distinct CONCAT(IFNULL(nom_marque,''),' ',IFNULL(nom_modele,'')) SEPARATOR ', ') as name from `tabModele vehicule item` where  parent=%s ;""",(mri.item_code), as_dict=1)
-				desg_marque = frappe.db.sql("""select GROUP_CONCAT(distinct IFNULL(marque,'') SEPARATOR ', ') as name from `tabMarque vehicule item` where  parent=%s ;""",(mri.item_code), as_dict=1)
+				desg_version = frappe.db.sql("""select GROUP_CONCAT(distinct IFNULL(generation_vehicule,'A') SEPARATOR ', ') as name from `tabVersion vehicule item` where  parent='%s' ;""" % (mri.item_code), as_dict=1)
+				desg_generation = frappe.db.sql("""select GROUP_CONCAT(distinct IFNULL(nom_generation,'') SEPARATOR ', ') as name from `tabGeneration vehicule item` where  parent='%s' ;""" % (mri.item_code), as_dict=1)
+				desg_modele = frappe.db.sql("""select GROUP_CONCAT(distinct CONCAT(IFNULL(nom_marque,''),' ',IFNULL(nom_modele,'')) SEPARATOR ', ') as name from `tabModele vehicule item` where  parent='%s' ;""" % (mri.item_code), as_dict=1)
+				desg_marque = frappe.db.sql("""select GROUP_CONCAT(distinct IFNULL(marque,'') SEPARATOR ', ') as name from `tabMarque vehicule item` where  parent='%s' ;""" % (mri.item_code), as_dict=1)
 				
-				frappe.msgprint("data: %s" % desg_version)
-				#generique = [desg_marque,desg_modele, desg_generation,desg_version]
-				#desg = " - ".join(generique)
+				#frappe.msgprint("data: %s" % desg_version.name)
+				generique = [desg_marque.name or '',desg_modele.name or '', desg_generation.name or '',desg_version.name or '']
+				desg = " - ".join(generique)
 
 			
 			cmp = "%s CP" % mri.item_code if (mri.has_variants and mri.item_code in mcomplements) else mri.item_code
