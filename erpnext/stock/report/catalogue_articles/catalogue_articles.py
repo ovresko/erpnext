@@ -22,11 +22,21 @@ def execute(filters=None):
 	if filters.get('manufacturer_lp'):
 		manufacturer_lp = cstr(filters.get("manufacturer_lp")).strip()
 		filters.manufacturer_lp = [d.strip() for d in manufacturer_lp.split(',') if d]
-		
+	# marque, desg, code, nom art, oem, fabricant, ref fab, qts depot, qts mag, qts tot, prix...
 	columns.append({
 			"fieldname": "info",
 			"label": "Info",
 			"width": 50
+		})
+	columns.append({
+			"fieldname": "marque",
+			"label": "Marque",
+			"width": 150
+		})
+	columns.append({
+			"fieldname": "pub_name",
+			"label": "Generations",
+			"width": 350
 		})
 	columns.append({
 			"fieldname": "item_code",
@@ -39,14 +49,9 @@ def execute(filters=None):
 			"width": 250
 		})
 	columns.append({
-			"fieldname": "marque",
-			"label": "Marque",
+			"fieldname": "oem",
+			"label": "OEM",
 			"width": 150
-		})
-	columns.append({
-			"fieldname": "pub_name",
-			"label": "Designation",
-			"width": 250
 		})
 	columns.append({
 			"fieldname": "fabricant",
@@ -59,6 +64,21 @@ def execute(filters=None):
 			"width": 150
 		})
 	
+	columns.append({
+			"fieldname": "qts_depot",
+			"label": "Qts Depot",
+			"width": 150
+		})
+	columns.append({
+			"fieldname": "qts_magasin",
+			"label": "Qts Magasin",
+			"width": 150
+		})
+	columns.append({
+			"fieldname": "qts_total",
+			"label": "Qts Total",
+			"width": 150
+		})
 
 
 	
@@ -72,26 +92,8 @@ def execute(filters=None):
 				"label": "%s (%s)" % (pl.name,pl.currency),
 				"width": 150
 			})
-	columns.append({
-			"fieldname": "oem",
-			"label": "OEM",
-			"width": 150
-		})
-	columns.append({
-			"fieldname": "qts_total",
-			"label": "Qts Total",
-			"width": 150
-		})
-	columns.append({
-			"fieldname": "qts_depot",
-			"label": "Qts Depot",
-			"width": 150
-		})
-	columns.append({
-			"fieldname": "qts_magasin",
-			"label": "Qts Magasin",
-			"width": 150
-		})
+	
+	
 	mris = []
 
 	order_by_statement = "order by item_code"
@@ -204,10 +206,10 @@ def execute(filters=None):
 				desg = ""
 				vmarque = ""
 				#Version vehicule item
-				desg_version = frappe.db.sql("""select GROUP_CONCAT(distinct(marque_vehicule)  SEPARATOR ', ') as marque, GROUP_CONCAT(distinct CONCAT(IFNULL(modele_vehicule,''),' ',IFNULL( generation_vehicule,'')) SEPARATOR ', ') as name from `tabVersion vehicule item` where  parent='%s' ;""" % (mri.item_code), as_dict=1)
-				desg_generation = frappe.db.sql("""select GROUP_CONCAT(distinct(nom_marque)  SEPARATOR ', ') as marque, GROUP_CONCAT(distinct CONCAT(IFNULL(nom_modele,''),' ',IFNULL(nom_generation,'')) SEPARATOR ', ') as name from `tabGeneration vehicule item` where  parent='%s' ;""" % (mri.item_code), as_dict=1)
-				desg_modele = frappe.db.sql("""select GROUP_CONCAT(distinct(nom_marque)  SEPARATOR ', ') as marque, GROUP_CONCAT(distinct CONCAT(IFNULL(nom_marque,''),' ',IFNULL(nom_modele,'')) SEPARATOR ', ') as name from `tabModele vehicule item` where  parent='%s' ;""" % (mri.item_code), as_dict=1)
-				desg_marque = frappe.db.sql("""select GROUP_CONCAT(distinct IFNULL(marque,'') SEPARATOR ', ') as name from `tabMarque vehicule item` where  parent='%s' ;""" % (mri.item_code), as_dict=1)
+				desg_version = frappe.db.sql("""select GROUP_CONCAT(distinct(marque_vehicule)  SEPARATOR ' - ') as marque, GROUP_CONCAT(distinct CONCAT(IFNULL(modele_vehicule,''),' ',IFNULL( generation_vehicule,'')) SEPARATOR ' - ') as name from `tabVersion vehicule item` where  parent='%s' ;""" % (mri.item_code), as_dict=1)
+				desg_generation = frappe.db.sql("""select GROUP_CONCAT(distinct(nom_marque)  SEPARATOR ' - ') as marque, GROUP_CONCAT(distinct CONCAT(IFNULL(nom_modele,''),' ',IFNULL(nom_generation,'')) SEPARATOR ' - ') as name from `tabGeneration vehicule item` where  parent='%s' ;""" % (mri.item_code), as_dict=1)
+				desg_modele = frappe.db.sql("""select GROUP_CONCAT(distinct(nom_marque)  SEPARATOR ' - ') as marque, GROUP_CONCAT(distinct CONCAT(IFNULL(nom_marque,''),' ',IFNULL(nom_modele,'')) SEPARATOR ' - ') as name from `tabModele vehicule item` where  parent='%s' ;""" % (mri.item_code), as_dict=1)
+				desg_marque = frappe.db.sql("""select GROUP_CONCAT(distinct IFNULL(marque,'') SEPARATOR ' - ') as name from `tabMarque vehicule item` where  parent='%s' ;""" % (mri.item_code), as_dict=1)
 				
 				
 				dmarques  = [desg_marque[0].name ,desg_modele[0].marque , desg_generation[0].marque,desg_version[0].marque ]
@@ -222,13 +224,18 @@ def execute(filters=None):
 			
 			cmp = "%s CP" % mri.item_code if (mri.has_variants and mri.item_code in mcomplements) else mri.item_code
 			qts_magasin = cint(mri.qts_total or 0) - cint(mri.qts_depot or 0)
+			# marque, desg, code, nom art, oem, fabricant, ref fab, qts depot, qts mag, qts tot, prix...
 			row = ["""<input type='button' onclick="erpnext.utils.open_item_info('%s', this)" value='info'>  </input>""" % mri.item_code,
-			      cmp,
-			       mri.item_name,
 			       vmarque,
 			       desg,
+			       cmp,
+			       mri.item_name,
+			       mri.oem_text or '',
 			       mri.manufacturer,
-			       mri.manufacturer_part_no
+			       mri.manufacturer_part_no,
+			       mri.qts_depot,
+			       qts_magasin,
+			       mri.qts_total
 			      ]
 
 			# get prices in each price list
@@ -254,13 +261,7 @@ def execute(filters=None):
 				
 			if filters.get('manufacturer') and filters.get('only_fabricant')  and mri.manufacturer not in filters.get('manufacturer'):
 				continue
-						
-			row.append(mri.oem_text or '')
-			row.append(mri.qts_total)
-			row.append(mri.qts_depot)
-			row.append(qts_magasin)
 			
-
 			data.append(row)
 		
 	return columns, data
