@@ -184,7 +184,7 @@ def execute(filters=None):
 		origin_model = frappe.get_doc("Item",model)
 		mitems = [origin_model]
 		mitems.extend(_mitems)
-		
+		desg = ""
 		for mri in mitems:
 			global info
 			qts_max_achat = 0
@@ -193,8 +193,9 @@ def execute(filters=None):
 			_date = ""
 			date =""
 			
-			desg = ""
+			
 			if mri.has_variants:
+				desg = ""
 				#Version vehicule item
 				desg_version = frappe.db.sql("""select GROUP_CONCAT(distinct IFNULL(generation_vehicule,'A') SEPARATOR ', ') as name from `tabVersion vehicule item` where  parent='%s' ;""" % (mri.item_code), as_dict=1)
 				desg_generation = frappe.db.sql("""select GROUP_CONCAT(distinct IFNULL(nom_generation,'') SEPARATOR ', ') as name from `tabGeneration vehicule item` where  parent='%s' ;""" % (mri.item_code), as_dict=1)
