@@ -39,6 +39,11 @@ def execute(filters=None):
 			"width": 250
 		})
 	columns.append({
+			"fieldname": "marque",
+			"label": "Marque",
+			"width": 150
+		})
+	columns.append({
 			"fieldname": "pub_name",
 			"label": "Designation",
 			"width": 250
@@ -185,6 +190,7 @@ def execute(filters=None):
 		mitems = [origin_model]
 		mitems.extend(_mitems)
 		desg = ""
+		vmarque = 
 		for mri in mitems:
 			global info
 			qts_max_achat = 0
@@ -197,13 +203,19 @@ def execute(filters=None):
 			if mri.has_variants:
 				desg = ""
 				#Version vehicule item
-				desg_version = frappe.db.sql("""select GROUP_CONCAT(distinct IFNULL(generation_vehicule,'A') SEPARATOR ', ') as name from `tabVersion vehicule item` where  parent='%s' ;""" % (mri.item_code), as_dict=1)
-				desg_generation = frappe.db.sql("""select GROUP_CONCAT(distinct IFNULL(nom_generation,'') SEPARATOR ', ') as name from `tabGeneration vehicule item` where  parent='%s' ;""" % (mri.item_code), as_dict=1)
-				desg_modele = frappe.db.sql("""select GROUP_CONCAT(distinct CONCAT(IFNULL(nom_marque,''),' ',IFNULL(nom_modele,'')) SEPARATOR ', ') as name from `tabModele vehicule item` where  parent='%s' ;""" % (mri.item_code), as_dict=1)
+				desg_version = frappe.db.sql("""select GROUP_CONCAT(distinct(marque_vehicule)  SEPARATOR ', ') as marque, GROUP_CONCAT(distinct CONCAT(IFNULL(modele_vehicule,''),' ',IFNULL( generation_vehicule,'')) SEPARATOR ', ') as name from `tabVersion vehicule item` where  parent='%s' ;""" % (mri.item_code), as_dict=1)
+				desg_generation = frappe.db.sql("""select GROUP_CONCAT(distinct(nom_marque)  SEPARATOR ', ') as marque, GROUP_CONCAT(distinct CONCAT(IFNULL(nom_modele,''),' ',IFNULL(nom_generation,'')) SEPARATOR ', ') as name from `tabGeneration vehicule item` where  parent='%s' ;""" % (mri.item_code), as_dict=1)
+				desg_modele = frappe.db.sql("""select GROUP_CONCAT(distinct(nom_marque)  SEPARATOR ', ') as marque, GROUP_CONCAT(distinct CONCAT(IFNULL(nom_marque,''),' ',IFNULL(nom_modele,'')) SEPARATOR ', ') as name from `tabModele vehicule item` where  parent='%s' ;""" % (mri.item_code), as_dict=1)
 				desg_marque = frappe.db.sql("""select GROUP_CONCAT(distinct IFNULL(marque,'') SEPARATOR ', ') as name from `tabMarque vehicule item` where  parent='%s' ;""" % (mri.item_code), as_dict=1)
+				
+				
+				marques  = [desg_marque[0].name or '',desg_modele[0].marque or '', desg_generation[0].marque or '',desg_version[0].marque or '']
+				marques =list(filter('', marques))
+				vmarque = " - ".join(marques)
 				
 				#frappe.msgprint("data: %s" % desg_version.name)
 				generique = [desg_marque[0].name or '',desg_modele[0].name or '', desg_generation[0].name or '',desg_version[0].name or '']
+				generique =list(filter('', generique))
 				desg = " - ".join(generique)
 
 			
@@ -212,6 +224,7 @@ def execute(filters=None):
 			row = ["""<input type='button' onclick="erpnext.utils.open_item_info('%s', this)" value='info'>  </input>""" % mri.item_code,
 			      cmp,
 			       mri.item_name,
+			       vmarque,
 			       desg,
 			       mri.manufacturer,
 			       mri.manufacturer_part_no
