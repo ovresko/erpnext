@@ -202,6 +202,7 @@ def execute(filters=None):
 			
 			if mri.has_variants:
 				desg = ""
+				vmarque = ""
 				#Version vehicule item
 				desg_version = frappe.db.sql("""select GROUP_CONCAT(distinct(marque_vehicule)  SEPARATOR ', ') as marque, GROUP_CONCAT(distinct CONCAT(IFNULL(modele_vehicule,''),' ',IFNULL( generation_vehicule,'')) SEPARATOR ', ') as name from `tabVersion vehicule item` where  parent='%s' ;""" % (mri.item_code), as_dict=1)
 				desg_generation = frappe.db.sql("""select GROUP_CONCAT(distinct(nom_marque)  SEPARATOR ', ') as marque, GROUP_CONCAT(distinct CONCAT(IFNULL(nom_modele,''),' ',IFNULL(nom_generation,'')) SEPARATOR ', ') as name from `tabGeneration vehicule item` where  parent='%s' ;""" % (mri.item_code), as_dict=1)
@@ -209,9 +210,9 @@ def execute(filters=None):
 				desg_marque = frappe.db.sql("""select GROUP_CONCAT(distinct IFNULL(marque,'') SEPARATOR ', ') as name from `tabMarque vehicule item` where  parent='%s' ;""" % (mri.item_code), as_dict=1)
 				
 				
-				marques  = [desg_marque[0].name or '',desg_modele[0].marque or '', desg_generation[0].marque or '',desg_version[0].marque or '']
-				marques =list(filter('', marques))
-				vmarque = " - ".join(marques)
+				dmarques  = [desg_marque[0].name or '',desg_modele[0].marque or '', desg_generation[0].marque or '',desg_version[0].marque or '']
+				dmarques =list(filter('', dmarques))
+				vmarque = " - ".join(dmarques)
 				
 				#frappe.msgprint("data: %s" % desg_version.name)
 				generique = [desg_marque[0].name or '',desg_modele[0].name or '', desg_generation[0].name or '',desg_version[0].name or '']
