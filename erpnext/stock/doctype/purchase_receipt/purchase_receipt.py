@@ -162,6 +162,7 @@ class PurchaseReceipt(BuyingController):
 			if item.facture_item:
 				frappe.db.set_value("Purchase Invoice Item",item.facture_item,"pr_detail",item.name)
 				frappe.db.set_value("Purchase Invoice Item",item.facture_item,"purchase_receipt",item.parent)
+			item.set_qts(save=True)
 
 	def check_next_docstatus(self):
 		submit_rv = frappe.db.sql("""select t1.name
@@ -194,6 +195,7 @@ class PurchaseReceipt(BuyingController):
 			if item.facture_item:
 				frappe.db.set_value("Purchase Invoice Item",item.facture_item,"pr_detail","")
 				frappe.db.set_value("Purchase Invoice Item",item.facture_item,"purchase_receipt","")
+			item.set_qts(save=True)
 
 	def get_current_stock(self):
 		for d in self.get('supplied_items'):
