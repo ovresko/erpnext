@@ -260,6 +260,10 @@ class Item(WebsiteGenerator):
 					from `tabWebsite Item Group`
 					where parentfield='website_item_groups' and parenttype='Item' and parent=%s""", self.name)
 		# update qts
+		self.set_qts()
+						
+						
+	def set_qts(self,save=False):
 		if not self.has_variants:
 			stotal = frappe.db.sql("""select sum(actual_qty) from  tabBin  where item_code=%s""",[self.item_code])
 			#frappe.msgprint("stotal: %s" % stotal)
@@ -273,6 +277,9 @@ class Item(WebsiteGenerator):
 					#frappe.msgprint("%s" % warehouses)
 					if qtotal:
 						self.qts_depot = qtotal[0][0]
+			if save:
+				frappe.db.set_value("Item", self.name, "qts_total", self.qts_total)
+				frappe.db.set_value("Item", self.name, "qts_depot", self.qts_depot)
 
 	def sync_comp(self):
 		if self.variant_of:
