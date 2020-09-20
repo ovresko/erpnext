@@ -190,7 +190,7 @@ def execute(filters=None):
 		mitems = [origin_model]
 		mitems.extend(_mitems)
 		desg = ""
-		vmarque = 
+		vmarque = ""
 		for mri in mitems:
 			global info
 			qts_max_achat = 0
