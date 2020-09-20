@@ -230,6 +230,8 @@ class DeliveryNote(SellingController):
 		# because updating reserved qty in bin depends upon updated delivered qty in SO
 		self.update_stock_ledger()
 		self.make_gl_entries()
+		for item in self.items:
+			item.set_qts(save=True)
 
 	def on_cancel(self):
 		self.check_close_sales_order("against_sales_order")
@@ -245,6 +247,8 @@ class DeliveryNote(SellingController):
 		self.cancel_packing_slips()
 
 		self.make_gl_entries_on_cancel()
+		for item in self.items:
+			item.set_qts(save=True)
 
 	def check_credit_limit(self):
 		from erpnext.selling.doctype.customer.customer import check_credit_limit
