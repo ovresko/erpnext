@@ -200,28 +200,10 @@ def execute(filters=None):
 				desg_generation = frappe.db.sql("""select GROUP_CONCAT(distinct nom_generation ORDER BY nom_generation ASC SEPARATOR ', ') as name from `tabGeneration vehicule item` where  parent=%s ;""",(mri.item_code), as_dict=1)
 				desg_modele = frappe.db.sql("""select GROUP_CONCAT(distinct CONCAT(nom_marque,' ',nom_modele) SEPARATOR ', ') as name from `tabModele vehicule item` where  parent=%s ;""",(mri.item_code), as_dict=1)
 				desg_marque = frappe.db.sql("""select GROUP_CONCAT(distinct marque ORDER BY marque ASC SEPARATOR ', ') as name from `tabMarque vehicule item` where  parent=%s ;""",(mri.item_code), as_dict=1)
-				if not len(desg_marque):
-					desg_marque = ''
-				else:
-					desg_marque = desg_marque[0].name
-					
-				if not len(desg_modele):
-					desg_modele = ''
-				else:
-					desg_modele = desg_modele[0].name
-					
-				if not len(desg_generation):
-					desg_generation = ''
-				else:
-					desg_generation = desg_generation[0].name
-					
-				if not len(desg_version):
-					desg_version = ''
-				else:
-					desg_version = desg_version[0].name
-					
-				generique = [desg_marque,desg_modele, desg_generation,desg_version]
-				desg = " - ".join(generique)
+				
+				frappe.msgprint(desg_version)
+				#generique = [desg_marque,desg_modele, desg_generation,desg_version]
+				#desg = " - ".join(generique)
 
 			
 			cmp = "%s CP" % mri.item_code if (mri.has_variants and mri.item_code in mcomplements) else mri.item_code
