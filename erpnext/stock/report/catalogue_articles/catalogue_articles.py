@@ -209,7 +209,7 @@ def execute(filters=None):
 				desg_modele = frappe.db.sql("""select GROUP_CONCAT(distinct(nom_marque)  SEPARATOR ', ') as marque, GROUP_CONCAT(distinct CONCAT(IFNULL(nom_marque,''),' ',IFNULL(nom_modele,'')) SEPARATOR ', ') as name from `tabModele vehicule item` where  parent='%s' ;""" % (mri.item_code), as_dict=1)
 				desg_marque = frappe.db.sql("""select GROUP_CONCAT(distinct IFNULL(marque,'') SEPARATOR ', ') as name from `tabMarque vehicule item` where  parent='%s' ;""" % (mri.item_code), as_dict=1)
 				
-				frappe.msgprint("data: %s" % desg_version.marque)
+				
 				dmarques  = [desg_marque[0].name ,desg_modele[0].marque , desg_generation[0].marque,desg_version[0].marque ]
 				dmarques = [x for x in dmarques if x]
 				vmarque = " - ".join(dmarques)
