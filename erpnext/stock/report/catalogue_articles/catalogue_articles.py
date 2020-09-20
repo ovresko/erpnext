@@ -39,6 +39,11 @@ def execute(filters=None):
 			"width": 250
 		})
 	columns.append({
+			"fieldname": "pub_name",
+			"label": "Designation",
+			"width": 250
+		})
+	columns.append({
 			"fieldname": "fabricant",
 			"label": "Fabricant",
 			"width": 150
@@ -188,11 +193,24 @@ def execute(filters=None):
 			_date = ""
 			date =""
 			
+			desg = ""
+			if mri.has_variants:
+				#Version vehicule item
+				desg_version = frappe.db.sql("""select GROUP_CONCAT(distinct generation_vehicule ORDER BY generation_vehicule ASC SEPARATOR ', ') from `tabVersion vehicule iteme` where  parent=%s ;""",(mri.item_code))
+				desg_generation = frappe.db.sql("""select GROUP_CONCAT(distinct nom_generation ORDER BY nom_generation ASC SEPARATOR ', ') from `tabGeneration vehicule item` where  parent=%s ;""",(mri.item_code))
+				desg_modele = frappe.db.sql("""select GROUP_CONCAT(distinct CONCAT(nom_marque,' ',nom_modele) SEPARATOR ', ') from `tabModele vehicule item` where  parent=%s ;""",(mri.item_code))
+				desg_marque = frappe.db.sql("""select GROUP_CONCAT(distinct marque ORDER BY marque ASC SEPARATOR ', ') from `tabMarque vehicule item` where  parent=%s ;""",(mri.item_code))
+				
+				generique = [desg_marque or '',desg_modele or '', desg_generation or '',desg_version or '']
+				desg = " - ".join(generique)
+
+			
 			cmp = "%s CP" % mri.item_code if (mri.has_variants and mri.item_code in mcomplements) else mri.item_code
 			qts_magasin = cint(mri.qts_total or 0) - cint(mri.qts_depot or 0)
 			row = ["""<input type='button' onclick="erpnext.utils.open_item_info('%s', this)" value='info'>  </input>""" % mri.item_code,
 			      cmp,
 			       mri.item_name,
+			       desg,
 			       mri.manufacturer,
 			       mri.manufacturer_part_no
 			      ]
