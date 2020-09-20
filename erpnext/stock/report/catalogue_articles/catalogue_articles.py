@@ -196,12 +196,31 @@ def execute(filters=None):
 			desg = ""
 			if mri.has_variants:
 				#Version vehicule item
-				desg_version = frappe.db.sql("""select GROUP_CONCAT(distinct generation_vehicule ORDER BY generation_vehicule ASC SEPARATOR ', ') from `tabVersion vehicule item` where  parent=%s ;""",(mri.item_code))
-				desg_generation = frappe.db.sql("""select GROUP_CONCAT(distinct nom_generation ORDER BY nom_generation ASC SEPARATOR ', ') from `tabGeneration vehicule item` where  parent=%s ;""",(mri.item_code))
-				desg_modele = frappe.db.sql("""select GROUP_CONCAT(distinct CONCAT(nom_marque,' ',nom_modele) SEPARATOR ', ') from `tabModele vehicule item` where  parent=%s ;""",(mri.item_code))
-				desg_marque = frappe.db.sql("""select GROUP_CONCAT(distinct marque ORDER BY marque ASC SEPARATOR ', ') from `tabMarque vehicule item` where  parent=%s ;""",(mri.item_code))
-				
-				generique = [desg_marque or '',desg_modele or '', desg_generation or '',desg_version or '']
+				desg_version = frappe.db.sql("""select GROUP_CONCAT(distinct generation_vehicule ORDER BY generation_vehicule ASC SEPARATOR ', ') from `tabVersion vehicule item` where  parent=%s ;""",(mri.item_code), as_dict=1)
+				desg_generation = frappe.db.sql("""select GROUP_CONCAT(distinct nom_generation ORDER BY nom_generation ASC SEPARATOR ', ') from `tabGeneration vehicule item` where  parent=%s ;""",(mri.item_code), as_dict=1)
+				desg_modele = frappe.db.sql("""select GROUP_CONCAT(distinct CONCAT(nom_marque,' ',nom_modele) SEPARATOR ', ') from `tabModele vehicule item` where  parent=%s ;""",(mri.item_code), as_dict=1)
+				desg_marque = frappe.db.sql("""select GROUP_CONCAT(distinct marque ORDER BY marque ASC SEPARATOR ', ') from `tabMarque vehicule item` where  parent=%s ;""",(mri.item_code), as_dict=1)
+				if not desg_marque:
+					desg_marque = ''
+				else:
+					desg_marque = desg_marque[0]
+					
+				if not desg_modele:
+					desg_modele = ''
+				else:
+					desg_modele = desg_modele[0]
+					
+				if not desg_generation:
+					desg_generation = ''
+				else:
+					desg_generation = desg_generation[0]
+					
+				if not desg_version:
+					desg_version = ''
+				else:
+					desg_version = desg_version[0]
+					
+				generique = [desg_marque,desg_modele, desg_generation,desg_version]
 				desg = " - ".join(generique)
 
 			
