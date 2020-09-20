@@ -196,10 +196,10 @@ def execute(filters=None):
 			desg = ""
 			if mri.has_variants:
 				#Version vehicule item
-				desg_version = frappe.db.sql("""select GROUP_CONCAT(distinct generation_vehicule ORDER BY generation_vehicule ASC SEPARATOR ', ') as name from `tabVersion vehicule item` where  parent=%s ;""",(mri.item_code), as_dict=1)
-				desg_generation = frappe.db.sql("""select GROUP_CONCAT(distinct nom_generation ORDER BY nom_generation ASC SEPARATOR ', ') as name from `tabGeneration vehicule item` where  parent=%s ;""",(mri.item_code), as_dict=1)
-				desg_modele = frappe.db.sql("""select GROUP_CONCAT(distinct CONCAT(nom_marque,' ',nom_modele) SEPARATOR ', ') as name from `tabModele vehicule item` where  parent=%s ;""",(mri.item_code), as_dict=1)
-				desg_marque = frappe.db.sql("""select GROUP_CONCAT(distinct marque ORDER BY marque ASC SEPARATOR ', ') as name from `tabMarque vehicule item` where  parent=%s ;""",(mri.item_code), as_dict=1)
+				desg_version = frappe.db.sql("""select GROUP_CONCAT(distinct IFNULL(generation_vehicule,'') ORDER BY generation_vehicule ASC SEPARATOR ', ') from `tabVersion vehicule item` where  parent=%s ;""",(mri.item_code), as_dict=1)
+				desg_generation = frappe.db.sql("""select GROUP_CONCAT(distinct IFNULL(nom_generation,'') ORDER BY nom_generation ASC SEPARATOR ', ') as name from `tabGeneration vehicule item` where  parent=%s ;""",(mri.item_code), as_dict=1)
+				desg_modele = frappe.db.sql("""select GROUP_CONCAT(distinct CONCAT(IFNULL(nom_marque,''),' ',IFNULL(nom_modele,'')) SEPARATOR ', ') as name from `tabModele vehicule item` where  parent=%s ;""",(mri.item_code), as_dict=1)
+				desg_marque = frappe.db.sql("""select GROUP_CONCAT(distinct IFNULL(marque,'') ORDER BY marque ASC SEPARATOR ', ') as name from `tabMarque vehicule item` where  parent=%s ;""",(mri.item_code), as_dict=1)
 				
 				frappe.msgprint(desg_version)
 				#generique = [desg_marque,desg_modele, desg_generation,desg_version]
