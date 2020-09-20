@@ -203,22 +203,22 @@ def execute(filters=None):
 				if not desg_marque:
 					desg_marque = ''
 				else:
-					desg_marque = desg_marque[0]
+					desg_marque = desg_marque[0][0]
 					
 				if not desg_modele:
 					desg_modele = ''
 				else:
-					desg_modele = desg_modele[0]
+					desg_modele = desg_modele[0][0]
 					
 				if not desg_generation:
 					desg_generation = ''
 				else:
-					desg_generation = desg_generation[0]
+					desg_generation = desg_generation[0][0]
 					
 				if not desg_version:
 					desg_version = ''
 				else:
-					desg_version = desg_version[0]
+					desg_version = desg_version[0][0]
 					
 				generique = [desg_marque,desg_modele, desg_generation,desg_version]
 				desg = " - ".join(generique)
