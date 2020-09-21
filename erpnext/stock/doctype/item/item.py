@@ -248,11 +248,15 @@ class Item(WebsiteGenerator):
 		if self.clean_manufacturer_part_number:
 			nom_g += (self.clean_manufacturer_part_number or '') + ' '
 		for v in self.versions:
-			nom_g += (v.nom_marque or '')+' '+(v.modele_vehicule or '')+' '+(v.nom_version or '')+' '
+			nom_g += (v.marque_vehicule or '')+' '+(v.modele_vehicule or '')+' '+(v.nom_version or '')+' - '
 		for g in self.generation_vehicule_supporte:
-			nom_g += (g.nom_marque or '')+' '+(g.nom_generation or '')+' '
+			nom_g += (g.nom_marque or '')+' '+(g.nom_generation or '')+' - '
+		for g in self.modele_vehicule_supporte:
+			nom_g += (g.nom_marque or '')+' '+(g.nom_modele or '')+' - '
 		for g in self.marque_vehicule_supporte:
 			nom_g += (g.marque or '')+' '
+		
+			
 		self.nom_generique_long = (nom_g or '').lower()
 		if not self.get("__islocal"):
 			self.old_item_group = frappe.db.get_value(self.doctype, self.name, "item_group")
