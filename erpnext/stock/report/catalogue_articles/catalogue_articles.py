@@ -129,7 +129,7 @@ def execute(filters=None):
 				order_by_statement=order_by_statement
 			),
 			filters, as_dict=1)
-	if not filters.get('regroupe'):
+	if filters.get('regroupe'):
 		all_items = []
 		item_dc = {}
 		mcomplements = []
