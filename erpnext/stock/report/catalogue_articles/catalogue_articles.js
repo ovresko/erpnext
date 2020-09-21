@@ -205,13 +205,6 @@ frappe.query_reports["Catalogue Articles"] = {
 			} 
 		},
 		{
-			"fieldname":"model_status",
-			"label": "Etat par modele",
-			"fieldtype": "Select",
-			"options": ["","Modele en repture"],
-			"default": ""
-		},
-		{
 			"fieldname": "depot_qty",
 			"label": "Disponible Depot",
 			"fieldtype": "Check",
@@ -234,6 +227,18 @@ frappe.query_reports["Catalogue Articles"] = {
 			"label": "Fabricant selec. seul.",
 			"fieldtype": "Check",
 			"default": 0
+		},
+		{
+			"fieldname": "regroupe",
+			"label": "Regroupe",
+			"fieldtype": "Check",
+			"default": 1
+		},
+		{
+			"fieldname": "hide_prices",
+			"label": "Sans prix",
+			"fieldtype": "Check",
+			"default": 1
 		}
 
 	],
