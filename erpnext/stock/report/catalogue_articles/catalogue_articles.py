@@ -81,17 +81,17 @@ def execute(filters=None):
 		})
 
 
-	
-	price_lists= frappe.get_all("Price List",filters={"selling":1,"enabled":1,"buying":0},fields=["name","currency"])
-	if price_lists:
-		for pl in price_lists:
-			if filters.price_list and pl.name not in filters.price_list:
-				continue
-			columns.append({
-				"fieldname": pl.name,
-				"label": "%s (%s)" % (pl.name,pl.currency),
-				"width": 150
-			})
+	if not filters.get('hide_prices'):
+		price_lists= frappe.get_all("Price List",filters={"selling":1,"enabled":1,"buying":0},fields=["name","currency"])
+		if price_lists:
+			for pl in price_lists:
+				if filters.price_list and pl.name not in filters.price_list:
+					continue
+				columns.append({
+					"fieldname": pl.name,
+					"label": "%s (%s)" % (pl.name,pl.currency),
+					"width": 150
+				})
 	
 	
 	mris = []
@@ -129,100 +129,171 @@ def execute(filters=None):
 				order_by_statement=order_by_statement
 			),
 			filters, as_dict=1)
-	all_items = []
-	item_dc = {}
-	mcomplements = []
-	models = []
-	_models = {item.variant_of for item in items if item.variant_of}
-	models_copy = []
-	models_copy.extend(_models)
-	ids = {o.item_code for o in items if o.item_code}
-	lids = "','".join(ids)
-	for m in models_copy:
-		if m in models:
-			pass
-		else:
-			models.insert(len(models),m)
-			complements = frappe.get_all("Composant",filters={"parent":m,"parentfield":"articles"},fields=["parent","item"])
-			if complements:
-				parents = {i.item for i in complements}
-				if parents:
-					for t in parents:
-						_models.discard(t)
-						if t in models:
-							models.remove(t)
-						models.insert(len(models),t)
-						mcomplements.append(t)
-						comp_items = frappe.db.sql(
-								"""
-								select
-									stock_uom,oem_text,item_bloque,qts_total,qts_depot, perfection,is_purchase_item,weight_per_unit,variant_of,has_variants,item_name, item_code, manufacturer,last_purchase_rate , manufacturer_part_no, item_group,last_purchase_devise,max_order_qty,max_ordered_variante
-								from `tabItem`
-								where disabled=0 and has_variants=0  and variant_of=%s and  item_code not in ('{0}')
-								
-								""".format(lids),
-								(t), as_dict=1)
-						#for ci in comp_items:
-						#	ci.update({"item_code":"%s CP" % ci.item_code})
-						items.extend(comp_items)
-						
-	if not models or len(models) <= 0:
-		frappe.msgprint("Aucune resultat")
-		return columns, data
-	ids = {o.item_code for o in items if o.item_code}
-	lids = "','".join(ids)
-	
-	for model in models:
-		if filters.get('model_status') and filters.get('model_status') == "Modele en repture":
-			projected = info_modele(model)[2] or 0
-			if projected or projected > 0:
-				continue
-		exitems = frappe.db.sql(
-		"""
-		select
-			stock_uom,item_bloque,oem_text, perfection,is_purchase_item,qts_total,qts_depot,weight_per_unit,variant_of,has_variants,item_name, item_code, manufacturer,last_purchase_rate , manufacturer_part_no, item_group,last_purchase_devise,max_order_qty,max_ordered_variante
-		from `tabItem`
-		where disabled=0 and has_variants=0 and variant_of = %s and item_code not in ('{0}')
-		""".format(lids),
-		(model), as_dict=1)
-		items.extend(exitems)
-		
-		_mitems = [item for item in items if item.variant_of == model]
-		origin_model = frappe.get_doc("Item",model)
-		mitems = [origin_model]
-		mitems.extend(_mitems)
+	if not filters.get('regroupe'):
+		all_items = []
+		item_dc = {}
+		mcomplements = []
+		models = []
+		_models = {item.variant_of for item in items if item.variant_of}
+		models_copy = []
+		models_copy.extend(_models)
+		ids = {o.item_code for o in items if o.item_code}
+		lids = "','".join(ids)
+		for m in models_copy:
+			if m in models:
+				pass
+			else:
+				models.insert(len(models),m)
+				complements = frappe.get_all("Composant",filters={"parent":m,"parentfield":"articles"},fields=["parent","item"])
+				if complements:
+					parents = {i.item for i in complements}
+					if parents:
+						for t in parents:
+							_models.discard(t)
+							if t in models:
+								models.remove(t)
+							models.insert(len(models),t)
+							mcomplements.append(t)
+							comp_items = frappe.db.sql(
+									"""
+									select
+										stock_uom,oem_text,item_bloque,qts_total,qts_depot, perfection,is_purchase_item,weight_per_unit,variant_of,has_variants,item_name, item_code, manufacturer,last_purchase_rate , manufacturer_part_no, item_group,last_purchase_devise,max_order_qty,max_ordered_variante
+									from `tabItem`
+									where disabled=0 and has_variants=0  and variant_of=%s and  item_code not in ('{0}')
+
+									""".format(lids),
+									(t), as_dict=1)
+							#for ci in comp_items:
+							#	ci.update({"item_code":"%s CP" % ci.item_code})
+							items.extend(comp_items)
+
+		if not models or len(models) <= 0:
+			frappe.msgprint("Aucune resultat")
+			return columns, data
+		ids = {o.item_code for o in items if o.item_code}
+		lids = "','".join(ids)
+
+		for model in models:
+			#if filters.get('model_status') and filters.get('model_status') == "Modele en repture":
+			#	projected = info_modele(model)[2] or 0
+			#	if projected or projected > 0:
+			#		continue
+			exitems = frappe.db.sql(
+			"""
+			select
+				stock_uom,item_bloque,oem_text, perfection,is_purchase_item,qts_total,qts_depot,weight_per_unit,variant_of,has_variants,item_name, item_code, manufacturer,last_purchase_rate , manufacturer_part_no, item_group,last_purchase_devise,max_order_qty,max_ordered_variante
+			from `tabItem`
+			where disabled=0 and has_variants=0 and variant_of = %s and item_code not in ('{0}')
+			""".format(lids),
+			(model), as_dict=1)
+			items.extend(exitems)
+
+			_mitems = [item for item in items if item.variant_of == model]
+			origin_model = frappe.get_doc("Item",model)
+			mitems = [origin_model]
+			mitems.extend(_mitems)
+			desg = ""
+			vmarque = ""
+			for mri in mitems:
+				global info
+				qts_max_achat = 0
+				last_valuation = 0
+				recom = 0
+				_date = ""
+				date =""
+
+
+				if mri.has_variants:
+					desg = ""
+					vmarque = ""
+					#Version vehicule item
+					desg_version = frappe.db.sql("""select GROUP_CONCAT(distinct(marque_vehicule)  SEPARATOR ' - ') as marque, GROUP_CONCAT(distinct CONCAT(IFNULL(modele_vehicule,''),' ',IFNULL( generation_vehicule,'')) SEPARATOR ' - ') as name from `tabVersion vehicule item` where  parent='%s' ;""" % (mri.item_code), as_dict=1)
+					desg_generation = frappe.db.sql("""select GROUP_CONCAT(distinct(nom_marque)  SEPARATOR ' - ') as marque, GROUP_CONCAT(distinct CONCAT(IFNULL(nom_modele,''),' ',IFNULL(nom_generation,'')) SEPARATOR ' - ') as name from `tabGeneration vehicule item` where  parent='%s' ;""" % (mri.item_code), as_dict=1)
+					desg_modele = frappe.db.sql("""select GROUP_CONCAT(distinct(nom_marque)  SEPARATOR ' - ') as marque, GROUP_CONCAT(distinct CONCAT(IFNULL(nom_marque,''),' ',IFNULL(nom_modele,'')) SEPARATOR ' - ') as name from `tabModele vehicule item` where  parent='%s' ;""" % (mri.item_code), as_dict=1)
+					desg_marque = frappe.db.sql("""select GROUP_CONCAT(distinct IFNULL(marque,'') SEPARATOR ' - ') as name from `tabMarque vehicule item` where  parent='%s' ;""" % (mri.item_code), as_dict=1)
+
+					dmarques  = [desg_marque[0].name ,desg_modele[0].marque , desg_generation[0].marque,desg_version[0].marque ]
+					dmarques = [x for x in dmarques if x]
+					vmarque = " - ".join(dmarques)
+
+					#frappe.msgprint("data: %s" % desg_version.name)
+					generique = [desg_marque[0].name ,desg_modele[0].name , desg_generation[0].name ,desg_version[0].name ]
+					generique =[x for x in generique if x]
+					desg = " - ".join(generique)
+
+
+				cmp = "%s CP" % mri.item_code if (mri.has_variants and mri.item_code in mcomplements) else mri.item_code
+				qts_magasin = cint(mri.qts_total or 0) - cint(mri.qts_depot or 0)
+				# marque, desg, code, nom art, oem, fabricant, ref fab, qts depot, qts mag, qts tot, prix...
+				row = ["""<input type='button' onclick="erpnext.utils.open_item_info('%s', this)" value='info'>  </input>""" % mri.item_code,
+				       vmarque,
+				       desg,
+				       cmp,
+				       mri.item_name,
+				       mri.oem_text or '',
+				       mri.manufacturer,
+				       mri.manufacturer_part_no,
+				       mri.qts_depot,
+				       qts_magasin,
+				       mri.qts_total
+				      ]
+
+				# get prices in each price list
+				has_atleast_price = 0
+				if price_lists and not filters.get('hide_prices'):
+					all_prices = ""
+					for pl in price_lists:
+						if filters.price_list and pl.name not in filters.price_list:
+							continue
+						if pl.name and not mri.has_variants:						
+							price = frappe.db.sql("""select price_list_rate from `tabItem Price` where  price_list=%s and (  item_code=%s) ORDER BY min_qty ASC LIMIT 1;""",(pl.name,mri.item_code))
+							if price:
+								all_prices = "%.2f %s" % (price[0][0] or 0,pl.currency)
+								row.append(all_prices)
+								has_atleast_price = 1
+								#row.append(price[0][0])
+							else:
+								row.append("_")
+						else:
+							row.append("_")
+				if filters.get('has_price') and not has_atleast_price and not mri.has_variants:
+					continue
+
+				if filters.get('manufacturer') and filters.get('only_fabricant')  and mri.manufacturer not in filters.get('manufacturer'):
+					continue
+
+				data.append(row)
+	else:
 		desg = ""
 		vmarque = ""
-		for mri in mitems:
+		for mri in items:
 			global info
 			qts_max_achat = 0
 			last_valuation = 0
 			recom = 0
 			_date = ""
 			date =""
-			
-			
-			if mri.has_variants:
-				desg = ""
-				vmarque = ""
-				#Version vehicule item
-				desg_version = frappe.db.sql("""select GROUP_CONCAT(distinct(marque_vehicule)  SEPARATOR ' - ') as marque, GROUP_CONCAT(distinct CONCAT(IFNULL(modele_vehicule,''),' ',IFNULL( generation_vehicule,'')) SEPARATOR ' - ') as name from `tabVersion vehicule item` where  parent='%s' ;""" % (mri.item_code), as_dict=1)
-				desg_generation = frappe.db.sql("""select GROUP_CONCAT(distinct(nom_marque)  SEPARATOR ' - ') as marque, GROUP_CONCAT(distinct CONCAT(IFNULL(nom_modele,''),' ',IFNULL(nom_generation,'')) SEPARATOR ' - ') as name from `tabGeneration vehicule item` where  parent='%s' ;""" % (mri.item_code), as_dict=1)
-				desg_modele = frappe.db.sql("""select GROUP_CONCAT(distinct(nom_marque)  SEPARATOR ' - ') as marque, GROUP_CONCAT(distinct CONCAT(IFNULL(nom_marque,''),' ',IFNULL(nom_modele,'')) SEPARATOR ' - ') as name from `tabModele vehicule item` where  parent='%s' ;""" % (mri.item_code), as_dict=1)
-				desg_marque = frappe.db.sql("""select GROUP_CONCAT(distinct IFNULL(marque,'') SEPARATOR ' - ') as name from `tabMarque vehicule item` where  parent='%s' ;""" % (mri.item_code), as_dict=1)
-				
-				
-				dmarques  = [desg_marque[0].name ,desg_modele[0].marque , desg_generation[0].marque,desg_version[0].marque ]
-				dmarques = [x for x in dmarques if x]
-				vmarque = " - ".join(dmarques)
-				
-				#frappe.msgprint("data: %s" % desg_version.name)
-				generique = [desg_marque[0].name ,desg_modele[0].name , desg_generation[0].name ,desg_version[0].name ]
-				generique =[x for x in generique if x]
-				desg = " - ".join(generique)
 
-			
-			cmp = "%s CP" % mri.item_code if (mri.has_variants and mri.item_code in mcomplements) else mri.item_code
+			desg = ""
+			vmarque = ""
+			#Version vehicule item
+			desg_version = frappe.db.sql("""select GROUP_CONCAT(distinct(marque_vehicule)  SEPARATOR ' - ') as marque, GROUP_CONCAT(distinct CONCAT(IFNULL(modele_vehicule,''),' ',IFNULL( generation_vehicule,'')) SEPARATOR ' - ') as name from `tabVersion vehicule item` where  parent='%s' ;""" % (mri.item_code), as_dict=1)
+			desg_generation = frappe.db.sql("""select GROUP_CONCAT(distinct(nom_marque)  SEPARATOR ' - ') as marque, GROUP_CONCAT(distinct CONCAT(IFNULL(nom_modele,''),' ',IFNULL(nom_generation,'')) SEPARATOR ' - ') as name from `tabGeneration vehicule item` where  parent='%s' ;""" % (mri.item_code), as_dict=1)
+			desg_modele = frappe.db.sql("""select GROUP_CONCAT(distinct(nom_marque)  SEPARATOR ' - ') as marque, GROUP_CONCAT(distinct CONCAT(IFNULL(nom_marque,''),' ',IFNULL(nom_modele,'')) SEPARATOR ' - ') as name from `tabModele vehicule item` where  parent='%s' ;""" % (mri.item_code), as_dict=1)
+			desg_marque = frappe.db.sql("""select GROUP_CONCAT(distinct IFNULL(marque,'') SEPARATOR ' - ') as name from `tabMarque vehicule item` where  parent='%s' ;""" % (mri.item_code), as_dict=1)
+
+
+			dmarques  = [desg_marque[0].name ,desg_modele[0].marque , desg_generation[0].marque,desg_version[0].marque ]
+			dmarques = [x for x in dmarques if x]
+			vmarque = " - ".join(dmarques)
+
+			#frappe.msgprint("data: %s" % desg_version.name)
+			generique = [desg_marque[0].name ,desg_modele[0].name , desg_generation[0].name ,desg_version[0].name ]
+			generique =[x for x in generique if x]
+			desg = " - ".join(generique)
+
+
+			cmp =mri.item_code
 			qts_magasin = cint(mri.qts_total or 0) - cint(mri.qts_depot or 0)
 			# marque, desg, code, nom art, oem, fabricant, ref fab, qts depot, qts mag, qts tot, prix...
 			row = ["""<input type='button' onclick="erpnext.utils.open_item_info('%s', this)" value='info'>  </input>""" % mri.item_code,
@@ -240,7 +311,7 @@ def execute(filters=None):
 
 			# get prices in each price list
 			has_atleast_price = 0
-			if price_lists:
+			if price_lists and  not filters.get('hide_prices'):
 				all_prices = ""
 				for pl in price_lists:
 					if filters.price_list and pl.name not in filters.price_list:
@@ -258,10 +329,10 @@ def execute(filters=None):
 						row.append("_")
 			if filters.get('has_price') and not has_atleast_price and not mri.has_variants:
 				continue
-				
+
 			if filters.get('manufacturer') and filters.get('only_fabricant')  and mri.manufacturer not in filters.get('manufacturer'):
 				continue
-			
+
 			data.append(row)
 		
 	return columns, data
