@@ -367,17 +367,26 @@ def get_conditions(filters):
 		conditions.append("(item_code=%(variant_of)s or variant_of=%(variant_of)s)")
 	if filters.get('is_purchase'):	
 		conditions.append("is_purchase_item=1")
+		
 	if filters.get('version'):
-		conditions.append("""(nom_generique_long  LIKE %(version)s)"""  )
+		nversion = frappe.db.get_value("Version vehicule",filters.get('version'),"version")
+		if nversion:
+			conditions.append("""(nom_generique_long  LIKE '%%{0}%%')""".format(nversion))
 		
 	if filters.get('modele_v'):
-		conditions.append("""(nom_generique_long  LIKE %(modele_v)s)"""  )		
+		nmodele = frappe.db.get_value("Modele de vehicule",filters.get('modele_v'),"modele")
+		if nmodele:
+			conditions.append("""(nom_generique_long  LIKE '%%{0}%%')""".format(nmodele))	
 
 	if filters.get('marque_v'):
-		conditions.append("""(nom_generique_long  LIKE %(marque_v)s)"""  )
+		nmarque = frappe.db.get_value("Marque vehicule",filters.get('marque_v'),"marque")
+		if nmarque:
+			conditions.append("""(nom_generique_long  LIKE '%%{0}%%')""".format(nmarque))
 
 	if filters.get('generation_v'):
-		conditions.append("""(nom_generique_long  LIKE %(generation_v)s)"""  )
+		ngeneration = frappe.db.get_value("Generation vehicule",filters.get('generation_v'),"nom_generation")
+		if ngeneration:
+			conditions.append("""(nom_generique_long  LIKE '%%{0}%%')""".format(ngeneration))
 
 	if filters.get('price_list'):
 		manufacturer_lp = filters.manufacturer_lp
