@@ -929,32 +929,26 @@ def get_conditions(filters):
 		conditions.append("(it.item_code=%(variant_of)s or it.variant_of=%(variant_of)s)")
 	if filters.get('is_purchase'):	
 		conditions.append("it.is_purchase_item=1")
-	if filters.get('version'):
-		conditions.append("""(it.item_code in (select parent from `tabVersion vehicule item` vv
-		where vv.version_vehicule=%(version)s))"""  )
+
 	if filters.get('confirmation'):
 		if filters.get('confirmation') == "En cours":
 			conditions.append("""(sqi.confirmation IS NULL or sqi.confirmation='' or sqi.confirmation=' ' or sqi.confirmation=%(confirmation)s)""")
 		else:
 			conditions.append("""sqi.confirmation=%(confirmation)s""")
+
+	if filters.get('version'):
+		conditions.append("""(it.nom_generique_long  LIKE %(version)s)"""  )
+		
 	if filters.get('modele_v'):
-		modele = frappe.db.get_value("Modele de vehicule", filters.modele_v, "modele")
-		#frappe.get_doc('Modele de vehicule',filters.modele_vehicule)
-		if modele:
-			query = """(it.item_code in (select parent from `tabVersion vehicule item` vm
-		where vm.modele_vehicule='%s'))""" % modele
-			conditions.append(query)
+		conditions.append("""(it.nom_generique_long  LIKE %(modele_v)s)"""  )		
 
 	if filters.get('marque_v'):
-		conditions.append("""(it.item_code in (select parent from `tabVersion vehicule item` vr 
-		where vr.nom_marque=%(marque_v)s))""")
+		conditions.append("""(it.nom_generique_long  LIKE %(marque_v)s)"""  )
 
 	if filters.get('generation_v'):
-		#generation_vehicule
-		generation = frappe.db.get_value("Generation vehicule", filters.generation_v, "generation")
-		if generation:
-			conditions.append("""(it.item_code in (select parent from `tabVersion vehicule item` vsr 
-		where vsr.generation_vehicule='%s'))""" % generation)
+		conditions.append("""(it.nom_generique_long  LIKE %(generation_v)s)"""  )
+		
+
 
 	if filters.get('price_list'):
 		manufacturer_lp = filters.manufacturer_lp
