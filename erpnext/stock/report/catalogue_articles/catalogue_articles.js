@@ -218,7 +218,7 @@ frappe.query_reports["Catalogue Articles"] = {
 		},
 		{
 			"fieldname": "has_price",
-			"label": "Avec Prix",
+			"label": "Articles Avec Prix Seulement",
 			"fieldtype": "Check",
 			"default": 0
 		},
@@ -236,7 +236,7 @@ frappe.query_reports["Catalogue Articles"] = {
 		},
 		{
 			"fieldname": "hide_prices",
-			"label": "Sans prix",
+			"label": "Cacher les prix",
 			"fieldtype": "Check",
 			"default": 0
 		}
