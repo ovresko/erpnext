@@ -238,7 +238,7 @@ frappe.query_reports["Catalogue Articles"] = {
 			"fieldname": "hide_prices",
 			"label": "Sans prix",
 			"fieldtype": "Check",
-			"default": 1
+			"default": 0
 		}
 
 	],
