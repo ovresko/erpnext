@@ -371,7 +371,7 @@ def get_conditions(filters):
 
 	if filters.get('marque_v'):
 		conditions.append("""(item_code in (select parent from `tabVersion vehicule item` vr 
-		where vr.marque_vehicule=%(marque_v)s))""")
+		where vr.nom_marque=%(marque_v)s))""")
 
 	if filters.get('generation_v'):
 		#generation_vehicule
