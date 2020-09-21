@@ -195,7 +195,9 @@ def execute(filters=None):
 			mitems.extend(_mitems)
 			desg = ""
 			vmarque = ""
-			for mri in mitems:
+			if not len(mitems) or len(mitems) == 1:
+				continue
+			for mri in mitems:				
 				global info
 				qts_max_achat = 0
 				last_valuation = 0
