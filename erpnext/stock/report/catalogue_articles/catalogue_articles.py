@@ -29,16 +29,6 @@ def execute(filters=None):
 			"width": 50
 		})
 	columns.append({
-			"fieldname": "marque",
-			"label": "Marque",
-			"width": 150
-		})
-	columns.append({
-			"fieldname": "pub_name",
-			"label": "Generations",
-			"width": 350
-		})
-	columns.append({
 			"fieldname": "item_code",
 			"label": _("Item Code"),
 			"width": 150
@@ -48,6 +38,17 @@ def execute(filters=None):
 			"label": _("Item Name"),
 			"width": 250
 		})
+	columns.append({
+			"fieldname": "marque",
+			"label": "Marque",
+			"width": 150
+		})
+	columns.append({
+			"fieldname": "pub_name",
+			"label": "Generations",
+			"width": 350
+		})
+	
 	columns.append({
 			"fieldname": "oem",
 			"label": "OEM",
@@ -226,10 +227,10 @@ def execute(filters=None):
 				qts_magasin = cint(mri.qts_total or 0) - cint(mri.qts_depot or 0)
 				# marque, desg, code, nom art, oem, fabricant, ref fab, qts depot, qts mag, qts tot, prix...
 				row = ["""<input type='button' onclick="erpnext.utils.open_item_info('%s', this)" value='info'>  </input>""" % mri.item_code,
-				       vmarque,
-				       desg,
 				       cmp,
 				       mri.item_name,
+				       vmarque,
+				       desg,				       
 				       mri.oem_text or '',
 				       mri.manufacturer,
 				       mri.manufacturer_part_no,
@@ -297,10 +298,10 @@ def execute(filters=None):
 			qts_magasin = cint(mri.qts_total or 0) - cint(mri.qts_depot or 0)
 			# marque, desg, code, nom art, oem, fabricant, ref fab, qts depot, qts mag, qts tot, prix...
 			row = ["""<input type='button' onclick="erpnext.utils.open_item_info('%s', this)" value='info'>  </input>""" % mri.item_code,
-			       vmarque,
-			       desg,
 			       cmp,
 			       mri.item_name,
+			       vmarque,
+			       desg,			       
 			       mri.oem_text or '',
 			       mri.manufacturer,
 			       mri.manufacturer_part_no,
