@@ -244,7 +244,7 @@ frappe.query_reports["Catalogue Articles"] = {
 			"fieldname": "hide_qty",
 			"label": "Cacher les qts",
 			"fieldtype": "Check",
-			"default": 0
+			"default": 1
 		}
 
 	],
