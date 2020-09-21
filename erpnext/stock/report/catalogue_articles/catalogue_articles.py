@@ -80,7 +80,7 @@ def execute(filters=None):
 			"width": 150
 		})
 
-
+	price_lists = []
 	if not filters.get('hide_prices'):
 		price_lists= frappe.get_all("Price List",filters={"selling":1,"enabled":1,"buying":0},fields=["name","currency"])
 		if price_lists:
