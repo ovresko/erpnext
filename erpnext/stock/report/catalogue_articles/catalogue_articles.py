@@ -64,22 +64,22 @@ def execute(filters=None):
 			"label": "Ref Fabricant",
 			"width": 150
 		})
-	
-	columns.append({
-			"fieldname": "qts_depot",
-			"label": "Qts Depot",
-			"width": 150
-		})
-	columns.append({
-			"fieldname": "qts_magasin",
-			"label": "Qts Magasin",
-			"width": 150
-		})
-	columns.append({
-			"fieldname": "qts_total",
-			"label": "Qts Total",
-			"width": 150
-		})
+	if not filters.get('hide_qty'):
+		columns.append({
+				"fieldname": "qts_depot",
+				"label": "Qts Depot",
+				"width": 150
+			})
+		columns.append({
+				"fieldname": "qts_magasin",
+				"label": "Qts Magasin",
+				"width": 150
+			})
+		columns.append({
+				"fieldname": "qts_total",
+				"label": "Qts Total",
+				"width": 150
+			})
 
 	price_lists = []
 	if not filters.get('hide_prices'):
@@ -226,18 +226,29 @@ def execute(filters=None):
 				cmp = "%s CP" % mri.item_code if (mri.has_variants and mri.item_code in mcomplements) else mri.item_code
 				qts_magasin = cint(mri.qts_total or 0) - cint(mri.qts_depot or 0)
 				# marque, desg, code, nom art, oem, fabricant, ref fab, qts depot, qts mag, qts tot, prix...
-				row = ["""<input type='button' onclick="erpnext.utils.open_item_info('%s', this)" value='info'>  </input>""" % mri.item_code,
-				       cmp,
-				       mri.item_name,
-				       vmarque,
-				       desg,				       
-				       mri.oem_text or '',
-				       mri.manufacturer,
-				       mri.manufacturer_part_no,
-				       mri.qts_depot,
-				       qts_magasin,
-				       mri.qts_total
-				      ]
+				if not filters.get('hide_qty'):
+					row = ["""<input type='button' onclick="erpnext.utils.open_item_info('%s', this)" value='info'>  </input>""" % mri.item_code,
+					       cmp,
+					       mri.item_name,
+					       vmarque,
+					       desg,				       
+					       mri.oem_text or '',
+					       mri.manufacturer,
+					       mri.manufacturer_part_no,
+					       mri.qts_depot,
+					       qts_magasin,
+					       mri.qts_total
+					      ]
+				else:
+					row = ["""<input type='button' onclick="erpnext.utils.open_item_info('%s', this)" value='info'>  </input>""" % mri.item_code,
+					       cmp,
+					       mri.item_name,
+					       vmarque,
+					       desg,				       
+					       mri.oem_text or '',
+					       mri.manufacturer,
+					       mri.manufacturer_part_no
+					      ]
 
 				# get prices in each price list
 				has_atleast_price = 0
@@ -297,18 +308,29 @@ def execute(filters=None):
 			cmp =mri.item_code
 			qts_magasin = cint(mri.qts_total or 0) - cint(mri.qts_depot or 0)
 			# marque, desg, code, nom art, oem, fabricant, ref fab, qts depot, qts mag, qts tot, prix...
-			row = ["""<input type='button' onclick="erpnext.utils.open_item_info('%s', this)" value='info'>  </input>""" % mri.item_code,
-			       cmp,
-			       mri.item_name,
-			       vmarque,
-			       desg,			       
-			       mri.oem_text or '',
-			       mri.manufacturer,
-			       mri.manufacturer_part_no,
-			       mri.qts_depot,
-			       qts_magasin,
-			       mri.qts_total
-			      ]
+			if not filters.get('hide_qty'):
+				row = ["""<input type='button' onclick="erpnext.utils.open_item_info('%s', this)" value='info'>  </input>""" % mri.item_code,
+				       cmp,
+				       mri.item_name,
+				       vmarque,
+				       desg,			       
+				       mri.oem_text or '',
+				       mri.manufacturer,
+				       mri.manufacturer_part_no,
+				       mri.qts_depot,
+				       qts_magasin,
+				       mri.qts_total
+				      ]
+			else:
+				row = ["""<input type='button' onclick="erpnext.utils.open_item_info('%s', this)" value='info'>  </input>""" % mri.item_code,
+				       cmp,
+				       mri.item_name,
+				       vmarque,
+				       desg,			       
+				       mri.oem_text or '',
+				       mri.manufacturer,
+				       mri.manufacturer_part_no
+				      ]
 
 			# get prices in each price list
 			has_atleast_price = 0
