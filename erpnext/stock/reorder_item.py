@@ -33,7 +33,7 @@ def refresh_items():
 	sp = frappe.get_single('Sync POS')
 	if sp.is_master:
 		return
-        models = frappe.get_all("Item",filters={"has_variants":"1"},fields=["name","modified"],order_by='modified asc',limit=10)
+        models = frappe.get_all("Item",filters={"has_variants":"1"},fields=["name","modified"],order_by='modified asc',limit=40)
         print("found %d " % len(models))
         for model in models:
 		try:
