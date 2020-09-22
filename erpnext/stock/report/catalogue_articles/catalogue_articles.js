@@ -261,7 +261,7 @@ frappe.query_reports["Catalogue Articles"] = {
 				
 			});
 			
-			$.get( "/api/method/erpnext.stock.doctype.item.item.bulk_print_list",{names:items});
+			$.get( "/api/method/erpnext.stock.doctype.item.item.bulk_print_list",{"names[]":items});
 
 			
 			
