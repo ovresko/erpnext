@@ -13,7 +13,7 @@ frappe.query_reports["Catalogue Articles"] = {
 			 {
 				 value = "<div style='color: white;background-color: #ca4100;padding: 1px;'>" + ovalue + "</div>";
 			 }
-			  if(data["item_code"] &&  data["item_code"].length == 11)
+			  if(data["item_code"] &&  (data["item_code"].length == 11 || data["item_code"].includes("----")) )
 			 {
 				 value = "<div style='color: white;background-color: #383484;padding: 1px;'>" + ovalue + "</div>";
 			 }
@@ -255,7 +255,7 @@ frappe.query_reports["Catalogue Articles"] = {
 			items = [];
 			data.forEach( (item) => {
 				var item_code = item['item_code'];
-				if(item_code && item_code!="Total"){
+				if(item_code && item_code!="Total" && !item_code.includes("----") ){
 					items.push(item_code);
 				}
 				
