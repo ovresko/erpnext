@@ -252,7 +252,7 @@ frappe.query_reports["Catalogue Articles"] = {
 		var me = this;
 		report.page.add_inner_button("Exporter Catalogue PDF", function() {
 			var data = report.data;
-			items = [];
+			var items = [];
 			data.forEach( (item) => {
 				var item_code = item['item_code'];
 				if(item_code && item_code!="Total" && !item_code.includes("----") ){
@@ -260,7 +260,7 @@ frappe.query_reports["Catalogue Articles"] = {
 				}
 				
 			});
-			names = items.join()
+			var names = items.join()
 			console.log(names);
 			frappe.xcall("erpnext.stock.doctype.item.item.bulk_print_list",{names: names});
 			//var w = window.open("/api/method/erpnext.stock.doctype.item.item.bulk_print_memberships?"
