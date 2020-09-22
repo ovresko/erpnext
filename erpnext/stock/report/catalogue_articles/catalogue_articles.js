@@ -261,13 +261,9 @@ frappe.query_reports["Catalogue Articles"] = {
 				
 			});
 			
+			$.get( "/api/method/erpnext.stock.doctype.item.item.bulk_print_list?"+"names="+encodeURIComponent(items));
 
-			var w = window.open("/api/method/erpnext.stock.doctype.item.item.bulk_print_list?"
-							+"names="+encodeURIComponent(items));
-	
-			if(!w) {
-				frappe.msgprint(__("Please enable pop-ups")); return;
-			}
+			
 			
 			
 		});
