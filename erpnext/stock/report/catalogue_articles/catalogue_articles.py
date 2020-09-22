@@ -23,6 +23,10 @@ def execute(filters=None):
 		manufacturer_lp = cstr(filters.get("manufacturer_lp")).strip()
 		filters.manufacturer_lp = [d.strip() for d in manufacturer_lp.split(',') if d]
 	# marque, desg, code, nom art, oem, fabricant, ref fab, qts depot, qts mag, qts tot, prix...
+
+	if not frappe.has_permission("Email Account", "delete"):
+		filters.set('hide_qty',True)
+		
 	columns.append({
 			"fieldname": "info",
 			"label": "Info",
@@ -225,7 +229,7 @@ def execute(filters=None):
 					desg = " - ".join(generique)
 
 
-				cmp = "%s CP" % mri.item_code if (mri.has_variants and mri.item_code in mcomplements) else mri.item_code
+				cmp = "%s CP ---------- " % mri.item_code if (mri.has_variants and mri.item_code in mcomplements) else "%s ---------- " % mri.item_code if mri.has_variants else mri.item_code
 				qts_magasin = cint(mri.qts_total or 0) - cint(mri.qts_depot or 0)
 				# marque, desg, code, nom art, oem, fabricant, ref fab, qts depot, qts mag, qts tot, prix...
 				if not filters.get('hide_qty'):
@@ -308,6 +312,7 @@ def execute(filters=None):
 
 
 			cmp =mri.item_code
+			
 			qts_magasin = cint(mri.qts_total or 0) - cint(mri.qts_depot or 0)
 			# marque, desg, code, nom art, oem, fabricant, ref fab, qts depot, qts mag, qts tot, prix...
 			if not filters.get('hide_qty'):
