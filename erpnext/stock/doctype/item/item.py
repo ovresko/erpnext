@@ -1267,14 +1267,15 @@ def update_variants(variants, template, publish_progress=True):
 				
 @frappe.whitelist()
 def bulk_print_list(names):
-	if names:
+	if names:		
 		names = {"names":names.split(",")}
+		frappe.msgprint(names)
 		bulk_print_memberships(json.dumps(names))
 	return "ok"
 	
 @frappe.whitelist()
 def bulk_print_memberships(names):
-	frappe.msgprint(names)
+	
 	names = json.loads(names)
 	if names and 'names' in names:
 		names = names['names']
