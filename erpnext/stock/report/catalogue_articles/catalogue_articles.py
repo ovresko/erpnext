@@ -374,23 +374,7 @@ def execute(filters=None):
 		names = [a[1].replace("*","").replace(" ","").replace("CP","") for a in data]
 		final_html = prepare_bulk_print_html(names)
 		frappe.msgprint(final_html)
-		pdf_options = { 
-						"page-height" : "29.7cm",
-						"page-width" : "21.0cm",
-						"margin-top": "10mm",
-						"margin-bottom": "10mm",
-						"margin-left": "10mm",
-						"margin-right": "10mm",
-						"no-outline": None,
-						"encoding": "UTF-8",
-						"title": "Catalogue",
-						"footer-right": '[page] / [topage]',
-						"footer-font-size" : 7
-					}
-
-		frappe.local.response.filename = "{filename}.pdf".format(filename="catalogue".replace(" ", "-").replace("/", "-"))
-		frappe.local.response.filecontent = dignity_get_pdf(final_html, options=pdf_options) #get_pdf(final_html, pdf_options)
-		frappe.local.response.type = "download"
+		
 	
 	return columns, data
 
