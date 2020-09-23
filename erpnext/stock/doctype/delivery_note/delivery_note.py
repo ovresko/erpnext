@@ -230,8 +230,7 @@ class DeliveryNote(SellingController):
 		# because updating reserved qty in bin depends upon updated delivered qty in SO
 		self.update_stock_ledger()
 		self.make_gl_entries()
-		for item in self.items:
-			item.set_qts(save=True)
+		frappe.enqueue("erpnext.stock.doctype.delivery_note.delivery_note.on_submit_delivery_note",items=self.items,timeout=10000)
 
 	def on_cancel(self):
 		self.check_close_sales_order("against_sales_order")
@@ -247,8 +246,8 @@ class DeliveryNote(SellingController):
 		self.cancel_packing_slips()
 
 		self.make_gl_entries_on_cancel()
-		for item in self.items:
-			item.set_qts(save=True)
+		frappe.enqueue("erpnext.stock.doctype.delivery_note.delivery_note.on_submit_delivery_note",items=self.items,timeout=10000)
+
 
 	def check_credit_limit(self):
 		from erpnext.selling.doctype.customer.customer import check_credit_limit
@@ -341,6 +340,14 @@ class DeliveryNote(SellingController):
 		except:
 			frappe.throw(_("Could not create Credit Note automatically, please uncheck 'Issue Credit Note' and submit again"))
 
+@frappe.whitelist()
+def on_submit_delivery_note(items):
+	if items:
+		for item in items:
+			titem = frappe.get_doc("Item",item.item_code)
+			if titem:
+				titem.set_qts(save=True)
+				
 def update_billed_amount_based_on_so(so_detail, update_modified=True):
 	# Billed against Sales Order directly
 	billed_against_so = frappe.db.sql("""select sum(amount) from `tabSales Invoice Item`
