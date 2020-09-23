@@ -1301,8 +1301,10 @@ def print_catalogue(names):
 				}
 		
 	frappe.local.response.filename = "{filename}.pdf".format(filename="catalogue".replace(" ", "-").replace("/", "-"))
-	frappe.local.response.filecontent = dignity_get_pdf(final_html, options=pdf_options) #get_pdf(final_html, pdf_options)
+	content = dignity_get_pdf(final_html, options=pdf_options) #get_pdf(final_html, pdf_options)
+	frappe.local.response.filecontent = content
 	frappe.local.response.type = "download"
+	return content
 	
 	
 def prepare_bulk_print_html(names):
