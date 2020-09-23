@@ -245,6 +245,12 @@ frappe.query_reports["Catalogue Articles"] = {
 			"label": "Cacher les qts",
 			"fieldtype": "Check",
 			"default": 1
+		},
+		{
+			"fieldname": "generate_pdf",
+			"label": "Exporter catalogue",
+			"fieldtype": "Check",
+			"default": 0
 		}
 
 	],
