@@ -7,6 +7,11 @@ from frappe import _, _dict
 from erpnext.stock.get_item_details import get_item_details
 from frappe.utils import getdate, cstr, flt, fmt_money,cint
 from erpnext.stock.doctype.item.item import print_catalogue
+from frappe.utils.pdf import get_pdf
+import pdfkit	
+import os
+import json
+
 
 def execute(filters=None):
 	columns, data = [], []
@@ -367,13 +372,91 @@ def execute(filters=None):
 			data.append(row)
 	if filters.get('generate_pdf') and data:
 		names = [a[1].replace("*","").replace(" ","").replace("CP","") for a in data]
-		content = print_catalogue(names)
-		frappe.local.response.filename = "catalogue.pdf"
-		frappe.local.response.filecontent = content
+		final_html = prepare_bulk_print_html(names)
+		pdf_options = { 
+						"page-height" : "29.7cm",
+						"page-width" : "21.0cm",
+						"margin-top": "10mm",
+						"margin-bottom": "10mm",
+						"margin-left": "10mm",
+						"margin-right": "10mm",
+						"no-outline": None,
+						"encoding": "UTF-8",
+						"title": "Catalogue",
+						"footer-right": '[page] / [topage]',
+						"footer-font-size" : 7
+					}
+
+		frappe.local.response.filename = "{filename}.pdf".format(filename="catalogue".replace(" ", "-").replace("/", "-"))
+		frappe.local.response.filecontent = dignity_get_pdf(final_html, options=pdf_options) #get_pdf(final_html, pdf_options)
 		frappe.local.response.type = "download"
 	
 	return columns, data
-      
+
+def prepare_bulk_print_html(names):
+	html = ""
+	sc_list = []
+	
+	data = {}
+	items = []
+	
+	# get items
+	for name in names:
+		#frappe.msgprint(name)
+		items.append(frappe.get_doc("Item", name))
+	
+	fabricants = {o.manufacturer for o in items if not o.has_variants}
+	models = {item.variant_of for item in items if item.variant_of}
+	index = 1
+	total = len(models)
+	for model in models:
+		_model = frappe.get_doc("Item", model)
+		_variants = [item for item in items if item.variant_of == model]
+		versions_all = sum(x.important == True for x in _model.versions)
+		gen_all = sum(x.important == True for x in _model.generation_vehicule_supporte)
+		oem_all = sum(x.important == True for x in _model.oem)
+		critere_piece_all = sum(x.important == True for x in _model.critere_piece)
+		data[model] = {"model":_model,"variants":_variants,"total":total,"index":index,"gen_all":gen_all,"versions_all":versions_all,"oem_all":oem_all,"critere_piece_all":critere_piece_all }
+		index= index+1
+	html_params = { "data": data }
+	final_html = frappe.render_template("erpnext/templates/includes/catalog_bulk_print.html", html_params)
+
+	return final_html
+
+def dignity_get_pdf(html, options=None):
+	fname = os.path.join("/tmp", "dignity-sc-list-{0}.pdf".format(frappe.generate_hash()))
+
+	try:
+		pdfkit.from_string(html, fname, options=options or {})
+
+		with open(fname, "rb") as fileobj:
+			filedata = fileobj.read()
+
+	except IOError, e:
+		if ("ContentNotFoundError" in e.message
+			or "ContentOperationNotPermittedError" in e.message
+			or "UnknownContentError" in e.message
+			or "RemoteHostClosedError" in e.message):
+
+			# allow pdfs with missing images if file got created
+			if os.path.exists(fname):
+				with open(fname, "rb") as fileobj:
+					filedata = fileobj.read()
+
+			else:
+				frappe.throw(_("PDF generation failed because of broken image links"))
+		else:
+			raise
+
+	finally:
+		cleanup(fname)
+
+
+	return filedata
+
+def cleanup(fname):
+	if os.path.exists(fname):
+		os.remove(fname)
 def get_conditions(filters):
 	conditions = []
 	# group, modele, manufacturer, age_plus, age_minus
