@@ -1268,8 +1268,7 @@ def update_variants(variants, template, publish_progress=True):
 @frappe.whitelist()
 def bulk_print_list(names):
 	if names:		
-		names = {"names":names.split(",")}
-		frappe.msgprint(names)
+		names = {"names":names.split(",")}		
 		bulk_print_memberships(json.dumps(names))
 	return "ok"
 	
@@ -1281,7 +1280,10 @@ def bulk_print_memberships(names):
 		names = names['names']
 	if len(names) == 0:
 		frappe.msgprint("No rows selected.")
-	
+	else:
+		print_catalogue(names)
+@frappe.whitelist()	
+def print_catalogue(names):	
 	final_html = prepare_bulk_print_html(names)
 
 	pdf_options = { 
