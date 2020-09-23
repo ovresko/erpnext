@@ -230,7 +230,7 @@ def execute(filters=None):
 					desg = " - ".join(generique)
 
 
-				cmp = "%s CP ---------- " % mri.item_code if (mri.has_variants and mri.item_code in mcomplements) else "%s ---------- " % mri.item_code if mri.has_variants else mri.item_code
+				cmp = "%s CP *********** " % mri.item_code if (mri.has_variants and mri.item_code in mcomplements) else "%s *********** " % mri.item_code if mri.has_variants else mri.item_code
 				qts_magasin = cint(mri.qts_total or 0) - cint(mri.qts_depot or 0)
 				# marque, desg, code, nom art, oem, fabricant, ref fab, qts depot, qts mag, qts tot, prix...
 				if not filters.get('hide_qty'):
@@ -366,7 +366,7 @@ def execute(filters=None):
 
 			data.append(row)
 	if filters.get('generate_pdf') and data:
-		names = [a[1].replace("-","").replace(" ","").replace("CP","") for a in data]
+		names = [a[1].replace("*","").replace(" ","").replace("CP","") for a in data]
 		print_catalogue(names)
 	
 	return columns, data
