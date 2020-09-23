@@ -162,7 +162,7 @@ class PurchaseReceipt(BuyingController):
 			if item.facture_item:
 				frappe.db.set_value("Purchase Invoice Item",item.facture_item,"pr_detail",item.name)
 				frappe.db.set_value("Purchase Invoice Item",item.facture_item,"purchase_receipt",item.parent)
-			item.set_qts(save=True)
+		frappe.enqueue("erpnext.stock.doctype.purchase_receipt.purchase_receipt.on_submit_purchase_receipt",items=self.items,timeout=10000)
 
 	def check_next_docstatus(self):
 		submit_rv = frappe.db.sql("""select t1.name
@@ -195,7 +195,7 @@ class PurchaseReceipt(BuyingController):
 			if item.facture_item:
 				frappe.db.set_value("Purchase Invoice Item",item.facture_item,"pr_detail","")
 				frappe.db.set_value("Purchase Invoice Item",item.facture_item,"purchase_receipt","")
-			item.set_qts(save=True)
+		frappe.enqueue("erpnext.stock.doctype.purchase_receipt.purchase_receipt.on_submit_purchase_receipt",items=self.items,timeout=10000)
 
 	def get_current_stock(self):
 		for d in self.get('supplied_items'):
@@ -399,7 +399,14 @@ class PurchaseReceipt(BuyingController):
 			pr_doc.update_billing_percentage(update_modified=update_modified)
 
 		self.load_from_db()
-
+@frappe.whitelist()
+def on_submit_purchase_receipt(items):
+	if items:
+		for item in items:
+			titem = frappe.get_doc("Item",item.item_code)
+			if titem:
+				titem.set_qts(save=True)
+	
 def update_billed_amount_based_on_po(po_detail, update_modified=True):
 	# Billed against Sales Order directly
 	billed_against_po = frappe.db.sql("""select sum(amount) from `tabPurchase Invoice Item`
