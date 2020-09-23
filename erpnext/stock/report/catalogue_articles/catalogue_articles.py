@@ -6,6 +6,7 @@ import frappe, erpnext, json
 from frappe import _, _dict
 from erpnext.stock.get_item_details import get_item_details
 from frappe.utils import getdate, cstr, flt, fmt_money,cint
+from erpnext.stock.doctype.item.item import print_catalogue
 
 def execute(filters=None):
 	columns, data = [], []
@@ -364,6 +365,10 @@ def execute(filters=None):
 				continue
 
 			data.append(row)
+	if filters.get('generate_pdf') and data:
+		names = [a['item_code'].replace("-","").replace(" ","").replace("CP","") for a in data]
+		print_catalogue(names)
+	
 	return columns, data
       
 def get_conditions(filters):
