@@ -13,7 +13,7 @@ frappe.query_reports["Catalogue Articles"] = {
 			 {
 				 value = "<div style='color: white;background-color: #ca4100;padding: 1px;'>" + ovalue + "</div>";
 			 }
-			  if(data["item_code"] &&  (data["item_code"].length == 11 || data["item_code"].includes("----")) )
+			  if(data["item_code"] &&  (data["item_code"].length == 11 || data["item_code"].includes("****")) )
 			 {
 				 value = "<div style='color: white;background-color: #383484;padding: 1px;'>" + ovalue + "</div>";
 			 }
