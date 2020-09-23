@@ -366,7 +366,7 @@ def execute(filters=None):
 
 			data.append(row)
 	if filters.get('generate_pdf') and data:
-		names = [a['item_code'].replace("-","").replace(" ","").replace("CP","") for a in data]
+		names = [a[1].replace("-","").replace(" ","").replace("CP","") for a in data]
 		print_catalogue(names)
 	
 	return columns, data
