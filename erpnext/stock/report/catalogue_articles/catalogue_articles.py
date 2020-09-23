@@ -364,9 +364,8 @@ def execute(filters=None):
 				continue
 
 			data.append(row)
-	test = "test"
-	return columns, data, test
-					       
+	return columns, data
+      
 def get_conditions(filters):
 	conditions = []
 	# group, modele, manufacturer, age_plus, age_minus
