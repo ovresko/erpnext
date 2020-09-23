@@ -364,7 +364,7 @@ def execute(filters=None):
 				continue
 
 			data.append(row)
-		
+	test = "test"
 	return columns, data
 					       
 def get_conditions(filters):
