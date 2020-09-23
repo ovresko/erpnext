@@ -367,7 +367,10 @@ def execute(filters=None):
 			data.append(row)
 	if filters.get('generate_pdf') and data:
 		names = [a[1].replace("*","").replace(" ","").replace("CP","") for a in data]
-		print_catalogue(names)
+		content = print_catalogue(names)
+		frappe.local.response.filename = "catalogue.pdf"
+		frappe.local.response.filecontent = content
+		frappe.local.response.type = "download"
 	
 	return columns, data
       
