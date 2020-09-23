@@ -373,6 +373,7 @@ def execute(filters=None):
 	if filters.get('generate_pdf') and data:
 		names = [a[1].replace("*","").replace(" ","").replace("CP","") for a in data]
 		final_html = prepare_bulk_print_html(names)
+		frappe.msgprint(final_html)
 		pdf_options = { 
 						"page-height" : "29.7cm",
 						"page-width" : "21.0cm",
