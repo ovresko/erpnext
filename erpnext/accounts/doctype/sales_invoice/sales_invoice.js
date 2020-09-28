@@ -241,7 +241,7 @@ erpnext.accounts.SalesInvoiceController = erpnext.selling.SellingController.exte
 				method: "erpnext.accounts.utils.get_balance_on",
 				args: {date: doc.posting_date, party_type: 'Customer', party: doc.customer},
 				callback: function(r) {
-					doc.solde_client = format_currency(r.message, erpnext.get_currency(doc.company));
+					me.frm.doc.solde_client = format_currency(r.message, erpnext.get_currency(doc.company));
 					refresh_field('solde_client', 'accounts');
 				}
 			});
