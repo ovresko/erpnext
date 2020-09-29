@@ -360,6 +360,7 @@ def execute(filters=None):
 		if last_valuation:
 			taux_taxe = last_valuation*0.19
 			val_ttc = round(last_valuation+taux_taxe)
+			taux_taxe = round(taux_taxe)
 		pond_valuation = 0
 		
 		#frappe.db.sql("""select (medium / total) as result from (select t.item_code, sum(t.actual_qty) AS total, (t.actual_qty * t.valuation_rate) AS medium from `tabStock Ledger Entry` t where item_code=%s and actual_qty>0 GROUP BY t.item_code ) as inner_query""", (mri.item_code), as_dict=1)
