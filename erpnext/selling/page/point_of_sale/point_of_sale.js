@@ -2639,7 +2639,7 @@ class POSItems {
 			if ( qts == '') {
 			   qts = "+1";
 			}
-			me.events.update_cart(item_code, 'qty', qts,null,1);
+			me.events.update_cart(item_code, 'qty', qts,1);
 			 
 			
 		});
