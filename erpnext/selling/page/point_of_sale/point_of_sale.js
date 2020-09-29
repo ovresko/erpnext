@@ -927,12 +927,13 @@ class POSCart {
 	}
 	
 	cree_commande()
-	{
+	{	me = this;
 		frappe.call({
 			method: "erpnext.selling.page.point_of_sale.point_of_sale.make_sales_order",
 			args: {
-				"customer": this.frm.doc.customer,
-				"items": this.frm.doc.items,
+				"customer": me.frm.doc.customer,
+				"items": me.frm.doc.items,
+				"price_list" : me.frm.doc.selling_price_list,
 				"pos_profile": this.frm.doc.pos_profile
 			},
 			callback: function(r) {
