@@ -288,6 +288,7 @@ erpnext.pos.PointOfSale = class PointOfSale {
 		if(this.cart.exists(item_code, batch_no)) {
 			if(from_search == 1){
 				alert("Article existe deja !");	
+				frappe.dom.unfreeze();
 				return;
 			}
 			const search_field = batch_no ? 'batch_no' : 'item_code';
