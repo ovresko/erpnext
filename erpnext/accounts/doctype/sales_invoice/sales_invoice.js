@@ -54,6 +54,17 @@ erpnext.accounts.SalesInvoiceController = erpnext.selling.SellingController.exte
 				this.make_payment_entry, __("Make"));
 			cur_frm.page.set_inner_btn_group_as_primary(__("Make"));
 		}
+		
+		if(this.frm.doc.customer) {
+			frappe.call({
+				method: "erpnext.accounts.utils.get_balance_on",
+				args: {date: me.frm.doc.posting_date, party_type: 'Customer', party: me.frm.doc.customer},
+				callback: function(r) {
+					me.frm.doc.solde_client = format_currency(r.message, erpnext.get_currency(me.frm.doc.company));
+					refresh_field('solde_client', 'accounts');
+				}
+			});
+		}
 
 		if(doc.docstatus==1 && !doc.is_return) {
 
@@ -124,14 +135,16 @@ erpnext.accounts.SalesInvoiceController = erpnext.selling.SellingController.exte
 		if (frappe.get_route()[0] != 'Form') {
 			return
 		}
-		frappe.call({
-			method: "erpnext.accounts.utils.get_balance_on",
-			args: {date: me.frm.doc.posting_date, party_type: 'Customer', party: me.frm.doc.customer},
-			callback: function(r) {
-				me.frm.doc.solde_client = format_currency(r.message, erpnext.get_currency(me.frm.doc.company));
-				refresh_field('solde_client', 'accounts');
-			}
-		});
+		if(this.frm.doc.customer) {
+			frappe.call({
+				method: "erpnext.accounts.utils.get_balance_on",
+				args: {date: me.frm.doc.posting_date, party_type: 'Customer', party: me.frm.doc.customer},
+				callback: function(r) {
+					me.frm.doc.solde_client = format_currency(r.message, erpnext.get_currency(me.frm.doc.company));
+					refresh_field('solde_client', 'accounts');
+				}
+			});
+		}
 		$.each(doc["items"], function(i, row) {
 			if(row.delivery_note) frappe.model.clear_doc("Delivery Note", row.delivery_note)
 		})
