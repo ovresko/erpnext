@@ -110,7 +110,7 @@ def get_price_info(customer,price_list,transaction_date,qty,item_code,uom):
 	
 	
 @frappe.whitelist()
-def get_item_info(item_code):
+def website_item_info(item_code):
 	if item_code:
 		item = frappe.client.get("Item",item_code)
 		image = ''
@@ -122,9 +122,7 @@ def get_item_info(item_code):
 		_modal =""" 
 						<button type="button" data-item-code="{item_code}" class="btn btn-primary btn-sm btn-versions-list" > 
 							<span class="hidden-xs">Vehicules Supportees</span>
-						</button><br><br>
-
-<br>
+						</button><br><br><br>
 						<div class="etat-stock"></div>
 						<div class="etat-price"></div>
 						<div class="etat-val"></div>
