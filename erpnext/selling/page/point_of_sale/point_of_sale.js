@@ -272,20 +272,24 @@ erpnext.pos.PointOfSale = class PointOfSale {
 			wrapper: this.wrapper.find('.item-container'),
 			frm: this.frm,
 			events: {
-				update_cart: (item, field, value) => {
+				update_cart: (item, field, value,from_search=0) => {
 					if(!this.frm.doc.customer) {
 						frappe.throw(__('Please select a customer'));
 					}
-					this.update_item_in_cart(item, field, value);
+					this.update_item_in_cart(item, field, value,null,from_search);
 					this.cart && this.cart.unselect_all();
 				}
 			}
 		});
 	}
 
-	update_item_in_cart(item_code, field='qty', value=1, batch_no) {
+	update_item_in_cart(item_code, field='qty', value=1, batch_no,from_search=0) {
 		frappe.dom.freeze();
 		if(this.cart.exists(item_code, batch_no)) {
+			if(from_search == 1){
+				alert("Article existe deja !");	
+				return;
+			}
 			const search_field = batch_no ? 'batch_no' : 'item_code';
 			const search_value = batch_no || item_code;
 			const item = this.frm.doc.items.find(i => i[search_field] === search_value);
@@ -2635,7 +2639,7 @@ class POSItems {
 			if ( qts == '') {
 			   qts = "+1";
 			}
-			me.events.update_cart(item_code, 'qty', qts);
+			me.events.update_cart(item_code, 'qty', qts,null,1);
 			 
 			
 		});
