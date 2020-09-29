@@ -52,6 +52,8 @@ class SalesOrder(SellingController):
 
 		if not self.billing_status: self.billing_status = 'Not Billed'
 		if not self.delivery_status: self.delivery_status = 'Not Delivered'
+		
+		self.items_cost = sum(a.valuation_rate for a in self.items if a.valuation_rate)
 		for item in self.items:
 			adr = frappe.get_list("Adresse Magasin",fields=['adresse'],
 					      filters={"parent":item.item_code,"warehouse":self.set_warehouse})
