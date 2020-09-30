@@ -1189,7 +1189,7 @@ def get_item_attribute(parent, attribute_value=''):
 	return frappe.get_all("Item Attribute Value", fields = ["attribute_value"],
 		filters = {'parent': parent, 'attribute_value': ("like", "%%%s%%" % attribute_value)})
 
-set_item_transfer
+
 @frappe.whitelist()
 def set_item_transfer(item_code,qty,warehouse):
 	if item_code and qty and warehouse:
