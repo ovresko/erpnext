@@ -229,13 +229,6 @@ frappe.query_reports["Rapport analyse depot"] = {
 			"label": "Afficher les prix",
 			"fieldtype": "Check",
 			"default": 0
-		},
-		{
-			"fieldname":"model_status",
-			"label": "Etat par modele",
-			"fieldtype": "Select",
-			"options": ["","Modele en repture"],
-			"default": ""
 		}
 	]
 }
