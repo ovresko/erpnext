@@ -13,9 +13,9 @@ def execute(filters=None):
 		frappe.msgprint("Vous devez inserer un entrepot pour filtrer")
 		return columns, data
 	
-	if not filters.group and not filters.get("recu") and not filters.ref_fabricant and not filters.item_code and not filters.generation_v and not filters.marque_v and not filters.variant_of and not filters.modele_v and not filters.version and not filters.price_list and not filters.perfection and not filters.manufacturer:
-		#frappe.msgprint("Appliquer un filtre")
-		return columns, data
+	#if not filters.group and not filters.get("recu") and not filters.ref_fabricant and not filters.item_code and not filters.generation_v and not filters.marque_v and not filters.variant_of and not filters.modele_v and not filters.version and not filters.price_list and not filters.perfection and not filters.manufacturer:
+	#	#frappe.msgprint("Appliquer un filtre")
+	#	return columns, data
 	
 	
 	if filters.get('manufacturer'):
@@ -339,7 +339,7 @@ def execute(filters=None):
 			       #qts_depot
 			       mri.qts_depot,
 			       #qts_magasin
-			       mri.qts_magasin,
+			       (info[0] or 0) - mri.qts_depot,
 			       #qts
 			       info[0] or 0,
 			       #qts_projete
