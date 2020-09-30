@@ -256,7 +256,7 @@ def execute(filters=None):
 			       #qts_depot
 			       mri.qts_depot,
 			       #qts_magasin
-			       flt(info[0] or 0) - flt(mri.qts_depot or 0),
+			       flt(mri.qts_total or 0) - flt(mri.qts_depot or 0),
 			       #qts
 			       mri.qts_total,
 			       #qts_projete
