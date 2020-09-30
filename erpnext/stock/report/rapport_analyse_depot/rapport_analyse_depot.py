@@ -183,7 +183,7 @@ def execute(filters=None):
 			select
 				stock_uom,item_bloque, perfection,is_purchase_item,qts_total,qts_depot,weight_per_unit,variant_of,has_variants,item_name, item_code, manufacturer,last_purchase_rate , manufacturer_part_no, item_group,last_purchase_devise,max_order_qty,max_ordered_variante
 			from `tabItem`
-			where disabled=0 and has_variants=0 {conditions} and item_code in ({rec}) and item_code in (select obin.item_code from `tabBin` obin where obin.actual_qty > 0 and obin.item_code = item_code and obin.is_group=0 and obin.warehouse != '{warehouse}') and item_code not in (select bin.item_code from `tabBin` bin where bin.actual_qty > 0 and bin.item_code = item_code and bin.warehouse = '{warehouse}')
+			where disabled=0 and qts_total not null and qts_total != "0" and has_variants=0 {conditions} and item_code in ({rec}) and item_code in (select obin.item_code from `tabBin` obin where obin.actual_qty > 0 and obin.item_code = item_code and obin.is_group=0 and obin.warehouse != '{warehouse}') and item_code not in (select bin.item_code from `tabBin` bin where bin.actual_qty > 0 and bin.item_code = item_code and bin.warehouse = '{warehouse}')
 			{order_by_statement}
 			""".format(
 				conditions=get_conditions(filters),
@@ -199,7 +199,7 @@ def execute(filters=None):
 			select
 				stock_uom,item_bloque, perfection,is_purchase_item,qts_total,qts_depot,weight_per_unit,variant_of,has_variants,item_name, item_code, manufacturer,last_purchase_rate , manufacturer_part_no, item_group,last_purchase_devise,max_order_qty,max_ordered_variante
 			from `tabItem`
-			where disabled=0 and has_variants=0 {conditions} and item_code in (select obin.item_code from `tabBin` obin where obin.actual_qty > 0 and obin.item_code = item_code and obin.is_group=0 and obin.warehouse != '{warehouse}') and item_code not in (select bin.item_code from `tabBin` bin where bin.actual_qty > 0 and bin.item_code = item_code and bin.warehouse = '{warehouse}')
+			where disabled=0 and qts_total not null and qts_total != "0" and has_variants=0 {conditions} and item_code in (select obin.item_code from `tabBin` obin where obin.actual_qty > 0 and obin.item_code = item_code and obin.is_group=0 and obin.warehouse != '{warehouse}') and item_code not in (select bin.item_code from `tabBin` bin where bin.actual_qty > 0 and bin.item_code = item_code and bin.warehouse = '{warehouse}')
 			{order_by_statement}
 			""".format(
 				conditions=get_conditions(filters),
