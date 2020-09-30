@@ -339,7 +339,7 @@ def execute(filters=None):
 			       #qts_depot
 			       mri.qts_depot,
 			       #qts_magasin
-			       (info[0] or 0) - (mri.qts_depot or 0),
+			       flt(info[0] or 0) - flt(mri.qts_depot or 0),
 			       #qts
 			       info[0] or 0,
 			       #qts_projete
