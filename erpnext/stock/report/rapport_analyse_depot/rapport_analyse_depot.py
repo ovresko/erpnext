@@ -36,11 +36,6 @@ def execute(filters=None):
 			"width": 150
 		})
 	columns.append({
-			"fieldname": "date_recom",
-			"label": "Derniere Date Commande",
-			"width": 150
-		})
-	columns.append({
 			"fieldname": "item_name",
 			"label": _("Item Name"),
 			"width": 150
@@ -59,51 +54,11 @@ def execute(filters=None):
 			"fieldname": "ref_fabricant",
 			"label": "Ref Fabricant",
 			"width": 150
-		})
-	columns.append({
-			"fieldname": "poids",
-			"label": _("Poids"),
-			"width": 150
-		})
+		})	
 	columns.append({
 			"fieldname": "perfection",
 			"label": "Perfection",
 			"width": 150
-		})
-	columns.append({
-			"fieldname": "last_qty",
-			"label": "Derniere Qts Achetee",
-			"width": 150
-		})
-	columns.append({
-			"fieldname": "last_valuation",
-			"label": "Derniere taux de valorisation",
-			"width": 150
-		})
-	columns.append({
-			"fieldname": "consom",
-			"label": "Consommation 1 ans",
-			"width": 150
-		})
-	columns.append({
-			"fieldname": "qts_comm",
-			"label": "Qte Commande",
-			"width": 160
-		})
-	columns.append({
-			"fieldname": "qts_non_recue",
-			"label": "Qte reliquats",
-			"width": 160
-		})
-	columns.append({
-			"fieldname": "qts_dem",
-			"label": "Qte Demande non commande",
-			"width": 160
-		})
-	columns.append({
-			"fieldname": "qts_bloque",
-			"label": "Qte Demande consulte (blocage recommande auto)",
-			"width": 260
 		})
 	columns.append({
 			"fieldname": "qts_depot",
@@ -120,42 +75,7 @@ def execute(filters=None):
 			"label": "Qte Total",
 			"width": 150
 		})
-	columns.append({
-			"fieldname": "qts_projete",
-			"label": "Qte Projete",
-			"width": 150
-		})
-	columns.append({
-			"fieldname": "qts_demande",
-			"label": "Qte en Demande",
-			"width": 150
-		})
-	columns.append({
-			"fieldname": "qts_consulte",
-			"label": "Qte en Consultation",
-			"width": 150
-		})
-	columns.append({
-			"fieldname": "qts_max_achat",
-			"label": "Qte Max d'achat",
-			"width": 150
-		})
-	columns.append({
-			"fieldname": "qts_recom",
-			"label": "Recommande auto",
-			"width": 150
-		})
-	
-	columns.append({
-			"fieldname": "last_purchase_rate",
-			"label": "Dernier Prix d'achat (DZD)",
-			"width": 150
-		})
-	columns.append({
-			"fieldname": "last_purchase_devise",
-			"label": "Dernier Prix d'achat (Devise)",
-			"width": 150
-		})
+
 	if filters.show_price:
 		price_lists= frappe.get_all("Price List",filters={"buying":1},fields=["name","currency"])
 		if price_lists:
@@ -275,22 +195,22 @@ def execute(filters=None):
 			qts_max_achat = 0
 			if mri.variant_of:
 				#variante
-				info = info_variante(mri.item_code)
+				#info = info_variante(mri.item_code)
 				qts_max_achat = mri.max_ordered_variante
 			elif mri.has_variants:
-				info = info_modele(mri.item_code)
+				#info = info_modele(mri.item_code)
 				qts_max_achat = mri.max_order_qty
-			sqllast_qty = frappe.db.sql("""select actual_qty,valuation_rate,incoming_rate from `tabStock Ledger Entry` 
-			where item_code=%s and voucher_type=%s 
-			order by posting_date desc, posting_time desc limit 1""", (mri.item_code,"Purchase Receipt"), as_dict=1)
-			relq = frappe.db.sql("""select sum(ordered_qty) - sum(qty) from `tabPurchase Invoice Item` 
-			where item_code=%s and docstatus=1 and ordered_qty>0""", (mri.item_code))[0][0]
+			#sqllast_qty = frappe.db.sql("""select actual_qty,valuation_rate,incoming_rate from `tabStock Ledger Entry` 
+			#where item_code=%s and voucher_type=%s 
+			#order by posting_date desc, posting_time desc limit 1""", (mri.item_code,"Purchase Receipt"), as_dict=1)
+			#relq = frappe.db.sql("""select sum(ordered_qty) - sum(qty) from `tabPurchase Invoice Item` 
+			#where item_code=%s and docstatus=1 and ordered_qty>0""", (mri.item_code))[0][0]
 			last_qty = 0
-			qts_consulte = frappe.db.sql("""select sum(qty) from `tabSupplier Quotation Item` 
-			where item_code=%s and docstatus=0""", (mri.item_code))[0][0]
-			qts_demande = frappe.db.sql("""select sum(qty) from `tabMaterial Request Item` 
-			where item_code=%s and docstatus=1 and consulted=0 and warehouse='GLOBAL - MV'""", (mri.item_code))[0][0]
-			r_qts_bloque="Bloque" if mri.item_bloque else ""
+			#qts_consulte = frappe.db.sql("""select sum(qty) from `tabSupplier Quotation Item` 
+			#where item_code=%s and docstatus=0""", (mri.item_code))[0][0]
+			#qts_demande = frappe.db.sql("""select sum(qty) from `tabMaterial Request Item` 
+			#where item_code=%s and docstatus=1 and consulted=0 and warehouse='GLOBAL - MV'""", (mri.item_code))[0][0]
+			#r_qts_bloque="Bloque" if mri.item_bloque else ""
 			#qts_bloque = frappe.db.sql("""select sum(qty) from `tabMaterial Request Item` 
 			#where item_code=%s and docstatus=1 and ordered_qty=0 and consulted=1""", (mri.item_code))[0][0]
 			
@@ -300,60 +220,60 @@ def execute(filters=None):
 			recom = 0
 			_date = ""
 			date =""
-			_recom = frappe.get_all("Item Reorder",fields=["warehouse_reorder_qty","modified"],filters=[{"parent":mri.item_code},{"warehouse":"GLOBAL - MV"}])
-			if _recom:
-				recom = _recom[0].warehouse_reorder_qty
-				_date = _recom[0].modified
-				date = frappe.utils.get_datetime(date).strftime("%d/%m/%Y")
-			if sqllast_qty:
-				last_qty = sqllast_qty[0].actual_qty
-				last_valuation = sqllast_qty[0].incoming_rate
+			#_recom = frappe.get_all("Item Reorder",fields=["warehouse_reorder_qty","modified"],filters=[{"parent":mri.item_code},{"warehouse":"GLOBAL - MV"}])
+			#if _recom:
+			#	recom = _recom[0].warehouse_reorder_qty
+			#	_date = _recom[0].modified
+			#	date = frappe.utils.get_datetime(date).strftime("%d/%m/%Y")
+			#if sqllast_qty:
+			#	last_qty = sqllast_qty[0].actual_qty
+			#	last_valuation = sqllast_qty[0].incoming_rate
 			cmp = "%s CP" % mri.item_code if (mri.has_variants and mri.item_code in mcomplements) else mri.item_code
 			row = ["""<input type='button' onclick="erpnext.utils.open_item_info('%s', this)" value='info'>  </input> &nbsp;&nbsp;&nbsp; <button id='%s' onClick="demander_item('%s')" type='button'>Demander</button><input placeholder='Qts' id='input_%s' style='color:black'></input>""" % (mri.item_code,mri.item_code,mri.item_code,mri.item_code),
 			       cmp,
 			       #date
-			       date,
+			       #date,
 			       mri.item_name,
 			       #uom
 			       mri.stock_uom,
 			       mri.manufacturer,
 			       mri.manufacturer_part_no,
 			       #poids
-			       mri.weight_per_unit,
+			       #mri.weight_per_unit,
 			       #perfection
 			       mri.perfection,
 			       #last_qty
-			       last_qty or 0,
+			       #last_qty or 0,
 			       #last_valuation
-			       last_valuation or 0,
+			       #last_valuation or 0,
 			       #consom,
-			       "_",
+			       #"_",
 			       #qts_comm
-			       info[3] or 0,
+			       #info[3] or 0,
 			       #reliuat
-			       relq or 0,
+			       #relq or 0,
 			       #qts_dem
-			       info[1] or 0,
+			       #info[1] or 0,
 			       #qts_bloque
-			       r_qts_bloque or '',
+			       #r_qts_bloque or '',
 			       #qts_depot
 			       mri.qts_depot,
 			       #qts_magasin
 			       flt(info[0] or 0) - flt(mri.qts_depot or 0),
 			       #qts
-			       info[0] or 0,
+			       mri.qts_total,
 			       #qts_projete
-			       info[2] or 0,
-			       qts_demande or 0,
-			       qts_consulte or 0,
+			       #info[2] or 0,
+			       #qts_demande or 0,
+			       #qts_consulte or 0,
 			       #qts_max_achat
-			       qts_max_achat or 0,
+			       #qts_max_achat or 0,
 			       #recom
-			       recom or 0,
+			       #recom or 0,
 			       #last_purchase_rate
-			       mri.last_purchase_rate or 0,
+			       #mri.last_purchase_rate or 0,
 			       #last_purchase_devise
-			       mri.last_purchase_devise or 0
+			       #mri.last_purchase_devise or 0
 			      ]
 
 			if filters.show_price:
