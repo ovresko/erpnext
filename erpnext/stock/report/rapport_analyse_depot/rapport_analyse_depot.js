@@ -11,6 +11,10 @@ function demander_item(data) {
 	console.log("qty:",qty);
 	var warehouse = $("input[data-fieldname='warehouse']").val();
 	console.log("warehouse:",warehouse);
+	if(!warehouse)
+	{
+		alert("Entrepot invalide");
+	}
 	var confirme = confirm("Confirmer l'operation ?");
 	if(!confirme){
 		return;
