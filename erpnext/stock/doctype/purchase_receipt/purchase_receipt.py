@@ -83,6 +83,8 @@ class PurchaseReceipt(BuyingController):
 				    item.original_qts = item.qty
 				item.qts_ecart = item.original_qts - item.qty
 				item.montant_ecart = item.qts_ecart * item.rate
+				if item.warehouse == "GLOBAL - MV" and self.warehouse:
+					item.warehouse = self.warehouse
                 
 		if getdate(self.posting_date) > getdate(nowdate()):
 			throw(_("Posting Date cannot be future date")) 
