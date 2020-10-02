@@ -201,6 +201,12 @@ frappe.query_reports["Rapport analyse depot"] = {
 			"default": 0
 		},
 		{
+			"fieldname":"qts_min",
+			"label":"Qts minimum",
+			"fieldtype": "Int",
+			"default": ""
+		},
+		{
 			"fieldname":"manufacturer_lp",
 			"label": "Fabricant LP",
 			"fieldtype": "MultiSelect",
