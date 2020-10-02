@@ -121,7 +121,7 @@ def website_item_info(item_code):
 			image ='<img src="'+item.image+'">'
 		_modal =""" 
 						<button type="button" data-item-code="{item_code}" class="btn btn-primary btn-sm btn-versions-list" > 
-							<span class="hidden-xs">Vehicules Supportees</span>
+							<span >Vehicules Supportees</span>
 						</button><br><br><br>
 						<div class="etat-stock"></div>
 						<div class="etat-price"></div>
