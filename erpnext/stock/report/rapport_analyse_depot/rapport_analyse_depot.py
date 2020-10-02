@@ -136,161 +136,117 @@ def execute(filters=None):
 	models_copy.extend(_models)
 	ids = {o.item_code for o in items if o.item_code}
 	lids = "','".join(ids)
-	for m in models_copy:
-		if m in models:
-			pass
-		else:
-			models.insert(len(models),m)
-			complements = frappe.get_all("Composant",filters={"parent":m,"parentfield":"articles"},fields=["parent","item"])
-			if complements:
-				parents = {i.item for i in complements}
-				if parents:
-					for t in parents:
-						_models.discard(t)
-						if t in models:
-							models.remove(t)
-						models.insert(len(models),t)
-						mcomplements.append(t)
-						comp_items = frappe.db.sql(
-								"""
-								select
-									stock_uom,item_bloque, qts_total,qts_depot,perfection,is_purchase_item,weight_per_unit,variant_of,has_variants,item_name, item_code, manufacturer,last_purchase_rate , manufacturer_part_no, item_group,last_purchase_devise,max_order_qty,max_ordered_variante
-								from `tabItem`
-								where disabled=0 and has_variants=0  and variant_of=%s and  item_code not in ('{0}')
-								
-								""".format(lids),
-								(t), as_dict=1)
-						#for ci in comp_items:
-						#	ci.update({"item_code":"%s CP" % ci.item_code})
-						items.extend(comp_items)
-						
-	if not models or len(models) <= 0:
-		frappe.msgprint("Aucune resultat")
-		return columns, data
-	ids = {o.item_code for o in items if o.item_code}
-	lids = "','".join(ids)
+	if filters.get('grouped'):
+		for m in models_copy:
+			if m in models:
+				pass
+			else:
+				models.insert(len(models),m)
+				complements = frappe.get_all("Composant",filters={"parent":m,"parentfield":"articles"},fields=["parent","item"])
+				if complements:
+					parents = {i.item for i in complements}
+					if parents:
+						for t in parents:
+							_models.discard(t)
+							if t in models:
+								models.remove(t)
+							models.insert(len(models),t)
+							mcomplements.append(t)
+							comp_items = frappe.db.sql(
+									"""
+									select
+										stock_uom,item_bloque, qts_total,qts_depot,perfection,is_purchase_item,weight_per_unit,variant_of,has_variants,item_name, item_code, manufacturer,last_purchase_rate , manufacturer_part_no, item_group,last_purchase_devise,max_order_qty,max_ordered_variante
+									from `tabItem`
+									where disabled=0 and has_variants=0  and variant_of=%s and  item_code not in ('{0}')
+
+									""".format(lids),
+									(t), as_dict=1)
+							#for ci in comp_items:
+							#	ci.update({"item_code":"%s CP" % ci.item_code})
+							items.extend(comp_items)
+
+		if not models or len(models) <= 0:
+			frappe.msgprint("Aucune resultat")
+			return columns, data
+		ids = {o.item_code for o in items if o.item_code}
+		lids = "','".join(ids)
 	
-	for model in models:
+		for model in models:
 
-		exitems = frappe.db.sql(
-		"""
-		select
-			stock_uom,item_bloque, perfection,is_purchase_item,weight_per_unit,qts_total,qts_depot,variant_of,has_variants,item_name, item_code, manufacturer,last_purchase_rate , manufacturer_part_no, item_group,last_purchase_devise,max_order_qty,max_ordered_variante
-		from `tabItem`
-		where disabled=0 and has_variants=0 and variant_of = %s and item_code not in ('{0}')
-		""".format(lids),
-		(model), as_dict=1)
-		items.extend(exitems)
-		
-		_mitems = [item for item in items if item.variant_of == model]
-		origin_model = frappe.get_doc("Item",model)
-		mitems = [origin_model]
-		mitems.extend(_mitems)
-		
-		for mri in mitems:
-			global info
-			qts_max_achat = 0
-			if mri.variant_of:
-				#variante
-				#info = info_variante(mri.item_code)
-				qts_max_achat = mri.max_ordered_variante
-			elif mri.has_variants:
-				#info = info_modele(mri.item_code)
-				qts_max_achat = mri.max_order_qty
-			#sqllast_qty = frappe.db.sql("""select actual_qty,valuation_rate,incoming_rate from `tabStock Ledger Entry` 
-			#where item_code=%s and voucher_type=%s 
-			#order by posting_date desc, posting_time desc limit 1""", (mri.item_code,"Purchase Receipt"), as_dict=1)
-			#relq = frappe.db.sql("""select sum(ordered_qty) - sum(qty) from `tabPurchase Invoice Item` 
-			#where item_code=%s and docstatus=1 and ordered_qty>0""", (mri.item_code))[0][0]
-			last_qty = 0
-			#qts_consulte = frappe.db.sql("""select sum(qty) from `tabSupplier Quotation Item` 
-			#where item_code=%s and docstatus=0""", (mri.item_code))[0][0]
-			#qts_demande = frappe.db.sql("""select sum(qty) from `tabMaterial Request Item` 
-			#where item_code=%s and docstatus=1 and consulted=0 and warehouse='GLOBAL - MV'""", (mri.item_code))[0][0]
-			#r_qts_bloque="Bloque" if mri.item_bloque else ""
-			#qts_bloque = frappe.db.sql("""select sum(qty) from `tabMaterial Request Item` 
-			#where item_code=%s and docstatus=1 and ordered_qty=0 and consulted=1""", (mri.item_code))[0][0]
-			
-			#if qts_bloque and qts_bloque > 0:
-			#	r_qts_bloque = "Bloque au recommande auto"
-			last_valuation = 0
-			recom = 0
-			_date = ""
-			date =""
-			#_recom = frappe.get_all("Item Reorder",fields=["warehouse_reorder_qty","modified"],filters=[{"parent":mri.item_code},{"warehouse":"GLOBAL - MV"}])
-			#if _recom:
-			#	recom = _recom[0].warehouse_reorder_qty
-			#	_date = _recom[0].modified
-			#	date = frappe.utils.get_datetime(date).strftime("%d/%m/%Y")
-			#if sqllast_qty:
-			#	last_qty = sqllast_qty[0].actual_qty
-			#	last_valuation = sqllast_qty[0].incoming_rate
-			cmp = "%s CP" % mri.item_code if (mri.has_variants and mri.item_code in mcomplements) else mri.item_code
-			row = ["""<input type='button' onclick="erpnext.utils.open_item_info('%s', this)" value='info'>  </input> &nbsp;&nbsp;&nbsp; <button id='%s' onClick="demander_item('%s')" type='button'>Demander</button><input placeholder='Qts' id='input_%s' style='color:black'></input>""" % (mri.item_code,mri.item_code,mri.item_code,mri.item_code),
-			       cmp,
-			       #date
-			       #date,
-			       mri.item_name,
-			       #uom
-			       mri.stock_uom,
-			       mri.manufacturer,
-			       mri.manufacturer_part_no,
-			       #poids
-			       #mri.weight_per_unit,
-			       #perfection
-			       mri.perfection,
-			       #last_qty
-			       #last_qty or 0,
-			       #last_valuation
-			       #last_valuation or 0,
-			       #consom,
-			       #"_",
-			       #qts_comm
-			       #info[3] or 0,
-			       #reliuat
-			       #relq or 0,
-			       #qts_dem
-			       #info[1] or 0,
-			       #qts_bloque
-			       #r_qts_bloque or '',
-			       #qts_depot
-			       mri.qts_depot,
-			       #qts_magasin
-			       flt(mri.qts_total or 0) - flt(mri.qts_depot or 0),
-			       #qts
-			       mri.qts_total,
-			       #qts_projete
-			       #info[2] or 0,
-			       #qts_demande or 0,
-			       #qts_consulte or 0,
-			       #qts_max_achat
-			       #qts_max_achat or 0,
-			       #recom
-			       #recom or 0,
-			       #last_purchase_rate
-			       #mri.last_purchase_rate or 0,
-			       #last_purchase_devise
-			       #mri.last_purchase_devise or 0
-			      ]
+			exitems = frappe.db.sql(
+			"""
+			select
+				stock_uom,item_bloque, perfection,is_purchase_item,weight_per_unit,qts_total,qts_depot,variant_of,has_variants,item_name, item_code, manufacturer,last_purchase_rate , manufacturer_part_no, item_group,last_purchase_devise,max_order_qty,max_ordered_variante
+			from `tabItem`
+			where disabled=0 and has_variants=0 and variant_of = %s and item_code not in ('{0}')
+			""".format(lids),
+			(model), as_dict=1)
+			items.extend(exitems)
 
-			#if filters.show_price:
-			# get prices in each price list
-			#	if price_lists and not mri.has_variants:
-			#		all_prices = ""
-			#		for pl in price_lists:
-			#			if pl.name:
-			#				price = frappe.db.sql("""select price_list_rate from `tabItem Price` where buying=1 and price_list=%s and (  item_code=%s) ORDER BY creation DESC LIMIT 1;""",(pl.name,mri.item_code))
-			#				if price:
-			#					all_prices += "%s : %.2f %s - " % (pl.name ,price[0][0] or 0,pl.currency)
-			#		row.append(all_prices)
-			#					#row.append(price[0][0])
-			#				#else:
-			#					#row.append("_")
-			#			#else:
-			#				#row.append("_")
+			_mitems = [item for item in items if item.variant_of == model]
+			origin_model = frappe.get_doc("Item",model)
+			mitems = [origin_model]
+			mitems.extend(_mitems)
 
-			data.append(row)
-		
+			for mri in mitems:
+				global info
+				qts_max_achat = 0
+				if mri.variant_of:
+					qts_max_achat = mri.max_ordered_variante
+				elif mri.has_variants:
+					qts_max_achat = mri.max_order_qty
+				
+				last_qty = 0
+				
+				last_valuation = 0
+				recom = 0
+				_date = ""
+				date =""
+				cmp = "%s CP" % mri.item_code if (mri.has_variants and mri.item_code in mcomplements) else mri.item_code
+				row = ["""<input type='button' onclick="erpnext.utils.open_item_info('%s', this)" value='info'>  </input> &nbsp;&nbsp;&nbsp; <button id='%s' onClick="demander_item('%s')" type='button'>Demander</button><input placeholder='Qts' id='input_%s' style='color:black'></input>""" % (mri.item_code,mri.item_code,mri.item_code,mri.item_code),
+				       cmp,
+				       mri.item_name,
+				       mri.stock_uom,
+				       mri.manufacturer,
+				       mri.manufacturer_part_no,
+				       mri.perfection,
+				       mri.qts_depot,
+				       flt(mri.qts_total or 0) - flt(mri.qts_depot or 0),
+				       mri.qts_total,
+				       
+				      ]
+
+				data.append(row)
+	else:
+		for mri in items:
+				global info
+				qts_max_achat = 0
+				if mri.variant_of:
+					qts_max_achat = mri.max_ordered_variante
+				elif mri.has_variants:
+					qts_max_achat = mri.max_order_qty
+				
+				last_qty = 0
+				
+				last_valuation = 0
+				recom = 0
+				_date = ""
+				date =""
+				cmp = "%s CP" % mri.item_code if (mri.has_variants and mri.item_code in mcomplements) else mri.item_code
+				row = ["""<input type='button' onclick="erpnext.utils.open_item_info('%s', this)" value='info'>  </input> &nbsp;&nbsp;&nbsp; <button id='%s' onClick="demander_item('%s')" type='button'>Demander</button><input placeholder='Qts' id='input_%s' style='color:black'></input>""" % (mri.item_code,mri.item_code,mri.item_code,mri.item_code),
+				       cmp,
+				       mri.item_name,
+				       mri.stock_uom,
+				       mri.manufacturer,
+				       mri.manufacturer_part_no,
+				       mri.perfection,
+				       mri.qts_depot,
+				       flt(mri.qts_total or 0) - flt(mri.qts_depot or 0),
+				       mri.qts_total,
+				       
+				      ]
+
+				data.append(row)
 	return columns, data
 					       
 def get_conditions(filters):
