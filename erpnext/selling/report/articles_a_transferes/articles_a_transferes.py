@@ -151,6 +151,8 @@ def execute(filters=None):
 		total_qty = 0
 		total_qty_cmd = sum(_item.qty for _item in items if (_item.qty and _item.item_code == item.item_code))
 		qts_transfere = total_qty_cmd - qty
+		if qts_transfere <= 0:
+			continue
 		qts_stock_source = 0
 		suggere_qty = frappe.db.sql("""select warehouse,actual_qty from `tabBin` where item_code=%s and actual_qty>%s  and warehouse!=%s limit 1""",(item.item_code,qts_transfere,item.warehouse),as_dict=1)
 		if not suggere_qty :
@@ -181,6 +183,8 @@ def execute(filters=None):
 			client =  ', '.join({_item.customer_name for _item in items if ("customer_name" in _item and _item.customer_name   and _item.item_code == item.item_code)})
 			actual_qty  = '0'
 			qts_transfere = total_qty - qty
+			if qts_transfere <= 0:
+				continue
 			delivery_date = min(_item.schedule_date for _item in items if (_item.schedule_date  and _item.item_code == item.item_code)) if "consulted" in item else  min(_item.delivery_date for _item in items if _item.delivery_date  and _item.item_code == item.item_code)
 		else:
 			total_qty = item.qty
