@@ -76,14 +76,14 @@ def execute(filters=None):
 			"width": 150
 		})
 
-	if filters.show_price:
-		price_lists= frappe.get_all("Price List",filters={"buying":1},fields=["name","currency"])
-		if price_lists:
-			columns.append({
-						"fieldname": "all_prices",
-						"label": "Prix article",
-						"width": 450
-					})
+	#if filters.show_price:
+	#	price_lists= frappe.get_all("Price List",filters={"buying":1},fields=["name","currency"])
+	#	if price_lists:
+	#		columns.append({
+	#					"fieldname": "all_prices",
+	#					"label": "Prix article",
+	#					"width": 450
+	#				})
 		#	for pl in price_lists:
 		#		columns.append({
 		#			"fieldname": pl.name,
@@ -273,21 +273,21 @@ def execute(filters=None):
 			       #mri.last_purchase_devise or 0
 			      ]
 
-			if filters.show_price:
+			#if filters.show_price:
 			# get prices in each price list
-				if price_lists and not mri.has_variants:
-					all_prices = ""
-					for pl in price_lists:
-						if pl.name:
-							price = frappe.db.sql("""select price_list_rate from `tabItem Price` where buying=1 and price_list=%s and (  item_code=%s) ORDER BY creation DESC LIMIT 1;""",(pl.name,mri.item_code))
-							if price:
-								all_prices += "%s : %.2f %s - " % (pl.name ,price[0][0] or 0,pl.currency)
-					row.append(all_prices)
-								#row.append(price[0][0])
-							#else:
-								#row.append("_")
-						#else:
-							#row.append("_")
+			#	if price_lists and not mri.has_variants:
+			#		all_prices = ""
+			#		for pl in price_lists:
+			#			if pl.name:
+			#				price = frappe.db.sql("""select price_list_rate from `tabItem Price` where buying=1 and price_list=%s and (  item_code=%s) ORDER BY creation DESC LIMIT 1;""",(pl.name,mri.item_code))
+			#				if price:
+			#					all_prices += "%s : %.2f %s - " % (pl.name ,price[0][0] or 0,pl.currency)
+			#		row.append(all_prices)
+			#					#row.append(price[0][0])
+			#				#else:
+			#					#row.append("_")
+			#			#else:
+			#				#row.append("_")
 
 			data.append(row)
 		
