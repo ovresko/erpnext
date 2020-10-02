@@ -224,11 +224,5 @@ frappe.query_reports["Rapport analyse depot"] = {
 				return data;
 			} 
 		}
-		,{
-			"fieldname": "show_price",
-			"label": "Afficher les prix",
-			"fieldtype": "Check",
-			"default": 0
-		}
 	]
 }
