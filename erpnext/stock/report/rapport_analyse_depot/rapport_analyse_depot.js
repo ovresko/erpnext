@@ -196,7 +196,7 @@ frappe.query_reports["Rapport analyse depot"] = {
 		}
 		,{
 			"fieldname": "grouped",
-			"label": "Grouper les qts",
+			"label": "Grouper par modele",
 			"fieldtype": "Check",
 			"default": 0
 		},
