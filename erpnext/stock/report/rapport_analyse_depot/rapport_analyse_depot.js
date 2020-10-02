@@ -193,6 +193,12 @@ frappe.query_reports["Rapport analyse depot"] = {
 			"label": __("Purchase Receipt"),
 			fieldtype: "Link",
 			options: "Purchase Receipt"			
+		}
+		,{
+			"fieldname": "grouped",
+			"label": "Grouper les qts",
+			"fieldtype": "Check",
+			"default": 0
 		},
 		{
 			"fieldname":"manufacturer_lp",
