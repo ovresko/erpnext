@@ -351,6 +351,7 @@ erpnext.pos.PointOfSale = class PointOfSale {
 		 
 		if(!item.qts_depot || (item.qts_depot && parseFloat(item.qts_depot) <=0)){
 			alert("Qts d'article non disponible");
+			frappe.dom.unfreeze();
 			return;
 		}
 		
