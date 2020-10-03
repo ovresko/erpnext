@@ -286,7 +286,7 @@ erpnext.pos.PointOfSale = class PointOfSale {
 	update_item_in_cart(item_code, field='qty', value=1, batch_no,from_search=0) {
 		frappe.dom.freeze();
 		if(this.cart.exists(item_code, batch_no)) {
-			if(from_search == 1){
+			if(from_search == 1) {
 				alert("Article existe deja !");	
 				frappe.dom.unfreeze();
 				return;
@@ -348,8 +348,8 @@ erpnext.pos.PointOfSale = class PointOfSale {
 		//frappe.model.set_value("Sales Invoice Item", item.name, "item_code", item_code);
 		 
 		frappe.flags.hide_serial_batch_dialog = true;
-		 
-		if(!item.qts_depot || (item.qts_depot && parseFloat(item.qts_depot) <=0)){
+		console.log(item);
+		if(item.qts_depot && parseFloat(item.qts_depot) <=0){
 			alert("Qts d'article non disponible");
 			frappe.dom.unfreeze();
 			return;
