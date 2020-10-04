@@ -40,8 +40,10 @@
 			<th class="text-left">Référence</th>
 			<th class="text-left">Info.</th>
 			{% if(!filters.hide_prices) { %}
-				<th class="text-left" style="width:80px">PRIX PUBLIQUE</th>
-				<th class="text-left" style="width:80px">PRIX EN GROS</th>
+				{%  price_index = report_columns.map(function(e) { return e.fieldname; }).indexOf('fiche_infor_link'); %}
+				{% for(var j=report_columns.length-1, k=price_index; j>=k; j--) { %}
+					<th class="text-left" style="width:80px">{%= report_columns[j].label %}</th>
+				{% } %}	
 			{% } %}
 		</tr>
 	</thead>
@@ -59,8 +61,11 @@
 				<td class="text-left">{%= row.ref_fabricant  %}</td>
 				<td class="text-left"> <a href="http://192.168.100.20/result?p={%= row.item_code %}" target="_blank" > Fiche info </a></td>
 				{% if(!filters.hide_prices) { %}
-					<td class="text-right">{%= row[report_columns[report_columns.length-1].fieldname]  %}</td>
-					<td class="text-right">{%= row[report_columns[report_columns.length-2].fieldname]  %}</td>
+					{%  price_index = report_columns.map(function(e) { return e.fieldname; }).indexOf('fiche_infor_link'); %}
+					{% for(var j=report_columns.length-1, k=price_index; j>=k; j--) { %}
+						<th class="text-right" style="width:80px">{%= row[report_columns[j].fieldname] %}</th>
+					{% } %}	
+					
 				{% } %}
 			</tr>
 		{% } %}
