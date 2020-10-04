@@ -49,13 +49,13 @@
 				var row = data[j];				
 			%}
 			<tr>
-				<td class="text-left">{%= row["item_name"]  %}</td>
-				<td class="text-left">{%= row["marque"]  %}</td>
-				<td class="text-left">{%= row["pub_name"]  %}</td>
-				<td class="text-left">{%= row["oem"]  %}</td>
-				<td class="text-left">{%= row["fabricant"]  %}</td>
-				<td class="text-left">{%= row["ref_fabricant"]  %}</td>
-				<td class="text-left"><a href="{%= row['fiche_infor_link']" > Fiche info </a> %}</td>
+				<td class="text-left">{%= row.item_name  %}</td>
+				<td class="text-left">{%= row.marque  %}</td>
+				<td class="text-left">{%= row.pub_name  %}</td>
+				<td class="text-left">{%= row.oem  %}</td>
+				<td class="text-left">{%= row.fabricant  %}</td>
+				<td class="text-left">{%= row.ref_fabricant  %}</td>
+				<td class="text-left"><a href="{%= row.fiche_infor_link %}" > Fiche info </a></td>
 				{% if(!filters.hide_prices) { %}
 					<td class="text-right">{%= row[report_columns.length-1]  %}</td>
 					<td class="text-right">{%= row[report_columns.length-2]  %}</td>
