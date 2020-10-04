@@ -57,17 +57,17 @@ def get_transfer(items):
 		"purpose": "Material Transfer"
 	})
 	for item in items:
-		if item.qty and item.item and item.warehouse and item.source:
+		if item['qty'] and item['item'] and item['warehouse'] and item['source']:
 			mr.append("items", {
 				"doctype": "Stock Entry Item",
-				"item_code": item.item,
-				"qty": item.qty,
-				"s_warehouse": item.source,
-				"t_warehouse": item.warehouse,
-				"item_name": item.item_name,
-				"description": item.description,
-				"item_group": item.item_group,
-				"brand": item.brand,
+				"item_code": item['item'],
+				"qty": flt(item['qty'] or 0),
+				"s_warehouse": item['source'],
+				"t_warehouse": item['warehouse'],
+				"item_name": item['item_name']
+				#"description": item.description,
+				#"item_group": item.item_group,
+				#"brand": item.brand,
 			})
 	mr.insert()
 	return mr.name
