@@ -213,7 +213,7 @@ def execute(filters=None):
 				qts_local = 0
 				bin = frappe.db.sql("""select actual_qty from `tabBin` where item_code = %s and warehouse = %s limit 1""", (mri.item_code, filters.get('warehouse')), as_dict=1)
 				if bin and len(bin) > 0:
-					qts_local = bin[0] or 0
+					qts_local = bin[0].actual_qty or 0
 				cmp = "%s CP" % mri.item_code if (mri.has_variants and mri.item_code in mcomplements) else mri.item_code
 				row = ["""<input type='button' onclick="erpnext.utils.open_item_info('%s', this)" value='info'>  </input> &nbsp;&nbsp;&nbsp; <button id='%s' onClick="demander_item('%s')" type='button'>Demander</button><input placeholder='Qts' id='input_%s' style='color:black'></input>""" % (mri.item_code,mri.item_code,mri.item_code,mri.item_code),
 				       cmp,
@@ -248,7 +248,7 @@ def execute(filters=None):
 				qts_local=0
 				bin = frappe.db.sql("""select actual_qty from `tabBin` where item_code = %s and warehouse = %s limit 1""", (mri.item_code, filters.get('warehouse')), as_dict=1)
 				if bin and len(bin) > 0:
-					qts_local = bin[0] or 0
+					qts_local = bin[0].actual_qty or 0
 				cmp = "%s CP" % mri.item_code if (mri.has_variants and mri.item_code in mcomplements) else mri.item_code
 				row = ["""<input type='button' onclick="erpnext.utils.open_item_info('%s', this)" value='info'>  </input> &nbsp;&nbsp;&nbsp; <button id='%s' onClick="demander_item('%s')" type='button'>Demander</button><input placeholder='Qts' id='input_%s' style='color:black'></input>""" % (mri.item_code,mri.item_code,mri.item_code,mri.item_code),
 				       cmp,
