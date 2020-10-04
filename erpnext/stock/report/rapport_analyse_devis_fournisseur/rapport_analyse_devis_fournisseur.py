@@ -671,13 +671,13 @@ def execute(filters=None):
 		elif mri.has_variants:
 			info = info_modele(mri.item_code)
 			qts_max_achat = mri.max_order_qty
-		if is_full:
-			sqllast_qty = frappe.db.sql("""select actual_qty,valuation_rate,incoming_rate from `tabStock Ledger Entry` 
-			where item_code=%s and voucher_type=%s 
-			order by posting_date desc, posting_time desc limit 1""", (mri.item_code,"Purchase Receipt"), as_dict=1)
-			if sqllast_qty:
-				last_qty = sqllast_qty[0].actual_qty
-				last_valuation = sqllast_qty[0].incoming_rate
+		#if is_full:
+		sqllast_qty = frappe.db.sql("""select actual_qty,valuation_rate,incoming_rate from `tabStock Ledger Entry` 
+		where item_code=%s and voucher_type=%s 
+		order by posting_date desc, posting_time desc limit 1""", (mri.item_code,"Purchase Receipt"), as_dict=1)
+		if sqllast_qty:
+			last_qty = sqllast_qty[0].actual_qty
+			last_valuation = sqllast_qty[0].incoming_rate
 		
 		recom = 0
 		_date = ""
