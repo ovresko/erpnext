@@ -62,8 +62,8 @@
 				<td class="text-left"> <a href="http://192.168.100.20/result?p={%= row.item_code %}" target="_blank" > Fiche info </a></td>
 				{% if(!filters.hide_prices) { %}
 					{%  price_index = report_columns.map(function(e) { return e.fieldname; }).indexOf('fiche_infor_link'); %}
-					{% for(var j=report_columns.length-1, k=price_index; j>k; j--) { %}
-						<th class="text-right" style="width:80px">{%= row[report_columns[j].fieldname] %}</th>
+					{% for(var o=report_columns.length-1, t=price_index; o>t; o--) { %}
+						<th class="text-right" style="width:80px">{%= row[report_columns[o].fieldname] %}</th>
 					{% } %}	
 					
 				{% } %}
