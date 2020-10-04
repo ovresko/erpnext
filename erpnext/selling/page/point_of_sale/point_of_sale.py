@@ -70,8 +70,8 @@ def get_transfer(items):
 				"s_warehouse": item['source'],
 				"t_warehouse": item['warehouse'],
 				"item_name": item['item_name'],
-				"uom": uom				
-				"description": mitem.description,
+				"uom": uom,
+				"description": mitem.description
 				#"item_group": item.item_group,
 				#"brand": item.brand,
 			})
