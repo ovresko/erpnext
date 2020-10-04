@@ -16,7 +16,7 @@
 	}
 </style>
 {% var letterhead= filters.letter_head || (frappe.get_doc(":Company", filters.company) && frappe.get_doc(":Company", filters.company).default_letter_head) %}
-{% if(letterhead) {  console.log(row[report_columns.length-1]) ;%}
+{% if(letterhead) { %}
 <div style="margin-bottom: 7px;" class="text-center">
 	{%= frappe.boot.letter_heads[letterhead].header %}
 </div>
@@ -55,10 +55,10 @@
 				<td class="text-left">{%= row.oem  %}</td>
 				<td class="text-left">{%= row.fabricant  %}</td>
 				<td class="text-left">{%= row.ref_fabricant  %}</td>
-				<td class="text-left"> <a href="http://192.168.100.20/result?p={%= row.item_code %} target="_blank" > Fiche info </a></td>
+				<td class="text-left"> <a href="http://192.168.100.20/result?p={%= row.item_code %}" target="_blank" > Fiche info </a></td>
 				{% if(!filters.hide_prices) { %}
-					<td class="text-right">{%= row[report_columns.length-1]  %}</td>
-					<td class="text-right">{%= row[report_columns.length-2]  %}</td>
+					<td class="text-right">{%= row[report_columns[report_columns.length-1].name]  %}</td>
+					<td class="text-right">{%= row[report_columns[report_columns.length-2].name]  %}</td>
 				{% } %}
 			</tr>
 		{% } %}
