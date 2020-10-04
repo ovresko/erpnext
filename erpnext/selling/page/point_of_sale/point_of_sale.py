@@ -49,6 +49,9 @@ def get_valorisation(item_code):
 
 @frappe.whitelist()
 def get_transfer(items):
+	if not items:
+		return "No data"
+	items= json.loads(items)
 	mr = frappe.new_doc("Stock Entry")
 	company = frappe.db.get_single_value('Global Defaults', 'default_company')
 	mr.update({
