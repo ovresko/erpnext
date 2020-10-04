@@ -27,5 +27,33 @@ frappe.query_reports["Articles a transferes"] = {
 			"fieldtype": "Check",
 			"default": 1
 		}
-	]
+	],
+	onload: function(report) {
+		var me = this;
+		report.page.add_inner_button("Generer transfert", function() {
+			var data = report.data;
+			items = [];
+			data.forEach( (item) => {
+				var item_code = item['item_code'];
+				if(item_code && item_code!="Total"){
+					items.push(item);					 
+				}
+				
+			});
+			frappe.call({
+				method: "erpnext.selling.page.point_of_sale.point_of_sale.get_transfer",
+				args: {
+					items: items,
+				},
+				callback: function(r) {
+					if (r.message) {
+						
+						alert(r.message);				
+					}
+				}
+			});
+			//console.log(report);
+			
+		});
+	}
 }
