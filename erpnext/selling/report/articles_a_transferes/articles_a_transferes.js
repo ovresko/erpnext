@@ -40,6 +40,7 @@ frappe.query_reports["Articles a transferes"] = {
 				}
 				
 			});
+			console.log(items);
 			frappe.call({
 				method: "erpnext.selling.page.point_of_sale.point_of_sale.get_transfer",
 				args: {
