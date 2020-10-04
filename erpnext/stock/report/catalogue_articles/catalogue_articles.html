@@ -1,9 +1,17 @@
 {%
-	var report_columns = report.get_columns_for_print();
-
-	if (report_columns.length > 8) {
-		frappe.throw(__("Too many columns. Export the report and print it using a spreadsheet application."));
+	var areport_columns = report.get_columns_for_print();
+	var report_columns = [];
+	for (const element of report_columns) {
+	  if(	element.name != "info"
+		&& element.name != "item_code" 
+		&& element.name != "qts_depot" 
+		&& element.name != "qts_magasin" 
+		&& element.name != "qts_total")
+		{
+			report_columns.push(element);
+		}
 	}
+	
 %}
 
 <style>
@@ -21,13 +29,11 @@
 	{%= frappe.boot.letter_heads[letterhead].header %}
 </div>
 {% } %}
-<h2 class="text-center">{%= __(report.report_name) %}</h2>
+<h2 class="text-center">Catalogue d'articles</h2>
 <h3 class="text-center">{%= filters.company %}</h3>
 <h3 class="text-center">{%= filters.fiscal_year %}</h3>
 <h5 class="text-center">{%=  __("Currency") %} : {%= filters.presentation_currency || erpnext.get_currency(filters.company) %} </h4>
-{% if (filters.from_date) { %}
-	<h4 class="text-center">{%= frappe.datetime.str_to_user(filters.from_date) %} - {%= frappe.datetime.str_to_user(filters.to_date) %}</h3>
-{% } %}
+
 <hr>
 
 <table class="table table-bordered">
