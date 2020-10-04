@@ -12,7 +12,7 @@
 		height: 37px;
 	}
 	.bd{
-		font-size:8px !important;	
+		font-size:10px !important;	
 	}
 </style>
 {% var letterhead= filters.letter_head || (frappe.get_doc(":Company", filters.company) && frappe.get_doc(":Company", filters.company).default_letter_head) %}
@@ -32,17 +32,17 @@
 <table class="table table-bordered">
 	<thead>
 		<tr>
-			<th class="text-left">Article</th>
-			<th class="text-left">Marque</th>
-			<th class="text-left">Générations</th>
-			<th class="text-left">OEM</th>
-			<th class="text-left">Fabricant</th>
-			<th class="text-left">Référence</th>
-			<th class="text-left">Info.</th>
+			<th class="text-left" style="font-size:12px">Article</th>
+			<th class="text-left" style="font-size:12px">Marque</th>
+			<th class="text-left" style="font-size:12px">Générations</th>
+			<th class="text-left" style="font-size:12px">OEM</th>
+			<th class="text-left" style="font-size:12px">Fabricant</th>
+			<th class="text-left" style="font-size:12px">Référence</th>
+			<th class="text-left" style="font-size:12px">Info.</th>
 			{% if(!filters.hide_prices) { %}
 				{%  price_index = report_columns.map(function(e) { return e.fieldname; }).indexOf('fiche_infor_link'); %}
 				{% for(var j=report_columns.length-1, k=price_index; j>k; j--) { %}
-					<th class="text-left" style="width:80px">{%= report_columns[j].label %}</th>
+					<th class="text-left" style="width:80px;font-size:12px">{%= report_columns[j].label %}</th>
 				{% } %}	
 			{% } %}
 		</tr>
