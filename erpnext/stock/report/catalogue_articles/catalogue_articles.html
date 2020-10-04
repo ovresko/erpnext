@@ -1,16 +1,5 @@
 {%
-	var areport_columns = report.get_columns_for_print();
-	var report_columns = [];
-	for (const element of areport_columns) {
-	  if(	element.name != "info"
-		&& element.name != "item_code" 
-		&& element.name != "qts_depot" 
-		&& element.name != "qts_magasin" 
-		&& element.name != "qts_total")
-		{
-			report_columns.push(element);
-		}
-	}
+	var report_columns = report.get_columns_for_print();
 	
 %}
 
@@ -21,6 +10,9 @@
 
 	.financial-statements-blank-row td {
 		height: 37px;
+	}
+	.bd{
+		font-size:11px !important;	
 	}
 </style>
 {% var letterhead= filters.letter_head || (frappe.get_doc(":Company", filters.company) && frappe.get_doc(":Company", filters.company).default_letter_head) %}
@@ -34,36 +26,42 @@
 <h3 class="text-center">{%= filters.fiscal_year %}</h3>
 
 <hr>
-
+<div class="bd">
 <table class="table table-bordered">
 	<thead>
 		<tr>
-			<th style="width: {%= 100 - (report_columns.length - 2) * 13 %}%"></th>
-			{% for(var i=2, l=report_columns.length; i<l; i++) { %}
-				<th class="text-right">{%= report_columns[i].label %}</th>
+			<th class="text-left">Article</th>
+			<th class="text-left">Marque</th>
+			<th class="text-left">Générations</th>
+			<th class="text-left">OEM</th>
+			<th class="text-left">Fabricant</th>
+			<th class="text-left">Référence</th>
+			<th class="text-left">Fiche info</th>
+			{% if(!filters.hide_prices) { %}
+				<th class="text-left">PRIX PUBLIQUE</th>
+				<th class="text-left">PRIX EN GROS</th>
 			{% } %}
 		</tr>
 	</thead>
 	<tbody>
 		{% for(var j=0, k=data.length-1; j<k; j++) { %}
 			{%
-				var row = data[j];
-				var row_class = data[j].parent_account ? "" : "financial-statements-important";
-				row_class += data[j].account_name ? "" : " financial-statements-blank-row";
+				var row = data[j];				
 			%}
-			<tr class="{%= row_class %}">
-				<td>
-					<span style="padding-left: {%= cint(data[j].indent) * 2 %}em">{%= row.account_name %}</span>
-				</td>
-				{% for(var i=2, l=report_columns.length; i<l; i++) { %}
-					<td class="text-right">
-						{% var fieldname = report_columns[i].fieldname; %}
-						{% if (!is_null(row[fieldname])) { %}
-							{%= format_currency(row[fieldname], filters.presentation_currency) %}
-						{% } %}
-					</td>
+			<tr>
+				<td class="text-left">{%= row["item_name"]  %}</td>
+				<td class="text-left">{%= row["marque"]  %}</td>
+				<td class="text-left">{%= row["pub_name"]  %}</td>
+				<td class="text-left">{%= row["oem"]  %}</td>
+				<td class="text-left">{%= row["fabricant"]  %}</td>
+				<td class="text-left">{%= row["ref_fabricant"]  %}</td>
+				<td class="text-left"><a href="{%= row['fiche_infor_link']" > Fiche info </a> %}</td>
+				{% if(!filters.hide_prices) { %}
+					<td class="text-right">{%= row[report_columns.length-1]  %}</td>
+					<td class="text-right">{%= row[report_columns.length-2]  %}</td>
 				{% } %}
 			</tr>
 		{% } %}
 	</tbody>
 </table>
+</div>
