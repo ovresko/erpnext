@@ -61,6 +61,11 @@ def execute(filters=None):
 			"width": 150
 		})
 	columns.append({
+			"fieldname": "qts_local",
+			"label": "Qts Actuel",
+			"width": 150
+		})
+	columns.append({
 			"fieldname": "qts_depot",
 			"label": "Qts Depot",
 			"width": 150
@@ -205,6 +210,9 @@ def execute(filters=None):
 				recom = 0
 				_date = ""
 				date =""
+				qts_local = 0
+				bin = frappe.db.sql("""select actual_qty from `tabBin` where item_code = %s and warehouse = %s""", (mri.item_code, filters.get('warehouse')), as_dict=1)
+				qts_local = bin[0][0] if bin and bin[0] else 0
 				cmp = "%s CP" % mri.item_code if (mri.has_variants and mri.item_code in mcomplements) else mri.item_code
 				row = ["""<input type='button' onclick="erpnext.utils.open_item_info('%s', this)" value='info'>  </input> &nbsp;&nbsp;&nbsp; <button id='%s' onClick="demander_item('%s')" type='button'>Demander</button><input placeholder='Qts' id='input_%s' style='color:black'></input>""" % (mri.item_code,mri.item_code,mri.item_code,mri.item_code),
 				       cmp,
@@ -213,6 +221,7 @@ def execute(filters=None):
 				       mri.manufacturer,
 				       mri.manufacturer_part_no,
 				       mri.perfection,
+				       qts_local,
 				       mri.qts_depot,
 				       flt(mri.qts_total or 0) - flt(mri.qts_depot or 0),
 				       mri.qts_total,
@@ -235,6 +244,8 @@ def execute(filters=None):
 				recom = 0
 				_date = ""
 				date =""
+				bin = frappe.db.sql("""select actual_qty from `tabBin` where item_code = %s and warehouse = %s""", (mri.item_code, filters.get('warehouse')), as_dict=1)
+				qts_local = bin[0][0] if bin and bin[0] else 0
 				cmp = "%s CP" % mri.item_code if (mri.has_variants and mri.item_code in mcomplements) else mri.item_code
 				row = ["""<input type='button' onclick="erpnext.utils.open_item_info('%s', this)" value='info'>  </input> &nbsp;&nbsp;&nbsp; <button id='%s' onClick="demander_item('%s')" type='button'>Demander</button><input placeholder='Qts' id='input_%s' style='color:black'></input>""" % (mri.item_code,mri.item_code,mri.item_code,mri.item_code),
 				       cmp,
@@ -243,6 +254,7 @@ def execute(filters=None):
 				       mri.manufacturer,
 				       mri.manufacturer_part_no,
 				       mri.perfection,
+				       qts_local,
 				       mri.qts_depot,
 				       flt(mri.qts_total or 0) - flt(mri.qts_depot or 0),
 				       mri.qts_total,
