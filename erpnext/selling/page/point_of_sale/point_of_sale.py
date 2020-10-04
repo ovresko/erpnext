@@ -62,7 +62,7 @@ def get_transfer(items):
 	for item in items:
 		if item['qty'] and item['item'] and item['warehouse'] and item['source']:
 			mitem = frappe.get_doc("Item",item['item'])
-			uom = item.stock_uom
+			uom = mitem.stock_uom
 			mr.append("items", {
 				"doctype": "Stock Entry Item",
 				"item_code": item['item'],
