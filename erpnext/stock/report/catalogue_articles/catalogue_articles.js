@@ -256,22 +256,6 @@ frappe.query_reports["Catalogue Articles"] = {
 	],
 	onload: function(report) {
 		var me = this;
-		report.page.add_inner_button("Exporter Catalogue PDF", function() {
-			var data = report.data;
-			var items = [];
-			data.forEach( (item) => {
-				var item_code = item['item_code'];
-				if(item_code && item_code!="Total" && !item_code.includes("----") ){
-					items.push(item_code);
-				}
-				
-			});
-			
-			$.get( "/api/method/erpnext.stock.doctype.item.item.bulk_print_list",{"names":encodeURIComponent(items)});
-
-			
-			
-			
-		});
+		 
 	}
 }
