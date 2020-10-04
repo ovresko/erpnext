@@ -34,13 +34,13 @@ frappe.query_reports["Articles a transferes"] = {
 			var data = report.data;
 			items = [];
 			data.forEach( (item) => {
-				var item_code = item['item_code'];
+				var item_code = item['item'];
 				if(item_code && item_code!="Total"){
 					items.push(item);					 
 				}
 				
 			});
-			console.log(items);
+			//console.log(items);
 			frappe.call({
 				method: "erpnext.selling.page.point_of_sale.point_of_sale.get_transfer",
 				args: {
