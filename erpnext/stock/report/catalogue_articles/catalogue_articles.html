@@ -55,7 +55,7 @@
 				<td class="text-left">{%= row.oem  %}</td>
 				<td class="text-left">{%= row.fabricant  %}</td>
 				<td class="text-left">{%= row.ref_fabricant  %}</td>
-				<td class="text-left"><a href="{%= row.fiche_infor_link %}" > Fiche info </a></td>
+				<td class="text-left"> <a href="http://192.168.100.20/result?p={%= row.fiche_infor_link %} target="_blank" > Fiche info </a></td>
 				{% if(!filters.hide_prices) { %}
 					<td class="text-right">{%= row[report_columns.length-1]  %}</td>
 					<td class="text-right">{%= row[report_columns.length-2]  %}</td>
