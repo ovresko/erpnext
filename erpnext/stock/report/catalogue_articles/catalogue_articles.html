@@ -12,7 +12,7 @@
 		height: 37px;
 	}
 	.bd{
-		font-size:9px !important;	
+		font-size:8px !important;	
 	}
 </style>
 {% var letterhead= filters.letter_head || (frappe.get_doc(":Company", filters.company) && frappe.get_doc(":Company", filters.company).default_letter_head) %}
@@ -22,8 +22,10 @@
 </div>
 {% } %}
 <h2 class="text-center">Catalogue d'articles</h2>
-<h3 class="text-center">{%= filters.company %}</h3>
-<h3 class="text-center">{%= filters.fiscal_year %}</h3>
+<p class="text-center">{%= filters.group %}</p>
+<p class="text-center">{%= filters.marque_v %} {%= filters.modele_v %} {%= filters.generation_v %} {%= filters.version %}</p>
+<p class="text-center">{%= filters.manufacturer %}</p>
+<p class="text-center">Générer le {%= frappe.datetime.str_to_user(frappe.datetime.get_datetime_as_string()) %}</p>
 
 <hr>
 <div class="bd">
@@ -36,10 +38,10 @@
 			<th class="text-left">OEM</th>
 			<th class="text-left">Fabricant</th>
 			<th class="text-left">Référence</th>
-			<th class="text-left">Fiche info</th>
+			<th class="text-left">Info.</th>
 			{% if(!filters.hide_prices) { %}
-				<th class="text-left">PRIX PUBLIQUE</th>
-				<th class="text-left">PRIX EN GROS</th>
+				<th class="text-left" style="width:80px">PRIX PUBLIQUE</th>
+				<th class="text-left" style="width:80px">PRIX EN GROS</th>
 			{% } %}
 		</tr>
 	</thead>
