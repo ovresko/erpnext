@@ -48,6 +48,32 @@ def get_valorisation(item_code):
 	return text
 
 @frappe.whitelist()
+def get_transfer(items):
+	mr = frappe.new_doc("Stock Entry")
+	company = frappe.db.get_single_value('Global Defaults', 'default_company')
+	mr.update({
+		"company": company,
+		"posting_date": nowdate(),
+		"purpose": "Material Transfer"
+	})
+	for item in items:
+		if item.qty and item.item and item.warehouse and item.source:
+			mr.append("items", {
+				"doctype": "Stock Entry Item",
+				"item_code": item.item,
+				"qty": item.qty,
+				"s_warehouse": item.source,
+				"t_warehouse": item.warehouse,
+				"item_name": item.item_name,
+				"description": item.description,
+				"item_group": item.item_group,
+				"brand": item.brand,
+			})
+	mr.insert()
+	return mr.name
+	
+	
+@frappe.whitelist()
 def get_customer(customer):
 	cs = frappe.get_doc("Customer",customer)
 	bl = get_balance_on(party_type="Customer",party=customer)
