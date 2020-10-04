@@ -47,9 +47,8 @@ frappe.query_reports["Articles a transferes"] = {
 					items: items,
 				},
 				callback: function(r) {
-					if (r.message) {
-						
-						alert(r.message);				
+					if (r.message) {						
+						 window.open('/desk#Form/Stock%20Entry/'+r.message, '_blank');
 					}
 				}
 			});
