@@ -66,6 +66,7 @@ def get_transfer(items):
 			mr.append("items", {
 				"doctype": "Stock Entry Item",
 				"item_code": item['item'],
+				"item_name": mitem.item_name,
 				"qty": flt(item['qty'] or 0),
 				"s_warehouse": item['source'],
 				"t_warehouse": item['warehouse'],
@@ -75,6 +76,8 @@ def get_transfer(items):
 				#"item_group": item.item_group,
 				#"brand": item.brand,
 			})
+		else:
+			return "Qts invalide"
 	mr.insert()
 	return mr.name
 	
