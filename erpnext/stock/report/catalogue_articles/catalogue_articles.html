@@ -1,3 +1,35 @@
+{%
+	var report_columns = report.get_columns_for_print();
+
+	if (report_columns.length > 8) {
+		frappe.throw(__("Too many columns. Export the report and print it using a spreadsheet application."));
+	}
+%}
+
+<style>
+	.financial-statements-important td {
+		font-weight: bold;
+	}
+
+	.financial-statements-blank-row td {
+		height: 37px;
+	}
+</style>
+{% var letterhead= filters.letter_head || (frappe.get_doc(":Company", filters.company) && frappe.get_doc(":Company", filters.company).default_letter_head) %}
+{% if(letterhead) { %}
+<div style="margin-bottom: 7px;" class="text-center">
+	{%= frappe.boot.letter_heads[letterhead].header %}
+</div>
+{% } %}
+<h2 class="text-center">{%= __(report.report_name) %}</h2>
+<h3 class="text-center">{%= filters.company %}</h3>
+<h3 class="text-center">{%= filters.fiscal_year %}</h3>
+<h5 class="text-center">{%=  __("Currency") %} : {%= filters.presentation_currency || erpnext.get_currency(filters.company) %} </h4>
+{% if (filters.from_date) { %}
+	<h4 class="text-center">{%= frappe.datetime.str_to_user(filters.from_date) %} - {%= frappe.datetime.str_to_user(filters.to_date) %}</h3>
+{% } %}
+<hr>
+
 <table class="table table-bordered">
 	<thead>
 		<tr>
