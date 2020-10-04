@@ -57,8 +57,8 @@
 				<td class="text-left">{%= row.ref_fabricant  %}</td>
 				<td class="text-left"> <a href="http://192.168.100.20/result?p={%= row.item_code %}" target="_blank" > Fiche info </a></td>
 				{% if(!filters.hide_prices) { %}
-					<td class="text-right">{%= row[report_columns[report_columns.length-1].name]  %}</td>
-					<td class="text-right">{%= row[report_columns[report_columns.length-2].name]  %}</td>
+					<td class="text-right">{%= row[report_columns[report_columns.length-1].fieldname]  %}</td>
+					<td class="text-right">{%= row[report_columns[report_columns.length-2].fieldname]  %}</td>
 				{% } %}
 			</tr>
 		{% } %}
