@@ -163,7 +163,7 @@ def execute(filters=None):
 					continue
 				
 				qts_stock_source = suggere_qty.actual_qty
-				suggere_qty = "Qts Insufisante | %s" % (suggere_qty.warehouse)
+				suggere_qty = "%s" % (suggere_qty.warehouse)
 				
 			else:
 				if filters.disp==1:
