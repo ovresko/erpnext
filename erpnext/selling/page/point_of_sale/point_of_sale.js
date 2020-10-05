@@ -349,6 +349,11 @@ erpnext.pos.PointOfSale = class PointOfSale {
 		 
 		frappe.flags.hide_serial_batch_dialog = true;
 		console.log(item);
+		if (field == "qty" && item.projected_qty <= args['qty']) {
+			alert("Qts d'article non disponible");
+			frappe.dom.unfreeze();
+			return;
+		}
 		if(item.projected_qty <=0) {
 			alert("Qts d'article non disponible");
 			frappe.dom.unfreeze();
