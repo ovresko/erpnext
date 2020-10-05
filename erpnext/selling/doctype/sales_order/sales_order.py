@@ -89,7 +89,7 @@ class SalesOrder(SellingController):
 			tot_avail_qty = frappe.db.sql("select projected_qty from `tabBin` \
 				where item_code = %s and warehouse = %s", (d.item_code, d.warehouse))
 			d.projected_qty = tot_avail_qty and flt(tot_avail_qty[0][0]) or 0
-			if not d.projected_qty or d.projected_qty <= 0:
+			if not d.projected_qty or d.projected_qty < d.qty:
 				frappe.msgprint("Qts non disponible pour l'article : %s" % d.item_code)
 
 		# check for same entry multiple times
