@@ -923,6 +923,7 @@ class POSCart {
 	{
 		frappe.call({
 			method: "erpnext.selling.page.point_of_sale.point_of_sale.make_devis",
+			freeze: true,
 			args: {
 				"customer": this.frm.doc.customer,
 				"items": this.frm.doc.items,
@@ -941,6 +942,7 @@ class POSCart {
 	{	
 		frappe.call({
 			method: "erpnext.selling.page.point_of_sale.point_of_sale.make_sales_order",
+			freeze: true,
 			args: {
 				"customer": this.frm.doc.customer,
 				"items": this.frm.doc.items,
