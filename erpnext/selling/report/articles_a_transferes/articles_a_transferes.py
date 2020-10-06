@@ -130,7 +130,8 @@ def execute(filters=None):
 			qty = qty[0]
 		else:
 			qty = 0
-		
+		if qty < 0:
+			qty = 0
 		#if item.qty <= qty:
 		#	continue
 		#qts a transfere
