@@ -150,9 +150,16 @@ def execute(filters=None):
 			
 		total_qty = 0
 		total_qty_cmd = sum(_item.qty for _item in items if (_item.qty and _item.item_code == item.item_code))
+		# check if traite
+		if filters.ntraite == 1 :
+			iti = frappe.db.sql("""select item_code,qty from `tabStock Entry Detail` where item_code=%s and docstatus==0 and s_warehouse==%s t_warehouse==%s """,(item.item_code,filters.source_warehouse,filters.warehouse),as_dict=1)
+			if iti:
+				qts_traite = sum(a.qty for a in iti if a.qty)
+				total_qty_cmd = total_qty_cmd - qts_traite
 		qts_transfere = total_qty_cmd - qty
 		if qts_transfere <= 0:
 			continue
+			
 		qts_stock_source = 0
 		suggere_qty = frappe.db.sql("""select warehouse,actual_qty from `tabBin` where item_code=%s and actual_qty>%s  and warehouse!=%s limit 1""",(item.item_code,qts_transfere,item.warehouse),as_dict=1)
 		if not suggere_qty :
@@ -177,6 +184,8 @@ def execute(filters=None):
 			qts_stock_source = suggere_qty.actual_qty
 			suggere_qty = "%s" % (suggere_qty.warehouse)
 			
+		
+				
 		if filters.grouped==1 and filters.warehouse:
 			total_qty = total_qty_cmd
 			parent =  ', '.join({_item.parent for _item in items if (_item.parent  and _item.item_code == item.item_code)})
