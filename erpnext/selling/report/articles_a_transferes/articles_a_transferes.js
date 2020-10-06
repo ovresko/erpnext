@@ -37,7 +37,7 @@ frappe.query_reports["Articles a transferes"] = {
 	],
 	onload: function(report) {
 		var me = this;
-		frappe.dom.freeze()
+		frappe.dom.freeze();
 		report.page.add_inner_button("Generer transfert", function() {
 			var data = report.data;
 			items = [];
@@ -51,6 +51,7 @@ frappe.query_reports["Articles a transferes"] = {
 			//console.log(items);
 			frappe.call({
 				method: "erpnext.selling.page.point_of_sale.point_of_sale.get_transfer",
+				freeze: true,
 				args: {
 					items: items,
 				},
