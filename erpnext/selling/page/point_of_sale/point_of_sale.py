@@ -54,9 +54,15 @@ def get_transfer(items):
 	items= json.loads(items)
 	mr = frappe.new_doc("Stock Entry")
 	company = frappe.db.get_single_value('Global Defaults', 'default_company')
+	if not len(items):
+		return
+	sw = items[0]['source']
+	tw = items[0]['warehouse']
 	mr.update({
 		"company": company,
 		"posting_date": nowdate(),
+		"from_warehouse": sw,
+		"to_warehouse": tw,
 		"purpose": "Material Transfer"
 	})
 	for item in items:
