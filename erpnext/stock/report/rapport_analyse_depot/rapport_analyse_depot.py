@@ -223,7 +223,7 @@ def execute(filters=None):
 				       mri.manufacturer_part_no,
 				       mri.perfection,
 				       qts_local,
-				       mri.qts_depot,
+				       mri.qts_depot - qts_local,
 				       flt(mri.qts_total or 0) - flt(mri.qts_depot or 0),
 				       mri.qts_total,
 				       
@@ -258,7 +258,7 @@ def execute(filters=None):
 				       mri.manufacturer_part_no,
 				       mri.perfection,
 				       qts_local,
-				       mri.qts_depot,
+				       mri.qts_depot - qts_local,
 				       flt(mri.qts_total or 0) - flt(mri.qts_depot or 0),
 				       mri.qts_total,
 				       
