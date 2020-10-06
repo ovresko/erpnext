@@ -346,7 +346,7 @@ erpnext.pos.PointOfSale = class PointOfSale {
 		//let item = this.frm.add_child('items');
 		//item['item_code']=item_code;
 		//frappe.model.set_value("Sales Invoice Item", item.name, "item_code", item_code);
-		let origin_item = this.get_item_details(item.item_code);
+		let origin_item = this.items.get(item.item_code);
 		console.log(item, args,origin_item);
 		if (field == "qty" && origin_item.qts_depot < args['qty']) {
 			alert("Qts d'article non disponible");
