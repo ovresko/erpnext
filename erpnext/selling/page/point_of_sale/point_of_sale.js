@@ -347,13 +347,13 @@ erpnext.pos.PointOfSale = class PointOfSale {
 		//item['item_code']=item_code;
 		//frappe.model.set_value("Sales Invoice Item", item.name, "item_code", item_code);
 		let origin_item = this.items.get(item.item_code);
-		console.log(item, args,origin_item);
-		if (field == "qty" && origin_item.qts_depot < args['qty']) {
+		//console.log(item, args,origin_item);
+		if (field == "qty" && parseFloat(origin_item.qts_depot) < args['qty']) {
 			alert("Qts d'article non disponible");
 			frappe.dom.unfreeze();
 			return;
 		}
-		if(item.projected_qty <=0) {
+		if(parseFloat(origin_item.qts_depot) <=0) {
 			alert("Qts d'article non disponible");
 			frappe.dom.unfreeze();
 			return;
