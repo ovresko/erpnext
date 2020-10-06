@@ -322,7 +322,18 @@ erpnext.pos.PointOfSale = class PointOfSale {
 			}
 			return;
 		}
-
+		let origin_item = this.get_item_details(item.item_code);
+		console.log(item, args,origin_item);
+		if (field == "qty" && origin_item.qts_depot < args['qty']) {
+			alert("Qts d'article non disponible");
+			frappe.dom.unfreeze();
+			return;
+		}
+		if(item.projected_qty <=0) {
+			alert("Qts d'article non disponible");
+			frappe.dom.unfreeze();
+			return;
+		}
 		
 		let args = { item_code: item_code };
 		if (field == "qty"){
@@ -348,17 +359,7 @@ erpnext.pos.PointOfSale = class PointOfSale {
 		//frappe.model.set_value("Sales Invoice Item", item.name, "item_code", item_code);
 		 
 		frappe.flags.hide_serial_batch_dialog = true;
-		console.log(item);
-		if (field == "qty" && item.projected_qty < args['qty']) {
-			alert("Qts d'article non disponible");
-			frappe.dom.unfreeze();
-			return;
-		}
-		if(item.projected_qty <=0) {
-			alert("Qts d'article non disponible");
-			frappe.dom.unfreeze();
-			return;
-		}
+		
 		
 		frappe.run_serially([
 			() => this.frm.script_manager.trigger('item_code', item.doctype, item.name),
@@ -1402,18 +1403,15 @@ class POSCart {
 				"callback": function(response) { 
 					if(response.message)
 					{ 
-						result.price_list_rate  = response.message;
-						console.log("new price ",result.price_list_rate);
+						result.price_list_rate  = response.message; 
 						const _item =result;//this.get_item_details_cart(item.item_code,item.qty);
 						const is_stock_item = _item.is_stock_item;
 						const indicator_class = (!is_stock_item || item.actual_qty >= item.qty) ? 'green' : 'red';
 						const remove_class = indicator_class == 'green' ? 'red' : 'green';
-						console.log("item update_item",item.rate);
-						console.log("_item update_item",_item.price_list_rate);
+						  
 						if(item.rate != _item.price_list_rate){  
 							$item.find('.remise').text("Ancien : "+format_currency(item.rate, me.frm.doc.currency,0));
-							item.rate = _item.price_list_rate; 
-							console.log("update rate",item.rate);
+							item.rate = _item.price_list_rate;  
 						}else{
 							$item.find('.remise').text('');
 						}
