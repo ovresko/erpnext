@@ -37,6 +37,7 @@ frappe.query_reports["Articles a transferes"] = {
 	],
 	onload: function(report) {
 		var me = this;
+		frappe.dom.freeze()
 		report.page.add_inner_button("Generer transfert", function() {
 			var data = report.data;
 			items = [];
@@ -62,5 +63,6 @@ frappe.query_reports["Articles a transferes"] = {
 			//console.log(report);
 			
 		});
+		frappe.dom.unfreeze();
 	}
 }
