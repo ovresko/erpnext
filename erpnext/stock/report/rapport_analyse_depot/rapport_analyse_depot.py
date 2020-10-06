@@ -215,6 +215,8 @@ def execute(filters=None):
 				if bin and len(bin) > 0:
 					qts_local = bin[0].actual_qty or 0
 				cmp = "%s CP" % mri.item_code if (mri.has_variants and mri.item_code in mcomplements) else mri.item_code
+				if filters.disp_g==1 and (flt(mri.qts_depot or 0) - flt(qts_local or 0)) <= 0:
+					continue
 				row = ["""<input type='button' onclick="erpnext.utils.open_item_info('%s', this)" value='info'>  </input> &nbsp;&nbsp;&nbsp; <button id='%s' onClick="demander_item('%s')" type='button'>Demander</button><input placeholder='Qts' id='input_%s' style='color:black'></input>""" % (mri.item_code,mri.item_code,mri.item_code,mri.item_code),
 				       cmp,
 				       mri.item_name,
@@ -250,6 +252,8 @@ def execute(filters=None):
 				if bin and len(bin) > 0:
 					qts_local = bin[0].actual_qty or 0
 				cmp = "%s CP" % mri.item_code if (mri.has_variants and mri.item_code in mcomplements) else mri.item_code
+				if filters.disp_g==1 and (flt(mri.qts_depot or 0) - flt(qts_local or 0)) <= 0:
+					continue
 				row = ["""<input type='button' onclick="erpnext.utils.open_item_info('%s', this)" value='info'>  </input> &nbsp;&nbsp;&nbsp; <button id='%s' onClick="demander_item('%s')" type='button'>Demander</button><input placeholder='Qts' id='input_%s' style='color:black'></input>""" % (mri.item_code,mri.item_code,mri.item_code,mri.item_code),
 				       cmp,
 				       mri.item_name,
