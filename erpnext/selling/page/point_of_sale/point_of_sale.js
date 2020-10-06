@@ -322,18 +322,7 @@ erpnext.pos.PointOfSale = class PointOfSale {
 			}
 			return;
 		}
-		let origin_item = this.get_item_details(item.item_code);
-		console.log(item, args,origin_item);
-		if (field == "qty" && origin_item.qts_depot < args['qty']) {
-			alert("Qts d'article non disponible");
-			frappe.dom.unfreeze();
-			return;
-		}
-		if(item.projected_qty <=0) {
-			alert("Qts d'article non disponible");
-			frappe.dom.unfreeze();
-			return;
-		}
+		
 		
 		let args = { item_code: item_code };
 		if (field == "qty"){
@@ -357,7 +346,18 @@ erpnext.pos.PointOfSale = class PointOfSale {
 		//let item = this.frm.add_child('items');
 		//item['item_code']=item_code;
 		//frappe.model.set_value("Sales Invoice Item", item.name, "item_code", item_code);
-		 
+		let origin_item = this.get_item_details(item.item_code);
+		console.log(item, args,origin_item);
+		if (field == "qty" && origin_item.qts_depot < args['qty']) {
+			alert("Qts d'article non disponible");
+			frappe.dom.unfreeze();
+			return;
+		}
+		if(item.projected_qty <=0) {
+			alert("Qts d'article non disponible");
+			frappe.dom.unfreeze();
+			return;
+		}
 		frappe.flags.hide_serial_batch_dialog = true;
 		
 		
