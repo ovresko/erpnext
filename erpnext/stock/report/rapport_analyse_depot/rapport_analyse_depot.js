@@ -207,6 +207,12 @@ frappe.query_reports["Rapport analyse depot"] = {
 			"default": ""
 		},
 		{
+			"fieldname": "disp_g",
+			"label": "Disponible depot",
+			"fieldtype": "Check",
+			"default": 0
+		},
+		{
 			"fieldname":"manufacturer_lp",
 			"label": "Fabricant LP",
 			"fieldtype": "MultiSelect",
