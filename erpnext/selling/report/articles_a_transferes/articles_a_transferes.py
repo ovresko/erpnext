@@ -152,7 +152,7 @@ def execute(filters=None):
 		total_qty_cmd = sum(_item.qty for _item in items if (_item.qty and _item.item_code == item.item_code))
 		# check if traite
 		if filters.ntraite == 1 and filters.source_warehouse and filters.warehouse:
-			iti = frappe.db.sql("""select item_code,qty from `tabStock Entry Detail` where item_code='%s' and docstatus=0 and s_warehouse='%s' and t_warehouse='%s' """,(item.item_code,filters.source_warehouse,filters.warehouse),as_dict=1)
+			iti = frappe.db.sql("""select item_code,qty from `tabStock Entry Detail` where item_code=%s and docstatus=0 and s_warehouse=%s and t_warehouse=%s""",(item.item_code,filters.source_warehouse,filters.warehouse),as_dict=1)
 			if iti:
 				qts_traite = sum(a.qty for a in iti if a.qty)
 				total_qty_cmd = total_qty_cmd - qts_traite
