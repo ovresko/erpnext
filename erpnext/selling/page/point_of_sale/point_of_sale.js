@@ -2748,7 +2748,7 @@ class POSItems {
 			item.actual_qty = item.actual_qty  - item.reserved_qty;
 		 }
 		let actual_qty = '0';
-		if(item.actual_qty || item.qts_total || item.qts_depot){
+		if(parseFloat(item.actual_qty) > 0 || parseFloat(item.qts_total) > 0 || parseFloat(item.qts_depot) > 0){
 			price = '<span class="price-info" style="margin:0px;background-color: rgba(10, 154, 7, 0.8);border-radius: 0px;font-weight: bold;">' +price_list_rate +'</span>';
 		}
 		
