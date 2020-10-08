@@ -43,7 +43,7 @@ class MaterialRequest(BuyingController):
 		result = float(per * 100)
 		self.per_consulted = result
 		if result > 0:
-			frappe.db.sql("""update `tabMaterial Request` set per_consulted = %s,where name = %s""", (result, self.name))
+			frappe.db.sql("""update `tabMaterial Request` set per_consulted = %s where name = %s""", (result, self.name))
 		else:
 			frappe.db.sql("""update `tabMaterial Request` set per_consulted = %s where name = %s""", (result, self.name))
 
