@@ -31,6 +31,7 @@ class MaterialRequest(BuyingController):
 
 	def on_update_after_submit(self):
 		self.handle_per_consulted()
+		self.update_requested_qty()
 
 	def handle_per_consulted(self):
 		if self.docstatus == 2:
