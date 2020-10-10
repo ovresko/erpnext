@@ -66,6 +66,11 @@ def execute(filters=None):
 			"width": 150
 		})
 	columns.append({
+			"fieldname": "qts_demande",
+			"label": "Qts Demande",
+			"width": 150
+		})
+	columns.append({
 			"fieldname": "qts_depot",
 			"label": "Qts Depot",
 			"width": 150
@@ -210,17 +215,20 @@ def execute(filters=None):
 				_date = ""
 				date =""
 				qts_local = 0
-				bin = frappe.db.sql("""select actual_qty,indented_qty from `tabBin` where item_code = %s and warehouse = %s limit 1""", (mri.item_code, filters.get('warehouse')), as_dict=1)
+				qts_demande = 0
+				bin = frappe.db.sql("""select actual_qty from `tabBin` where item_code = %s and warehouse = %s limit 1""", (mri.item_code, filters.get('warehouse')), as_dict=1)
 				if bin and len(bin) > 0:
 					qts_local = bin[0].actual_qty or 0
 					if qts_local < 0:
 						qts_local = 0
-					qts_demande = 0
-					if filters.get('demande'):
-						qts_demande =  frappe.db.sql("""select sum(mri.qty) sumqty  from `tabMaterial Request Item` mri LEFT JOIN `tabMaterial Request` mr on mri.parent = mr.name where mri.item_code = %s and mri.warehouse = %s and mr.material_request_type='Material Transfer' and mr.docstatus=1 and mr.status!='Stopped' """, (mri.item_code, filters.get('warehouse')), as_dict=1)
-						if qts_demande:
-							qts_demande = qts_demande[0].sumqty or 0
-							qts_local = qts_local + qts_demande
+				qts_demande =  frappe.db.sql("""select sum(mri.qty) sumqty  from `tabMaterial Request Item` mri LEFT JOIN `tabMaterial Request` mr on mri.parent = mr.name where mri.item_code = %s and mri.warehouse = %s and mr.material_request_type='Material Transfer' and mr.docstatus=1 and mr.status!='Stopped' """, (mri.item_code, filters.get('warehouse')), as_dict=1)
+				if qts_demande:
+					qts_demande = qts_demande[0].sumqty or 0
+					if qts_demande < 0:
+						qts_demande = 0
+				if filters.get('demande') and (qts_local+qts_demande) > qts_min:
+					continue
+							
 					
 				cmp = "%s CP" % mri.item_code if (mri.has_variants and mri.item_code in mcomplements) else mri.item_code
 				qts_elswhere = flt(mri.qts_depot or 0) - flt(qts_local or 0)				
@@ -234,6 +242,7 @@ def execute(filters=None):
 				       mri.manufacturer_part_no,
 				       mri.perfection,
 				       qts_local,
+				       qts_demande,
 				       qts_elswhere,
 				       flt(mri.qts_total or 0) - flt(mri.qts_depot or 0),
 				       mri.qts_total,
@@ -257,17 +266,20 @@ def execute(filters=None):
 				_date = ""
 				date =""
 				qts_local=0
-				bin = frappe.db.sql("""select actual_qty,indented_qty from `tabBin` where item_code = %s and warehouse = %s limit 1""", (mri.item_code, filters.get('warehouse')), as_dict=1)
+				qts_demande = 0
+				bin = frappe.db.sql("""select actual_qty from `tabBin` where item_code = %s and warehouse = %s limit 1""", (mri.item_code, filters.get('warehouse')), as_dict=1)
 				if bin and len(bin) > 0:
 					qts_local = bin[0].actual_qty or 0
 					if qts_local < 0:
 						qts_local = 0
-					qts_demande = 0
-					if filters.get('demande'):
-						qts_demande =  frappe.db.sql("""select sum(mri.qty) sumqty  from `tabMaterial Request Item` mri LEFT JOIN `tabMaterial Request` mr on mri.parent = mr.name where mri.item_code = %s and mri.warehouse = %s and mr.material_request_type='Material Transfer' and mr.docstatus=1 and mr.status!='Stopped' """, (mri.item_code, filters.get('warehouse')), as_dict=1)
-						if qts_demande:
-							qts_demande = qts_demande[0].sumqty or 0
-							qts_local = qts_local + qts_demande
+				qts_demande =  frappe.db.sql("""select sum(mri.qty) sumqty  from `tabMaterial Request Item` mri LEFT JOIN `tabMaterial Request` mr on mri.parent = mr.name where mri.item_code = %s and mri.warehouse = %s and mr.material_request_type='Material Transfer' and mr.docstatus=1 and mr.status!='Stopped' """, (mri.item_code, filters.get('warehouse')), as_dict=1)
+				if qts_demande:
+					qts_demande = qts_demande[0].sumqty or 0
+					if qts_demande < 0:
+						qts_demande = 0
+				if filters.get('demande') and (qts_local+qts_demande) > qts_min:
+					continue
+					
 				cmp = "%s CP" % mri.item_code if (mri.has_variants and mri.item_code in mcomplements) else mri.item_code
 				qts_elswhere = flt(mri.qts_depot or 0) - flt(qts_local or 0)				
 				if filters.disp_g==1 and qts_elswhere <= 0:
@@ -280,6 +292,7 @@ def execute(filters=None):
 				       mri.manufacturer_part_no,
 				       mri.perfection,
 				       qts_local,
+				       qts_demande,
 				       qts_elswhere,
 				       flt(mri.qts_total or 0) - flt(mri.qts_depot or 0),
 				       mri.qts_total,
