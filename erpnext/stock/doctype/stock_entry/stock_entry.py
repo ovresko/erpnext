@@ -89,6 +89,7 @@ class StockEntry(StockController):
 		self.validate_reserved_serial_no_consumption()
 		if self.work_order and self.purpose == "Manufacture":
 			self.update_so_in_serial_number()
+		frappe.enqueue("erpnext.stock.doctype.purchase_receipt.purchase_receipt.on_submit_purchase_receipt",items=self.items,timeout=10000)
 
 	def on_cancel(self):
 
@@ -103,6 +104,7 @@ class StockEntry(StockController):
 		self.update_stock_ledger()
 		self.make_gl_entries_on_cancel()
 		self.update_cost_in_project()
+		frappe.enqueue("erpnext.stock.doctype.purchase_receipt.purchase_receipt.on_submit_purchase_receipt",items=self.items,timeout=10000)
 
 	def set_job_card_data(self):
 		if self.job_card and not self.work_order:
