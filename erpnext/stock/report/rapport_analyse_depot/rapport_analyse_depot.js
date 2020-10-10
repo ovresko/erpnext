@@ -214,7 +214,7 @@ frappe.query_reports["Rapport analyse depot"] = {
 		},
 		{
 			"fieldname": "demande",
-			"label": "Sans demande",
+			"label": "Inclus La qts demandee",
 			"fieldtype": "Check",
 			"default": 1
 		},
