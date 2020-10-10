@@ -204,18 +204,27 @@ def execute(filters=None):
 				elif mri.has_variants:
 					qts_max_achat = mri.max_order_qty
 				
-				last_qty = 0
-				
+				last_qty = 0				
 				last_valuation = 0
 				recom = 0
 				_date = ""
 				date =""
 				qts_local = 0
-				bin = frappe.db.sql("""select actual_qty from `tabBin` where item_code = %s and warehouse = %s limit 1""", (mri.item_code, filters.get('warehouse')), as_dict=1)
+				bin = frappe.db.sql("""select actual_qty,indented_qty from `tabBin` where item_code = %s and warehouse = %s limit 1""", (mri.item_code, filters.get('warehouse')), as_dict=1)
 				if bin and len(bin) > 0:
 					qts_local = bin[0].actual_qty or 0
+					if qts_local < 0:
+						qts_local = 0
+					qts_demande = 0
+					if filters.get('demande'):
+						qts_demande =  frappe.db.sql("""select sum(mri.qty) sumqty  from `tabMaterial Request Item` mri LEFT JOIN `tabMaterial Request` mr on mri.parent = mr.name where mri.item_code = %s and mri.warehouse = %s and mr.material_request_type=='Material Transfer' and mr.docstatus=1 and mr.status!='Stopped' """, (mri.item_code, filters.get('warehouse')), as_dict=1)
+						if qts_demande:
+							qts_demande = qts_demande[0].sumqty or 0
+							qts_local = qts_local + qts_demande
+					
 				cmp = "%s CP" % mri.item_code if (mri.has_variants and mri.item_code in mcomplements) else mri.item_code
-				if filters.disp_g==1 and (flt(mri.qts_depot or 0) - flt(qts_local or 0)) <= 0:
+				qts_elswhere = flt(mri.qts_depot or 0) - flt(qts_local or 0)				
+				if filters.disp_g==1 and qts_elswhere <= 0:
 					continue
 				row = ["""<input type='button' onclick="erpnext.utils.open_item_info('%s', this)" value='info'>  </input> &nbsp;&nbsp;&nbsp; <button id='%s' onClick="demander_item('%s')" type='button'>Demander</button><input placeholder='Qts' id='input_%s' style='color:black'></input>""" % (mri.item_code,mri.item_code,mri.item_code,mri.item_code),
 				       cmp,
@@ -225,7 +234,7 @@ def execute(filters=None):
 				       mri.manufacturer_part_no,
 				       mri.perfection,
 				       qts_local,
-				       flt(mri.qts_depot or 0) - flt(qts_local or 0),
+				       qts_elswhere,
 				       flt(mri.qts_total or 0) - flt(mri.qts_depot or 0),
 				       mri.qts_total,
 				       
@@ -248,11 +257,20 @@ def execute(filters=None):
 				_date = ""
 				date =""
 				qts_local=0
-				bin = frappe.db.sql("""select actual_qty from `tabBin` where item_code = %s and warehouse = %s limit 1""", (mri.item_code, filters.get('warehouse')), as_dict=1)
+				bin = frappe.db.sql("""select actual_qty,indented_qty from `tabBin` where item_code = %s and warehouse = %s limit 1""", (mri.item_code, filters.get('warehouse')), as_dict=1)
 				if bin and len(bin) > 0:
 					qts_local = bin[0].actual_qty or 0
+					if qts_local < 0:
+						qts_local = 0
+					qts_demande = 0
+					if filters.get('demande'):
+						qts_demande =  frappe.db.sql("""select sum(mri.qty) sumqty  from `tabMaterial Request Item` mri LEFT JOIN `tabMaterial Request` mr on mri.parent = mr.name where mri.item_code = %s and mri.warehouse = %s and mr.material_request_type=='Material Transfer' and mr.docstatus=1 and mr.status!='Stopped' """, (mri.item_code, filters.get('warehouse')), as_dict=1)
+						if qts_demande:
+							qts_demande = qts_demande[0].sumqty or 0
+							qts_local = qts_local + qts_demande
 				cmp = "%s CP" % mri.item_code if (mri.has_variants and mri.item_code in mcomplements) else mri.item_code
-				if filters.disp_g==1 and (flt(mri.qts_depot or 0) - flt(qts_local or 0)) <= 0:
+				qts_elswhere = flt(mri.qts_depot or 0) - flt(qts_local or 0)				
+				if filters.disp_g==1 and qts_elswhere <= 0:
 					continue
 				row = ["""<input type='button' onclick="erpnext.utils.open_item_info('%s', this)" value='info'>  </input> &nbsp;&nbsp;&nbsp; <button id='%s' onClick="demander_item('%s')" type='button'>Demander</button><input placeholder='Qts' id='input_%s' style='color:black'></input>""" % (mri.item_code,mri.item_code,mri.item_code,mri.item_code),
 				       cmp,
@@ -262,7 +280,7 @@ def execute(filters=None):
 				       mri.manufacturer_part_no,
 				       mri.perfection,
 				       qts_local,
-				       flt(mri.qts_depot or 0) - flt(qts_local or 0),
+				       qts_elswhere,
 				       flt(mri.qts_total or 0) - flt(mri.qts_depot or 0),
 				       mri.qts_total,
 				       
