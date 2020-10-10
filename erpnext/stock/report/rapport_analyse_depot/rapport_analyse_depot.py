@@ -217,7 +217,7 @@ def execute(filters=None):
 						qts_local = 0
 					qts_demande = 0
 					if filters.get('demande'):
-						qts_demande =  frappe.db.sql("""select sum(mri.qty) sumqty  from `tabMaterial Request Item` mri LEFT JOIN `tabMaterial Request` mr on mri.parent = mr.name where mri.item_code = %s and mri.warehouse = %s and mr.material_request_type=='Material Transfer' and mr.docstatus=1 and mr.status!='Stopped' """, (mri.item_code, filters.get('warehouse')), as_dict=1)
+						qts_demande =  frappe.db.sql("""select sum(mri.qty) sumqty  from `tabMaterial Request Item` mri LEFT JOIN `tabMaterial Request` mr on mri.parent = mr.name where mri.item_code = %s and mri.warehouse = %s and mr.material_request_type='Material Transfer' and mr.docstatus=1 and mr.status!='Stopped' """, (mri.item_code, filters.get('warehouse')), as_dict=1)
 						if qts_demande:
 							qts_demande = qts_demande[0].sumqty or 0
 							qts_local = qts_local + qts_demande
@@ -264,7 +264,7 @@ def execute(filters=None):
 						qts_local = 0
 					qts_demande = 0
 					if filters.get('demande'):
-						qts_demande =  frappe.db.sql("""select sum(mri.qty) sumqty  from `tabMaterial Request Item` mri LEFT JOIN `tabMaterial Request` mr on mri.parent = mr.name where mri.item_code = %s and mri.warehouse = %s and mr.material_request_type=='Material Transfer' and mr.docstatus=1 and mr.status!='Stopped' """, (mri.item_code, filters.get('warehouse')), as_dict=1)
+						qts_demande =  frappe.db.sql("""select sum(mri.qty) sumqty  from `tabMaterial Request Item` mri LEFT JOIN `tabMaterial Request` mr on mri.parent = mr.name where mri.item_code = %s and mri.warehouse = %s and mr.material_request_type='Material Transfer' and mr.docstatus=1 and mr.status!='Stopped' """, (mri.item_code, filters.get('warehouse')), as_dict=1)
 						if qts_demande:
 							qts_demande = qts_demande[0].sumqty or 0
 							qts_local = qts_local + qts_demande
