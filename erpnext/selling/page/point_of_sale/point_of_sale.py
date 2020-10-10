@@ -48,6 +48,26 @@ def get_valorisation(item_code):
 	return text
 
 @frappe.whitelist()
+def finish_transfer(items):
+	if not items:
+		return "No data"
+	items= json.loads(items)
+	dms = [a['document'].split(',') for a in items if a['document']]
+	dms = [item for sublist in dms for item in sublist]
+	dms = [a for a in dms if "DM" in a]
+	dms = list(set(dms))
+	
+	for dm in dms:
+		doc = frappe.get_doc("Material Request", dm)
+		if doc and doc.docstatus == 1:
+			doc.update_status("Stopped")
+		elif doc:
+			frappe.delete_doc("Material Request", dm, force=1)
+			
+	return "Done"
+
+	
+@frappe.whitelist()
 def get_transfer(items):
 	if not items:
 		return "No data"
