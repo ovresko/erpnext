@@ -56,7 +56,20 @@ frappe.query_reports["Articles a transferes"] = {
 					items: items,
 				},
 				callback: function(r) {
-					if (r.message) {						
+					if (r.message) {
+							
+						frappe.call({
+								method: "erpnext.selling.page.point_of_sale.point_of_sale.finish_transfer",
+								freeze: true,
+								args: {
+									items: items,
+								},
+								callback: function(r) {
+									if (r.message) {						
+										 alert("Demandes articles fermees");
+									}
+								}
+							});
 						 window.open('/desk#Form/Stock%20Entry/'+r.message, '_blank');
 					}
 				}
