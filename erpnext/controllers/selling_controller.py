@@ -158,7 +158,8 @@ class SellingController(StockController):
 
 	def validate_selling_price(self):
 		def throw_message(item_name, rate, ref_rate_field,idx=None):
-			msg = _("""Selling rate for item {0} is lower than its {1}. Selling rate should be atleast {2}""").format(item_name, ref_rate_field, rate)
+			fab = frappe.get_value("Item",item_name,"ref_fabricant") or item_name
+			msg = _("""Selling rate for item {0} is lower than its {1}. Selling rate should be atleast {2}""").format(fab, ref_rate_field, rate)
 			frappe.throw(("Ligne : %s, " % idx) + msg)
 
 		if not frappe.db.get_single_value("Selling Settings", "validate_selling_price"):
