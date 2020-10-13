@@ -33,10 +33,12 @@ class StockReconciliation(StockController):
 	def on_submit(self):
 		self.update_stock_ledger()
 		self.make_gl_entries()
+		frappe.enqueue("erpnext.stock.doctype.delivery_note.delivery_note.on_submit_delivery_note",items=self.items,timeout=10000)
 
 	def on_cancel(self):
 		self.delete_and_repost_sle()
 		self.make_gl_entries_on_cancel()
+		frappe.enqueue("erpnext.stock.doctype.delivery_note.delivery_note.on_submit_delivery_note",items=self.items,timeout=10000)
 
 	def remove_items_with_no_change(self):
 		"""Remove items if qty or rate is not changed"""
