@@ -279,6 +279,15 @@ $.extend(erpnext.item, {
 				]
 			}
 		}
+		
+		frm.fields_dict['groupe_type_article'].get_query = function(doc, cdt, cdn) {
+			return {
+				filters: [
+					['Item Group', 'docstatus', '!=', 2],
+					['Item Group', 'is_group', '!=', 1]
+				]
+			}
+		}
 
 		frm.fields_dict['deferred_revenue_account'].get_query = function() {
 			return {
