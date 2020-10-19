@@ -208,7 +208,7 @@ def execute(filters=None):
 		it.max_order_qty,
 		it.max_ordered_variante
 		from `tabItem` it 
-		where  it.disabled=0 and it.has_variants=0 and it.is_sales_item=1 {conditions}
+		where  it.disabled=0 and it.has_variants=0  {conditions}
 		{order_by_statement}
 		""".format(
 			conditions=get_conditions(filters),
