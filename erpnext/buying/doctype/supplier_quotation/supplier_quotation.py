@@ -63,7 +63,13 @@ class SupplierQuotation(BuyingController):
 		if self.docstatus == 1:
 			resultat = "Termine P3"
 		else:
-			encours = sum(1 for item in self.items if item.confirmation == "En cours" or not item.confirmation or item.confirmation=='') or 0
+			#@offre :=(select count(*) from `tabSupplier Quotation Item` sqi6 where sqi6.parent=mr.name and sqi6.prix_fournisseur > 0) as "Avec Offre:Data:100",
+			#@change:=(select count(*) from `tabSupplier Quotation Item` sqia where sqia.parent=mr.name and sqia.prix_fournisseur != sqia.offre_fournisseur_initial and sqia.offre_fournisseur_initial >0) as "Change Offre:Data:100",
+	 		#@en_cours:=(select count(*) from `tabSupplier Quotation Item` sqi where sqi.parent=mr.name and (sqi.confirmation="En cours" or sqi.confirmation IS NULL or sqi.confirmation='' or sqi.confirmation=' ')) as "En cours:Data:100",
+			#@en_negociation:=(select count(*) from `tabSupplier Quotation Item` sqi2 where sqi2.parent=mr.name and sqi2.confirmation="En negociation") as "En negociation:Data:100",
+			#@approuve:=(select count(*) from `tabSupplier Quotation Item` sqi3 where sqi3.parent=mr.name and sqi3.confirmation="Approuve") as "Approuve:Data:100",
+			#@annule :=(select count(*) from `tabSupplier Quotation Item` sqi4 where sqi4.parent=mr.name and sqi4.confirmation="Annule") as "Annule:Data:100",
+			encours = sum(1 for item in self.items if item.confirmation == "En cours" or not item.confirmation or item.confirmation=='' or item.confirmation==' ') or 0
 			offre = sum(1 for item in self.items if item.prix_fournisseur > 0) or 0
 			change =  sum(1 for item in self.items if item.prix_fournisseur != item.offre_fournisseur_initial and item.offre_fournisseur_initial > 0) or 0
 			total = len(self.items) or 0
@@ -76,7 +82,7 @@ class SupplierQuotation(BuyingController):
 			#WHEN ((@en_cours = @total) and (@offre=0) and (mr.etat_mail ='Email Envoye')) THEN 'En attente de repense P1'
 			elif encours == total and offre==0 and self.etat_mail =='Email Envoye':
 				resultat = 'En attente de repense P1'
-			#WHEN (@en_cours > 0 and @en_cours < @total and @offre>0 and (mr.etat_mail !='Email Envoye')) THEN 'A Traite P1'
+			#WHEN (@en_cours > 0 and @change=0 and @offre>0 and (mr.etat_mail !='Email Envoye')) THEN 'A Traite P1'
 			elif encours >0 and change==0 and  offre>0 and self.etat_mail !='Email Envoye':
 				resultat = 'A Traite P1'
 			#WHEN ((@en_cours = 0) and @change=0 and (@offre>0) and (mr.etat_mail !='Email Envoye')) THEN 'A Envoyer P2'
@@ -85,7 +91,7 @@ class SupplierQuotation(BuyingController):
 			#WHEN ((@en_cours = 0) and (@offre>0) and (mr.etat_mail ='Email Envoye')) THEN 'En attente de repense P2'
 			elif encours==0 and offre>0 and self.etat_mail =='Email Envoye':
 				resultat = 'En attente de repense P2'
-			#WHEN ((@en_cours = 0) and (@offre>0) and @change >0 and (@annule + @approuve < @total) and (mr.etat_mail !='Email Envoye')) THEN 'A Traite P2'
+			#WHEN (  (@offre>0) and @change >0 and (@annule + @approuve < @total) and (mr.etat_mail !='Email Envoye')) THEN 'A Traite P2'
 			elif offre>0 and change>0 and (approuve+annule) < total and self.etat_mail !='Email Envoye':
 				resultat = 'A Traite P2'
 			#WHEN ((@en_cours = 0) and (@offre>0) and (@annule + @approuve = @total) and (mr.etat_mail !='Email Envoye')) THEN 'Envoyer la confirmation'
@@ -306,7 +312,9 @@ def on_update_consultation(items,pname):
 	#print("doing update xxx consultation")
 	bc = []
 	dms = []
+	parent = ''
 	for item in items:
+		parent = item.parent
 		try:
 			if not item.previous_rate:
 				item.previous_rate = 0
@@ -338,6 +346,11 @@ def on_update_consultation(items,pname):
 			item.previous_rate = item.rate
 		except:
 			print("An exception occurred")
+	if parent:	
+		sq = frappe.get_doc("Supplier Quotation",parent)
+		if sq:
+			sq.set_resultat()
+		
 	if dms:
 		setdms = set(dms)
 		dms = list(setdms)
