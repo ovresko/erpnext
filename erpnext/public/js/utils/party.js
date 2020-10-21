@@ -19,7 +19,7 @@ erpnext.utils.open_item_info =  function(item_code,me) {
 				//btn-print
 				$(document).off("click", ".btn-print").on('click', '.btn-print', function(){
 					 event.stopPropagation();  
-					var url = "http://192.168.100.20/printview?doctype=Item&name="+item_code+"&trigger_print=1&format=Format%20Article%20Publique&no_letterhead=0&_lang=fr"
+					var url = window.location.origin + "/printview?doctype=Item&name="+item_code+"&trigger_print=1&format=Format%20Article%20Publique&no_letterhead=0&_lang=fr"
 					window.open(url , '_blank', 'toolbar=0,location=0,menubar=0,location=yes, scrollbars=yes,status=yes'); 
 				});
 				
