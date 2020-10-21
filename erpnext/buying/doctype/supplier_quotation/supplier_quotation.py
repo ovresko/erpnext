@@ -118,6 +118,7 @@ class SupplierQuotation(BuyingController):
 		self.update_rfq_supplier_status(1)
 		self.update_requested_qty()
 		frappe.enqueue("erpnext.buying.doctype.supplier_quotation.supplier_quotation.update_mr",doc=self,timeout=10000)
+		self.set_resultat()
                 #self.update_mr()
 	
 	def update_requested_qty(self, mr_item_rows=None):
