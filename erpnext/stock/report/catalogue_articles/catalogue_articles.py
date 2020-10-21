@@ -242,7 +242,7 @@ def execute(filters=None):
 
 				cmp = "%s CP *********** " % mri.item_code if (mri.has_variants and mri.item_code in mcomplements) else "%s *********** " % mri.item_code if mri.has_variants else mri.item_code
 				qts_magasin = cint(mri.qts_total or 0) - cint(mri.qts_depot or 0)
-				lien = """<a href="http://192.168.100.20/result?p=%s" target="_blank" > http://192.168.100.20/result?p=%s </a>""" % (mri.item_code,mri.item_code)
+				lien = """<a href="http://41.220.144.37/result?p=%s" target="_blank" > http://41.220.144.37/result?p=%s </a>""" % (mri.item_code,mri.item_code)
 				# marque, desg, code, nom art, oem, fabricant, ref fab, qts depot, qts mag, qts tot, prix...
 				if not filters.get('hide_qty'):
 					row = ["""<input type='button' onclick="erpnext.utils.open_item_info('%s', this)" value='info'>  </input>""" % mri.item_code,
@@ -328,7 +328,7 @@ def execute(filters=None):
 			cmp =mri.item_code
 			
 			qts_magasin = cint(mri.qts_total or 0) - cint(mri.qts_depot or 0)
-			lien = """<a href="http://192.168.100.20/result?p=%s" target="_blank" > http://192.168.100.20/result?p=%s </a>""" % (mri.item_code,mri.item_code)
+			lien = """<a href="http://41.220.144.37/result?p=%s" target="_blank" > http://41.220.144.37/result?p=%s </a>""" % (mri.item_code,mri.item_code)
 			# marque, desg, code, nom art, oem, fabricant, ref fab, qts depot, qts mag, qts tot, prix...
 			if not filters.get('hide_qty'):
 				row = ["""<input type='button' onclick="erpnext.utils.open_item_info('%s', this)" value='info'>  </input>""" % mri.item_code,
