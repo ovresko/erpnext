@@ -102,6 +102,7 @@ class SupplierQuotation(BuyingController):
 				resultat = 'Termine P3'
 			else:
 				resultat = 'NA'
+		self.resultat = resultat
 		frappe.db.set_value("Supplier Quotation",self.name,"resultat",resultat)
 
         def on_update(self):
@@ -111,12 +112,6 @@ class SupplierQuotation(BuyingController):
 		frappe.enqueue("erpnext.buying.doctype.supplier_quotation.supplier_quotation.on_update_dv",items=self.items,timeout=10000)
 		self.set_resultat()
 		frappe.msgprint("Resultat : %s" % self.resultat)
-		
-	def on_update_after_submit(self):
-		frappe.enqueue("erpnext.buying.doctype.supplier_quotation.supplier_quotation.on_update_consultation",items=self.items,pname=self.name,timeout=10000)
-		frappe.enqueue("erpnext.buying.doctype.supplier_quotation.supplier_quotation.on_update_dv",items=self.items,timeout=10000)
-		self.set_resultat()
-		frappe.msgprint("[AU] Resultat : %s" % self.resultat)
 
 	def on_submit(self):
 		self.validate_approuve()
