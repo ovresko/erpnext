@@ -84,6 +84,11 @@ def execute(filters=None):
 			"width": 150
 		})
 	columns.append({
+			"fieldname": "date_quotation",
+			"label": "Date Consultation",
+			"width": 150
+		})
+	columns.append({
 			"fieldname": "supplier",
 			"label": "Fournisseur",
 			"width": 150
@@ -155,6 +160,21 @@ def execute(filters=None):
 				"label": "Qte Demande non commande",
 				"width": 160
 			})
+	columns.append({
+			"fieldname": "qts_total",
+			"label": "Qte Total",
+			"width": 150
+		})
+	columns.append({
+			"fieldname": "qts_depot",
+			"label": "Qte Depot",
+			"width": 150
+		})
+	columns.append({
+			"fieldname": "qts_mag",
+			"label": "Qte Magasin",
+			"width": 150
+		})
 	columns.append({
 			"fieldname": "qts",
 			"label": "Qte En stock",
@@ -361,6 +381,8 @@ def execute(filters=None):
 		it.has_variants,
 		it.manufacturer,
 		it.last_purchase_rate , 
+		it.qts_total,
+		it.qts_depot,
 		it.manufacturer_part_no, 
 		it.last_purchase_devise,
 		it.max_order_qty,
@@ -467,6 +489,8 @@ def execute(filters=None):
 		it.variant_of,
 		it.perfection,
 		it.is_purchase_item,
+		it.qts_total,
+		it.qts_depot,
 		it.variant_of,
 		it.has_variants,
 		it.weight_per_unit,
@@ -493,6 +517,8 @@ def execute(filters=None):
 		"has_variants",
 		"item_name", 
 		"item_code", 
+		"qts_total",
+		"qts_depot",
 		"manufacturer",
 		"last_purchase_rate" , 
 		"manufacturer_part_no", 
@@ -536,6 +562,7 @@ def execute(filters=None):
 		devis_status = ''
 		material_request = ''
 		supplier_quotation =  ''
+		date_quotation = ''
 		qts_devis = 0
 		datedm = ''
 		#rate,
@@ -594,6 +621,7 @@ def execute(filters=None):
 			#taux_mb = float(taux_mb) or 1
 			material_request = mri.material_request
 			supplier_quotation = mri.parent
+			date_quotation = mri.creation
 			qts_devis = mri.qty or 0
 			if mri.confirmation == "Approuve" or  mri.confirmation == "Annule":
 				rate = mri.rate or 0
@@ -714,6 +742,7 @@ def execute(filters=None):
 			       material_request,
 			       #supplier_quotation
 			       supplier_quotation,
+			       date_quotation,
 			       #supplier
 			       supplier,
 			       pays,
@@ -743,6 +772,9 @@ def execute(filters=None):
 			       #qts_dem
 			       info[1] or 0,
 			       #qts
+			       mri.qts_total,
+			       mri.qts_depot,
+			       (mri.qts_total or 0) - (mri.qts_depot or 0),
 			       info[0] or 0,
 			       #qts_projete
 			       info[2] or 0,
@@ -804,6 +836,7 @@ def execute(filters=None):
 			       #material_request,
 			       #supplier_quotation
 			       supplier_quotation,
+			       date_quotation,
 			       #supplier
 			       supplier,
 			       pays,
@@ -822,6 +855,9 @@ def execute(filters=None):
 			       #qts_dem
 			       #info[1] or 0,
 			       #qts
+			       mri.qts_total,
+			       mri.qts_depot,
+			       (mri.qts_total or 0) - (mri.qts_depot or 0),			       
 			       info[0] or 0,
 			       #qts_projete
 			       info[2] or 0,
