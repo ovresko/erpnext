@@ -167,7 +167,10 @@ def execute(filters=None):
 			suggere_qty = frappe.db.sql("""select warehouse,actual_qty from `tabBin` where item_code=%s and  actual_qty>0  and warehouse!=%s  order by actual_qty desc  limit 1""",(item.item_code, item.warehouse),as_dict=1)
 			if suggere_qty and suggere_qty[0]:
 				suggere_qty = suggere_qty[0]
+				parentwh = frappe.db.get_value('Warehouse', suggere_qty.warehouse, 'parent_warehouse') 
 				if filters.source_warehouse and filters.source_warehouse != suggere_qty.warehouse:
+					continue
+				elif not filters.source_warehouse and parentwh != entrepot_depot:
 					continue
 				
 				qts_stock_source = suggere_qty.actual_qty
@@ -179,9 +182,12 @@ def execute(filters=None):
 				suggere_qty = "Non disponible"
 		else:
 			suggere_qty = suggere_qty[0]
+			parentwh = frappe.db.get_value('Warehouse', suggere_qty.warehouse, 'parent_warehouse') 
 			if filters.source_warehouse and filters.source_warehouse != suggere_qty.warehouse:
 					continue
-			
+			elif not filters.source_warehouse and parentwh != entrepot_depot:
+					continue
+					
 			qts_stock_source = suggere_qty.actual_qty
 			suggere_qty = "%s" % (suggere_qty.warehouse)
 			
