@@ -108,6 +108,8 @@ def execute(filters=None):
 	
 	entrepot_magasin = frappe.db.get_value('Stock Settings', None, 'entrepot_magasin')
 	entrepot_depot  = frappe.db.get_value('Stock Settings', None, 'entrepot_depot')
+	depot_parent = frappe.db.get_value('Stock Settings', None, 'depot_parent')
+	
 	if entrepot_depot == filters.warehouse:
 		warehouses= frappe.db.sql("""select name from `tabWarehouse` where parent_warehouse=%s""",(entrepot_magasin))
 		if warehouses:
@@ -170,7 +172,7 @@ def execute(filters=None):
 				parentwh = frappe.db.get_value('Warehouse', suggere_qty.warehouse, 'parent_warehouse') 
 				if filters.source_warehouse and filters.source_warehouse != suggere_qty.warehouse:
 					continue
-				elif not filters.source_warehouse and parentwh != entrepot_depot:
+				elif not filters.source_warehouse and parentwh != depot_parent:
 					continue
 				
 				qts_stock_source = suggere_qty.actual_qty
@@ -185,7 +187,7 @@ def execute(filters=None):
 			parentwh = frappe.db.get_value('Warehouse', suggere_qty.warehouse, 'parent_warehouse') 
 			if filters.source_warehouse and filters.source_warehouse != suggere_qty.warehouse:
 					continue
-			elif not filters.source_warehouse and parentwh != entrepot_depot:
+			elif not filters.source_warehouse and parentwh != depot_parent:
 					continue
 					
 			qts_stock_source = suggere_qty.actual_qty
