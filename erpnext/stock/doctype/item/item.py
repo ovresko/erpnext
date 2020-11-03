@@ -282,8 +282,9 @@ class Item(WebsiteGenerator):
 					if qtotal:
 						self.qts_depot = qtotal[0][0]
 			if save:
-				frappe.db.set_value("Item", self.name, "qts_total", self.qts_total)
-				frappe.db.set_value("Item", self.name, "qts_depot", self.qts_depot)
+				self.save()
+				#frappe.db.set_value("Item", self.name, "qts_total", self.qts_total)
+				#frappe.db.set_value("Item", self.name, "qts_depot", self.qts_depot)
 
 	def sync_comp(self):
 		if self.variant_of:
