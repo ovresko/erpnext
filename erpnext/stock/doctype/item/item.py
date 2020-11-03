@@ -283,6 +283,7 @@ class Item(WebsiteGenerator):
 						self.qts_depot = qtotal[0][0]
 			if save:
 				self.save()
+				frappe.db.commit()
 				#frappe.db.set_value("Item", self.name, "qts_total", self.qts_total)
 				#frappe.db.set_value("Item", self.name, "qts_depot", self.qts_depot)
 
