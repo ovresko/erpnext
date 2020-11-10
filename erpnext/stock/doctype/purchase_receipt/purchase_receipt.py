@@ -188,7 +188,7 @@ class PurchaseReceipt(BuyingController):
 
 		self.update_prevdoc_status()
 		self.update_billing_status()
-
+		frappe.msgprint("Operation annulee")
 		# Updating stock ledger should always be called after updating prevdoc status,
 		# because updating ordered qty in bin depends upon updated ordered qty in PO
 		self.update_stock_ledger()
