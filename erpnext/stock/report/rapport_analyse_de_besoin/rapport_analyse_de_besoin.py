@@ -106,6 +106,16 @@ def execute(filters=None):
 			"width": 150
 		})
 	columns.append({
+			"fieldname": "qts_depot",
+			"label": "Qte Depot",
+			"width": 150
+		})
+	columns.append({
+			"fieldname": "qts_magasin",
+			"label": "Qte Magasin",
+			"width": 150
+		})
+	columns.append({
 			"fieldname": "qts_projete",
 			"label": "Qte Projete",
 			"width": 150
@@ -165,7 +175,7 @@ def execute(filters=None):
 		items = frappe.db.sql(
 			"""
 			select
-				stock_uom,item_bloque, perfection,is_purchase_item,weight_per_unit,variant_of,has_variants,item_name, item_code, manufacturer,last_purchase_rate , manufacturer_part_no, item_group,last_purchase_devise,max_order_qty,max_ordered_variante
+				stock_uom,item_bloque, qts_total, qts_depot, perfection,is_purchase_item,weight_per_unit,variant_of,has_variants,item_name, item_code, manufacturer,last_purchase_rate , manufacturer_part_no, item_group,last_purchase_devise,max_order_qty,max_ordered_variante
 			from `tabItem`
 			where disabled=0 and has_variants=0 {conditions} and item_code in ({rec})
 			{order_by_statement}
@@ -180,7 +190,7 @@ def execute(filters=None):
 		items = frappe.db.sql(
 			"""
 			select
-				stock_uom,item_bloque, perfection,is_purchase_item,weight_per_unit,variant_of,has_variants,item_name, item_code, manufacturer,last_purchase_rate , manufacturer_part_no, item_group,last_purchase_devise,max_order_qty,max_ordered_variante
+				stock_uom,item_bloque, qts_total, qts_depot, perfection,is_purchase_item,weight_per_unit,variant_of,has_variants,item_name, item_code, manufacturer,last_purchase_rate , manufacturer_part_no, item_group,last_purchase_devise,max_order_qty,max_ordered_variante
 			from `tabItem`
 			where disabled=0 and has_variants=0 {conditions}
 			{order_by_statement}
@@ -216,7 +226,7 @@ def execute(filters=None):
 						comp_items = frappe.db.sql(
 								"""
 								select
-									stock_uom,item_bloque, perfection,is_purchase_item,weight_per_unit,variant_of,has_variants,item_name, item_code, manufacturer,last_purchase_rate , manufacturer_part_no, item_group,last_purchase_devise,max_order_qty,max_ordered_variante
+									stock_uom,item_bloque, qts_total, qts_depot, perfection,is_purchase_item,weight_per_unit,variant_of,has_variants,item_name, item_code, manufacturer,last_purchase_rate , manufacturer_part_no, item_group,last_purchase_devise,max_order_qty,max_ordered_variante
 								from `tabItem`
 								where disabled=0 and has_variants=0  and variant_of=%s and  item_code not in ('{0}')
 								
@@ -240,7 +250,7 @@ def execute(filters=None):
 		exitems = frappe.db.sql(
 		"""
 		select
-			stock_uom,item_bloque, perfection,is_purchase_item,weight_per_unit,variant_of,has_variants,item_name, item_code, manufacturer,last_purchase_rate , manufacturer_part_no, item_group,last_purchase_devise,max_order_qty,max_ordered_variante
+			stock_uom,item_bloque, perfection,is_purchase_item, qts_total, qts_depot,weight_per_unit,variant_of,has_variants,item_name, item_code, manufacturer,last_purchase_rate , manufacturer_part_no, item_group,last_purchase_devise,max_order_qty,max_ordered_variante
 		from `tabItem`
 		where disabled=0 and has_variants=0 and variant_of = %s and item_code not in ('{0}')
 		""".format(lids),
@@ -320,6 +330,8 @@ def execute(filters=None):
 			       r_qts_bloque or '',
 			       #qts
 			       info[0] or 0,
+			       mri.qts_depot or 0,
+			       (mri.qts_total or 0) - (mri.qts_depot or 0),
 			       #qts_projete
 			       info[2] or 0,
 			       qts_demande or 0,
