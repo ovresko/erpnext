@@ -269,10 +269,13 @@ class Item(WebsiteGenerator):
 						
 	def set_qts(self,save=False):
 		if not self.has_variants:
+			self.qts_total = 0				
+			self.qts_depot =0
 			stotal = frappe.db.sql("""select sum(actual_qty) from  tabBin  where item_code=%s""",[self.item_code])
 			#frappe.msgprint("stotal: %s" % stotal)
 			if stotal:
 				self.qts_total = stotal[0][0]
+				
 			depot_parent  = frappe.db.get_value('Stock Settings', None, 'depot_parent')
 			if depot_parent:
 				warehouses= frappe.db.sql("""select name from `tabWarehouse` where parent_warehouse=%s""",(depot_parent),as_dict=True)
