@@ -164,7 +164,8 @@ class PurchaseReceipt(BuyingController):
 			if item.facture_item:
 				frappe.db.set_value("Purchase Invoice Item",item.facture_item,"pr_detail",item.name)
 				frappe.db.set_value("Purchase Invoice Item",item.facture_item,"purchase_receipt",item.parent)
-		frappe.enqueue("erpnext.stock.doctype.purchase_receipt.purchase_receipt.on_submit_purchase_receipt",items=self.items,timeout=10000)
+		frappe.db.commit()
+		frappe.enqueue("erpnext.stock.doctype.purchase_receipt.purchase_receipt.on_submit_purchase_receipt",items=self.items,timeout=50000)
 
 	def check_next_docstatus(self):
 		submit_rv = frappe.db.sql("""select t1.name
@@ -197,7 +198,8 @@ class PurchaseReceipt(BuyingController):
 			if item.facture_item:
 				frappe.db.set_value("Purchase Invoice Item",item.facture_item,"pr_detail","")
 				frappe.db.set_value("Purchase Invoice Item",item.facture_item,"purchase_receipt","")
-		frappe.enqueue("erpnext.stock.doctype.purchase_receipt.purchase_receipt.on_submit_purchase_receipt",items=self.items,timeout=10000)
+		frappe.db.commit()
+		frappe.enqueue("erpnext.stock.doctype.purchase_receipt.purchase_receipt.on_submit_purchase_receipt",items=self.items,timeout=50000)
 
 	def get_current_stock(self):
 		for d in self.get('supplied_items'):
