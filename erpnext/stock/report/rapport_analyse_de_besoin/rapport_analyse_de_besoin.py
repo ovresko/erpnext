@@ -444,6 +444,6 @@ def info_variante(model, warehouse=None):
 		condition += " AND warehouse = %s"
 
 	actual_qty = frappe.db.sql("""select sum(actual_qty), sum(indented_qty), sum(projected_qty), sum(ordered_qty) from tabBin
-		where is_group=0 item_code=%s {0}""".format(condition), values)[0]
+		where is_group=0 and item_code=%s {0}""".format(condition), values)[0]
 
 	return actual_qty
