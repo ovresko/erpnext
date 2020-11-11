@@ -330,8 +330,8 @@ def execute(filters=None):
 			       r_qts_bloque or '',
 			       #qts
 			       info[0] or 0,
-			       mri.qts_depot or 0,
-			       (mri.qts_total or 0) - (mri.qts_depot or 0),
+			       flt(mri.qts_depot or 0),
+			       flt(mri.qts_total or 0) - flt(mri.qts_depot or 0),
 			       #qts_projete
 			       info[2] or 0,
 			       qts_demande or 0,
