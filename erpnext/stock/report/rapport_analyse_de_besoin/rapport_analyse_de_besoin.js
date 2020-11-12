@@ -245,7 +245,7 @@ frappe.query_reports["Rapport analyse de besoin"] = {
 			"fieldname":"model_status",
 			"label": "Etat par modele",
 			"fieldtype": "Select",
-			"options": ["","Modele en repture"],
+			"options": ["","Modele en repture","Repture Article"],
 			"default": ""
 		}
 	]
