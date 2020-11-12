@@ -242,6 +242,13 @@ frappe.query_reports["Rapport analyse de besoin"] = {
 			"default": 0
 		},
 		{
+			"fieldname":"entry_status",
+			"label": "Etat ",
+			"fieldtype": "Select",
+			"options": ["","Achetes deja","Non Achetes"],
+			"default": ""
+		},
+		{
 			"fieldname":"model_status",
 			"label": "Etat par modele",
 			"fieldtype": "Select",
