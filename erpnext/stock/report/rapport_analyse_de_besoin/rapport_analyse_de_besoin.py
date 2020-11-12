@@ -263,7 +263,7 @@ def execute(filters=None):
 		mitems.extend(_mitems)
 		if not mitems or len(mitems) <=0:
 			frappe.msgprint("Aucune resultat!")
-			
+		entry_status = filters.get('entry_status')
 		for mri in mitems:
 			global info
 			qts_max_achat = 0
@@ -275,7 +275,7 @@ def execute(filters=None):
 				info = info_modele(mri.item_code)
 				qts_max_achat = mri.max_order_qty
 				
-			if mri.variant_of and filters.get('entry_status') and filters.get('entry_status') == "Non Achetes" and (info[1] > 0 or info[2] >0) :
+			if mri.variant_of and entry_status == "Non Achetes" and (info[1] > 0 or info[2] >0) :
 				continue
 			#Recu Deja
 				
@@ -310,7 +310,7 @@ def execute(filters=None):
 				last_qty = sqllast_qty[0].actual_qty
 				last_valuation = sqllast_qty[0].incoming_rate
 				
-			if not last_qty and  mri.variant_of and filters.get('entry_status') and filters.get('entry_status') == "Recu Deja":
+			if not last_qty and  mri.variant_of and entry_status == "Recu Deja":
 				continue
 			cmp = "%s CP" % mri.item_code if (mri.has_variants and mri.item_code in mcomplements) else mri.item_code
 			row = ["""<input type='button' onclick="erpnext.utils.open_item_info('%s', this)" value='info'>  </input> &nbsp;&nbsp;&nbsp; <button id='%s' onClick="demander_item('%s')" type='button'>Demander</button><input placeholder='Qts' id='input_%s' style='color:black'></input><button   onClick="achat_item('%s')" type='button'>ACHAT %s</button>""" % (mri.item_code,mri.item_code,mri.item_code,mri.item_code,mri.item_code,mri.is_purchase_item),
