@@ -261,7 +261,9 @@ def execute(filters=None):
 		origin_model = frappe.get_doc("Item",model)
 		mitems = [origin_model]
 		mitems.extend(_mitems)
-		
+		if not mitems or len(mitems) <=0:
+			frappe.msgprint("Aucune resultat!")
+			
 		for mri in mitems:
 			global info
 			qts_max_achat = 0
