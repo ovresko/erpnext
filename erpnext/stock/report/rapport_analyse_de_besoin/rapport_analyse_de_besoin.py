@@ -275,7 +275,7 @@ def execute(filters=None):
 				info = info_modele(mri.item_code)
 				qts_max_achat = mri.max_order_qty
 				
-			if filters.get('entry_status') and filters.get('entry_status') == "Non Achetes" and info and (info[1] > 0 or info[2] >0) :
+			if filters.get('entry_status') and filters.get('entry_status') == "Non Achetes" and (info[1] > 0 or info[2] >0) :
 				continue
 				
 			sqllast_qty = frappe.db.sql("""select actual_qty,valuation_rate,incoming_rate from `tabStock Ledger Entry` 
