@@ -165,7 +165,7 @@ def execute(filters=None):
 		#			"width": 150
 		#		})
 	mris = []
-
+	entry_status = filters.get('entry_status')
 	order_by_statement = "order by item_code"
 	items = []
 	if filters.get("recu"):
@@ -185,7 +185,37 @@ def execute(filters=None):
 				order_by_statement=order_by_statement
 			),
 			filters, as_dict=1)
-		
+	elif order_by_statement and order_by_statement == "Non Achetes":
+		items = frappe.db.sql(
+			"""
+			select
+				stock_uom,item_bloque, qts_total, qts_depot, perfection,is_purchase_item,weight_per_unit,variant_of,has_variants,item_name, item_code, manufacturer,last_purchase_rate , manufacturer_part_no, item_group,last_purchase_devise,max_order_qty,max_ordered_variante
+			from `tabItem`
+			where disabled=0 and has_variants=0 and NOT EXISTS (select name from `tabStock Ledger Entry` se
+			where se.item_code=item_code and voucher_type="Purchase Receipt"
+			{conditions}
+			{order_by_statement}
+			""".format(
+				conditions=get_conditions(filters),
+				order_by_statement=order_by_statement
+			),
+			filters, as_dict=1)
+		#Achetes deja
+	elif order_by_statement and order_by_statement == "Achetes deja":
+		items = frappe.db.sql(
+			"""
+			select
+				stock_uom,item_bloque, qts_total, qts_depot, perfection,is_purchase_item,weight_per_unit,variant_of,has_variants,item_name, item_code, manufacturer,last_purchase_rate , manufacturer_part_no, item_group,last_purchase_devise,max_order_qty,max_ordered_variante
+			from `tabItem`
+			where disabled=0 and has_variants=0 and EXISTS (select name from `tabStock Ledger Entry` se
+			where se.item_code=item_code and voucher_type="Purchase Receipt"
+			{conditions}
+			{order_by_statement}
+			""".format(
+				conditions=get_conditions(filters),
+				order_by_statement=order_by_statement
+			),
+			filters, as_dict=1)
 	else:
 		items = frappe.db.sql(
 			"""
@@ -263,7 +293,7 @@ def execute(filters=None):
 		mitems.extend(_mitems)
 		if not mitems or len(mitems) <=0:
 			frappe.msgprint("Aucune resultat!")
-		entry_status = filters.get('entry_status')
+		
 		for mri in mitems:
 			global info
 			qts_max_achat = 0
@@ -383,11 +413,6 @@ def get_conditions(filters):
 	# group, modele, manufacturer, age_plus, age_minus
 	if filters.get('group'):
 		conditions.append("item_group=%(group)s")
-	
-	if filters.get('entry_status'):
-		if filters.get('entry_status') == "Achetes deja":
-			conditions.append("last_purchase_rate>0")
-
 	
 	if filters.get('model_status') and filters.get('model_status') == "Repture Article":
 		conditions.append("qts_depot<=0")
