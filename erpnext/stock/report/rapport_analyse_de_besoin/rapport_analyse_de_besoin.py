@@ -272,6 +272,10 @@ def execute(filters=None):
 			elif mri.has_variants:
 				info = info_modele(mri.item_code)
 				qts_max_achat = mri.max_order_qty
+				
+			if filters.get('entry_status') and filters.get('entry_status') == "Non Achetes" and info and (info[1] > 0 or info[2] >0) :
+				continue
+				
 			sqllast_qty = frappe.db.sql("""select actual_qty,valuation_rate,incoming_rate from `tabStock Ledger Entry` 
 			where item_code=%s and voucher_type=%s 
 			order by posting_date desc, posting_time desc limit 1""", (mri.item_code,"Purchase Receipt"), as_dict=1)
@@ -371,6 +375,11 @@ def get_conditions(filters):
 	# group, modele, manufacturer, age_plus, age_minus
 	if filters.get('group'):
 		conditions.append("item_group=%(group)s")
+	
+	if filters.get('entry_status'):
+		if filters.get('entry_status') == "Achetes deja":
+			conditions.append("last_purchase_rate>0")
+
 	
 	if filters.get('model_status') and filters.get('model_status') == "Repture Article":
 		conditions.append("qts_depot<=0")
