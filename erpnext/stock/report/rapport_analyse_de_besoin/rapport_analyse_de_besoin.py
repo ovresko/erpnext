@@ -373,7 +373,7 @@ def get_conditions(filters):
 		conditions.append("item_group=%(group)s")
 	
 	if filters.get('model_status') and filters.get('model_status') == "Repture Article":
-		conditions.append("qts_depot is null or qts_depot='0'")
+		conditions.append("qts_depot<=0")
 	#perfection
 	if filters.get('perfection'):
 		conditions.append("perfection=%(perfection)s")
