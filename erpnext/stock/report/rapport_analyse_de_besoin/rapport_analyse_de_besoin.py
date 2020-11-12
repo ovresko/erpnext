@@ -277,10 +277,13 @@ def execute(filters=None):
 				
 			if mri.variant_of and filters.get('entry_status') and filters.get('entry_status') == "Non Achetes" and (info[1] > 0 or info[2] >0) :
 				continue
+			#Recu Deja
 				
 			sqllast_qty = frappe.db.sql("""select actual_qty,valuation_rate,incoming_rate from `tabStock Ledger Entry` 
 			where item_code=%s and voucher_type=%s 
 			order by posting_date desc, posting_time desc limit 1""", (mri.item_code,"Purchase Receipt"), as_dict=1)
+			
+				
 			relq = frappe.db.sql("""select sum(ordered_qty) - sum(qty) from `tabPurchase Invoice Item` 
 			where item_code=%s and docstatus=1 and ordered_qty>0""", (mri.item_code))[0][0]
 			last_qty = 0
@@ -306,6 +309,9 @@ def execute(filters=None):
 			if sqllast_qty:
 				last_qty = sqllast_qty[0].actual_qty
 				last_valuation = sqllast_qty[0].incoming_rate
+				
+			if not last_qty and  mri.variant_of and filters.get('entry_status') and filters.get('entry_status') == "Recu Deja":
+				continue
 			cmp = "%s CP" % mri.item_code if (mri.has_variants and mri.item_code in mcomplements) else mri.item_code
 			row = ["""<input type='button' onclick="erpnext.utils.open_item_info('%s', this)" value='info'>  </input> &nbsp;&nbsp;&nbsp; <button id='%s' onClick="demander_item('%s')" type='button'>Demander</button><input placeholder='Qts' id='input_%s' style='color:black'></input><button   onClick="achat_item('%s')" type='button'>ACHAT %s</button>""" % (mri.item_code,mri.item_code,mri.item_code,mri.item_code,mri.item_code,mri.is_purchase_item),
 			       cmp,
