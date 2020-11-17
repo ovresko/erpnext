@@ -315,7 +315,7 @@ def execute(filters=None):
 			
 			cmd_total = frappe.db.sql("""select sum(qty)  from  `tabPurchase Order Item` where item_code=%s  and docstatus=1 """, (mri.item_code))[0][0]
 			fac_total = frappe.db.sql("""select sum(qty)  from  `tabPurchase Invoice Item` where item_code=%s  and docstatus=1 """, (mri.item_code))[0][0]
-			relq = cmd_total - fac_total
+			relq = (cmd_total or 0) - (fac_total or 0)
 			#relq = frappe.db.sql("""select sum(po.qty) - sum(pi.qty) as 'diffr' from `tabPurchase Invoice Item` pi, `tabPurchase Order Item` po where pi.item_code=%s and po.item_code=%s and pi.docstatus=1 and po.docstatus=1 GROUP BY pi.item_code""", (mri.item_code,mri.item_code))
 			#if relq:
 			#	relq = relq[0][0]
