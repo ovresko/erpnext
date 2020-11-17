@@ -313,11 +313,14 @@ def execute(filters=None):
 			where item_code=%s and voucher_type=%s 
 			order by posting_date desc, posting_time desc limit 1""", (mri.item_code,"Purchase Receipt"), as_dict=1)
 			
-			relq = frappe.db.sql("""select sum(po.qty) - sum(pi.qty) as 'diffr' from `tabPurchase Invoice Item` pi, `tabPurchase Order Item` po where pi.item_code=%s and po.item_code=%s and pi.docstatus=1 and po.docstatus=1 GROUP BY pi.item_code""", (mri.item_code,mri.item_code))
-			if relq:
-				relq = relq[0][0]
-			else:
-				relq = ''
+			cmd_total = frappe.db.sql("""select sum(qty)  from  `tabPurchase Order Item` where item_code=%s  and docstatus=1 """, (mri.item_code))[0][0]
+			fac_total = frappe.db.sql("""select sum(qty)  from  `tabPurchase Invoice Item` where item_code=%s  and docstatus=1 """, (mri.item_code))[0][0]
+			relq = cmd_total - fac_total
+			#relq = frappe.db.sql("""select sum(po.qty) - sum(pi.qty) as 'diffr' from `tabPurchase Invoice Item` pi, `tabPurchase Order Item` po where pi.item_code=%s and po.item_code=%s and pi.docstatus=1 and po.docstatus=1 GROUP BY pi.item_code""", (mri.item_code,mri.item_code))
+			#if relq:
+			#	relq = relq[0][0]
+			#else:
+			#	relq = ''
 			
 			last_qty = 0
 			
@@ -369,7 +372,7 @@ def execute(filters=None):
 			       #qts_comm
 			       info[3] or 0,
 			       #reliuat
-			       relq or 0,
+			       f"{cmd_total} - {fac_total} = {relq} 0",
 			       #qts_dem
 			       info[1] or 0,
 			       #qts_bloque
