@@ -372,7 +372,7 @@ def execute(filters=None):
 			       #qts_comm
 			       info[3] or 0,
 			       #reliuat
-			       f"{cmd_total} - {fac_total} = {relq} 0",
+			       "%s - %s = %s" % (cmd_total,fac_total,relq),
 			       #qts_dem
 			       info[1] or 0,
 			       #qts_bloque
