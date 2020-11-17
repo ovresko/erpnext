@@ -313,10 +313,11 @@ def execute(filters=None):
 			where item_code=%s and voucher_type=%s 
 			order by posting_date desc, posting_time desc limit 1""", (mri.item_code,"Purchase Receipt"), as_dict=1)
 			
-				
-			relq = frappe.db.sql("""select sum(ordered_qty) - sum(qty) from `tabPurchase Invoice Item` 
-			where item_code=%s and docstatus=1 and ordered_qty>0""", (mri.item_code))[0][0]
+			relq = frappe.db.sql("""select sum(po.qty) - sum(pi.qty) from `tabPurchase Invoice Item` pi, `tabPurchase Order Item` po
+			where pi.item_code=%s and po.item_code=%s and pi.docstatus=1 and po.docstatus=1 """, (mri.item_code))[0][0]
+			
 			last_qty = 0
+			
 			qts_consulte = frappe.db.sql("""select sum(qty) from `tabSupplier Quotation Item` 
 			where item_code=%s and docstatus=0""", (mri.item_code))[0][0]
 			qts_demande = frappe.db.sql("""select sum(qty) from `tabMaterial Request Item` 
