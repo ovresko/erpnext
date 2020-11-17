@@ -1207,7 +1207,7 @@ class POSCart {
 				},
 				onchange: () => {
 					let customer = this.customer_field.get_value();
-					
+					me.frm.doc.selling_price_list = None
 					this.events.on_customer_change(customer);
 					this.events.get_loyalty_details();
 					
@@ -2471,8 +2471,7 @@ class POSItems {
 		//btn-dosearch
 		this.wrapper.on('click', '.btn-dosearch', function(event) {
 			var $search_field = me.wrapper.find('.search-field');
-			 var keyw = $search_field.find('input:text').val();
-			console.log("keyw",keyw);
+			var keyw = $search_field.find('input:text').val();
 			me.start = 0;
 			me.filter_items({ start:me.start,search_term: keyw});
 		});
