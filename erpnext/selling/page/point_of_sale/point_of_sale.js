@@ -1207,7 +1207,7 @@ class POSCart {
 				},
 				onchange: () => {
 					let customer = this.customer_field.get_value();
-					me.frm.doc.selling_price_list = None
+					me.frm.doc.selling_price_list = null;
 					this.events.on_customer_change(customer);
 					this.events.get_loyalty_details();
 					
