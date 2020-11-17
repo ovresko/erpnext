@@ -313,8 +313,7 @@ def execute(filters=None):
 			where item_code=%s and voucher_type=%s 
 			order by posting_date desc, posting_time desc limit 1""", (mri.item_code,"Purchase Receipt"), as_dict=1)
 			
-			relq = frappe.db.sql("""select (sum(po.qty) - sum(pi.qty)) as diffr from `tabPurchase Invoice Item` pi inner join `tabPurchase Order Item` po
-			on pi.item_code=po.item_code
+			relq = frappe.db.sql("""select sum(po.qty) - sum(pi.qty) as diffr from `tabPurchase Invoice Item` pi, `tabPurchase Order Item` po
 			where pi.item_code=%s and po.item_code=%s and pi.docstatus=1 and po.docstatus=1 GROUP BY pi.item_code""", (mri.item_code,mri.item_code))[0][0]
 			
 			last_qty = 0
