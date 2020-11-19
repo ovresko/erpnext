@@ -374,7 +374,8 @@ def execute(filters=None):
 			       #reliuat
 			       relq or 0,
 			       #qts_dem
-			       info[1] or 0,
+			       qts_demande or 0,
+			       #info[1] or 0,
 			       #qts_bloque
 			       r_qts_bloque or '',
 			       #qts
