@@ -37,7 +37,7 @@
 			{% if(data[i].posting_date) { %}
 				<td>{%= frappe.datetime.str_to_user(data[i].posting_date) %}</td>
 				<td>{%= __(data[i].voucher_type) %} : {%= data[i].voucher_no %} 
-					{% if(data[i].voucher_type = 'Sales Invoice' and data[i].credit > 0) { %} 
+					{% if(data[i].voucher_type == 'Sales Invoice' && data[i].credit > 0) { %} 
 					Avoir 
 					{% } %}</td>
 				
