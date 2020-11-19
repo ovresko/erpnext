@@ -109,6 +109,9 @@ class PurchaseInvoice(BuyingController):
 
 	def check_country(self):
 		for item in self.items:
+			if item.ordered_qty < item.qty:
+				frappe.throw("Qts Facture pour article %s %s est superieur a la commande %s" %(item.item_code,item.qty,item.ordered_qty) )
+				
 			if item.po_detail:
 				po = frappe.get_doc("Purchase Order Item",item.po_detail)
 				if po and po.pays:
