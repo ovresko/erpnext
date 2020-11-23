@@ -32,12 +32,12 @@
 <table class="table table-bordered">
 	<thead>
 		<tr>
-			<th class="text-left" style="font-size:12px; width='30%'" >Article</th>
+			<th class="text-left" style="font-size:12px; width:30%" >Article</th>
 			<th class="text-left" style="font-size:12px">Marque</th>
-			<th class="text-left" style="font-size:12px; width='40%'">Générations</th>
+			<th class="text-left" style="font-size:12px; width:40%">Générations</th>
 			<th class="text-left" style="font-size:12px">OEM</th>
 			<th class="text-left" style="font-size:12px">Fabricant</th>
-			<th class="text-left" style="font-size:12px; width='30%'">Référence</th>
+			<th class="text-left" style="font-size:12px; width:30%">Référence</th>
 			<th class="text-left" style="font-size:12px">Info.</th>
 			{% if(!filters.hide_prices) { %}
 				{%  price_index = report_columns.map(function(e) { return e.fieldname; }).indexOf('fiche_infor_link'); %}
