@@ -280,7 +280,7 @@ def execute(filters=None):
 						if pl.name and not mri.has_variants:						
 							price = frappe.db.sql("""select price_list_rate from `tabItem Price` where  price_list=%s and (  item_code=%s) ORDER BY min_qty ASC LIMIT 1;""",(pl.name,mri.item_code))
 							if price:
-								all_prices = "%.2f %s" % (price[0][0] or 0,pl.currency)
+								all_prices = "%.2f" % (price[0][0] or 0)
 								row.append(all_prices)
 								has_atleast_price = 1
 								#row.append(price[0][0])
