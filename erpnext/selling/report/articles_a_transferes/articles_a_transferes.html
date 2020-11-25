@@ -3,6 +3,9 @@
   
 <p>Stock Cible : <strong> {%= filters.warehouse %}</strong></p>
 <p>Stock Source : <strong>{%= filters.source_warehouse %}</strong></p>
+{% if (filters.cmd ) { %}
+	<h1>Urgent</h1>
+{% } %}
 {% if (filters.grouped ) { %}
 		<strong> [Quantites Groupees]</strong>
 	{% } else { %}
