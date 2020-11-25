@@ -99,12 +99,13 @@ def execute(filters=None):
 	
 	
 	items.extend(orders_items)
-	dm_items = frappe.db.sql(""" select * from `tabMaterial Request Item` mri 
-	left join (select docstatus,name,material_request_type,status from `tabMaterial Request`) mrd
-	on (mrd.name = mri.parent) 
-	where  mrd.docstatus = 1 and mrd.material_request_type='Material Transfer' and mrd.status in ('Submitted','Pending') and mri.parent is not null and mri.docstatus=1 and mri.ordered_qty=0 and mri.warehouse=%s""",(filters.warehouse),as_dict=1)
-		
-	items.extend(dm_items)
+	if filters.cmd == 0:
+		dm_items = frappe.db.sql(""" select * from `tabMaterial Request Item` mri 
+		left join (select docstatus,name,material_request_type,status from `tabMaterial Request`) mrd
+		on (mrd.name = mri.parent) 
+		where  mrd.docstatus = 1 and mrd.material_request_type='Material Transfer' and mrd.status in ('Submitted','Pending') and mri.parent is not null and mri.docstatus=1 and mri.ordered_qty=0 and mri.warehouse=%s""",(filters.warehouse),as_dict=1)
+
+		items.extend(dm_items)
 	
 	entrepot_magasin = frappe.db.get_value('Stock Settings', None, 'entrepot_magasin')
 	entrepot_depot  = frappe.db.get_value('Stock Settings', None, 'entrepot_depot')
