@@ -374,7 +374,7 @@ def execute(filters=None):
 							row.append("_")
 					else:
 						row.append("_")
-			if filters.get('has_price') and not has_atleast_price and not mri.has_variants:
+			if filters.get('has_price') and not has_atleast_price and not mri.has_variants and not filters.hide_prices:
 				continue
 
 			if filters.get('manufacturer') and filters.get('only_fabricant')  and mri.manufacturer not in filters.get('manufacturer'):
