@@ -111,7 +111,7 @@ def execute(filters=None):
 	entrepot_depot  = frappe.db.get_value('Stock Settings', None, 'entrepot_depot')
 	depot_parent = frappe.db.get_value('Stock Settings', None, 'depot_parent')
 	
-	if entrepot_depot == filters.warehouse:
+	if filters.cmd == 0 and entrepot_depot == filters.warehouse:
 		warehouses= frappe.db.sql("""select name from `tabWarehouse` where parent_warehouse=%s""",(entrepot_magasin))
 		if warehouses:
 			for wr in warehouses:
