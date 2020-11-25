@@ -33,6 +33,11 @@ frappe.query_reports["Articles a transferes"] = {
 			"label": "Non traites seulement",
 			"fieldtype": "Check",
 			"default": 1
+		},{
+			"fieldname": "cmd",
+			"label": "Commandes",
+			"fieldtype": "Check",
+			"default": 0
 		}
 	],
 	onload: function(report) {
