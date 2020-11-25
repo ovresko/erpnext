@@ -3,7 +3,7 @@
   
 <p>Stock Cible : <strong> {%= filters.warehouse %}</strong></p>
 <p>Stock Source : <strong>{%= filters.source_warehouse %}</strong></p>
-{% if (filters.cmd ) { %}
+{% if (filters.cmd == 1) { %}
 	<h1>Urgent</h1>
 {% } %}
 {% if (filters.grouped ) { %}
