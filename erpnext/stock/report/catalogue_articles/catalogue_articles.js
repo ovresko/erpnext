@@ -208,7 +208,7 @@ frappe.query_reports["Catalogue Articles"] = {
 			"fieldname": "depot_qty",
 			"label": "Disponible Depot",
 			"fieldtype": "Check",
-			"default": 0
+			"default": 1
 		},
 		{
 			"fieldname": "magasin_qty",
@@ -220,25 +220,25 @@ frappe.query_reports["Catalogue Articles"] = {
 			"fieldname": "has_price",
 			"label": "Articles Avec Prix Seulement",
 			"fieldtype": "Check",
-			"default": 0
+			"default": 1
 		},
 		{
 			"fieldname": "only_fabricant",
 			"label": "Fabricant selec. seul.",
 			"fieldtype": "Check",
-			"default": 0
+			"default": 1
 		},
 		{
 			"fieldname": "regroupe",
 			"label": "Regroupe",
 			"fieldtype": "Check",
-			"default": 1
+			"default": 0
 		},
 		{
 			"fieldname": "hide_prices",
 			"label": "Cacher les prix",
 			"fieldtype": "Check",
-			"default": 0
+			"default": 1
 		},
 		{
 			"fieldname": "hide_qty",
