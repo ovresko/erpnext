@@ -16,7 +16,7 @@ import json
 def execute(filters=None):
 	columns, data = [], []
 	if not filters.group and not filters.get("recu") and not filters.ref_fabricant and not filters.item_code and not filters.generation_v and not filters.marque_v and not filters.variant_of and not filters.modele_v and not filters.version and not filters.price_list and not filters.perfection and not filters.manufacturer:
-		frappe.msgprint("appliquer un filtre plus spécifique !")
+		frappe.msgprint("appliquer un filtre plus specifique !")
 		return columns, data
 	
 	if filters.get('manufacturer'):
