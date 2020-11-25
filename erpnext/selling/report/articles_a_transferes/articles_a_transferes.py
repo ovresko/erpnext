@@ -99,7 +99,7 @@ def execute(filters=None):
 	
 	
 	items.extend(orders_items)
-	if filters.cmd == 0:
+	if not filters.cmd:
 		dm_items = frappe.db.sql(""" select * from `tabMaterial Request Item` mri 
 		left join (select docstatus,name,material_request_type,status from `tabMaterial Request`) mrd
 		on (mrd.name = mri.parent) 
@@ -111,7 +111,7 @@ def execute(filters=None):
 	entrepot_depot  = frappe.db.get_value('Stock Settings', None, 'entrepot_depot')
 	depot_parent = frappe.db.get_value('Stock Settings', None, 'depot_parent')
 	
-	if filters.cmd == 0 and entrepot_depot == filters.warehouse:
+	if not filters.cmd and entrepot_depot == filters.warehouse:
 		warehouses= frappe.db.sql("""select name from `tabWarehouse` where parent_warehouse=%s""",(entrepot_magasin))
 		if warehouses:
 			for wr in warehouses:
