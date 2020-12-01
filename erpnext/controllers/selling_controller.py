@@ -175,7 +175,7 @@ class SellingController(StockController):
 			last_purchase_rate, is_stock_item = frappe.get_cached_value("Item", it.item_code, ["last_purchase_rate", "is_stock_item"])
 			last_purchase_rate_in_sales_uom = last_purchase_rate / (it.conversion_factor or 1)
 			if flt(it.base_rate) < flt(last_purchase_rate_in_sales_uom):
-				throw_message(it.item_code, last_purchase_rate_in_sales_uom, "last purchase rate",idx=it.idx,it.base_rate)
+				throw_message(it.item_code, last_purchase_rate_in_sales_uom, "last purchase rate",idx=it.idx,base_rate=it.base_rate)
 
 			last_valuation_rate = frappe.db.sql("""
 				SELECT valuation_rate FROM `tabStock Ledger Entry` WHERE item_code = %s
@@ -186,7 +186,7 @@ class SellingController(StockController):
 				last_valuation_rate_in_sales_uom = last_valuation_rate[0][0] / (it.conversion_factor or 1)
 				it.valuation_rate = last_valuation_rate_in_sales_uom
 				if is_stock_item and flt(it.base_rate) < flt(last_valuation_rate_in_sales_uom):
-					throw_message(it.item_code, last_valuation_rate_in_sales_uom, "valuation rate",idx=it.idx,it.base_rate)
+					throw_message(it.item_code, last_valuation_rate_in_sales_uom, "valuation rate",idx=it.idx,base_rate=it.base_rate)
 
 
 	def get_item_list(self):
