@@ -1464,7 +1464,7 @@ class POSCart {
 			<div style="border-bottom: solid 1px #d1d8dd;" class="list-item indicator ${indicator_class}" data-item-code="${escape(item.item_code)}"
 				data-batch-no="${batch_no}" title="Item: ${item.item_name.toLowerCase()} ${fabricant.toLowerCase()} ${ref_fabricant.toLowerCase()} Available Qty: ${item.actual_qty}" >
 				<div class="item-name   " style="flex-grow:1">
-					<div>${item.idx} - ${item.item_name}</div>
+					<div>${this.$cart_items.length+1} - ${item.item_name}</div>
 					<div> ${fabricant} ${ref_fabricant}   [ ${adresse} ]    </div>
 					<div style="margin-top:5px">
 						 
