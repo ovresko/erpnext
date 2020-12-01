@@ -2308,6 +2308,11 @@ class POSItems {
 				//if (search_term && !barcode) {
 				//	this.search_index[search_term] = items;
 				//}
+				if (this.item_modele){
+					items.sort(function(a, b){
+					  return a.qty > b.qty;
+					});
+				}
 				this.last_last_last_items =this.last_last_items;
 				this.last_last_items =this.last_items;
 				this.last_items =this.items;
