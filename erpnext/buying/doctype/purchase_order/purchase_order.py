@@ -9,7 +9,7 @@ from frappe import msgprint, _
 from frappe.model.mapper import get_mapped_doc
 from erpnext.controllers.buying_controller import BuyingController
 from erpnext.stock.doctype.item.item import get_last_purchase_details
-from erpnext.stock.stock_balance import update_bin_qty, get_ordered_qty
+from erpnext.stock.stock_balance import update_bin_qty, get_ordered_qty, get_indented_qty
 from frappe.desk.notifications import clear_doctype_notifications
 from erpnext.buying.utils import validate_for_items, check_for_closed_status
 from erpnext.stock.utils import get_bin
@@ -180,7 +180,8 @@ class PurchaseOrder(BuyingController):
 					item_wh_list.append([d.item_code, d.warehouse])
 		for item_code, warehouse in item_wh_list:
 			update_bin_qty(item_code, warehouse, {
-				"ordered_qty": get_ordered_qty(item_code, warehouse)
+				"ordered_qty": get_ordered_qty(item_code, warehouse),
+				"indented_qty": get_indented_qty(item_code, warehouse)
 			})
 
 	def check_modified_date(self):
