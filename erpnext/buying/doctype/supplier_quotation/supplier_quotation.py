@@ -6,7 +6,7 @@ import frappe
 from frappe import throw, _
 from frappe.utils import flt, nowdate, add_days
 from frappe.model.mapper import get_mapped_doc
-from erpnext.stock.stock_balance import update_bin_qty, get_indented_qty
+from erpnext.stock.stock_balance import update_bin_qty, get_indented_qty,get_ordered_qty
 from erpnext.controllers.buying_controller import BuyingController
 from erpnext.buying.utils import validate_for_items
 
@@ -132,7 +132,8 @@ class SupplierQuotation(BuyingController):
 
 		for item_code, warehouse in item_wh_list:
 			update_bin_qty(item_code, warehouse, {
-				"indented_qty": get_indented_qty(item_code, warehouse)
+				"indented_qty": get_indented_qty(item_code, warehouse),
+				"ordered_qty": get_ordered_qty(item_code, warehouse)
 			})
 	def validate_approuve(self):
 		encours = sum(1 for i in self.items if (i.confirmation =="En cours" or i.confirmation =="En negociation"))
