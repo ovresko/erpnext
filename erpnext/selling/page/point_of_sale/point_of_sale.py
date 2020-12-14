@@ -337,7 +337,7 @@ def get_item_prices(item_code,selling=1):
 	item = frappe.client.get("Item",item_code)
 	res.update({'item':item})
 	text = ''
-	prices = frappe.db.get_all("Item Price",filters={"item_code":item_code,"selling":selling},fields=["currency","name","price_list_rate","min_qty","price_list"])
+	prices = frappe.db.get_all("Item Price",filters={"item_code":item_code,"selling":selling,"buying":0},fields=["currency","name","price_list_rate","min_qty","price_list"])
 	if prices:
 		for p in prices:
 			text += "<li>%s +%s      <strong>%s</strong> %s </li>" % ((p.price_list or '').ljust(25,str("-")),(str(p.min_qty) or '').ljust(20,str(" ")),(str(p.price_list_rate) or '').ljust(10,str(" ")),p.currency)
