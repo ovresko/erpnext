@@ -262,6 +262,9 @@ def get_list_context(context=None):
 
 	return list_context
 
+def update_resultat(doc, method):
+	doc.set_resultat()
+	
 @frappe.whitelist()
 def update_mr(doc):
 	man = doc.manufacturer
