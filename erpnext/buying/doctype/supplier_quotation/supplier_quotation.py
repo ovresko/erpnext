@@ -28,8 +28,11 @@ class SupplierQuotation(BuyingController):
 		validate_for_items(self)
 		self.validate_with_previous_doc()
 		self.validate_uom_is_integer("uom", "qty")
+		
 		_items = []
 		for item in self.items:
+			item.ref_devis = i.parent
+			item.ref_fabricant = frappe.db.get_value("Item",i.item_code,"manufacturer_part_no")
 			if item.material_request_item and not frappe.db.exists("Material Request Item", item.material_request_item):
 				frappe.msgprint("Attention l'article %s fait reference a une ligne demande %s deja supprimee!" % (item.item_code,item.material_request_item))
 				item.material_request_item = ''
@@ -54,7 +57,7 @@ class SupplierQuotation(BuyingController):
 				if item.fabricant == self.manufacturer:
 					if not any(x.name == item.name for x in _items):
 						_items.append(item)
-		
+		self.set_resultat()
 		if self.manufacturer:
 			self.items = _items
 			
@@ -108,13 +111,9 @@ class SupplierQuotation(BuyingController):
         def on_update(self):
 		#if self.etat_mail == "Email Envoye":
 		#	throw("Impossible de modifier la consultation si l'email est envoye ! Veuillez marquer comme non envoye.")
-		for i in self.items:
-			i.ref_devis = i.parent
-			i.ref_fabricant = frappe.db.get_value("Item",i.item_code,"manufacturer_part_no")
-
 		frappe.enqueue("erpnext.buying.doctype.supplier_quotation.supplier_quotation.on_update_consultation",items=self.items,pname=self.name,timeout=10000)
 		#frappe.enqueue("erpnext.buying.doctype.supplier_quotation.supplier_quotation.on_update_dv",items=self.items,timeout=10000)
-		self.set_resultat()
+		
 		frappe.msgprint("Resultat : %s" % self.resultat)
 
 	def on_submit(self):
