@@ -110,6 +110,7 @@ class SupplierQuotation(BuyingController):
 		#	throw("Impossible de modifier la consultation si l'email est envoye ! Veuillez marquer comme non envoye.")
 		for i in self.items:
 			i.ref_devis = i.parent
+			i.ref_fabricant = frappe.db.get_value("Item",i.item_code,"manufacturer_part_no")
 
 		frappe.enqueue("erpnext.buying.doctype.supplier_quotation.supplier_quotation.on_update_consultation",items=self.items,pname=self.name,timeout=10000)
 		#frappe.enqueue("erpnext.buying.doctype.supplier_quotation.supplier_quotation.on_update_dv",items=self.items,timeout=10000)
