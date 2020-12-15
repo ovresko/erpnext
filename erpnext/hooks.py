@@ -205,7 +205,7 @@ doc_events = {
 		"on_trash": "erpnext.regional.check_deletion_permission"
 	},
 	"Supplier Quotation": {
-		"on_update_after_submit": "erpnext.buying.doctype.supplier_quotation.set_resultat"
+		"on_update_after_submit": "erpnext.buying.doctype.supplier_quotation.supplier_quotation.update_resultat"
 	},
 	"Payment Entry": {
 		"on_submit": ["erpnext.regional.france.utils.create_transaction_log", "erpnext.accounts.doctype.payment_request.payment_request.make_status_as_paid"],
