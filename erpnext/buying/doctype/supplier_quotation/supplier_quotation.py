@@ -62,8 +62,10 @@ class SupplierQuotation(BuyingController):
 			
 	def set_resultat(self):
 		for item in self.items:
-			item.ref_devis = item.parent
 			item.ref_fabricant = frappe.db.get_value("Item",item.item_code,"manufacturer_part_no")
+			frappe.db.set_value("Supplier Quotation Item",item.name,"ref_devis",item.parent)
+			frappe.db.set_value("Supplier Quotation Item",item.name,"ref_fabricant",item.ref_fabricant)
+			
 		resultat = 'NA'
 		if self.docstatus == 1:
 			resultat = "Termine P3"
