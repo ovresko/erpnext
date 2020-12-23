@@ -69,7 +69,7 @@ def execute(filters=None):
 	
 	items = []
 	orders_items = frappe.db.sql(""" select * from `tabSales Order Item` soi   
-	left join (select customer_name as customer_name, name,status,docstatus,workflow_state,delivery_date as delivery_date from `tabSales Order` ) so  
+	left join (select customer_name as customer_name,customer, name,status,docstatus,workflow_state,delivery_date as delivery_date from `tabSales Order` ) so  
 	on (soi.parent = so.name)
 	where so.status not in ('Closed','Cancelled','Draft') and so.customer=%s and so.docstatus = 1 and so.workflow_state='Reservation' and soi.docstatus=1  and soi.parent is not null""",(filters.customer),as_dict=1)
 	
