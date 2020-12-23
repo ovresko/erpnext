@@ -84,6 +84,9 @@ def execute(filters=None):
 			qty = 0
 		if qty < 0:
 			qty = 0
+			
+		if filters.get("disp") and qty <= 0:
+			continue
 		row = [
 			item.delivery_date,
 			item.item_code,
