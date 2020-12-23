@@ -73,9 +73,10 @@ def execute(filters=None):
 	on (soi.parent = so.name)
 	where so.status not in ('Closed','Cancelled','Draft') and soi.delivered_qty < soi.qty and so.customer=%s and so.docstatus = 1 and so.workflow_state='Reservation' and soi.docstatus=1  and soi.parent is not null""",(filters.customer),as_dict=1)
 	
-	
+	commandes = set()
 	items.extend(orders_items)
 	for item in items:
+		commandes.add(item.parent)
 		qty = frappe.db.sql("""select sum(actual_qty) from `tabBin` where item_code=%s and warehouse=%s""",(item.item_code,item.warehouse))[0]
 		if qty and qty[0]:
 			qty = qty[0]
