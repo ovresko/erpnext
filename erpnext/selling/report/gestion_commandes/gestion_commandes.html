@@ -18,7 +18,7 @@
 		</tr>
 	</thead>
 	<tbody style="font-size:8px">
-		{% for(var i=0, l=data.length-1; i<l; i++) { %}
+		{% for(var i=0, l=data.length; i<l; i++) { %}
 			<tr> 
 				<td>{%= data[i].item_ref %}</td>
 				<td>{%= data[i].item_name %}</td>
@@ -36,16 +36,16 @@
 	  <table class="table table-bordered" >
 	<thead>
 		<tr>
-			<th style="width: 33%;font-size:13px">Accusé décharge</th>
-			<th style="width: 33%;font-size:13px">Accusé de livraison</th>
-			<th style="width: 33%;font-size:13px">Commandes inclus</th>			 
+			<th style="width: 33%;font-size:10px">Accusé décharge</th>
+			<th style="width: 33%;font-size:10px">Accusé de livraison</th>
+			<th style="width: 33%;font-size:10px">Commandes inclus</th>			 
 		</tr>
 	</thead>
 	<tbody>	 
 			<tr> 
 				<td><br><br><br><br><br> </td>
 				<td> </td>
-				<td> {%= data[data.length-1].item %} </td>
+				<td> {%= data[data.length-1][1] %} </td>
 			<tr> 
 	</tbody>
 </table>
