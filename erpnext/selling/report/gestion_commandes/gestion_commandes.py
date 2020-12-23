@@ -100,6 +100,6 @@ def execute(filters=None):
 	
 		data.append(row)
 	commandes = ", ".join(commandes)
-	data.append(["Liste des commandes",commandes])
+	data.append(["Liste des commandes",commandes,"","","","","","","","",""])
 	
 	return columns, data
