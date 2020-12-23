@@ -99,4 +99,6 @@ def execute(filters=None):
 		]
 	
 		data.append(row)
+	commandes = ", ".join(commandes)
+	
 	return columns, data
