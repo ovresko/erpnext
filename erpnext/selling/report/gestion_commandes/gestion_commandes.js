@@ -4,6 +4,11 @@
 
 frappe.query_reports["Gestion Commandes"] = {
 	"filters": [
-
+		{
+			"fieldname": "customer",
+			"label": "Client",
+			fieldtype: "Link",
+			options: "Customer"
+		}
 	]
 }
