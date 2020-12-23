@@ -5,6 +5,21 @@
 <p>Générer par {%= frappe.session.user %} Le {%= frappe.datetime.str_to_user(frappe.datetime.get_datetime_as_string()) %}</p>
   
   <hr>
+<table class="table table-bordered" style="font-size:8px">
+<thead>
+	<tr>
+		<th style="width: 10%">Commandes</th>
+	</tr>
+</thead>
+<tbody style="font-size:8px">
+	{% for(var i=data.length-2, l=data.length-1; i<l; i++) { %}
+		<tr> 
+			<td>{%= data[i].item %}</td>
+		</tr>
+	{% } %}
+</tbody>
+</table>
+
   <table class="table table-bordered" style="font-size:8px">
 	<thead>
 		<tr>
@@ -19,7 +34,7 @@
 		</tr>
 	</thead>
 	<tbody style="font-size:8px">
-		{% for(var i=0, l=data.length; i<l; i++) { %}
+		{% for(var i=0, l=data.length-2; i<l; i++) { %}
 			<tr> 
 				<td>{%= data[i].date %}</td>
 				<td>{%= data[i].item %}</td>
