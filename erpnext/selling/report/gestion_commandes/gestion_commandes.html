@@ -18,7 +18,7 @@
 		</tr>
 	</thead>
 	<tbody style="font-size:8px">
-		{% for(var i=0, l=data.length; i<l; i++) { %}
+		{% for(var i=0, l=data.length-1; i<l; i++) { %}
 			<tr> 
 				<td>{%= data[i].item_ref %}</td>
 				<td>{%= data[i].item_name %}</td>
@@ -45,7 +45,7 @@
 			<tr> 
 				<td><br><br><br><br><br> </td>
 				<td> </td>
-				<td> {%= commandes %} </td>
+				<td> {%= data[data.length].item %} </td>
 			<tr> 
 	</tbody>
 </table>
