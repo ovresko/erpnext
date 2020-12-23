@@ -99,7 +99,7 @@ def execute(filters=None):
 		]
 	
 		data.append(row)
-	commandes = ", ".join(commandes)
-	data.append(["Liste des commandes",commandes,"","","","","","","","",""])
+	commandes = " - ".join(commandes)
+	data.append(["Liste des commandes",commandes,"_","_","_","_","_","_","_","_","_"])
 	
 	return columns, data
