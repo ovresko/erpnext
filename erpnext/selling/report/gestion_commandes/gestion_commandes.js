@@ -24,7 +24,7 @@ frappe.query_reports["Gestion Commandes"] = {
 			var data = report.data;
 			items = [];
 			customer = me.filters.customer
-			console.log("customer",customer)
+			console.log("customer",me)
 			data.forEach( (item) => {
 				var item_code = item['item'];
 				if(item_code && item_code!="Total" && item_code!="_"){
