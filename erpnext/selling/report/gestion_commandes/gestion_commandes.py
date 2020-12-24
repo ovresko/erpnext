@@ -104,7 +104,7 @@ def execute(filters=None):
 			continue
 			
 		delivery = frappe.db.sql(""" select item_code from `tabDelivery Note Item` soi   
- 		where soi.docstatus = 0 and soi.from_report =1 and soi.against_sales_order = %s""",(item.name),as_dict=1)
+ 		where soi.docstatus = 0 and soi.from_report =1 and soi.so_detail = %s""",(item.name),as_dict=1)
 
 		if delivery and len(delivery):
 			continue
