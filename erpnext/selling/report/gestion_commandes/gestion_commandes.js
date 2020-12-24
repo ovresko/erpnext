@@ -26,7 +26,7 @@ frappe.query_reports["Gestion Commandes"] = {
 			customer = report.filters.customer
 			data.forEach( (item) => {
 				var item_code = item['item'];
-				if(item_code && item_code!="Total"){
+				if(item_code && item_code!="Total" && item_code!="_"){
 					items.push(item);					 
 				}
 				
