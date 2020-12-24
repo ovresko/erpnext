@@ -44,6 +44,9 @@ frappe.query_reports["Gestion Commandes"] = {
 				callback: function(r) {
 					if (r.message) {
 						 window.open('/desk#Form/Delivery%20Note/'+r.message, '_blank');
+						 window.open('/printview?doctype=Delivery%20Note&name='+r.message+'&format=Adresses%20Magasin&no_letterhead=0&_lang=fr', '_blank');
+
+						
 					}
 				}
 			});
