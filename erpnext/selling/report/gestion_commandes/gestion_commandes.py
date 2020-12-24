@@ -4,6 +4,7 @@
 from __future__ import unicode_literals
 import frappe
 from datetime import timedelta
+from frappe.utils import get_datetime
 
 
 def execute(filters=None):
@@ -94,8 +95,8 @@ def execute(filters=None):
 			
 		if filters.get("disp") and qty <= 0:
 			continue
-		timedelta(days=15)
-		datef = item.delivery_date + timedelta
+		
+		datef = get_datetime(item.delivery_date) + timedelta(days=15)
 		row = [
 			item.delivery_date,
 			datef,
