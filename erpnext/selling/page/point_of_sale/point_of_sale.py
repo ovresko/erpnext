@@ -87,12 +87,14 @@ def get_delivery(items,customer):
 	for item in items:
 		if item['qty_prep'] and item['item'] and item['warehouse']:
 			mitem = frappe.get_doc("Item",item['item'])
+			so = frappe.db.get_value("Sales Order Item",item['item_commande'],"rate")
 			uom = mitem.stock_uom
 			mr.append("items", {
 				"doctype": "Delivery Note Item",
 				"item_code": item['item'],
 				"item_name": mitem.item_name,
 				"qty": flt(item['qty_prep'] or 0),
+				"rate": so,
 				"warehouse": item['warehouse'],
 				"item_name": item['item_name'],
 				"uom": uom,
