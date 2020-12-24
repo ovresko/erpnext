@@ -3,6 +3,8 @@
 
 from __future__ import unicode_literals
 import frappe
+from datetime import timedelta
+
 
 def execute(filters=None):
 	columns, data = [], []
@@ -13,6 +15,11 @@ def execute(filters=None):
 	columns.append({
 			"fieldname": "date",
 			"label": "Date",
+			"width": 200
+		})
+	columns.append({
+			"fieldname": "date_fin",
+			"label": "Date Fin",
 			"width": 200
 		})
 	columns.append({
@@ -87,8 +94,11 @@ def execute(filters=None):
 			
 		if filters.get("disp") and qty <= 0:
 			continue
+		timedelta(days=15)
+		datef = item.delivery_date + timedelta
 		row = [
 			item.delivery_date,
+			datef,
 			item.item_code,
 			item.item_name,
 			item.ref_fabricant,
