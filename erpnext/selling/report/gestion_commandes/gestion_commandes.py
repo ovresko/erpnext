@@ -92,7 +92,6 @@ def execute(filters=None):
 	commandes = set()
 	items.extend(orders_items)
 	for item in items:
-		commandes.add(item.parent)
 		qty = frappe.db.sql("""select sum(actual_qty) from `tabBin` where item_code=%s and warehouse=%s""",(item.item_code,item.warehouse))[0]
 		if qty and qty[0]:
 			qty = qty[0]
@@ -103,7 +102,14 @@ def execute(filters=None):
 			
 		if filters.get("disp") and qty <= 0:
 			continue
+			
+		delivery = frappe.db.sql(""" select item_code from `tabDelivery Note Item` soi   
+ 		where soi.docstatus = 0 and soi.from_report =1 and soi.against_sales_order = %s""",(item.name),as_dict=1)
+
+		if delivery and len(delivery):
+			continue
 		
+		commandes.add(item.parent)
 		datef = get_datetime(item.delivery_date) + timedelta(days=15)
 		row = [
 			item.delivery_date,
