@@ -50,9 +50,15 @@ def execute(filters=None):
 			"label": "Client",
 			"width": 150
 		})
+	
 	columns.append({
 			"fieldname": "commande",
 			"label": "Commande",
+			"width": 150
+		})
+	columns.append({
+			"fieldname": "item_commande",
+			"label": "Art. Commande",
 			"width": 150
 		})
 	columns.append({
@@ -79,8 +85,8 @@ def execute(filters=None):
 	items = []
 	today = getdate(add_days(nowdate(), -15))
 	orders_items = frappe.db.sql(""" select * from `tabSales Order Item` soi   
-	left join (select customer_name as customer_name,customer, name,status,docstatus,workflow_state,delivery_date as delivery_date from `tabSales Order` ) so  
-	on (soi.parent = so.name)
+	left join (select customer_name as customer_name,customer, name as so_name,status,docstatus,workflow_state,delivery_date as delivery_date from `tabSales Order` ) so  
+	on (soi.parent = so.so_name)
 	where so.status not in ('Closed','Cancelled','Draft') and soi.delivered_qty < soi.qty and so.customer=%s and so.docstatus = 1 and so.workflow_state='Reservation' and soi.docstatus=1  and soi.parent is not null and soi.delivery_date >= %s""",(filters.customer,today),as_dict=1)
 	
 	commandes = set()
@@ -108,6 +114,7 @@ def execute(filters=None):
 			item.fabricant,
 			item.customer_name,
 			item.parent,
+			item.name,
 			item.warehouse,
 			qty,
 			item.qty,
