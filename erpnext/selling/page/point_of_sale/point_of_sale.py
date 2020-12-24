@@ -89,7 +89,7 @@ def get_delivery(items,customer):
 			mitem = frappe.get_doc("Item",item['item'])
 			uom = mitem.stock_uom
 			mr.append("items", {
-				"doctype": "Stock Entry Item",
+				"doctype": "Delivery Note Item",
 				"item_code": item['item'],
 				"item_name": mitem.item_name,
 				"qty": flt(item['qty_prep'] or 0),
