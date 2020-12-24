@@ -76,10 +76,11 @@ def execute(filters=None):
 		})
 	
 	items = []
+	today = getdate(add_days(nowdate(), -15))
 	orders_items = frappe.db.sql(""" select * from `tabSales Order Item` soi   
 	left join (select customer_name as customer_name,customer, name,status,docstatus,workflow_state,delivery_date as delivery_date from `tabSales Order` ) so  
 	on (soi.parent = so.name)
-	where so.status not in ('Closed','Cancelled','Draft') and soi.delivered_qty < soi.qty and so.customer=%s and so.docstatus = 1 and so.workflow_state='Reservation' and soi.docstatus=1  and soi.parent is not null""",(filters.customer),as_dict=1)
+	where so.status not in ('Closed','Cancelled','Draft') and soi.delivered_qty < soi.qty and so.customer=%s and so.docstatus = 1 and so.workflow_state='Reservation' and soi.docstatus=1  and soi.parent is not null and soi.delivery_date >= %s""",(filters.customer,today),as_dict=1)
 	
 	commandes = set()
 	items.extend(orders_items)
