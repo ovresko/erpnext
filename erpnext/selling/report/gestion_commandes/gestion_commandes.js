@@ -23,7 +23,7 @@ frappe.query_reports["Gestion Commandes"] = {
 		report.page.add_inner_button("Generer Livraison", function() {
 			var data = report.data;
 			items = [];
-			customer = report.filters.customer
+			customer = me.filters.customer
 			console.log("customer",customer)
 			data.forEach( (item) => {
 				var item_code = item['item'];
