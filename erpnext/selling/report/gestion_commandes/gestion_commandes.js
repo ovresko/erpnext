@@ -16,5 +16,38 @@ frappe.query_reports["Gestion Commandes"] = {
 			"fieldtype": "Check",
 			"default": 1
 		}
-	]
+	],
+	onload: function(report) {
+		var me = this;
+		frappe.dom.freeze();
+		report.page.add_inner_button("Generer Livraison", function() {
+			var data = report.data;
+			items = [];
+			customer = report.filters.customer
+			data.forEach( (item) => {
+				var item_code = item['item'];
+				if(item_code && item_code!="Total"){
+					items.push(item);					 
+				}
+				
+			});
+			//console.log(items);
+			frappe.call({
+				method: "erpnext.selling.page.point_of_sale.point_of_sale.get_delivery",
+				freeze: true,
+				args: {
+					items: items,
+					customer: customer
+				},
+				callback: function(r) {
+					if (r.message) {
+						 window.open('/desk#Form/Delivery%20Note/'+r.message, '_blank');
+					}
+				}
+			});
+			//console.log(report);
+			
+		});
+		frappe.dom.unfreeze();
+	}
 }
