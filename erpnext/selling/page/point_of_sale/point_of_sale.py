@@ -66,6 +66,48 @@ def finish_transfer(items):
 			
 	return "Done"
 
+
+@frappe.whitelist()
+def get_delivery(items,customer):
+	if not items:
+		return "No data"
+	items= json.loads(items)
+	mr = frappe.new_doc("Delivery Note")
+	company = frappe.db.get_single_value('Global Defaults', 'default_company')
+	if not len(items):
+		return
+	sw = items[0]['warehouse']
+
+	mr.update({
+		"company": company,
+		"customer": customer,
+		"posting_date": nowdate(),
+		"set_warehouse": sw,
+	})
+	for item in items:
+		if item['qty_prep'] and item['item'] and item['warehouse']:
+			mitem = frappe.get_doc("Item",item['item'])
+			uom = mitem.stock_uom
+			mr.append("items", {
+				"doctype": "Stock Entry Item",
+				"item_code": item['item'],
+				"item_name": mitem.item_name,
+				"qty": flt(item['qty_prep'] or 0),
+				"warehouse": item['warehouse'],
+				"item_name": item['item_name'],
+				"uom": uom,
+				"description": mitem.description,
+				"so_detail": item['item_commande'],
+				"against_sales_order": item['commande'],
+				"from_report": True
+				#"item_group": item.item_group,
+				#"brand": item.brand,
+			})
+		else:
+			return "Qts invalide"
+	mr.insert()
+	return mr.name
+	
 	
 @frappe.whitelist()
 def get_transfer(items):
