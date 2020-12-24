@@ -22,9 +22,10 @@ frappe.query_reports["Gestion Commandes"] = {
 		frappe.dom.freeze();
 		report.page.add_inner_button("Generer Livraison", function() {
 			var data = report.data;
+			filters = report.get_values()
 			items = [];
-			customer = me.filters.customer
-			console.log("customer",me)
+			customer = filters.customer
+			console.log("customer",filters)
 			data.forEach( (item) => {
 				var item_code = item['item'];
 				if(item_code && item_code!="Total" && item_code!="_"){
