@@ -44,7 +44,11 @@ def execute(filters=None):
 			"label": "Fabricant",
 			"width": 150
 		})
-	
+	columns.append({
+			"fieldname": "clientc",
+			"label": "Client",
+			"width": 150
+		})
 	columns.append({
 			"fieldname": "client",
 			"label": "Client",
@@ -131,7 +135,8 @@ def execute(filters=None):
 			item.item_name,
 			item.ref_fabricant,
 			item.fabricant,
-			f"{item.customer} {item.customer_name}",
+			item.customer,
+			item.customer_name,
 			item.parent,
 			item.name,
 			item.warehouse,
