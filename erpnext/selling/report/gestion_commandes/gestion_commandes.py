@@ -10,8 +10,8 @@ from frappe.utils import today,cstr, flt, getdate, comma_and, cint, nowdate, add
 
 def execute(filters=None):
 	columns, data = [], []
-	if  not filters.customer:
-		frappe.throw("Selectionner un client")
+	if  not filters.from_date:
+		frappe.throw("Selectionner date")
 		return columns, data
 	
 	columns.append({
@@ -93,11 +93,17 @@ def execute(filters=None):
 		
 	items = []
 	today = getdate(add_days(nowdate(), -15))
-	orders_items = frappe.db.sql(""" select * from `tabSales Order Item` soi   
-	left join (select customer_name as customer_name,customer, name as so_name,status,docstatus,workflow_state,delivery_date as delivery_date from `tabSales Order` ) so  
-	on (soi.parent = so.so_name)
-	where so.status not in ('Closed','Cancelled','Draft') and soi.delivered_qty < soi.qty and so.customer=%s and so.docstatus = 1 and so.workflow_state='Reservation' and soi.docstatus=1  and soi.parent is not null and soi.delivery_date >= %s and soi.delivery_date <= %s""",(filters.customer,filters.from_date,filters.to_date),as_dict=1)
-	
+	if filters.customer:
+		orders_items = frappe.db.sql(""" select * from `tabSales Order Item` soi   
+		left join (select customer_name as customer_name,customer, name as so_name,status,docstatus,workflow_state,delivery_date as delivery_date from `tabSales Order` ) so  
+		on (soi.parent = so.so_name)
+		where so.status not in ('Closed','Cancelled','Draft') and soi.delivered_qty < soi.qty and so.customer=%s and so.docstatus = 1 and so.workflow_state='Reservation' and soi.docstatus=1  and soi.parent is not null and soi.delivery_date >= %s and soi.delivery_date <= %s""",(filters.customer,filters.from_date,filters.to_date),as_dict=1)
+	else:
+		orders_items = frappe.db.sql(""" select * from `tabSales Order Item` soi   
+		left join (select customer_name as customer_name,customer, name as so_name,status,docstatus,workflow_state,delivery_date as delivery_date from `tabSales Order` ) so  
+		on (soi.parent = so.so_name)
+		where so.status not in ('Closed','Cancelled','Draft') and soi.delivered_qty < soi.qty and so.docstatus = 1 and so.workflow_state='Reservation' and soi.docstatus=1  and soi.parent is not null and soi.delivery_date >= %s and soi.delivery_date <= %s""",(filters.from_date,filters.to_date),as_dict=1)
+
 	commandes = set()
 	items.extend(orders_items)
 	for item in items:
