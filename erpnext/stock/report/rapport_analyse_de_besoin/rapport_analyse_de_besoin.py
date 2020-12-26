@@ -70,16 +70,7 @@ def execute(filters=None):
 			"label": "Derniere Qts Achetee",
 			"width": 150
 		})
-	columns.append({
-			"fieldname": "last_valuation",
-			"label": "Derniere taux de valorisation",
-			"width": 150
-		})
-	columns.append({
-			"fieldname": "consom",
-			"label": "Consommation 1 ans",
-			"width": 150
-		})
+	
 	columns.append({
 			"fieldname": "qts_comm",
 			"label": "Qte Commande",
@@ -95,16 +86,7 @@ def execute(filters=None):
 			"label": "Qte reliquats total",
 			"width": 160
 		})
-	columns.append({
-			"fieldname": "qts_dem",
-			"label": "Qte Demande non commande",
-			"width": 160
-		})
-	columns.append({
-			"fieldname": "qts_bloque",
-			"label": "Qte Demande consulte (blocage recommande auto)",
-			"width": 260
-		})
+	
 	columns.append({
 			"fieldname": "qts",
 			"label": "Qte en stock",
@@ -153,6 +135,26 @@ def execute(filters=None):
 	columns.append({
 			"fieldname": "last_purchase_devise",
 			"label": "Dernier Prix d'achat (Devise)",
+			"width": 150
+		})
+	columns.append({
+			"fieldname": "qts_dem",
+			"label": "Qte Demande non commande",
+			"width": 160
+		})
+	columns.append({
+			"fieldname": "qts_bloque",
+			"label": "Qte Demande consulte (blocage recommande auto)",
+			"width": 260
+		})
+	columns.append({
+			"fieldname": "last_valuation",
+			"label": "Derniere taux de valorisation",
+			"width": 150
+		})
+	columns.append({
+			"fieldname": "consom",
+			"label": "Consommation 1 ans",
 			"width": 150
 		})
 	if filters.show_price:
@@ -380,20 +382,13 @@ def execute(filters=None):
 			       mri.perfection,
 			       #last_qty
 			       last_qty or 0,
-			       #last_valuation
-			       last_valuation or 0,
-			       #consom,
-			       "_",
+			      
 			       #qts_comm
 			       cmd_total,
 			       #reliuat
 			       relq or 0,
 			       cmd_total + (relq or 0),
-			       #qts_dem
-			       qts_demande or 0,
-			       #info[1] or 0,
-			       #qts_bloque
-			       r_qts_bloque or '',
+			       
 			       #qts
 			       info[0] or 0,
 			       flt(mri.qts_depot or 0),
@@ -409,7 +404,16 @@ def execute(filters=None):
 			       #last_purchase_rate
 			       mri.last_purchase_rate or 0,
 			       #last_purchase_devise
-			       mri.last_purchase_devise or 0
+			       mri.last_purchase_devise or 0,
+			       #qts_dem
+			       qts_demande or 0,
+			       #info[1] or 0,
+			       #qts_bloque
+			       r_qts_bloque or '',
+				#last_valuation
+			       last_valuation or 0,
+			       #consom,
+			       "_",
 			      ]
 
 			if filters.show_price:
