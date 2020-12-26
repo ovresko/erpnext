@@ -37,6 +37,10 @@ frappe.query_reports["Gestion Commandes"] = {
 			filters = report.get_values()
 			items = [];
 			customer = filters.customer
+			if (customer == null){
+				alert("Client invalide");
+				return;
+			}
 			console.log("customer",filters)
 			data.forEach( (item) => {
 				var item_code = item['item'];
