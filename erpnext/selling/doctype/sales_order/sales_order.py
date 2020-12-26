@@ -985,7 +985,7 @@ def make_raw_material_request(items, company, sales_order, project=None):
 def cancel_old_orders():
 	today = getdate(add_days(nowdate(), -15))
 	print(today)
-	orders = frappe.get_all("Sales Order",fields=["name"],filters={"status": ("!=","Closed"),"per_billed":0,"per_delivered":0,"docstatus": "1","delivery_date":("<", today)})
+	orders = frappe.get_all("Sales Order",fields=["name"],filters={"status": ("!=","Closed"),"docstatus": "1","delivery_date":("<", today)})
 	if orders:
 		for ord in orders:
 			print(ord.name)
@@ -993,11 +993,11 @@ def cancel_old_orders():
 			update_status("Closed",ord.name)
 			#order.cancel()
 	#partials
-	orders = frappe.get_all("Sales Order",fields=["name"],filters={"status": ("!=","Closed"),"per_billed":(">",0),"per_delivered":("<",100),"per_delivered":(">",0),"docstatus": "1","delivery_date":("<", today)})
-	if orders:
-		for ord in orders:
-			print(ord.name)
-			update_status("Closed",ord.name)
+	#orders = frappe.get_all("Sales Order",fields=["name"],filters={"status": ("!=","Closed"),"per_billed":(">",0),"per_delivered":("<",100),"per_delivered":(">",0),"docstatus": "1","delivery_date":("<", today)})
+	#if orders:
+	#	for ord in orders:
+	#		print(ord.name)
+	#		update_status("Closed",ord.name)
 	#partials
 	orders = frappe.get_all("Sales Order",fields=["name"],filters={"docstatus": "0","delivery_date":("<", today)})
 	if orders:
