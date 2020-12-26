@@ -14,7 +14,16 @@ frappe.query_reports["Gestion Commandes"] = {
 			"fieldname": "cmd",
 			"label": "Commande",
 			fieldtype: "Link",
-			options: "Sales Order"
+			options: "Sales Order",
+			"get_query": function() {
+				return {
+					"doctype": "Sales Order",
+					"filters": {
+						"workflow_state": "Reservation",
+						"docstatus":1
+					}
+				}
+			}
 		},
 		{
 			"fieldname": "disp",
