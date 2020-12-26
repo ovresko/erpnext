@@ -131,7 +131,7 @@ def execute(filters=None):
 			item.item_name,
 			item.ref_fabricant,
 			item.fabricant,
-			item.customer_name,
+			f"{item.customer} {item.customer_name}",
 			item.parent,
 			item.name,
 			item.warehouse,
