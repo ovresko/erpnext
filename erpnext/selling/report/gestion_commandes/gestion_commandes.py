@@ -99,7 +99,7 @@ def execute(filters=None):
 	on (soi.parent = so.so_name)
 	where so.status not in ('Closed','Cancelled','Draft') {conditions} and soi.delivered_qty < soi.qty and and so.docstatus = 1 and so.workflow_state='Reservation' and soi.docstatus=1  and soi.parent is not null """.format(
 			conditions=get_conditions(filters)
-		),filters,,as_dict=1)
+		),filters,as_dict=1)
 
 
 	commandes = set()
