@@ -91,6 +91,11 @@ def execute(filters=None):
 			"width": 160
 		})
 	columns.append({
+			"fieldname": "qts_comm_qts_non_recue",
+			"label": "Qte reliquats total",
+			"width": 160
+		})
+	columns.append({
 			"fieldname": "qts_dem",
 			"label": "Qte Demande non commande",
 			"width": 160
@@ -273,6 +278,9 @@ def execute(filters=None):
 	lids = "','".join(ids)
 	
 	for model in models:
+		# projete  = stock reel + reliquat + commande - commande client 
+		# reliquat = commande achat non facturer - 
+		
 		if filters.get('model_status') and filters.get('model_status') == "Modele en repture":
 			projected = info_modele(model)[2] or 0
 			if projected or projected > 0:
@@ -313,11 +321,13 @@ def execute(filters=None):
 			where item_code=%s and voucher_type=%s 
 			order by posting_date desc, posting_time desc limit 1""", (mri.item_code,"Purchase Receipt"), as_dict=1)
 			
-			cmd_total = frappe.db.sql("""select sum(qty)  from  `tabPurchase Order Item` where item_code=%s  and docstatus=1 """, (mri.item_code))[0][0]
-			fac_total = frappe.db.sql("""select sum(qty)  from  `tabPurchase Invoice Item` where item_code=%s  and docstatus=1 """, (mri.item_code))[0][0]
-			relq = (cmd_total or 0) - (fac_total or 0)
+			cmd_total = frappe.db.sql("""select sum(qty)  from  `tabPurchase Order Item` where item_code=%s and received_qty=0 and docstatus=1 """, (mri.item_code))[0][0]
+			fac_total = frappe.db.sql("""select sum(qty)-sum(received_qty)  from  `tabPurchase Invoice Item` where item_code=%s and received_qty>0  and docstatus=1 """, (mri.item_code))[0][0]
+			relq =fac_total or 0
 			if relq < 0:
 				relq = 0
+			if not cmd_total:
+				cmd_total =0
 			#relq = frappe.db.sql("""select sum(po.qty) - sum(pi.qty) as 'diffr' from `tabPurchase Invoice Item` pi, `tabPurchase Order Item` po where pi.item_code=%s and po.item_code=%s and pi.docstatus=1 and po.docstatus=1 GROUP BY pi.item_code""", (mri.item_code,mri.item_code))
 			#if relq:
 			#	relq = relq[0][0]
@@ -340,6 +350,8 @@ def execute(filters=None):
 			recom = 0
 			_date = ""
 			date =""
+			projete = 0
+			reserve =  info[4] or 0
 			_recom = frappe.get_all("Item Reorder",fields=["warehouse_reorder_qty","modified"],filters=[{"parent":mri.item_code},{"warehouse":"GLOBAL - MV"}])
 			if _recom:
 				recom = _recom[0].warehouse_reorder_qty
@@ -348,7 +360,7 @@ def execute(filters=None):
 			if sqllast_qty:
 				last_qty = sqllast_qty[0].actual_qty
 				last_valuation = sqllast_qty[0].incoming_rate
-				
+			projete = mri.qts_total + relq + cmd_total - reserve
 			if not last_qty and  mri.variant_of and entry_status == "Recu Deja":
 				continue
 			cmp = "%s CP" % mri.item_code if (mri.has_variants and mri.item_code in mcomplements) else mri.item_code
@@ -372,9 +384,10 @@ def execute(filters=None):
 			       #consom,
 			       "_",
 			       #qts_comm
-			       info[3] or 0,
+			       cmd_total,
 			       #reliuat
 			       relq or 0,
+			       cmd_total + (relq or 0),
 			       #qts_dem
 			       qts_demande or 0,
 			       #info[1] or 0,
@@ -385,7 +398,7 @@ def execute(filters=None):
 			       flt(mri.qts_depot or 0),
 			       flt(mri.qts_total or 0) - flt(mri.qts_depot or 0),
 			       #qts_projete
-			       info[2] or 0,
+			       projete,
 			       qts_demande or 0,
 			       qts_consulte or 0,
 			       #qts_max_achat
@@ -486,7 +499,7 @@ def info_modele(model, warehouse=None):
 		values.append(warehouse)
 		condition += " AND warehouse = %s"
 
-	actual_qty = frappe.db.sql("""select sum(actual_qty), sum(indented_qty), sum(projected_qty), sum(ordered_qty) from tabBin
+	actual_qty = frappe.db.sql("""select sum(actual_qty), sum(indented_qty), sum(projected_qty), sum(ordered_qty), sum(reserved_qty) from tabBin
 		where model=%s {0}""".format(condition), values)[0]
 
 	return actual_qty
@@ -497,7 +510,7 @@ def info_variante(model, warehouse=None):
 		values.append(warehouse)
 		condition += " AND warehouse = %s"
 
-	actual_qty = frappe.db.sql("""select sum(actual_qty), sum(indented_qty), sum(projected_qty), sum(ordered_qty) from tabBin
+	actual_qty = frappe.db.sql("""select sum(actual_qty), sum(indented_qty), sum(projected_qty), sum(ordered_qty), sum(reserved_qty from tabBin
 		where item_code=%s {0}""".format(condition), values)[0]
 
 	return actual_qty
