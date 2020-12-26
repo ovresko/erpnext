@@ -93,16 +93,14 @@ def execute(filters=None):
 		
 	items = []
 	today = getdate(add_days(nowdate(), -15))
-	if filters.customer:
-		orders_items = frappe.db.sql(""" select * from `tabSales Order Item` soi   
-		left join (select customer_name as customer_name,customer, name as so_name,status,docstatus,workflow_state,delivery_date as delivery_date from `tabSales Order` ) so  
-		on (soi.parent = so.so_name)
-		where so.status not in ('Closed','Cancelled','Draft') and soi.delivered_qty < soi.qty and so.customer=%s and so.docstatus = 1 and so.workflow_state='Reservation' and soi.docstatus=1  and soi.parent is not null and soi.delivery_date >= %s and soi.delivery_date <= %s""",(filters.customer,filters.from_date,filters.to_date),as_dict=1)
-	else:
-		orders_items = frappe.db.sql(""" select * from `tabSales Order Item` soi   
-		left join (select customer_name as customer_name,customer, name as so_name,status,docstatus,workflow_state,delivery_date as delivery_date from `tabSales Order` ) so  
-		on (soi.parent = so.so_name)
-		where so.status not in ('Closed','Cancelled','Draft') and soi.delivered_qty < soi.qty and so.docstatus = 1 and so.workflow_state='Reservation' and soi.docstatus=1  and soi.parent is not null and soi.delivery_date >= %s and soi.delivery_date <= %s""",(filters.from_date,filters.to_date),as_dict=1)
+
+	orders_items = frappe.db.sql(""" select * from `tabSales Order Item` soi   
+	left join (select customer_name as customer_name,customer, name as so_name,status,docstatus,workflow_state,delivery_date as delivery_date from `tabSales Order` ) so  
+	on (soi.parent = so.so_name)
+	where so.status not in ('Closed','Cancelled','Draft') {conditions} and soi.delivered_qty < soi.qty and and so.docstatus = 1 and so.workflow_state='Reservation' and soi.docstatus=1  and soi.parent is not null and soi.delivery_date >= %s and soi.delivery_date <= %s""".format(
+			conditions=get_conditions(filters)
+		),(filters.customer,filters.from_date,filters.to_date),as_dict=1)
+
 
 	commandes = set()
 	items.extend(orders_items)
@@ -147,3 +145,14 @@ def execute(filters=None):
 	data.append(["Liste des commandes",commandes,"_","_","_","_","_","_","_","_","_"])
 	
 	return columns, data
+
+def get_conditions(filters):
+	conditions = []
+
+	#perfection
+	if filters.get('customer'):
+		conditions.append("so.customer=%(customer)s")
+	if filters.get('cmd'):
+		conditions.append("so.name=%(cmd)s")
+
+	return "and {}".format(" and ".join(conditions)) if conditions else ""
