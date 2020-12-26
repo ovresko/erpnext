@@ -15,7 +15,19 @@ frappe.query_reports["Gestion Commandes"] = {
 			"label": "Disponible",
 			"fieldtype": "Check",
 			"default": 1
-		}
+		},
+		{
+			"fieldname": "from_date",
+			"label": __("From Date"),
+			"fieldtype": "Date",
+			"default": frappe.defaults.get_user_default("year_start_date"),
+		},
+		{
+			"fieldname": "to_date",
+			"label": __("To Date"),
+			"fieldtype": "Date",
+			"default": frappe.defaults.get_user_default("year_end_date"),
+		},
 	],
 	onload: function(report) {
 		var me = this;
