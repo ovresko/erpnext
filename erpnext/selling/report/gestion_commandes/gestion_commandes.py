@@ -153,7 +153,7 @@ def get_conditions(filters):
 	if filters.get('customer'):
 		conditions.append("so.customer=%(customer)s")
 	if filters.get('cmd'):
-		conditions.append("so.name=%(cmd)s")
+		conditions.append("so.so_name=%(cmd)s")
 	if filters.get('from_date'):
 		conditions.append("soi.delivery_date >= %(from_date)s")
 	if filters.get('to_date'):
