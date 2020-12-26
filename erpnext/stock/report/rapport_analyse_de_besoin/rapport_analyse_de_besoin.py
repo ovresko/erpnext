@@ -352,6 +352,7 @@ def execute(filters=None):
 			date =""
 			projete = 0
 			reserve =  info[4] or 0
+			mri.qts_total = flt(mri.qts_total or 0)
 			_recom = frappe.get_all("Item Reorder",fields=["warehouse_reorder_qty","modified"],filters=[{"parent":mri.item_code},{"warehouse":"GLOBAL - MV"}])
 			if _recom:
 				recom = _recom[0].warehouse_reorder_qty
