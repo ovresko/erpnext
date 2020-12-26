@@ -20,7 +20,9 @@ frappe.query_reports["Gestion Commandes"] = {
 					"doctype": "Sales Order",
 					"filters": {
 						"workflow_state": "Reservation",
-						"docstatus":1
+						"docstatus":1,
+						"status": ("!=","Closed"),
+						"per_delivered": ("<",100)
 					}
 				}
 			}
