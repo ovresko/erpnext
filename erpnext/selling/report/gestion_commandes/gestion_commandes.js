@@ -11,6 +11,12 @@ frappe.query_reports["Gestion Commandes"] = {
 			options: "Customer"
 		},
 		{
+			"fieldname": "cmd",
+			"label": "Commande",
+			fieldtype: "Link",
+			options: "Sales Order"
+		},
+		{
 			"fieldname": "disp",
 			"label": "Disponible",
 			"fieldtype": "Check",
