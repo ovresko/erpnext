@@ -61,6 +61,11 @@ def execute(filters=None):
 			"width": 150
 		})
 	columns.append({
+			"fieldname": "commercial",
+			"label": "Commercial",
+			"width": 150
+		})
+	columns.append({
 			"fieldname": "item_commande",
 			"label": "Art. Commande",
 			"width": 150
@@ -128,6 +133,7 @@ def execute(filters=None):
 		
 		commandes.add(item.parent)
 		datef = get_datetime(item.delivery_date) + timedelta(days=15)
+		commerical = frappe.get_fullname(item.owner) or ''
 		row = [
 			item.delivery_date,
 			datef,
@@ -139,6 +145,7 @@ def execute(filters=None):
 			item.customer_name,
 			item.parent,
 			item.name,
+			commerical,
 			item.warehouse,
 			qty,
 			item.qty,
@@ -157,6 +164,13 @@ def get_conditions(filters):
 	#perfection
 	if filters.get('customer'):
 		conditions.append("so.customer=%(customer)s")
+	
+	#perfection
+	if filters.get('user'):
+		conditions.append("so.owner=%(user)s")
+	if filters.get('regle'):
+		conditions.append("so.shipping_rule=%(regle)s")	
+		
 	if filters.get('cmd'):
 		conditions.append("so.so_name=%(cmd)s")
 	if filters.get('from_date'):
