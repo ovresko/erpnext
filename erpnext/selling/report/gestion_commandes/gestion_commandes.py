@@ -60,14 +60,15 @@ def execute(filters=None):
 			"label": "Commande",
 			"width": 150
 		})
-	columns.append({
-			"fieldname": "commercial",
-			"label": "Commercial",
-			"width": 150
-		})
+	
 	columns.append({
 			"fieldname": "item_commande",
 			"label": "Art. Commande",
+			"width": 150
+		})
+	columns.append({
+			"fieldname": "commercial",
+			"label": "Commercial",
 			"width": 150
 		})
 	columns.append({
