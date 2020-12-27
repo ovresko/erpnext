@@ -21,9 +21,7 @@ frappe.query_reports["Gestion Commandes"] = {
 					"filters": {
 						"workflow_state": "Reservation",
 						"docstatus":1,
-						"status": ("!=","Closed"),
-						"delivery_status":("!=","Fully Delivered"),
-						"per_delivered": ("<",100)
+						"status": ("!=","Closed")
 					}
 				}
 			}
