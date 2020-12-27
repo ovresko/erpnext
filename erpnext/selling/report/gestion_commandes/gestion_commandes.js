@@ -11,6 +11,18 @@ frappe.query_reports["Gestion Commandes"] = {
 			options: "Customer"
 		},
 		{
+			"fieldname": "user",
+			"label": "Commercial",
+			fieldtype: "Link",
+			options: "User"
+		},
+		{
+			"fieldname": "regle",
+			"label": "Regle de livraison",
+			fieldtype: "Link",
+			options: "Shipping Rule"
+		},
+		{
 			"fieldname": "cmd",
 			"label": "Commande",
 			fieldtype: "Link",
