@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 import frappe
 from datetime import timedelta
 from frappe.utils import get_datetime
-from frappe.utils import today,cstr, flt, getdate, comma_and, cint, nowdate, add_days
+from frappe.utils import get_fullname,today,cstr, flt, getdate, comma_and, cint, nowdate, add_days
 
 
 def execute(filters=None):
@@ -133,7 +133,7 @@ def execute(filters=None):
 		
 		commandes.add(item.parent)
 		datef = get_datetime(item.delivery_date) + timedelta(days=15)
-		commerical = frappe.get_fullname(item.owner) or ''
+		commerical = get_fullname(item.owner) or ''
 		row = [
 			item.delivery_date,
 			datef,
