@@ -16,16 +16,24 @@ import os
 
 from six import string_types
 
-def get_active_so():
-	return frappe.db.sql("""select name from `tabSales Order`
-		where status != 'Close' and docstatus = 1 and  workflow_state='Reservation and per_delivered<100'""")
+def get_active_so(doctype, txt, searchfield, start, page_len, filters):
+	if not txt:
+		return frappe.db.sql("""select name from `tabSales Order`
+			where status != 'Close' and docstatus = 1 and  workflow_state='Reservation and per_delivered<100'""")
+	else:
+		return frappe.db.sql("""select name from `tabSales Order`
+			where status != 'Close' and docstatus = 1 and  workflow_state='Reservation and per_delivered<100' and name LIKE '%s'""" % (txt))
 	
 
-def get_active_customers():
-	return frappe.db.sql("""select name from `tabCustomer`
-		where name in (select customer from `tabSales Order`
-		where status != 'Close' and docstatus = 1 and  workflow_state='Reservation and per_delivered<100') """)
-	
+def get_active_customers(doctype, txt, searchfield, start, page_len, filters):
+	if not txt:
+		return frappe.db.sql("""select name from `tabCustomer`
+			where name in (select customer from `tabSales Order`
+			where status != 'Close' and docstatus = 1 and  workflow_state='Reservation and per_delivered<100') """)
+	else:
+		return frappe.db.sql("""select name from `tabCustomer`
+			where name LIKE '%s' name in (select customer from `tabSales Order`
+			where status != 'Close' and docstatus = 1 and  workflow_state='Reservation and per_delivered<100') """ % (txt))
 	
 def get_valuation_rate(item_code):
 	"""Get an average valuation rate of an item from all warehouses"""
