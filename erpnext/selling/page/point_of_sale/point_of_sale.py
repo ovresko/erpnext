@@ -18,20 +18,20 @@ from six import string_types
 
 def get_active_so(doctype, txt, searchfield, start, page_len, filters):
 	if not txt:
-		return frappe.db.sql("""select name from `tabSales Order`
+		return frappe.db.sql("""select name,customer_name,status,delivery_date from `tabSales Order`
 			where status != 'Closed' and docstatus = 1 and  workflow_state='Reservation' and per_delivered<100""")
 	else:
-		return frappe.db.sql("""select name from `tabSales Order`
+		return frappe.db.sql("""select name,customer_name,status,delivery_date from `tabSales Order`
 			where status != 'Closed' and docstatus = 1 and  workflow_state='Reservation' and per_delivered<100 and name LIKE '%%{0}%%'""".format(txt))
 	
 
 def get_active_customers(doctype, txt, searchfield, start, page_len, filters):
 	if not txt:
-		return frappe.db.sql("""select name from `tabCustomer`
+		return frappe.db.sql("""select * from `tabCustomer`
 			where name in (select customer from `tabSales Order`
 			where status != 'Closed' and docstatus = 1 and  workflow_state='Reservation' and per_delivered<100) """)
 	else:
-		return frappe.db.sql("""select name from `tabCustomer`
+		return frappe.db.sql("""select * from `tabCustomer`
 			where name LIKE '%%{0}%%' and name in (select customer from `tabSales Order`where status != 'Closed' and docstatus = 1 and  workflow_state='Reservation' and per_delivered<100) """.format(txt))
 	
 def get_valuation_rate(item_code):
