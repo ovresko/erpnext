@@ -16,6 +16,17 @@ import os
 
 from six import string_types
 
+def get_active_so():
+	return frappe.db.sql("""select name from `tabSales Order`
+		where status != 'Close' and docstatus = 1 and  workflow_state='Reservation and per_delivered<100'""")
+	
+
+def get_active_customers():
+	return frappe.db.sql("""select name from `tabCustomer`
+		where name in (select customer from `tabSales Order`
+		where status != 'Close' and docstatus = 1 and  workflow_state='Reservation and per_delivered<100') """)
+	
+	
 def get_valuation_rate(item_code):
 	"""Get an average valuation rate of an item from all warehouses"""
 
