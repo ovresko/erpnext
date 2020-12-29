@@ -316,7 +316,7 @@ def execute(filters=None):
 		if filters.get("with_qty") and (not info or info[0] <= 0):
 			continue
 		sqllast_qty = frappe.db.sql("""select incoming_rate,actual_qty,valuation_rate,voucher_type, voucher_no from `tabStock Ledger Entry` 
-		where item_code=%s and voucher_type in ['Stock Reconciliation','Purchase Receipt']
+		where item_code=%s and (voucher_type = 'Stock Reconciliation' or voucher_type = 'Purchase Receipt')
 		order by posting_date desc, posting_time desc limit 1""", (mri.item_code), as_dict=1)
 		
 		pondere = 0
