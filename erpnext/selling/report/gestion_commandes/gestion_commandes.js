@@ -8,7 +8,12 @@ frappe.query_reports["Gestion Commandes"] = {
 			"fieldname": "customer",
 			"label": "Client",
 			fieldtype: "Link",
-			options: "Customer"
+			options: "Customer",
+			"get_query":  function() {
+				return {
+					query: "erpnext.selling.page.point_of_sale.point_of_sale.get_active_customers"
+				}
+			}
 		},
 		{
 			"fieldname": "user",
@@ -27,14 +32,9 @@ frappe.query_reports["Gestion Commandes"] = {
 			"label": "Commande",
 			fieldtype: "Link",
 			options: "Sales Order",
-			"get_query": function() {
+			"get_query":  function() {
 				return {
-					"doctype": "Sales Order",
-					"filters": {
-						"workflow_state": "Reservation",
-						"docstatus":1,
-						"status": ("!=","Closed")
-					}
+					query: "erpnext.selling.page.point_of_sale.point_of_sale.get_active_so"
 				}
 			}
 		},
