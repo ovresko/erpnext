@@ -27,11 +27,11 @@ def get_active_so(doctype, txt, searchfield, start, page_len, filters):
 
 def get_active_customers(doctype, txt, searchfield, start, page_len, filters):
 	if not txt:
-		return frappe.db.sql("""select * from `tabCustomer`
+		return frappe.db.sql("""select name,customer_name,customer_group,region_long from `tabCustomer`
 			where name in (select customer from `tabSales Order`
 			where status != 'Closed' and docstatus = 1 and  workflow_state='Reservation' and per_delivered<100) """)
 	else:
-		return frappe.db.sql("""select * from `tabCustomer`
+		return frappe.db.sql("""select name,customer_name,customer_group,region_long from `tabCustomer`
 			where name LIKE '%%{0}%%' and name in (select customer from `tabSales Order`where status != 'Closed' and docstatus = 1 and  workflow_state='Reservation' and per_delivered<100) """.format(txt))
 	
 def get_valuation_rate(item_code):
