@@ -250,6 +250,8 @@ class DeliveryNote(SellingController):
 
 
 	def check_credit_limit(self):
+		if not cint(frappe.db.get_single_value("Stock Settings", "controle_balance")):
+			return
 		from erpnext.selling.doctype.customer.customer import check_credit_limit
 
 		extra_amount = 0
