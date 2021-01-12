@@ -16,7 +16,7 @@ def execute(filters=None):
 	
 	columns.append({
 			"fieldname": "date",
-			"label": "Date",
+			"label": "Date Livraison",
 			"width": 200
 		})
 	columns.append({
@@ -64,7 +64,7 @@ def execute(filters=None):
 	columns.append({
 			"fieldname": "item_commande",
 			"label": "Art. Commande",
-			"width": 150
+			"width": 0
 		})
 	columns.append({
 			"fieldname": "commercial",
