@@ -135,7 +135,7 @@ def execute(filters=None):
 		commerical = get_fullname(item.owner) or ''
 		row = [
 			item.delivery_date,
-			datef,
+			datef.date(),
 			item.item_code,
 			item.item_name,
 			item.ref_fabricant,
