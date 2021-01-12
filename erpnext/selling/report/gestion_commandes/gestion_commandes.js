@@ -28,6 +28,12 @@ frappe.query_reports["Gestion Commandes"] = {
 			options: "Shipping Rule"
 		},
 		{
+			"fieldname": "territory",
+			"label": "Region",
+			fieldtype: "Link",
+			options: "Territory"
+		},
+		{
 			"fieldname": "cmd",
 			"label": "Commande",
 			fieldtype: "Link",
