@@ -10,9 +10,9 @@ from frappe.utils import get_fullname,today,cstr, flt, getdate, comma_and, cint,
 
 def execute(filters=None):
 	columns, data = [], []
-	if  not filters.from_date:
-		frappe.throw("Selectionner date")
-		return columns, data
+	#if  not filters.from_date:
+	#	frappe.throw("Selectionner date")
+	#	return columns, data
 	
 	columns.append({
 			"fieldname": "date",
