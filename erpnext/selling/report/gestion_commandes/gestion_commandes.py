@@ -112,6 +112,8 @@ def execute(filters=None):
 
 	commandes = set()
 	items.extend(orders_items)
+	items.sort(key=lambda x: x.delivery_date, reverse=True)
+
 	for item in items:
 		qty = frappe.db.sql("""select sum(actual_qty) from `tabBin` where item_code=%s and warehouse=%s""",(item.item_code,item.warehouse))[0]
 		if qty and qty[0]:
