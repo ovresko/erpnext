@@ -92,14 +92,12 @@ def execute(filters=None):
 			"width": 150
 		})
 	
-	if not filters.from_date or not filters.to_date:
-		frappe.throw("Date invalide")
-		
-	filters.from_date = getdate(filters.from_date)
-	filters.to_date = getdate(filters.to_date)
+	if filters.from_date or filters.to_date:
+		filters.from_date = getdate(filters.from_date)
+		filters.to_date = getdate(filters.to_date)
 
-	if filters.from_date > filters.to_date:
-		frappe.throw(_("From Date cannot be greater than To Date"))
+		if filters.from_date > filters.to_date:
+			frappe.throw(_("From Date cannot be greater than To Date"))
 		
 	items = []
 	today = getdate(add_days(nowdate(), -15))
