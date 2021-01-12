@@ -60,7 +60,6 @@ frappe.query_reports["Gestion Commandes"] = {
 			"fieldname": "to_date",
 			"label": __("To Date"),
 			"fieldtype": "Date",
-			"default": frappe.defaults.get_user_default("year_end_date"),
 		},
 	],
 	onload: function(report) {
