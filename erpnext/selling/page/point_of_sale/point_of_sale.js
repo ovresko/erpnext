@@ -2750,7 +2750,24 @@ class POSItems {
 		let tooltip = "La quantité réelle / réservée est "+ item.actual_qty+ " / "+item.reserved_qty;
 		 if(item.actual_qty ){
 			item.actual_qty = item.actual_qty  - item.reserved_qty;
+		 	if(item.actual_qty < 0 ){
+				item.actual_qty = 0;
+		 	}
 		 }
+		
+		 if(item.qts_depot ){
+			item.qts_depot = item.qts_depot  - item.reserved_qty;
+		 	if(item.qts_depot < 0 ){
+				item.qts_depot = 0;
+		 	}
+		 }
+		if(item.qts_total ){
+			item.qts_total = item.qts_total  - item.reserved_qty;
+			if(item.qts_total < 0 ){
+				item.qts_total = 0;
+		 	}
+		 }
+		
 		let actual_qty = '0';
 		if(parseFloat(item.actual_qty) > 0 || parseFloat(item.qts_total) > 0 || parseFloat(item.qts_depot) > 0){
 			price = '<span class="price-info" style="margin:0px;background-color: rgba(10, 154, 7, 0.8);border-radius: 0px;font-weight: bold;">' +price_list_rate +'</span>';
