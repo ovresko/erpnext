@@ -165,7 +165,22 @@ def get_conditions(filters):
 	#perfection
 	if filters.get('customer'):
 		conditions.append("so.customer=%(customer)s")
-	
+	#territory
+	if filters.get('territory'):
+		territory = frappe.get_doc("Territory",filters.get('territory'))
+		if territory.is_group:
+			territories = []
+			_territories = frappe.get_all("Territory",fields=['name','parent_territory','is_group'],filters={"parent_territory":territory.name})
+			for t in _territories:
+				territories.append(t)
+				if t.is_group:
+					_oterritories = frappe.get_all("Territory",fields=['name','parent_territory','is_group'],filters={"parent_territory":t.name})
+					if _oterritories:
+						territories.extend(_oterritories)
+				
+			conditions.append("so.territory in (%s)" % ', '.join(['%s']*len(territories)) % tuple([inv.name for inv in territories]))
+		else:
+			conditions.append("so.territory=%(territory)s")
 	#perfection
 	if filters.get('user'):
 		conditions.append("so.owner=%(user)s")
