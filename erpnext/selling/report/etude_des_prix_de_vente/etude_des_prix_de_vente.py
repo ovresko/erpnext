@@ -415,7 +415,7 @@ def execute(filters=None):
 						for p in price:
 							lp_benefice = round(p[0] - val_ttc)
 							if val_ttc:
-								lp_benefice = round((lp_benefice * 100) / val_ttc) or 0
+								lp_benefice = round((lp_benefice * 100) / p[0]) or 0
 							_price += "&nbsp;&nbsp;  +%s/<span style='background-color:black;color:white'>%s</span>/%s%%  &nbsp;&nbsp;" % (p[1],p[0],lp_benefice)
 					if benefice:
 						benefice = benefice[0][0]
