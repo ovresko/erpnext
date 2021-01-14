@@ -53,14 +53,17 @@ def get_valorisation(item_code):
 		raise frappe.PermissionError
 	text = ''
 	valuation = flt(get_valuation_rate(item_code)) or 0
+	valuation_ttc = valuation * 1.19
 	prices = frappe.db.get_all("Item Price",filters={"item_code":item_code,"selling":1},fields=["currency","name","price_list_rate","min_qty","price_list"])
 	if prices and valuation:
 		for p in prices:
 			text += "<br><li>%s +%s   __________   <strong>%s</strong> %s </li>" % (p.price_list,p.min_qty,p.price_list_rate,p.currency)
-			text += "- Cout : ____________________ %s DA<br>" % (valuation)
+			text += "- Cout : ____________________ %s DA<br>" % (round(valuation))
+			text += "- Cout TTC : ____________________ %s DA<br>" % (round(valuation_ttc))
 			if p.price_list_rate:
-				bn = p.price_list_rate - valuation
-				taux = (bn/valuation) * 100
+				bn = p.price_list_rate - valuation_ttc
+				taux = (bn/p.price_list_rate) * 100
+				text += "- Benefice : ____________________ %s DA <br>" % (round(bn))
 				text += "- Benefice : ____________________ %s %% <br>" % (round(taux))
 	
 	return text
