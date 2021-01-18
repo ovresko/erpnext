@@ -103,7 +103,12 @@ class SalesInvoice(SellingController):
 
 		# validate service stop date to lie in between start and end date
 		validate_service_stop_date(self)
-
+		
+		self.items_cost =  sum((a.valuation_rate or a.rate)*a.qty for a in self.items if a.qty)
+		if self.items_cost and self.total:
+			self.profit = self.total - self.items_cost
+			self.gross_profit = 100 * flt(self.profit / self.total)
+			
 		if not self.is_opening:
 			self.is_opening = 'No'
 
