@@ -2650,10 +2650,11 @@ class POSItems {
 			
 			
 			var ms = this;
+			let customer = this.customer_field.get_value();
 			frappe.call({
 				"method": "erpnext.selling.page.point_of_sale.point_of_sale.get_reliquat",
 				"args": {
-					"customer": ms.frm.doc.customer,
+					"customer": customer,
 					"item": item_code
 				},
 				"callback": function(response) {
