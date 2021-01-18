@@ -16,6 +16,19 @@ import os
 
 from six import string_types
 
+def get_reliquat(customer,item):
+	qts = frappe.db.sql('''
+	select sum(mri.qty - mri.delivered_qty) 
+	from `tabSales Order` mr 
+	left join `tabSales Order Item` mri 
+	on mri.parent = mr.name 
+	where mr.docstatus=1 and mr.status != 'Closed' and mr.status != 'Completed' 
+	and mri.delivered_qty < mri.qty and mri.item_code='%s' and mr.customer='%s' and mri.name not in (select so_detail from `tabDelivery Note Item` where item_code = '%s' and docstatus=0 and customer ='%s') ''' % (item,customer,item,customer))
+	if qts:
+		return qts[0]
+	else:
+		return 0
+
 def get_active_so(doctype, txt, searchfield, start, page_len, filters):
 	if not txt:
 		return frappe.db.sql("""select name,customer_name,status,delivery_date from `tabSales Order`
