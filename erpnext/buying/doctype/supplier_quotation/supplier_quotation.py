@@ -279,6 +279,11 @@ def update_mr(doc):
 		mr.append(item.material_request_item)
 	    if item.material_request:
 		allmr.append(item.material_request)
+		
+  	    update_bin_qty(item.item_code, item.warehouse, {
+			"ordered_qty": get_ordered_qty(item.item_code, item.warehouse),
+			"indented_qty": get_indented_qty(item.item_code, item.warehouse)
+		})
 
 	if man:
 		of_manu = frappe.get_all("Material Request Item",filters={"docstatus":("!=",2),"consulted":0,"creation":("<=",doc.creation),"fabricant":man},fields=["name","consultation"])
