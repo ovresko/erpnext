@@ -16,6 +16,7 @@ import os
 
 from six import string_types
 
+@frappe.whitelist()
 def get_reliquat(customer,item):
 	qts = frappe.db.sql('''
 	select sum(mri.qty - mri.delivered_qty) 
