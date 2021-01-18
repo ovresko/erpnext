@@ -522,6 +522,10 @@ def on_cancel_purchase_order(items,pname):
 					mr.flags.ignore_mandatory = True
 					mr.flags.ignore_validate = True
 					mr.save()
+				update_bin_qty(item.item_code, item.warehouse, {
+						"ordered_qty": get_ordered_qty(item.item_code, item.warehouse),
+						"indented_qty": get_indented_qty(item.item_code, item.warehouse)
+					})
 		except:
 			print("ERROR on_cancel_purchase_order")
 	for dv in dvs:
@@ -550,6 +554,11 @@ def on_update_purchase_order(items,pname):
 					mr.flags.ignore_mandatory = True
 					mr.flags.ignore_validate = True
 					mr.save()
+					
+				update_bin_qty(item.item_code, item.warehouse, {
+					"ordered_qty": get_ordered_qty(item.item_code, item.warehouse),
+					"indented_qty": get_indented_qty(item.item_code, item.warehouse)
+				})
 		except:
 			print("ERROR on_update_purchase_order")
 		
