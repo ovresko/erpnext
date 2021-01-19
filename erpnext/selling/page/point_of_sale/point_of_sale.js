@@ -2660,13 +2660,13 @@ class POSItems {
 					
 					if (item) {
 						if (item > 0){
-							frappe.freeze();
+							frappe.dom.freeze();
 							frappe.msgprint(
 								{
 								title: "Qts Reliquat",
 								message: "<h1 style='color:red'>Attention Client à commandé déja une quantité : "+item+"</h1>"
 							});
-							frappe.unfreeze();
+							frappe.dom.unfreeze();
 						}
 					}  
 					
