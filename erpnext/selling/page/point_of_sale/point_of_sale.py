@@ -18,13 +18,14 @@ from six import string_types
 
 @frappe.whitelist()
 def get_reliquat(customer,item):
+	#and mri.name not in (select so_detail from `tabDelivery Note Item` where item_code = '%s' and docstatus=0 and customer ='%s') 
 	qts = frappe.db.sql('''
 	select sum(mri.qty - mri.delivered_qty) 
 	from `tabSales Order` mr 
 	left join `tabSales Order Item` mri 
 	on mri.parent = mr.name 
 	where mr.docstatus=1 and mr.status != 'Closed' and mr.status != 'Completed' 
-	and mri.delivered_qty < mri.qty and mri.item_code='%s' and mr.customer='%s' and mri.name not in (select so_detail from `tabDelivery Note Item` where item_code = '%s' and docstatus=0 and customer ='%s') ''' % (item,customer,item,customer))
+	and mri.delivered_qty < mri.qty and mri.item_code='%s' and mr.customer='%s' ''' % (item,customer))
 	if qts:
 		return qts[0]
 	else:
