@@ -2659,7 +2659,7 @@ class POSItems {
 					var item = response.message; 
 					if (item) {
 						if (item > 0){
-							alert("Qts Reliquat :"+item);
+							frappe.msgprint("<h1 style='color:red'>Attention Client a commandé déja qts :"+item+"</h1>");
 						}
 					}  
 					let qts= prompt("Quantité");
