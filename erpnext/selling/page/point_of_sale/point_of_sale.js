@@ -2657,10 +2657,10 @@ class POSItems {
 				},
 				"callback": function(response) {
 					var item = response.message; 
-					var done = False; 
+					var done =false; 
 					if (item) {
 						if (item > 0){
-							done = True
+							done = true
 							frappe.msgprint(
 								{
 								title: "Qts Reliquat",
