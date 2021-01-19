@@ -767,10 +767,14 @@ class POSCart {
 				</div>
 
 				<div style="display:flex">
-					<div class="customer-field" style="width:92% ">
+					<div class="customer-field" style="width:84% ">
 					</div>
 					<div  style="width:8% ">
                                            <button  class="btn btn-default btn-xs btn-customer-delete" style="margin-left: 5px;margin-top:30px"><i class="fa fa-close"></i></button>
+
+					</div>
+					<div  style="width:8% ">
+                                           <button  class="btn btn-default btn-xs btn-reliquat" style="margin-left: 5px;margin-top:30px">R</button>
 
 					</div>
 				</div>
@@ -1587,6 +1591,13 @@ class POSCart {
 			const item_code = unescape($item.attr('data-item-code'));
 			console.log(flt($input.val()));
 			events.on_field_change(item_code, 'discount_percentage', flt($input.val()));
+		});
+		
+		// btn-reliquat
+		this.wrapper.on('click', '.btn-reliquat', function(event) {
+			event.stopPropagation();
+			let customer = me.frm.doc.customer
+			frappe.set_route('query-report', 'Etat Reliquats Clients', {customer: customer});
 		});
 		
 		
