@@ -1597,7 +1597,7 @@ class POSCart {
 		this.wrapper.on('click', '.btn-reliquat', function(event) {
 			event.stopPropagation();
 			let customer = me.frm.doc.customer
-			frappe.set_route('query-report', 'Etat Reliquats Clients', {customer: customer});
+			window.open('/desk#query-report/Etat%20Reliquats%20Clients?customer='+customer, '_blank');
 		});
 		
 		
