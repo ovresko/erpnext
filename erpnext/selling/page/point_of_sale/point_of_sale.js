@@ -2657,19 +2657,40 @@ class POSItems {
 				},
 				"callback": function(response) {
 					var item = response.message; 
+					var done = False; 
 					if (item) {
 						if (item > 0){
-							frappe.msgprint("<h1 style='color:red'>Attention Client a commandé déja qts :"+item+"</h1>");
+							done = True
+							frappe.msgprint(
+								{
+								title: "Qts Reliquat",
+								message: "<h1 style='color:red'>Attention Client à commandé déja une quantité : "+item+"</h1>",
+								callback: function(r){
+									let qts= prompt("Quantité");
+									if (qts == null ){
+										return;	
+									}
+									if ( qts == '') {
+									   qts = "+1";
+									}
+									me.events.update_cart(item_code, 'qty', qts,1);
+								}
+							});
+								
+								
+							
 						}
 					}  
-					let qts= prompt("Quantité");
-					if (qts == null ){
-						return;	
+					if (!done){
+						let qts= prompt("Quantité");
+						if (qts == null ){
+							return;	
+						}
+						if ( qts == '') {
+						   qts = "+1";
+						}
+						me.events.update_cart(item_code, 'qty', qts,1);
 					}
-					if ( qts == '') {
-					   qts = "+1";
-					}
-					me.events.update_cart(item_code, 'qty', qts,1);
 				}
 			}); 
 			
