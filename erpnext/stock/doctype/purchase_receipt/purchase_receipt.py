@@ -164,7 +164,7 @@ class PurchaseReceipt(BuyingController):
 			if item.facture_item:
 				frappe.db.set_value("Purchase Invoice Item",item.facture_item,"pr_detail",item.name)
 				frappe.db.set_value("Purchase Invoice Item",item.facture_item,"purchase_receipt",item.parent)
-		frappe.db.commit()
+		#frappe.db.commit()
 		frappe.enqueue("erpnext.stock.doctype.purchase_receipt.purchase_receipt.on_submit_purchase_receipt",items=self.items,timeout=50000)
 
 	def check_next_docstatus(self):
