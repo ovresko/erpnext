@@ -160,12 +160,16 @@ class PurchaseReceipt(BuyingController):
 
 		self.make_gl_entries()
 		for item in self.items:
-			frappe.db.set_value("Item", item.item_code, "prix_traite", "En cours")
+			#frappe.db.set_value("Item", item.item_code, "prix_traite", "En cours")
+			frappe.db.sql("""update `tabItem` set prix_traite='En cours' where name=%s""",item.item_code)
 			if item.facture_item:
-				frappe.db.set_value("Purchase Invoice Item",item.facture_item,"pr_detail",item.name)
-				frappe.db.set_value("Purchase Invoice Item",item.facture_item,"purchase_receipt",item.parent)
+				frappe.db.sql("""update `tabPurchase Invoice Item` set pr_detail=%s where name=%s""",(item.name,item.facture_item))
+				frappe.db.sql("""update `tabPurchase Invoice Item` set purchase_receipt=%s where name=%s""",(item.parent,item.facture_item))
+				#frappe.db.set_value("Purchase Invoice Item",item.facture_item,"pr_detail",item.name)
+				#frappe.db.set_value("Purchase Invoice Item",item.facture_item,"purchase_receipt",item.parent)
 		#frappe.db.commit()
-		frappe.enqueue("erpnext.stock.doctype.purchase_receipt.purchase_receipt.on_submit_purchase_receipt",items=self.items,timeout=50000)
+		
+		frappe.enqueue("erpnext.stock.doctype.purchase_receipt.purchase_receipt.on_submit_purchase_receipt",items=self.items,timeout=50000, is_async=True,  now=False, enqueue_after_commit=True)
 
 	def check_next_docstatus(self):
 		submit_rv = frappe.db.sql("""select t1.name
