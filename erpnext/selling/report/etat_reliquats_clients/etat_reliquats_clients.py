@@ -69,17 +69,17 @@ def execute(filters=None):
 		})
 	
 	orders_items = frappe.db.sql("""select 
-					mr.name as "Commande:Link/Sales Order:Data:50",
-					mr.delivery_date as "Date de livraison:Data:100",
-					mr.customer_name as "Client:Data:160",
-					mr.customer as "ID Client:Link/Customer:100",
-					mri.item_code as "Article:Data:140",
-					mri.ref_fabricant as "Ref Fabricant:Data:100",
-					mri.fabricant as "Fabricant:Data:100",
-					mri.qty as "Qts commandee:Data:100",
-					mri.delivered_qty as "Qts livree:Data:100",
-					@reste :=(mri.qty - mri.delivered_qty) as "Reliquat:Data:100",
-					mr.status as "Status:Data:50"
+					mr.name,
+					mr.delivery_date ,
+					mr.customer_name ,
+					mr.customer ,
+					mri.item_code ,
+					mri.ref_fabricant ,
+					mri.fabricant ,
+					mri.qty ,
+					mri.delivered_qty ,
+					@reste :=(mri.qty - mri.delivered_qty) ,
+					mr.status
 					from `tabSales Order` mr 
 					left join `tabSales Order Item` mri 
 					on mr.name = mri.parent
