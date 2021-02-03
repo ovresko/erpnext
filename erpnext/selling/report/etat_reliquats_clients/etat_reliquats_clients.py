@@ -110,7 +110,7 @@ def execute(filters=None):
 			item.delivered_qty,
 			item.reste,
 			item.status,
-			"""<input type='button' onclick="erpnext.utils.open_item_info('%s', this)" value='info'>  </input>""",
+			"""<input type='button' onclick="erpnext.utils.open_item_info('%s', this)" value='info'>  </input>""" % (item.item_code),
 			"""<button onClick="delete_item('%s')" type='button'>Supprimer</button>""" % (item.mriname)
 		]
 	
