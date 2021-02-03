@@ -66,6 +66,11 @@ def execute(filters=None):
 			"width": 70
 		})
 	columns.append({
+			"fieldname": "info",
+			"label": "Opt",
+			"width": 110
+		})
+	columns.append({
 			"fieldname": "delete",
 			"label": "Opt",
 			"width": 110
@@ -105,6 +110,7 @@ def execute(filters=None):
 			item.delivered_qty,
 			item.reste,
 			item.status,
+			"""<input type='button' onclick="erpnext.utils.open_item_info('%s', this)" value='info'>  </input>""",
 			"""<button onClick="delete_item('%s')" type='button'>Supprimer</button>""" % (item.mriname)
 		]
 	
