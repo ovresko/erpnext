@@ -25,6 +25,7 @@ from frappe.website.render import clear_cache
 from frappe.website.website_generator import WebsiteGenerator
 from frappe.model.naming import make_autoname
 from six import iteritems
+from erpnext.stock.stock_balance import update_bin_qty, get_reserved_qty
 
 
 class DuplicateReorderRows(frappe.ValidationError):
@@ -1316,7 +1317,12 @@ def update_variants(variants, template, publish_progress=True):
 @frappe.whitelist()
 def delete_order_item(item_code):
 	if item_code:
+		item = frappe.get_doc("Sales Order Item",item_code)
+		
 		frappe.db.sql("""delete from `tabSales Order Item` where name = %s""", (item_code))
+		update_bin_qty(item.item_code, item.warehouse, {
+				"reserved_qty": get_reserved_qty(item.item_code, item.warehouse)
+			})
 		return "Article %s est Supprime" % (item_code)
 		
 @frappe.whitelist()
