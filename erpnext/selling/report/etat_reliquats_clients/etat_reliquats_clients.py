@@ -20,12 +20,12 @@ def execute(filters=None):
 	columns.append({
 			"fieldname": "customer_name",
 			"label": "Client",
-			"width": 100
+			"width": 150
 		})
 	columns.append({
 			"fieldname": "customer",
 			"label": "Client",
-			"width": 50
+			"width": 110
 		})
 	columns.append({
 			"fieldname": "item_code",
@@ -35,27 +35,27 @@ def execute(filters=None):
 	columns.append({
 			"fieldname": "ref_fabricant",
 			"label": "Ref Fabricant",
-			"width": 100
+			"width": 140
 		})
 	columns.append({
 			"fieldname": "fabricant",
 			"label": "Fabricant",
-			"width": 70
+			"width": 100
 		})
 	columns.append({
 			"fieldname": "qty",
 			"label": "Qts commandee",
-			"width": 50
+			"width": 90
 		})
 	columns.append({
 			"fieldname": "delivered_qty",
 			"label": "Qts livree",
-			"width": 50
+			"width": 100
 		})
 	columns.append({
 			"fieldname": "reste",
 			"label": "Reliquat",
-			"width": 50
+			"width": 100
 		})
 	columns.append({
 			"fieldname": "status",
