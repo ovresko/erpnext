@@ -7,6 +7,9 @@ import frappe
 def execute(filters=None):
 	columns, data = [], []
 	
+	if not filters.customer:
+		filters.customer = "NA"
+	
 	columns.append({
 			"fieldname": "name",
 			"label": "Commande",
