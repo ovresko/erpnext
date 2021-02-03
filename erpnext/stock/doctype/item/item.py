@@ -1317,8 +1317,8 @@ def update_variants(variants, template, publish_progress=True):
 def delete_order_item(item_code):
 	if item_code:
 		frappe.db.sql("""delete from `tabSales Order Item` where name = %s""", (item_code))
-		return "Article Supprime"
-				
+		return "Article %s est Supprime" % (item_code)
+		
 @frappe.whitelist()
 def bulk_print_list(names):
 	if names:		
