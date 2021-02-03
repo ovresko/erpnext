@@ -78,7 +78,7 @@ def execute(filters=None):
 					mri.fabricant ,
 					mri.qty ,
 					mri.delivered_qty ,
-					@reste :=(mri.qty - mri.delivered_qty) ,
+					@reste := (mri.qty - mri.delivered_qty) as reste,
 					mr.status
 					from `tabSales Order` mr 
 					left join `tabSales Order Item` mri 
