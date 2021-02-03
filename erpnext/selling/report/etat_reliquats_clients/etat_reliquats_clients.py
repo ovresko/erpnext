@@ -10,62 +10,62 @@ def execute(filters=None):
 	columns.append({
 			"fieldname": "name",
 			"label": "Commande",
-			"width": 200
+			"width": 100
 		})
 	columns.append({
 			"fieldname": "delivery_date",
 			"label": "Date Livraison",
-			"width": 200
+			"width": 100
 		})
 	columns.append({
 			"fieldname": "customer_name",
 			"label": "Client",
-			"width": 200
+			"width": 100
 		})
 	columns.append({
 			"fieldname": "customer",
 			"label": "Client",
-			"width": 200
+			"width": 50
 		})
 	columns.append({
 			"fieldname": "item_code",
 			"label": "Article",
-			"width": 200
+			"width": 110
 		})
 	columns.append({
 			"fieldname": "ref_fabricant",
 			"label": "Ref Fabricant",
-			"width": 200
+			"width": 100
 		})
 	columns.append({
 			"fieldname": "fabricant",
 			"label": "Fabricant",
-			"width": 200
+			"width": 70
 		})
 	columns.append({
 			"fieldname": "qty",
 			"label": "Qts commandee",
-			"width": 200
+			"width": 50
 		})
 	columns.append({
 			"fieldname": "delivered_qty",
 			"label": "Qts livree",
-			"width": 200
+			"width": 50
 		})
 	columns.append({
 			"fieldname": "reste",
 			"label": "Reliquat",
-			"width": 200
+			"width": 50
 		})
 	columns.append({
 			"fieldname": "status",
 			"label": "Status",
-			"width": 200
+			"width": 70
 		})
 	columns.append({
 			"fieldname": "delete",
 			"label": "Opt",
-			"width": 120
+			"width": 110
 		})
 	
 	orders_items = frappe.db.sql("""select 
