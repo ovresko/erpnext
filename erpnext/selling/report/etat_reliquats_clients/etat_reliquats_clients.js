@@ -1,6 +1,6 @@
 
 function delete_item(data) {
-
+	console.log(data);
 	var confirme = confirm("Confirmer l'operation ?");
 	if(!confirme){
 		return;
