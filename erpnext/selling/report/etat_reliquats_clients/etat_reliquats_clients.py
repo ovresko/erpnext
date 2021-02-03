@@ -70,6 +70,7 @@ def execute(filters=None):
 	
 	orders_items = frappe.db.sql("""select 
 					mr.name,
+					mri.name as mriname,
 					mr.delivery_date ,
 					mr.customer_name ,
 					mr.customer ,
@@ -101,7 +102,7 @@ def execute(filters=None):
 			item.delivered_qty,
 			item.reste,
 			item.status,
-			"""<button onClick="delete_item('%s')" type='button'>Supprimer</button>""" % (item.name)
+			"""<button onClick="delete_item('%s')" type='button'>Supprimer</button>""" % (item.mriname)
 		]
 	
 		data.append(row)
