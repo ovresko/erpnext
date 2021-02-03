@@ -1313,6 +1313,11 @@ def update_variants(variants, template, publish_progress=True):
 		if publish_progress:
 				frappe.publish_progress(count*100/len(variants), title = _("Updating Variants..."))
 
+@frappe.whitelist()
+def delete_order_item(item_code):
+	if item_code:
+		frappe.db.sql("""delete from `tabSales Order Item` where name = %s""", (item_code))
+		return "Article Supprime"
 				
 @frappe.whitelist()
 def bulk_print_list(names):
