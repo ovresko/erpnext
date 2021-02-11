@@ -116,8 +116,10 @@ def set_address(refs2,stock,ads):
 			for idx,c in enumerate(clean):
 				addr= ads[idx]
 				if addr and c:
-					c = c.replace(" ","").replace("-","").replace(".","").replace("/","")
-					other_comp = frappe.get_doc("Item","clean_manufacturer_part_number",c)
+					c = c.replace(" ","").replace("-","").replace("_","").replace("/","").replace(".","")
+					code = frappe.db.get_value('Item', {"clean_manufacturer_part_number": c}, ['item_code'])
+					
+					other_comp = frappe.get_doc("Item",code)
 					row = other_comp.append('table_adresse_magasin',{})
 					row.warehouse = stock
 					row.adresse = addr
