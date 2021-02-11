@@ -667,8 +667,8 @@ def make_sales_order(customer,items,price_list,pos_profile):
 	if price_list:
 		so.selling_price_list = price_list
 	for item in items:
+		item = frappe._dict(item)
 		if item.qty:
-			item = frappe._dict(item)
 			item.doctype="Sales Order Item"
 			item.parent=so.name
 			item.parenttype = "Sales Order"
