@@ -72,6 +72,11 @@ def execute(filters=None):
 			"width": 250
 		})
 	columns.append({
+			"fieldname": "last_purchase_rc",
+			"label": "Dernier Prix recu",
+			"width": 250
+		})
+	columns.append({
 			"fieldname": "last_purchase_devise",
 			"label": "Dernier Prix d'achat (Devise)",
 			"width": 250
@@ -362,7 +367,11 @@ def execute(filters=None):
 			val_ttc = round(last_valuation+taux_taxe)
 			taux_taxe = round(taux_taxe)
 		pond_valuation = 0
-		
+		last_recu =  frappe.db.sql("""select item_code,rate  from `tabPurchase Receipt Item` 
+		where item_code=%s and docstatus=1
+		order by modified desc limit 1""", (mri.item_code), as_dict=1)
+		if last_recu:
+			last_recu = last_recu[0].rate
 		#frappe.db.sql("""select (medium / total) as result from (select t.item_code, sum(t.actual_qty) AS total, (t.actual_qty * t.valuation_rate) AS medium from `tabStock Ledger Entry` t where item_code=%s and actual_qty>0 GROUP BY t.item_code ) as inner_query""", (mri.item_code), as_dict=1)
 		if pondere:
 			pond_valuation = round(pondere or 0)
@@ -382,6 +391,7 @@ def execute(filters=None):
 			last_qty,
 			info[0] or 0,
 			info[2] or 0,
+			last_recu or 0,
 			mri.last_purchase_devise  or 0,
 			mri.last_purchase_rate  or 0,	
 			taux_change or 0,
