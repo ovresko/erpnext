@@ -17,12 +17,12 @@ def execute(filters=None):
 	columns.append({
 			"fieldname": "date",
 			"label": "Date Livraison",
-			"width": 200
+			"width": 100
 		})
 	columns.append({
 			"fieldname": "date_fin",
 			"label": "Date Fin",
-			"width": 200
+			"width": 100
 		})
 	columns.append({
 			"fieldname": "item",
@@ -44,7 +44,7 @@ def execute(filters=None):
 	columns.append({
 			"fieldname": "fabricant",
 			"label": "Fabricant",
-			"width": 150
+			"width": 110
 		})
 	columns.append({
 			"fieldname": "clientc",
@@ -58,7 +58,11 @@ def execute(filters=None):
 			"label": "Client",
 			"width": 150
 		})
-	
+	columns.append({
+			"fieldname": "region",
+			"label": "Region",
+			"width": 100
+		})
 	columns.append({
 			"fieldname": "commande",
 			"label": "Commande",
@@ -157,6 +161,7 @@ def execute(filters=None):
 			item.fabricant,
 			item.customer,
 			item.customer_name,
+			item.territory,
 			item.parent,
 			item.name,
 			commerical,
