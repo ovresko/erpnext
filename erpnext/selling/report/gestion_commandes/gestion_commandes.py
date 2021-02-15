@@ -193,7 +193,7 @@ def get_conditions(filters):
 					if _oterritories:
 						territories.extend(_oterritories)
 				
-			conditions.append("""so.territory in ("%s")""" % ', '.join(['"%s"']*len(territories)) % tuple([inv.name for inv in territories]))
+			conditions.append("""so.territory in (%s)""" % ', '.join(['"%s"']*len(territories)) % tuple([inv.name for inv in territories]))
 		else:
 			conditions.append("so.territory=%(territory)s")
 	#perfection
