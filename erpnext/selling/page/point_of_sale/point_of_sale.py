@@ -645,11 +645,11 @@ def make_devis(customer,items):
 	so.party_name = customer
 	for item in items:
 		item = frappe._dict(item)
-		item.doctype="Quotation Item"
-		item.parent=so.name
-		item.parenttype = "Quotation"
-		
-		so.append('items', item)
+		if item.qty:
+			item.doctype="Quotation Item"
+			item.parent=so.name
+			item.parenttype = "Quotation"
+			so.append('items', item)
 	
 	so.save()
 	return so
