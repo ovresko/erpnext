@@ -27,6 +27,8 @@ def execute(filters=None):
 	columns.append({
 			"fieldname": "item",
 			"label": "Article",
+			"fieldtype": "Link",
+			"options": "Item",
 			"width": 200
 		})
 	columns.append({
@@ -47,6 +49,8 @@ def execute(filters=None):
 	columns.append({
 			"fieldname": "clientc",
 			"label": "Client",
+			"fieldtype": "Link",
+			"options": "Customer",
 			"width": 150
 		})
 	columns.append({
@@ -58,6 +62,8 @@ def execute(filters=None):
 	columns.append({
 			"fieldname": "commande",
 			"label": "Commande",
+			"fieldtype": "Link",
+			"options": "Sales Order",
 			"width": 150
 		})
 	
@@ -91,7 +97,11 @@ def execute(filters=None):
 			"label": "Qts a preparee",
 			"width": 150
 		})
-	
+	columns.append({
+			"fieldname": "type",
+			"label": "Type",
+			"width": 150
+		})
 	if filters.from_date or filters.to_date:
 		filters.from_date = getdate(filters.from_date)
 		filters.to_date = getdate(filters.to_date)
@@ -135,6 +145,9 @@ def execute(filters=None):
 		commandes.add(item.parent)
 		datef = get_datetime(item.delivery_date) + timedelta(days=15)
 		commerical = get_fullname(item.owner) or ''
+		stype = "Non livre"
+		if item.delivered_qty:
+			stype = "Reliquat"
 		row = [
 			item.delivery_date,
 			datef.date(),
@@ -150,7 +163,8 @@ def execute(filters=None):
 			item.warehouse,
 			qty,
 			item.qty,
-			item.qty - item.delivered_qty
+			item.qty - item.delivered_qty,
+			stype
 		]
 	
 		data.append(row)
