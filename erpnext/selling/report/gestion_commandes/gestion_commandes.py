@@ -184,6 +184,7 @@ def get_conditions(filters):
 		territory = frappe.get_doc("Territory",filters.get('territory'))
 		if territory.is_group:
 			territories = []
+			territories.append(territory)
 			_territories = frappe.get_all("Territory",fields=['name','parent_territory','is_group'],filters={"parent_territory":territory.name})
 			for t in _territories:
 				territories.append(t)
