@@ -342,11 +342,11 @@ erpnext.pos.PointOfSale = class PointOfSale {
 		}
 
 		// add to cur_frm
-		const item = this.frm.add_child('items', args);
+		
 		//let item = this.frm.add_child('items');
 		//item['item_code']=item_code;
 		//frappe.model.set_value("Sales Invoice Item", item.name, "item_code", item_code);
-		let origin_item = this.items.get(item.item_code);
+		let origin_item = this.items.get(args['item_code']);
 		//console.log(item, args,origin_item);
 		if (field == "qty" && parseFloat(origin_item.qts_depot) < args['qty']) {
 			alert("Qts d'article non disponible");
@@ -363,6 +363,7 @@ erpnext.pos.PointOfSale = class PointOfSale {
 			frappe.dom.unfreeze();
 			return;
 		}
+		const item = this.frm.add_child('items', args);
 		frappe.flags.hide_serial_batch_dialog = true;
 		
 		
