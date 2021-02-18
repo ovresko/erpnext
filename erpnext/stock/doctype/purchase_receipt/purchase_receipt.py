@@ -161,6 +161,7 @@ class PurchaseReceipt(BuyingController):
 		self.make_gl_entries()
 		for item in self.items:
 			frappe.db.set_value("Item", item.item_code, "prix_traite", "En cours")
+			frappe.db.set_value("Item", item.item_code, "price_not_ready", 1)
 		#	frappe.db.sql("""update `tabItem` set prix_traite='En cours' where name=%s""",item.item_code)
 			if item.facture_item:
 		#		frappe.db.sql("""update `tabPurchase Invoice Item` set pr_detail=%s where name=%s""",(item.name,item.facture_item))
