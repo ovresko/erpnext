@@ -2794,6 +2794,8 @@ class POSItems {
 
 	get_item_html(item) {
 		let price_list_rate = "";
+		console.log(item);
+		console.log(item.price_not_ready);
 		if(item.price_not_ready ==1){
 			price_list_rate = "Arrivage en cours";
 		}else{
