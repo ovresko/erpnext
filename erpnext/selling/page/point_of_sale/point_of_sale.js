@@ -2794,15 +2794,18 @@ class POSItems {
 
 	get_item_html(item) {
 		let price_list_rate = "";
-		console.log(item);
+		//console.log(item);
 		console.log(item.price_not_ready);
 		if(item.price_not_ready ==1){
+			
 			price_list_rate = "Arrivage en cours";
+			//console.log(price_list_rate);
 		}else{
 			price_list_rate = format_currency(item.price_list_rate, this.currency,0);
+			//console.log(price_list_rate);
 		}
 		
-		price_list_rate = format_currency(item.price_list_rate, this.currency,0);
+		//price_list_rate = format_currency(item.price_list_rate, this.currency,0);
 		const { item_code, item_name, image} = item;
 		const item_title =  item_name || item_code;
 		const critere_text = (item.critere_text || '').split("/").join("<br>");
