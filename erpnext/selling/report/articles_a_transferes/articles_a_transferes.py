@@ -162,14 +162,16 @@ def execute(filters=None):
 			parent = item.parent
 			
 		total_qty = 0
-		total_qty_cmd = sum(_item.qty for _item in items if (_item.qty and _item.item_code == item.item_code))
+		total_qty_cmd = sum((_item.qty-_item.actual_qty) for _item in items if (_item.qty and _item.item_code == item.item_code and item.doctype=="Sales Order Item"))
+		total_qty_cmd = total_qty_cmd + sum(_item.qty for _item in items if (_item.qty and _item.item_code == item.item_code and item.doctype=="Material Request Item"))
+		
 		# check if traite
 		if filters.ntraite == 1 and filters.source_warehouse and filters.warehouse:
 			iti = frappe.db.sql("""select se.item_code,se.qty from `tabStock Entry Detail` se LEFT JOIN `tabStock Entry` ss ON se.parent = ss.name where se.item_code=%s and ss.docstatus=0 and se.docstatus=0 and se.s_warehouse=%s and se.t_warehouse=%s and ss.purpose='Material Transfer' """,(item.item_code,filters.source_warehouse,filters.warehouse),as_dict=1)
 			if iti:
 				qts_traite = sum(a.qty for a in iti if a.qty)
 				total_qty_cmd = total_qty_cmd - qts_traite
-		qts_transfere = total_qty_cmd - qty
+		qts_transfere = total_qty_cmd # - qty
 		if qts_transfere <= 0:
 			continue
 			
@@ -210,7 +212,7 @@ def execute(filters=None):
 			parent =  ', '.join({_item.parent for _item in items if (_item.parent  and _item.item_code == item.item_code)})
 			client =  ', '.join({_item.customer_name for _item in items if ("customer_name" in _item and _item.customer_name   and _item.item_code == item.item_code)})
 			actual_qty  = '0'
-			qts_transfere = total_qty - qty
+			qts_transfere = total_qty# - qty
 			if qts_transfere <= 0:
 				continue
 			delivery_date = min(_item.schedule_date for _item in items if (_item.schedule_date  and _item.item_code == item.item_code)) if "consulted" in item else  min(_item.delivery_date for _item in items if _item.delivery_date  and _item.item_code == item.item_code)
