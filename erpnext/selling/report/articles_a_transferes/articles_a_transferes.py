@@ -30,6 +30,11 @@ def execute(filters=None):
 			"width": 150
 		})
 	columns.append({
+			"fieldname": "item_adr",
+			"label": "Adresse",
+			"width": 150
+		})
+	columns.append({
 			"fieldname": "fabricant",
 			"label": "Fabricant",
 			"width": 150
@@ -138,7 +143,11 @@ def execute(filters=None):
 		#if item.qty <= qty:
 		#	continue
 		#qts a transfere
-		
+		adresse_magasin = ""
+		if filters.source_warehouse:
+			adr = frappe.get_list("Adresse Magasin",fields=['adresse'], filters={"parent":item.item_code,"warehouse":filters.source_warehouse})
+			if adr and adr[-1]:
+				adresse_magasin = adr[-1].adresse
 		delivery_date = ''
 		parent = ''
 		client = ''
@@ -216,6 +225,8 @@ def execute(filters=None):
 			item.item_code,
 			item.item_name,
 			item.ref_fabricant,
+			# addr
+			adresse_magasin,
 			item.fabricant,
 			parent,
 			client,
