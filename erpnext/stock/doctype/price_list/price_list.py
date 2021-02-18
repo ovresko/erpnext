@@ -99,12 +99,6 @@ def update_price(item_code,price_list,_price,qts,valuation):
 	return "not done"
 
 @frappe.whitelist()
-def switch_etat_bulk(items):
-	t = 0
-	if isinstance(items, basestring):
-		items = json.loads(items)
-	if items:
-		for item in items:
-			frappe.db.set_value("Item", item, "prix_traite", "En cours")
-			t += 1
-	return "Termine pour %d" %  t
+def switch_etat_bulk():
+	frappe.db.sql("""update tabItam set price_not_ready = 1 where prix_traite =='En cours' """)
+	return "Termine"
