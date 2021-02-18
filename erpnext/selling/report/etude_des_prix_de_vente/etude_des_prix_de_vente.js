@@ -218,34 +218,34 @@ frappe.query_reports["Etude des prix de vente"] = {
 			"default": 0
 		}
 	],
-	onload: function(report) {
-		var me = this;
-		report.page.add_inner_button("Convertir Tous En Cours", function() {
-			var data = report.data;
-			items = [];
-			data.forEach( (item) => {
-				var item_code = item['item_code'];
-				if(item_code && item_code!="Total"){
-					items.push(item_code);
-					 
-				}
-				
-			});
-			console.log(items);
-			frappe.call({
-				method: "erpnext.stock.doctype.price_list.price_list.switch_etat_bulk",
-				args: {
-					items: items,
-				},
-				callback: function(r) {
-					if (r.message) {
-						
-						alert(r.message);				
-					}
-				}
-			});
-			//console.log(report);
-			
-		});
-	}
+	//onload: function(report) {
+	//	var me = this;
+	//	report.page.add_inner_button("Convertir Tous En Cours", function() {
+	//		var data = report.data;
+	//		items = [];
+	//		data.forEach( (item) => {
+	//			var item_code = item['item_code'];
+	//			if(item_code && item_code!="Total"){
+	//				items.push(item_code);
+	//				 
+	//			}
+	//			
+	//		});
+	//		console.log(items);
+	//		frappe.call({
+	//			method: "erpnext.stock.doctype.price_list.price_list.switch_etat_bulk",
+	//			args: {
+	//				items: items,
+	//			},
+	//			callback: function(r) {
+	//				if (r.message) {
+	//					
+	//					alert(r.message);				
+	//				}
+	//			}
+	//		});
+	//		//console.log(report);
+	//		
+	//	});
+	//}
 }
