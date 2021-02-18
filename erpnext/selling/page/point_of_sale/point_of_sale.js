@@ -2787,7 +2787,14 @@ class POSItems {
 	}
 
 	get_item_html(item) {
-		const price_list_rate = format_currency(item.price_list_rate, this.currency,0);
+		let price_list_rate = "";
+		if(item.price_not_ready ==1){
+			price_list_rate = "Arrivage en cours";
+		}else{
+			price_list_rate = format_currency(item.price_list_rate, this.currency,0);
+		}
+		
+		price_list_rate = format_currency(item.price_list_rate, this.currency,0);
 		const { item_code, item_name, image} = item;
 		const item_title =  item_name || item_code;
 		const critere_text = (item.critere_text || '').split("/").join("<br>");
