@@ -107,10 +107,10 @@ def execute(filters=None):
 					dn.customer
 					from `tabDelivery Note Item` dni
 					left join `tabDelivery Note` dn
-					on dni.parent == dn.name
+					on dni.parent = dn.name
 					where dn.docstatus = 0
-					and dn.customer='%s'
-					and dni.item_code='%s'  """ % (filters.customer, item.item_code),as_dict=1)
+					and dn.customer = '%s'
+					and dni.item_code = '%s'  """ % (filters.customer, item.item_code),as_dict=1)
 		delete = ""
 		if has_bl and has_bl[0] and has_bl[0].dqty:
 			delete = "En preparation %s" % has_bl[0].name
