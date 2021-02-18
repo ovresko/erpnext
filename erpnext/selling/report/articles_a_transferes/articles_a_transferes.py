@@ -162,8 +162,8 @@ def execute(filters=None):
 			parent = item.parent
 			
 		total_qty = 0
-		total_qty_cmd = sum((_item.qty-_item.actual_qty) for _item in items if (_item.qty and _item.item_code == item.item_code and item.doctype=="Sales Order Item"))
-		total_qty_cmd = total_qty_cmd + sum(_item.qty for _item in items if (_item.qty and _item.item_code == item.item_code and item.doctype=="Material Request Item"))
+		total_qty_cmd = sum((_item.qty-_item.actual_qty) for _item in items if (_item.qty and _item.item_code == item.item_code and _item.doctype=="Sales Order Item"))
+		total_qty_cmd = total_qty_cmd + sum(_item.qty for _item in items if (_item.qty and _item.item_code == item.item_code and _item.doctype=="Material Request Item"))
 		
 		# check if traite
 		if filters.ntraite == 1 and filters.source_warehouse and filters.warehouse:
