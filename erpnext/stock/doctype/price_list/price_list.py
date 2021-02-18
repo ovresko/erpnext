@@ -51,11 +51,11 @@ def switch_etat(item_code,etat):
 	if item_code:
 		if not etat or etat == "Approuve":
 			frappe.db.set_value("Item", item_code, "prix_traite", "En cours")
-			frappe.db.set_value("Item", item_code, "is_sales_item", 0)
+			frappe.db.set_value("Item", item_code, "price_not_ready", 1)
 			return "En cours"
 		else:
 			frappe.db.set_value("Item", item_code, "prix_traite", "Approuve")
-			frappe.db.set_value("Item", item_code, "is_sales_item", 1)
+			frappe.db.set_value("Item", item_code, "price_not_ready", 0)
 			return "Approuve"
 
 @frappe.whitelist()
