@@ -99,7 +99,7 @@ def execute(filters=None):
 	
 	for item in orders_items:
 		has_bl = frappe.db.sql("""select sum(dni.qty) as qty, dn.name as name, dni.name as dniname,dni.item_code,dni.parent,dn.customer from 'tabDelivery Note Item' dni
-		left join 'tab Delivery Note' dn
+		left join 'tabDelivery Note' dn
 		on dn.name == dni.parent
 		where dn.docstatus = 0 and dn.customer='%s' and dni.item_code='%s'  """ % (filters.customer, item.item_code),as_dict=1)
 		delete = ""
