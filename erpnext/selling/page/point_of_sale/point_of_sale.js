@@ -358,6 +358,11 @@ erpnext.pos.PointOfSale = class PointOfSale {
 			frappe.dom.unfreeze();
 			return;
 		}
+		if(origin_item.price_not_ready ==1) {
+			alert("Prix d'article non disponible");
+			frappe.dom.unfreeze();
+			return;
+		}
 		frappe.flags.hide_serial_batch_dialog = true;
 		
 		
