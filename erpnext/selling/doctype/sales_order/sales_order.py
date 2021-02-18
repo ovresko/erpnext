@@ -93,6 +93,9 @@ class SalesOrder(SellingController):
 			total = flt(total)
 			if total < d.qty:
 				frappe.throw("Qts non disponible pour l'article : %s" % d.item_code)
+			price_not_ready = frappe.get_value("Item",d.item_code,"price_not_ready") or 0
+			if price_not_ready:
+				frappe.throw("Prix article nouveau arrivage non disponible pour l'article : %s" % d.item_code)
 
 		# check for same entry multiple times
 		unique_chk_list = set(check_list)
