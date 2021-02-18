@@ -98,6 +98,15 @@ def execute(filters=None):
 					and (mr.customer=%(customer)s OR %(customer)s IS NULL OR %(customer)s ='NA') """,filters,as_dict=1)
 	
 	for item in orders_items:
+		has_bl = frappe.db.sql("""select sum(dni.qty) as qty, dn.name as name, dni.name as dniname,dni.item_code,dni.parent,dn.customer from 'tabDelivery Note Item' dni
+		left join 'tab Delivery Note' dn
+		on dn.name == dni.parent
+		where dn.docstatus = 0 and dn.customer='%s' and dni.item_code='%s'  """ % (filters.customer, item.item_code),as_dict=1)
+		delete = ""
+		if has_bl and has_bl[0] and has_bl[0].qty:
+			delete = "En preparation %s" % has_bl[0].name
+		else:
+			delete = """<button onClick="delete_item('%s')" type='button'>Supprimer</button>""" % (item.mriname)
 		row = [
 			item.name,
 			item.delivery_date,
@@ -111,7 +120,7 @@ def execute(filters=None):
 			item.reste,
 			item.status,
 			"""<input type='button' onclick="erpnext.utils.open_item_info('%s', this)" value='info'>  </input>""" % (item.item_code),
-			"""<button onClick="delete_item('%s')" type='button'>Supprimer</button>""" % (item.mriname)
+			delete
 		]
 	
 		data.append(row)
