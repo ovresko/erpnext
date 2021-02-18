@@ -100,5 +100,5 @@ def update_price(item_code,price_list,_price,qts,valuation):
 
 @frappe.whitelist()
 def switch_etat_bulk():
-	frappe.db.sql("""update tabItam set price_not_ready = 1 where prix_traite ='En cours' """)
+	frappe.db.sql("""update `tabItem` set price_not_ready = 1 where prix_traite ='En cours' """)
 	return "Termine"
