@@ -9,6 +9,9 @@ from frappe.model.document import Document
 
 class Bin(Document):
 	def before_save(self):
+		stop_bin = frappe.db.get_value("Sync POS", None, "stop_update_bin")
+		if stop_bin:
+			frappe.throw("Update not allowed")
 		if self.get("__islocal") or not self.stock_uom:
 			self.stock_uom = frappe.get_cached_value('Item', self.item_code, 'stock_uom')
 		self.set_projected_qty()
