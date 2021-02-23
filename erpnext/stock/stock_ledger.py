@@ -122,6 +122,10 @@ class update_entries_after(object):
 
 	def update_bin(self):
 		# update bin
+		stop_bin = frappe.db.get_value("Sync POS", None, "stop_update_bin")
+		if stop_bin:
+			#frappe.msgprint(stop_bin)
+			return
 		bin_name = frappe.db.get_value("Bin", {
 			"item_code": self.item_code,
 			"warehouse": self.warehouse
