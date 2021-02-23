@@ -175,6 +175,9 @@ def get_planned_qty(item_code, warehouse):
 
 
 def update_bin_qty(item_code, warehouse, qty_dict=None):
+	stop_bin = frappe.db.get_value("Sync POS", None, "stop_update_bin")
+	if stop_bin:
+		return
 	from erpnext.stock.utils import get_bin
 	bin = get_bin(item_code, warehouse)
 	mismatch = False
