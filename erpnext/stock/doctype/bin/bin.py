@@ -38,7 +38,7 @@ class Bin(Document):
 		# update the stock values (for current quantities)
 		stop_bin = frappe.db.get_value("Sync POS", None, "stop_update_bin")
 		if stop_bin:
-			frappe.msgprint(stop_bin)
+			#frappe.msgprint(stop_bin)
 			return
 		if args.get("voucher_type")=="Stock Reconciliation":
 			if args.get('is_cancelled') == 'No':
