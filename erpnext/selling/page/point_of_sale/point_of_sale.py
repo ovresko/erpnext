@@ -554,7 +554,7 @@ def vente_perdue(cause,article,profile):
 	
 	
 @frappe.whitelist()
-def get_complements(item_code):
+def get_complements(item_code,price_list,warehouse):
 	if not item_code:
 		return []
 	versions = frappe.get_all("Composant",filters={"parent":item_code,"parentfield":"articles"},fields=["item","parent"])
@@ -563,12 +563,39 @@ def get_complements(item_code):
 	for version in versions:
 		_size = len(version.item)
 		if _size == 11:
-			item = frappe.get_all("Item",filters={"manufacturer":manufacturer,"variant_of":version.item},fields=["*"])
+			item = frappe.get_all("Item",filters={"manufacturer":manufacturer,"variant_of":version.item})
 			items.extend(item)
 		else:
-			item = frappe.get_all("Item",filters={"manufacturer":manufacturer,"item_code":version.item},fields=["*"])
+			item = frappe.get_all("Item",filters={"manufacturer":manufacturer,"item_code":version.item})
 			items.extend(item)
-	return items
+	if items:
+		items = [a['item_code'] for a in items]
+		#return items
+		res = frappe.db.sql("""select i.name as item_code,item_adr.adresse,item_adr.warehouse,i.nbr_variante,i.price_not_ready ,i.qts_depot,i.qts_total,i.designation_commerciale,i.variant_of,i.has_variants, i.item_name, i.image , i.idx as idx,i.clean_manufacturer_part_number, i.composant_text,i.articles_text,
+				i.is_stock_item, item_det.price_list_rate, item_det.currency, i.oem_text,i.titre_article,i.manufacturer,i.manufacturer_part_no,i.fabricant_logo,i.critere_text ,item_bin.actual_qty, item_bin.reserved_qty
+				from `tabItem` i LEFT JOIN (select item_code, price_list_rate,min_qty, currency from
+						`tabItem Price`	where min_qty=0 and price_list=%(price_list)s  ) item_det
+				ON
+					(item_det.item_code=i.name or item_det.item_code=i.variant_of)
+				LEFT JOIN (select item_code,  actual_qty, reserved_qty , warehouse from
+						`tabBin` where warehouse=%(warehouse)s) item_bin
+				ON
+					(item_bin.item_code=i.name or item_bin.item_code=i.variant_of) 
+				LEFT JOIN (select DISTINCT parent, warehouse, adresse from `tabAdresse Magasin` LIMIT 1 ) item_adr
+				ON
+					(item_adr.parent=i.name and  item_adr.warehouse=%(warehouse)s) 
+				where 
+					i.disabled = 0 and i.has_variants = 0 and i.is_sales_item = 1
+
+					and i.item_code in (%(items)s)
+					""",
+				{
+					'item_code': item_code,
+					'price_list': price_list,
+					'warehouse':warehouse,
+					'items': items
+				} , as_dict=1)
+		return res
 
 
 @frappe.whitelist()
