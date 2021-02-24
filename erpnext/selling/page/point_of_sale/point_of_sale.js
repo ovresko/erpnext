@@ -2579,6 +2579,8 @@ class POSItems {
 			event.stopPropagation();
 			const $item = $(this);
 			const item_code = unescape($item.attr('data-item-code'));
+			let pricelist = me.frm.doc.selling_price_list;
+			let pos_profile = me.frm.doc.pos_profile;
 			if(!item_code)
 			{
 				return;
@@ -2587,12 +2589,14 @@ class POSItems {
 			frappe.call({
 				"method": "erpnext.selling.page.point_of_sale.point_of_sale.get_complements",
 				"args": {
-					"item_code": item_code
+					"item_code": item_code,
+					"price_list": pricelist,
+					"pos_profile":pos_profile
 				},
 				"callback": function(response) {
 					var items = response.message; 
 					if(items){
-						 me.last_last_last_items =me.last_last_items;
+						me.last_last_last_items =me.last_last_items;
 						me.last_last_items =me.last_items;
 						me.last_items =me.items; 
 						me.items = items;
@@ -2610,6 +2614,8 @@ class POSItems {
 			event.stopPropagation();
 			const $item = $(this);
 			const item_code = unescape($item.attr('data-item-code'));
+			let pricelist = me.frm.doc.selling_price_list;
+			let pos_profile = me.frm.doc.pos_profile;
 			if(!item_code)
 			{
 				return;
@@ -2618,7 +2624,9 @@ class POSItems {
 			frappe.call({
 				"method": "erpnext.selling.page.point_of_sale.point_of_sale.get_composants",
 				"args": {
-					"item_code": item_code
+					"item_code": item_code,
+					"price_list": pricelist,
+					"pos_profile":pos_profile
 				},
 				"callback": function(response) {
 					var items = response.message; 
