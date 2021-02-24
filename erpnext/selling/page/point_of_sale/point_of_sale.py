@@ -570,7 +570,7 @@ def get_complements(item_code,price_list,pos_profile):
 			item = frappe.get_all("Item",filters={"manufacturer":manufacturer,"item_code":version.item})
 			items.extend(item)
 	if items:
-		items = [a for a in items]
+		#items = [a for a in items]
 		items = ' ,'.join(items)
 		#return items
 		res = frappe.db.sql("""select i.name as item_code,item_adr.adresse,item_adr.warehouse,i.nbr_variante,i.price_not_ready ,i.qts_depot,i.qts_total,i.designation_commerciale,i.variant_of,i.has_variants, i.item_name, i.image , i.idx as idx,i.clean_manufacturer_part_number, i.composant_text,i.articles_text,
@@ -611,13 +611,13 @@ def get_composants(item_code,price_list,pos_profile):
 	for version in versions:
 		_size = len(version.item)
 		if _size == 11:
-			item = frappe.get_all("Item",filters={"manufacturer":manufacturer,"variant_of":version.item},fields=["*"])
+			item = frappe.get_all("Item",filters={"manufacturer":manufacturer,"variant_of":version.item})
 			items.extend(item)
 		else:
-			item = frappe.get_all("Item",filters={"manufacturer":manufacturer,"item_code":version.item},fields=["*"])
+			item = frappe.get_all("Item",filters={"manufacturer":manufacturer,"item_code":version.item})
 			items.extend(item)
 	if items:
-		items = [a for a in items]
+		#items = [a for a in items]
 		items = ' ,'.join(items)
 		#return items
 		res = frappe.db.sql("""select i.name as item_code,item_adr.adresse,item_adr.warehouse,i.nbr_variante,i.price_not_ready ,i.qts_depot,i.qts_total,i.designation_commerciale,i.variant_of,i.has_variants, i.item_name, i.image , i.idx as idx,i.clean_manufacturer_part_number, i.composant_text,i.articles_text,
