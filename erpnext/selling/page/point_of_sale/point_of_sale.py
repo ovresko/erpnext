@@ -571,6 +571,7 @@ def get_complements(item_code,price_list,pos_profile):
 			items.extend(item)
 	if items:
 		items = [a for a in items]
+		items = ' ,'.join(items)
 		#return items
 		res = frappe.db.sql("""select i.name as item_code,item_adr.adresse,item_adr.warehouse,i.nbr_variante,i.price_not_ready ,i.qts_depot,i.qts_total,i.designation_commerciale,i.variant_of,i.has_variants, i.item_name, i.image , i.idx as idx,i.clean_manufacturer_part_number, i.composant_text,i.articles_text,
 				i.is_stock_item, item_det.price_list_rate, item_det.currency, i.oem_text,i.titre_article,i.manufacturer,i.manufacturer_part_no,i.fabricant_logo,i.critere_text ,item_bin.actual_qty, item_bin.reserved_qty
@@ -617,6 +618,7 @@ def get_composants(item_code,price_list,pos_profile):
 			items.extend(item)
 	if items:
 		items = [a for a in items]
+		items = ' ,'.join(items)
 		#return items
 		res = frappe.db.sql("""select i.name as item_code,item_adr.adresse,item_adr.warehouse,i.nbr_variante,i.price_not_ready ,i.qts_depot,i.qts_total,i.designation_commerciale,i.variant_of,i.has_variants, i.item_name, i.image , i.idx as idx,i.clean_manufacturer_part_number, i.composant_text,i.articles_text,
 				i.is_stock_item, item_det.price_list_rate, item_det.currency, i.oem_text,i.titre_article,i.manufacturer,i.manufacturer_part_no,i.fabricant_logo,i.critere_text ,item_bin.actual_qty, item_bin.reserved_qty
