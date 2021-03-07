@@ -2339,6 +2339,7 @@ class POSItems {
 				this.render_items(items);
 				this.set_item_in_the_cart(items, serial_no, batch_no, barcode);
 			});
+		loadLazzy();
 	}
 
 	set_item_in_the_cart(items, serial_no, batch_no, barcode) {
@@ -3425,7 +3426,8 @@ class Payment {
 	}
 
 }
-$( document ).ready(function() {
+function loadLazzy() {
+ 
 	   var lazyloadImages;    
 	  console.log("lazy");
 	  if ("IntersectionObserver" in window) {
