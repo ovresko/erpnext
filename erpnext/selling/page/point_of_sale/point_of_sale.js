@@ -2265,6 +2265,7 @@ class POSItems {
 		}
 
 		this.clusterize.update(row_items);
+		loadLazzy();
 	}
 
 	filter_items({start=0, search_term='' }={}) {
@@ -2339,7 +2340,7 @@ class POSItems {
 				this.render_items(items);
 				this.set_item_in_the_cart(items, serial_no, batch_no, barcode);
 			});
-		loadLazzy();
+		
 	}
 
 	set_item_in_the_cart(items, serial_no, batch_no, barcode) {
