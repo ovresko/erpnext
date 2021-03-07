@@ -3477,6 +3477,6 @@ function loadLazzy() {
 	    window.addEventListener("orientationChange", lazyload);
 	  }
 	 
-});
+}
 	
 
