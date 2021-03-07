@@ -2803,7 +2803,7 @@ class POSItems {
 	get_item_html(item) {
 		let price_list_rate = "";
 		//console.log(item);
-		console.log(item.price_not_ready);
+		//console.log(item.price_not_ready);
 		if(item.price_not_ready ==1){
 			
 			price_list_rate = "Arrivage en cours";
@@ -3426,8 +3426,9 @@ class Payment {
 
 document.addEventListener("DOMContentLoaded", function() {
   var lazyloadImages;    
-
+  console.log("lazy");
   if ("IntersectionObserver" in window) {
+	    console.log("window");
     lazyloadImages = document.querySelectorAll(".lazy");
     var imageObserver = new IntersectionObserver(function(entries, observer) {
       entries.forEach(function(entry) {
