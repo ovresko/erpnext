@@ -992,15 +992,14 @@ class POSCart {
 		 
 		if (this.numpad) {
 			const disable_btns = this.disable_numpad_control()
-			const enable_btns = [__('Rate'), __('Disc')]
+			let enable_btns = [__('Rate'), __('Disc')]
 
 			if (disable_btns) {
 				console.log("reset_cart");
 				enable_btns = enable_btns.filter(btn => !disable_btns.includes(btn));
 			}
 			
-			console.log("reset_cart");
-			console.log(enable_btns,disable_btns);
+			 
 			this.numpad.enable_buttons(enable_btns);
 		}
 	}
@@ -1028,7 +1027,7 @@ class POSCart {
 
 		if (this.numpad) {
 			const disable_btns = this.disable_numpad_control()
-			const enable_btns = [__('Rate'), __('Disc')]
+			let enable_btns = [__('Rate'), __('Disc')]
 
 			if (disable_btns) {
 				enable_btns = enable_btns.filter(btn => !disable_btns.includes(btn))
