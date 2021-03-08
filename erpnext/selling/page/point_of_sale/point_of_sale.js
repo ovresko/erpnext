@@ -3097,7 +3097,8 @@ class NumberPad {
 		}
 
 		this.set_class();
-
+		console.log(this.disable_btns);
+		console.log("make_dom");
 		if(this.disable_btns) {
 			this.disable_btns.forEach((btn) => {
 				const $btn = this.get_btn(btn);
