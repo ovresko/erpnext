@@ -995,7 +995,8 @@ class POSCart {
 			const enable_btns = [__('Rate'), __('Disc')]
 
 			if (disable_btns) {
-				enable_btns.filter(btn => !disable_btns.includes(btn))
+				console.log("reset_cart");
+				enable_btns = enable_btns.filter(btn => !disable_btns.includes(btn));
 			}
 			
 			console.log("reset_cart");
@@ -1030,10 +1031,9 @@ class POSCart {
 			const enable_btns = [__('Rate'), __('Disc')]
 
 			if (disable_btns) {
-				enable_btns.filter(btn => !disable_btns.includes(btn))
+				enable_btns = enable_btns.filter(btn => !disable_btns.includes(btn))
 			}
-			console.log("reset");
-			console.log(enable_btns);
+			 
 			this.numpad.enable_buttons(enable_btns);
 		}
 	}
