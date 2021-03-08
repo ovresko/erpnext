@@ -997,7 +997,9 @@ class POSCart {
 			if (disable_btns) {
 				enable_btns.filter(btn => !disable_btns.includes(btn))
 			}
-
+			
+			console.log("reset_cart");
+			console.log(disable_btns);
 			this.numpad.enable_buttons(enable_btns);
 		}
 	}
@@ -1030,7 +1032,8 @@ class POSCart {
 			if (disable_btns) {
 				enable_btns.filter(btn => !disable_btns.includes(btn))
 			}
-
+			console.log("reset_cart");
+			console.log(disable_btns);
 			this.numpad.enable_buttons(enable_btns);
 		}
 	}
