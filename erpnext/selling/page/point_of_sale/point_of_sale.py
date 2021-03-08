@@ -329,7 +329,7 @@ def website_item_info(item_code):
 @frappe.whitelist()
 def open_item_info(item_code):
 	if item_code:
-		item = frappe.client.get("Item",item_code)
+		item =  frappe.get_doc("Item",item_code)
 		image = ''
 		fabricant_logo = ''
 		if item.fabricant_logo:
