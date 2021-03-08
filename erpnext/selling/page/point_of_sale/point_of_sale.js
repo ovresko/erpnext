@@ -1294,6 +1294,9 @@ class POSCart {
 		if(!this.frm.allow_edit_discount) {
 			disabled_btns.push(__('Disc'));
 		}
+		console.log(disabled_btns);
+		console.log(this.frm.allow_edit_discount);
+		
 		return disabled_btns;
 	}
 
@@ -2367,7 +2370,10 @@ class POSItems {
 
 	reset_search_field() {
 		
-		this.search_field.set_value('');
+		if(this.search_field != undefined){
+			this.search_field.set_value('');
+		}
+		
 		this.vehicule_version_field.set_value('');
 		this.vehicule_generation_field.set_value('');
 		this.vehicule_modele_field.set_value('');
@@ -3430,9 +3436,9 @@ class Payment {
 function loadLazzy() {
  
 	   var lazyloadImages;    
-	  console.log("lazy");
+	  
 	  if ("IntersectionObserver" in window) {
-		    console.log("window");
+		    
 	    lazyloadImages = document.querySelectorAll(".lazy");
 	    var imageObserver = new IntersectionObserver(function(entries, observer) {
 	      entries.forEach(function(entry) {
