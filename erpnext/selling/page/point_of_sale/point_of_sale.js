@@ -2373,22 +2373,22 @@ class POSItems {
 		if(this.search_field != undefined)
 			this.search_field.set_value('');
 		
-		if(this.vehicule_version_field != undefined){
+		if(this.vehicule_version_field != undefined)
 			this.vehicule_version_field.set_value('');
-		if(this.vehicule_generation_field != undefined){
+		if(this.vehicule_generation_field != undefined)
 			this.vehicule_generation_field.set_value('');
-		if(this.vehicule_modele_field != undefined){
+		if(this.vehicule_modele_field != undefined)
 			this.vehicule_modele_field.set_value('');
-		if(this.vehicule_marque_field != undefined){
+		if(this.vehicule_marque_field != undefined)
 			this.vehicule_marque_field.set_value('');
-		if(this.item_modele_field != undefined){
+		if(this.item_modele_field != undefined)
 			this.item_modele_field.set_value('');
-		if(this.item_group_field != undefined){
+		if(this.item_group_field != undefined)
 			this.item_group_field.set_value('');
-		if(this.item_oem_field != undefined){
+		if(this.item_oem_field != undefined)
 			this.item_oem_field.set_value('');
 		   
-		if(this.search_field != undefined){
+		if(this.search_field != undefined)
 			this.search_field.$input.trigger("input");
 	}
 
