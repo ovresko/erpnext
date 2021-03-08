@@ -1765,7 +1765,7 @@ class POSItems {
 			<div class="vehicule-name-wrapper" style="display:flex;background-color:#F0FBFA;border-radius:20px">
 				 
 				<div style="width:20% ">
-				<img class="vehicule-image" src="" style="position: relative;top: 50%;transform: translateY(-50%);">
+				<img class="vehicule-image" src=""  loading="lazy" style="position: relative;top: 50%;transform: translateY(-50%);">
 				</div>
 
 				<div style="width:15% ;padding:10px">	
@@ -2271,7 +2271,7 @@ class POSItems {
 		}
 
 		this.clusterize.update(row_items);
-		loadLazzy();
+		//loadLazzy();
 	}
 
 	filter_items({start=0, search_term='' }={}) {
@@ -2918,7 +2918,7 @@ class POSItems {
 							${!image ? `<span class="placeholder-text">
 									${frappe.get_abbr(item_title)}
 								</span>` : '' }
-							${image ? `<img class="lazy" data-src="${image}" alt="${item_title}">` : '' }
+							${image ? `<img  src="${image}" loading="lazy" alt="${item_title}">` : '' }
 						</div>
 						${price}
 					</a>
@@ -2935,7 +2935,7 @@ class POSItems {
 					</div>
 					 
 					<div style="width:200px;padding-left:5px" >
-						<div style="margin-bottom:10px"><img  class="lazy" data-src="${item.fabricant_logo ||'#'}" width="80px" ></div>
+						<div style="margin-bottom:10px"><img  src="${item.fabricant_logo ||'#'}"  loading="lazy" width="80px" ></div>
 						<div>
 							<a class="btn-manufacturer" data-name="${item.manufacturer ||''}">${item.manufacturer ||''}</a>
 						</div>
