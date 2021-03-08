@@ -253,7 +253,7 @@ def get_price_info(customer,price_list,transaction_date,qty,item_code,uom):
 @frappe.whitelist()
 def website_item_info(item_code):
 	if item_code:
-		item = frappe.client.get("Item",item_code)
+		item = frappe.get_doc("Item",item_code)
 		image = ''
 		fabricant_logo = ''
 		if item.fabricant_logo:
@@ -414,7 +414,7 @@ def open_item_info(item_code):
 @frappe.whitelist()
 def get_item_prices(item_code,selling=1):
 	res = {}
-	item = frappe.client.get("Item",item_code)
+	item = frappe.get_doc("Item",item_code)
 	res.update({'item':item})
 	text = ''
 	prices = frappe.db.get_all("Item Price",filters={"item_code":item_code,"selling":selling,"buying":0},fields=["currency","name","price_list_rate","min_qty","price_list"])
@@ -427,7 +427,7 @@ def get_item_prices(item_code,selling=1):
 @frappe.whitelist()
 def get_item_info(item_code,price_list):
 	res = {}
-	item = frappe.client.get("Item",item_code)
+	item = frappe.get_doc("Item",item_code)
 	res.update({'item':item})
 	text = ''
 	prices = frappe.db.get_all("Item Price",filters={"item_code":item_code,"selling":1,"price_list":price_list},fields=["currency","name","price_list_rate","min_qty","price_list"])
