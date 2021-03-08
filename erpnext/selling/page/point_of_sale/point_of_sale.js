@@ -903,7 +903,7 @@ class POSCart {
 			callback: function(r) {
 				if (r.message) {
 					let cmd = r.message;
-					console.log(cmd);
+					//console.log(cmd);
 					var lw=window.open();
 					lw.document.write(cmd);
 					lw.print();
@@ -999,7 +999,7 @@ class POSCart {
 			}
 			
 			console.log("reset_cart");
-			console.log(enable_btns);
+			console.log(enable_btns,disable_btns);
 			this.numpad.enable_buttons(enable_btns);
 		}
 	}
@@ -1236,7 +1236,7 @@ class POSCart {
 							"callback": function(response) {
 								var sinv = response.message["customer"]; 
 								var bl = response.message["balance"]; 
-								console.log("bl",bl);
+								//console.log("bl",bl);
 								frappe.call({
 										"method": "erpnext.accounts.party.get_default_price_list_api",
 										"args": {
@@ -1297,8 +1297,8 @@ class POSCart {
 		if(!this.frm.allow_edit_discount) {
 			disabled_btns.push(__('Disc'));
 		}
-		console.log(disabled_btns);
-		console.log(this.frm.allow_edit_discount);
+		//console.log(disabled_btns);
+		//console.log(this.frm.allow_edit_discount);
 		
 		return disabled_btns;
 	}
@@ -1603,7 +1603,7 @@ class POSCart {
 			const $input = $(this);
 			const $item = $input.closest('.list-item[data-item-code]');
 			const item_code = unescape($item.attr('data-item-code'));
-			console.log(flt($input.val()));
+			//console.log(flt($input.val()));
 			events.on_field_change(item_code, 'discount_percentage', flt($input.val()));
 		});
 		
@@ -1634,7 +1634,7 @@ class POSCart {
 			
 			//const $item = me.$cart_items.find(item_selector);
 			//$item.remove();
-			console.log("item_code",item_code);
+			//console.log("item_code",item_code);
 			events.on_field_change(item_code, 'qty', 0);
 			
 		});
@@ -2104,7 +2104,7 @@ class POSItems {
 						"callback": function(response) {
 							var sinv = response.message; 
 							if (sinv) {
-								console.log(sinv);
+								//console.log(sinv);
 								wr.find('.vehicule-version-name').text(sinv.commercial_name+" "+sinv.code_moteur+" "+sinv.puissance_fiscale);  
 								wr.find('.vehicule-generation-name').text(sinv.nom_generation);  
 								wr.find('.vehicule-modele-name').text(sinv.nom_modele);  
@@ -2320,7 +2320,7 @@ class POSItems {
 			   && !this.item_group_parent
 			   && !this.vehicule_generation
 			   && !this.vehicule_version) {
-				console.log("hoing back");
+				//console.log("hoing back");
 				return this.render_items([]);
 				//this.items = this.all_items;
 				//return this.render_items(this.all_items || []);
@@ -2418,7 +2418,7 @@ class POSItems {
 			}
 			 
 			me.start = me.start +1;
-			console.log("page ",me.start)
+			//console.log("page ",me.start)
 			me.filter_items({start:me.start});
 			wr.find('.pagination').text(" "+(me.start || '')+" "); 
 			
@@ -2669,7 +2669,7 @@ class POSItems {
 			const $item = $(this);
 			const item_code = unescape($item.attr('data-item-code'));
 			const modele = item_code.substring(0,11);
-			console.log("modele",modele);
+			//console.log("modele",modele);
 			me.item_modele  = modele;
 			me.item_oem = '';
 			me.item_oem_field.set_value('');
@@ -2760,7 +2760,7 @@ class POSItems {
 					"callback": function(response) {
 						var item = response.message; 
 						if (item) {
-							 console.log(item);
+							// console.log(item);
 							
 							var html  ='Qts disponible dans le réseau <br>';
 							$.each(item[0], function(i, d) {
@@ -3100,13 +3100,12 @@ class NumberPad {
 		}
 
 		this.set_class();
-		console.log(this.disable_btns);
-		console.log("make_dom");
+		//console.log(this.disable_btns);
+		//console.log("make_dom");
 		if(this.disable_btns) {
 			this.disable_btns.forEach((btn) => {
 				const $btn = this.get_btn(btn);
-				console.log("disable_btns");
-				console.log($btn);
+				 
 				$btn.prop("disabled", true)
 				$btn.hover(() => {
 					$btn.css('cursor','not-allowed');
@@ -3118,8 +3117,7 @@ class NumberPad {
 	enable_buttons(btns) {
 		btns.forEach((btn) => {
 			const $btn = this.get_btn(btn);
-			console.log("enable_buttons");
-			console.log($btn);
+			 
 			$btn.prop("disabled", false)
 			$btn.hover(() => {
 				$btn.css('cursor','pointer');
@@ -3432,7 +3430,7 @@ class Payment {
 	update_payment_amount() {
 		var me = this;
 		$.each(this.frm.doc.payments, function(i, data) {
-			console.log("setting the ", data.mode_of_payment, " for the value", data.amount);
+			//console.log("setting the ", data.mode_of_payment, " for the value", data.amount);
 			me.dialog.set_value(data.mode_of_payment, data.amount);
 		});
 	}
