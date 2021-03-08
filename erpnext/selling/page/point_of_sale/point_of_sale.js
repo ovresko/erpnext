@@ -1461,7 +1461,7 @@ class POSCart {
 		const rate = format_currency(item.rate, this.frm.doc.currency,0);
 		const price_list_rate = format_currency(item.price_list_rate, this.frm.doc.currency,0);
 		const amount = format_currency(item.amount, this.frm.doc.currency,0);
-		console.log("item",item);
+		//console.log("item",item);
 		const indicator_class = (!is_stock_item || item.actual_qty >= item.qty) ? 'green' : 'red';
 		const batch_no = item.batch_no || '';
 		let fabricant = origin_item.manufacturer || '';
@@ -2370,20 +2370,26 @@ class POSItems {
 
 	reset_search_field() {
 		
-		if(this.search_field != undefined){
+		if(this.search_field != undefined)
 			this.search_field.set_value('');
-		}
 		
-		this.vehicule_version_field.set_value('');
-		this.vehicule_generation_field.set_value('');
-		this.vehicule_modele_field.set_value('');
-		this.vehicule_marque_field.set_value('');
-		this.item_modele_field.set_value('');
-		this.item_group_field.set_value('');
-		this.item_oem_field.set_value('');
-		 
+		if(this.vehicule_version_field != undefined){
+			this.vehicule_version_field.set_value('');
+		if(this.vehicule_generation_field != undefined){
+			this.vehicule_generation_field.set_value('');
+		if(this.vehicule_modele_field != undefined){
+			this.vehicule_modele_field.set_value('');
+		if(this.vehicule_marque_field != undefined){
+			this.vehicule_marque_field.set_value('');
+		if(this.item_modele_field != undefined){
+			this.item_modele_field.set_value('');
+		if(this.item_group_field != undefined){
+			this.item_group_field.set_value('');
+		if(this.item_oem_field != undefined){
+			this.item_oem_field.set_value('');
 		   
-		this.search_field.$input.trigger("input");
+		if(this.search_field != undefined){
+			this.search_field.$input.trigger("input");
 	}
 
 	bind_events() {
