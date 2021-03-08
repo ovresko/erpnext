@@ -3102,6 +3102,8 @@ class NumberPad {
 		if(this.disable_btns) {
 			this.disable_btns.forEach((btn) => {
 				const $btn = this.get_btn(btn);
+				console.log("disable_btns");
+				console.log($btn);
 				$btn.prop("disabled", true)
 				$btn.hover(() => {
 					$btn.css('cursor','not-allowed');
@@ -3113,6 +3115,8 @@ class NumberPad {
 	enable_buttons(btns) {
 		btns.forEach((btn) => {
 			const $btn = this.get_btn(btn);
+			console.log("enable_buttons");
+			console.log($btn);
 			$btn.prop("disabled", false)
 			$btn.hover(() => {
 				$btn.css('cursor','pointer');
