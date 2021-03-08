@@ -676,7 +676,7 @@ def get_stock_details(item_code,pos_profile=None):
 			if all_warehouses:
 				aw.extend([x.name for x in all_warehouses if x.name not in aw])
 		else:
-			raise frappe.PermissionError
+			return None
 	
 
 	rest = frappe.db.sql(''' select warehouse, actual_qty,reserved_qty from `tabBin` where item_code='{item_code}' and warehouse in ({wr})'''.format(item_code=item_code,   wr=", ".join(['%s']*len(aw))), tuple(aw), as_dict=1 )
