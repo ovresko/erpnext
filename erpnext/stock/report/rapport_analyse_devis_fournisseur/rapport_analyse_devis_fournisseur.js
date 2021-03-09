@@ -403,17 +403,17 @@ frappe.query_reports["Rapport analyse devis fournisseur"] = {
 		 	 var ovalue = value;
 			if(data != null && data != undefined){
 			
-				if(data!= null && data["etat_confirmation"] == "Approuve"){
+				if(data!= null && data["etat_confirmation"] == "Approuve" && data["resultat"] != "Termine P3" && data["resultat"] != "En attente de repense P1" && data["resultat"] != "En attente de repense P2"){
 					value = "<div style='color:green'>" + ovalue + "</div>";
 				}
 				
-				if(data!= null && data["etat_confirmation"] == "Annule"){
+				if(data!= null && data["etat_confirmation"] == "Annule" && data["resultat"] != "Email Envoye" && data["resultat"] != "A Envoyer P1" && data["resultat"] != "Termine P3" && data["resultat"] != "En attente de repense P1" && data["resultat"] != "En attente de repense P2"){
 					value = "<div style='color:#f5372a;font-weight:bold'>" + ovalue + "</div>";
 				}
-				if(data!= null && data["etat_confirmation"] == "En cours"){
+				if(data!= null && data["etat_confirmation"] == "En cours" && data["resultat"] != "Termine P3" && data["resultat"] != "En attente de repense P1" && data["resultat"] != "En attente de repense P2"){
 					value = "<div style='color:blue'>" + ovalue + "</div>";
 				}
-				if(data!= null && data["etat_confirmation"] == "En negociation"){
+				if(data!= null && data["etat_confirmation"] == "En negociation" && data["resultat"] != "Termine P3" && data["resultat"] != "En attente de repense P1" && data["resultat"] != "En attente de repense P2"){
 					value = "<div style='color:#E97A13'>" + ovalue + "</div>";
 				}
 				 if(data["item_code"].length == 14)
