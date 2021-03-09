@@ -139,6 +139,11 @@ def execute(filters=None):
 			"label": "Derniere Qts Achetee",
 			"width": 150
 		})
+		columns.append({
+			"fieldname": "last_qty_total",
+			"label": "Qts Achetee Total",
+			"width": 150
+		})
 	columns.append({
 			"fieldname": "last_valuation",
 			"label": "Derniere taux de valorisation",
@@ -700,10 +705,16 @@ def execute(filters=None):
 			info = info_modele(mri.item_code)
 			qts_max_achat = mri.max_order_qty
 		#if is_full:
-		sqllast_qty = frappe.db.sql("""select actual_qty,valuation_rate,incoming_rate from `tabStock Ledger Entry` 
+		sqllast_qty = 0
+		sqtotal = 0
+		a_sqllast_qty = frappe.db.sql("""select actual_qty,valuation_rate,incoming_rate from `tabStock Ledger Entry` 
 		where item_code=%s and voucher_type=%s 
-		order by posting_date desc, posting_time desc limit 1""", (mri.item_code,"Purchase Receipt"), as_dict=1)
-		if sqllast_qty:
+		order by posting_date desc, posting_time desc""", (mri.item_code,"Purchase Receipt"), as_dict=1)
+		
+		
+		if a_sqllast_qty:
+			sqtotal = sum[a.actual_qty or 0 for a in a_sqllast_qty]
+			sqllast_qty = a_sqllast_qty[0]
 			last_qty = sqllast_qty[0].actual_qty
 			last_valuation = sqllast_qty[0].incoming_rate
 		
@@ -763,6 +774,7 @@ def execute(filters=None):
 			       devis_status,
 			       #last_qty
 			       last_qty,
+			       sqtotal,
 			       #last_valuation
 			       last_valuation or 0,
 			       #consom,
@@ -846,6 +858,7 @@ def execute(filters=None):
 			       #prix_target,
 			       #last_qty
 			       last_qty,
+			       sqtotal,
 			       #last_valuation
 			       last_valuation or 0,
 			       #consom,
