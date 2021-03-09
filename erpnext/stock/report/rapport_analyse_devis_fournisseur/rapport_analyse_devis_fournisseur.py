@@ -714,7 +714,7 @@ def execute(filters=None):
 		
 		if a_sqllast_qty:
 			sqtotal = sum((a.actual_qty or 0) for a in a_sqllast_qty)
-			sqllast_qty = a_sqllast_qty[0]
+			sqllast_qty = a_sqllast_qty
 			last_qty = sqllast_qty[0].actual_qty
 			last_valuation = sqllast_qty[0].incoming_rate
 		
