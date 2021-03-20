@@ -70,7 +70,11 @@ def execute(filters=None):
 			"label": "Derniere Qts Achetee",
 			"width": 150
 		})
-	
+	columns.append({
+			"fieldname": "last_qty_total",
+			"label": "Qts Achetee Total",
+			"width": 150
+		})
 	columns.append({
 			"fieldname": "qts_comm",
 			"label": "Qte Commande",
@@ -318,10 +322,16 @@ def execute(filters=None):
 			if mri.variant_of and entry_status == "Non Achetes" and (info[1] > 0 or info[2] >0) :
 				continue
 			#Recu Deja
-				
-			sqllast_qty = frappe.db.sql("""select actual_qty,valuation_rate,incoming_rate from `tabStock Ledger Entry` 
+			a_sqllast_qty = frappe.db.sql("""select actual_qty,valuation_rate,incoming_rate from `tabStock Ledger Entry` 
 			where item_code=%s and voucher_type=%s 
-			order by posting_date desc, posting_time desc limit 1""", (mri.item_code,"Purchase Receipt"), as_dict=1)
+			order by posting_date desc, posting_time desc""", (mri.item_code,"Purchase Receipt"), as_dict=1)
+			sqtotal = 0
+			if a_sqllast_qty:
+				sqtotal = sum((a.actual_qty or 0) for a in a_sqllast_qty)
+				sqllast_qty = a_sqllast_qty
+				last_qty = sqllast_qty[0].actual_qty
+				last_valuation = sqllast_qty[0].incoming_rate
+
 			
 			cmd_total = frappe.db.sql("""select sum(qty)  from  `tabPurchase Order Item` where item_code=%s and received_qty=0 and docstatus=1 """, (mri.item_code))[0][0]
 			fac_total = frappe.db.sql("""select sum(qty)-sum(received_qty)  from  `tabPurchase Order Item` where item_code=%s and received_qty>0  and docstatus=1 """, (mri.item_code))[0][0]
@@ -360,9 +370,7 @@ def execute(filters=None):
 				recom = _recom[0].warehouse_reorder_qty
 				_date = _recom[0].modified
 				date = frappe.utils.get_datetime(date).strftime("%d/%m/%Y")
-			if sqllast_qty:
-				last_qty = sqllast_qty[0].actual_qty
-				last_valuation = sqllast_qty[0].incoming_rate
+			
 			projete = mri.qts_total + relq + cmd_total - reserve
 			if not last_qty and  mri.variant_of and entry_status == "Recu Deja":
 				continue
@@ -382,7 +390,7 @@ def execute(filters=None):
 			       mri.perfection,
 			       #last_qty
 			       last_qty or 0,
-			      
+			       sqtotal,
 			       #qts_comm
 			       cmd_total,
 			       #reliuat
