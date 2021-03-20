@@ -322,10 +322,12 @@ def execute(filters=None):
 			if mri.variant_of and entry_status == "Non Achetes" and (info[1] > 0 or info[2] >0) :
 				continue
 			#Recu Deja
+			last_qty = 0
+			sqtotal = 0
 			a_sqllast_qty = frappe.db.sql("""select actual_qty,valuation_rate,incoming_rate from `tabStock Ledger Entry` 
 			where item_code=%s and voucher_type=%s 
 			order by posting_date desc, posting_time desc""", (mri.item_code,"Purchase Receipt"), as_dict=1)
-			sqtotal = 0
+			
 			if a_sqllast_qty:
 				sqtotal = sum((a.actual_qty or 0) for a in a_sqllast_qty)
 				sqllast_qty = a_sqllast_qty
@@ -346,7 +348,7 @@ def execute(filters=None):
 			#else:
 			#	relq = ''
 			
-			last_qty = 0
+			
 			
 			qts_consulte = frappe.db.sql("""select sum(qty) from `tabSupplier Quotation Item` 
 			where item_code=%s and docstatus=0""", (mri.item_code))[0][0]
