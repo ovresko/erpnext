@@ -388,7 +388,7 @@ function demander_item(data) {
 			{
 				fieldname: 'qty',
 				label: 'Confirmer Qts commande: '+qty,
-				fieldtype: 'Float',
+				fieldtype: 'Int',
 				reqd: 1,
 				'default': qty
 			}
