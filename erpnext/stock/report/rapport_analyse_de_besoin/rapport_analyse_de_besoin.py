@@ -335,13 +335,13 @@ def execute(filters=None):
 				last_valuation = sqllast_qty[0].incoming_rate
 
 			
-			cmd_total = frappe.db.sql("""select sum(qty)  from  `tabPurchase Order Item` where item_code=%s and received_qty=0 and docstatus=1 """, (mri.item_code))[0][0]
+			#cmd_total = frappe.db.sql("""select sum(qty)  from  `tabPurchase Order Item` where item_code=%s and received_qty=0 and docstatus=1 """, (mri.item_code))[0][0]
 			fac_total = frappe.db.sql("""select sum(qty)-sum(received_qty)  from  `tabPurchase Order Item` where item_code=%s and received_qty>0  and docstatus=1 """, (mri.item_code))[0][0]
-			relq =fac_total or 0
+			relq = fac_total or 0
+			
 			if relq < 0:
 				relq = 0
-			if not cmd_total:
-				cmd_total =0
+
 			#relq = frappe.db.sql("""select sum(po.qty) - sum(pi.qty) as 'diffr' from `tabPurchase Invoice Item` pi, `tabPurchase Order Item` po where pi.item_code=%s and po.item_code=%s and pi.docstatus=1 and po.docstatus=1 GROUP BY pi.item_code""", (mri.item_code,mri.item_code))
 			#if relq:
 			#	relq = relq[0][0]
