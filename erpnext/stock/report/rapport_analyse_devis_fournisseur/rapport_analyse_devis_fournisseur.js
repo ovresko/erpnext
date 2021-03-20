@@ -383,25 +383,27 @@ function achat_item(data){
 function demander_item(data) {
 	var qty_id = 'input_'+data;
 	var qty = $('#'+qty_id).val();
+	
 	frappe.prompt([
 			{
 				fieldname: 'aqty',
 				label: 'Confirmer Qts commande: '+qty,
-				fieldtype: 'Data',
+				fieldtype: 'Float',
 				reqd: 1,
 				'default': qty
 			}
 		], (aqty) => {
 			// cache this for next entry
+			var myqty = aqty.qty
 			frappe.call({
 				method: "erpnext.buying.doctype.supplier_quotation.supplier_quotation.set_item_demande",
 				args: {
 					item_code: data,
-					qty: aqty.qty
+					qty: myqty
 				},
 				callback: function(r) {
 					if (r.message) {
-						alert(r.message);
+						alert(r.message+': '+myqty);
 					}
 				}
 			});
