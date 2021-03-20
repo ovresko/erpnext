@@ -710,8 +710,12 @@ def execute(filters=None):
 		a_sqllast_qty = frappe.db.sql("""select actual_qty,valuation_rate,incoming_rate from `tabStock Ledger Entry` 
 		where item_code=%s and voucher_type=%s 
 		order by posting_date desc, posting_time desc""", (mri.item_code,"Purchase Receipt"), as_dict=1)
-		
-		
+		relq = 0
+		fac_total = frappe.db.sql("""select sum(qty)-sum(received_qty)  from  `tabPurchase Order Item` where item_code=%s and received_qty>0  and docstatus=1 """, (mri.item_code))[0][0]
+			relq =fac_total or 0
+			if relq < 0:
+				relq = 0
+				
 		if a_sqllast_qty:
 			sqtotal = sum((a.actual_qty or 0) for a in a_sqllast_qty)
 			sqllast_qty = a_sqllast_qty
@@ -780,7 +784,7 @@ def execute(filters=None):
 			       #consom,
 			       "_",
 			       #qts_reliquat
-			       info[3] or 0,
+			       relq or 0,
 			       #qts_dem
 			       info[1] or 0,
 			       #qts
@@ -864,7 +868,7 @@ def execute(filters=None):
 			       #consom,
 			       "_",
 			       #qts_reliquat
-			       info[3] or 0,
+			       relq or 0,
 			       #qts_dem
 			       #info[1] or 0,
 			       #qts
