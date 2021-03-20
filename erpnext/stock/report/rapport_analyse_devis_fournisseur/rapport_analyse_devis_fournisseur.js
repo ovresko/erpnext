@@ -386,7 +386,7 @@ function demander_item(data) {
 	
 	frappe.prompt([
 			{
-				fieldname: 'aqty',
+				fieldname: 'qty',
 				label: 'Confirmer Qts commande: '+qty,
 				fieldtype: 'Float',
 				reqd: 1,
@@ -395,7 +395,7 @@ function demander_item(data) {
 		], (aqty) => {
 			// cache this for next entry
 			var myqty = aqty.qty
-			console.log(aqty,myqty,data);
+			//console.log(aqty,myqty,data);
 			frappe.call({
 				method: "erpnext.buying.doctype.supplier_quotation.supplier_quotation.set_item_demande",
 				args: {
