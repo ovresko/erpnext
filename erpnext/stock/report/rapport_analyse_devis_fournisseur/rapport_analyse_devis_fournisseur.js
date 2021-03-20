@@ -383,18 +383,31 @@ function achat_item(data){
 function demander_item(data) {
 	var qty_id = 'input_'+data;
 	var qty = $('#'+qty_id).val();
-	frappe.call({
-			method: "erpnext.buying.doctype.supplier_quotation.supplier_quotation.set_item_demande",
-			args: {
-				item_code: data,
-				qty: qty
-			},
-			callback: function(r) {
-				if (r.message) {
-					alert(r.message);
-				}
+	frappe.prompt([
+			{
+				fieldname: 'qty',
+				label: 'Confirmer Qts commande: '+qty,
+				fieldtype: 'Data',
+				reqd: 1,
+				'default': qty
 			}
-		});
+		], (data) => {
+			// cache this for next entry
+			frappe.call({
+				method: "erpnext.buying.doctype.supplier_quotation.supplier_quotation.set_item_demande",
+				args: {
+					item_code: data,
+					qty: qty
+				},
+				callback: function(r) {
+					if (r.message) {
+						alert(r.message);
+					}
+				}
+			});
+		},
+		'Qts commande '+qty);
+	
 }
 
 frappe.query_reports["Rapport analyse devis fournisseur"] = {
