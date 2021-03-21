@@ -3483,9 +3483,13 @@ function loadLazzy() {
 //	});
 	 
 }
-$(".pos-items-wrapper").bind('scroll', function() {
-   lazyLoadInstance.update();
-}); 
+
+$(document).ready(() => {
+   $("div").scroll(() => {
+      lazyLoadInstance.update();
+   });
+});
+
 
 
 	
