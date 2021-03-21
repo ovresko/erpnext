@@ -1872,6 +1872,13 @@ class POSItems {
 				</div>
 			</div>
 		`);
+		
+		var scrolledDiv = document.getElementById("items-wrapper-id");
+		scrolledDiv.onscroll = function(){
+		$("img.lazyload").lazyload({ 
+				effect: "fadeIn" 
+			    }).removeClass("lazy");
+		};
 	}
 	
 	make_oem(){ 
@@ -3481,12 +3488,7 @@ function loadLazzy() {
 	    }).removeClass("lazy");
 }
 
-var scrolledDiv = document.getElementById("items-wrapper-id");
-scrolledDiv.onscroll = function(){
-$("img.lazyload").lazyload({ 
-		effect: "fadeIn" 
-	    }).removeClass("lazy");
-};
+
  
 
 
