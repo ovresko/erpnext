@@ -3448,7 +3448,7 @@ class Payment {
 
 function loadLazzy() {
 	console.log("lazy");
-	  $(window).on('scroll', '.image-view-container', function(){ 
+	 $(document).on('scroll', '.image-view-container', function(){ 
 	//$('.pos-items-wrapper').on('scroll',function() {
 	   	var lazyloadImages;    
 		lazyloadImages = document.querySelectorAll(".lazy");
