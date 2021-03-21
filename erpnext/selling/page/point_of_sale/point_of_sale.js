@@ -1861,13 +1861,13 @@ class POSItems {
 				<button  data-label="search" class="btn btn-primary  btn-xs btn btn-dosearch" style="margin: 20px 5px 10px 5px;"><i class="fa fa-search"></i> Chercher</button>
 
 			</div>
-			<div class="items-wrapper" id="items-wrapper-id">
+			<div class="items-wrapper">
 			</div>
 		`);
 
 		this.items_wrapper = this.wrapper.find('.items-wrapper');
 		this.items_wrapper.append(`
-			<div class="list-item-table pos-items-wrapper">
+			<div class="list-item-table pos-items-wrapper"  id="items-wrapper-id">
 				<div class="pos-items image-view-container">
 				</div>
 			</div>
