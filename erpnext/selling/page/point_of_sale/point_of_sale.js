@@ -46,6 +46,7 @@ erpnext.pos.PointOfSale = class PointOfSale {
 		frappe.require(assets, () => {
 			this.make();
 		});
+		loadLazzy();
 	}
 
 	make() {
@@ -2270,7 +2271,7 @@ class POSItems {
 		}
 
 		this.clusterize.update(row_items);
-		loadLazzy();
+		
 	}
 
 	filter_items({start=0, search_term='' }={}) {
@@ -3444,23 +3445,24 @@ class Payment {
 	}
 
 }
-function loadLazzy() {
-	 var lazyloadImages;    
-	setTimeout(function(){ 
-	
-	lazyloadImages = document.querySelectorAll(".lazy");
-		lazyloadImages.forEach(function(img) {
-				console.log(img.dataset.src);
-			 	
-			      img.src = img.dataset.src;
-			      img.classList.remove('lazy');
-				
-			});
-		
-	}, 3000);
 
-		
- 
+function loadLazzy() {
+	
+	$( ".pos-items-wrapper" ).scroll(function() {
+	   var lazyloadImages;    
+		setTimeout(function(){ 
+
+		lazyloadImages = document.querySelectorAll(".lazy");
+			lazyloadImages.forEach(function(img) {
+					console.log(img.dataset.src);
+
+				      img.src = img.dataset.src;
+				      img.classList.remove('lazy');
+
+				});
+
+		}, 3000);
+	});
 	 
 }
 	
