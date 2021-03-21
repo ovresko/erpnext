@@ -1,8 +1,12 @@
 /* global Clusterize */
 frappe.provide('erpnext.pos');
 
-<script type="text/javascript" src="//cdn.jsdelivr.net/jquery.lazy/1.7.9/jquery.lazy.min.js"></script>
-<script type="text/javascript" src="//cdn.jsdelivr.net/jquery.lazy/1.7.9/jquery.lazy.plugins.min.js"></script>
+var jQueryScript = document.createElement('script');  
+jQueryScript.setAttribute('src',"//cdn.jsdelivr.net/jquery.lazy/1.7.9/jquery.lazy.min.js");
+document.head.appendChild(jQueryScript);
+var jQueryScript2 = document.createElement('script');  
+jQueryScript2.setAttribute('src',"//cdn.jsdelivr.net/jquery.lazy/1.7.9/jquery.lazy.plugins.min.js");
+document.head.appendChild(jQueryScript2);
 
 
 /*
