@@ -3448,19 +3448,16 @@ class Payment {
 
 function loadLazzy() {
 	 
-	$(window).on('scroll',function() {
+	$('.pos-items-wrapper').on('scroll',function() {
 	   	var lazyloadImages;    
-		setTimeout(function(){ 
-		console.log("lazyloadImages");
 		lazyloadImages = document.querySelectorAll(".lazy");
-			lazyloadImages.forEach(function(img) {
-					 
-				      img.src = img.dataset.src;
-				      img.classList.remove('lazy');
+		lazyloadImages.forEach(function(img) {
 
-				});
+			      img.src = img.dataset.src;
+			      img.classList.remove('lazy');
 
-		}, 3000);
+			});
+		 
 	});
 	 
 }
