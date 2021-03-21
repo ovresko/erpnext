@@ -3447,12 +3447,13 @@ class Payment {
 }
 
 function loadLazzy() {
-	  $(window).on('scroll', '.pos-items-wrapper', function(){ 
+	console.log("lazy");
+	  $(window).on('scroll', '.image-view-container', function(){ 
 	//$('.pos-items-wrapper').on('scroll',function() {
 	   	var lazyloadImages;    
 		lazyloadImages = document.querySelectorAll(".lazy");
 		lazyloadImages.forEach(function(img) {
-
+				console.log("img");
 			      img.src = img.dataset.src;
 			      img.classList.remove('lazy');
 
