@@ -1764,7 +1764,7 @@ class POSItems {
 			<div class="vehicule-name-wrapper" style="display:flex;background-color:#F0FBFA;border-radius:20px">
 				 
 				<div style="width:20% ">
-				<img class="vehicule-image"   src=""  loading="lazy" style="position: relative;top: 50%;transform: translateY(-50%);">
+				<img class="vehicule-image"   src=""   style="position: relative;top: 50%;transform: translateY(-50%);">
 				</div>
 
 				<div style="width:15% ;padding:10px">	
