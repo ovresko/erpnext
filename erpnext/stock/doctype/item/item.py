@@ -198,7 +198,15 @@ class Item(WebsiteGenerator):
 		self.validate_item_defaults()
 		self.update_defaults_from_item_group()
 		self.validate_stock_for_has_batch_and_has_serial()
-		#if self.has_variants:
+		
+		if self.has_variants:
+			count = frappe.db.sql("""select count(name) as cnt from `tabItem` where variant_of='%s'""" % (self.name),as_dict=1)
+			if count:
+				self.nbr_variante = count[0]['cnt'] or 0
+		else:
+			count = frappe.db.sql("""select count(name) as cnt from `tabItem` where variant_of='%s'""" % (self.variant_of),as_dict=1)
+			if count:
+				self.nbr_variante = count[0]['cnt'] or 0
 		#	self.nbr_var = ''
 		#	vars = frappe.db.sql(''' select count(name) from `tabItem` where variant_of=%s ''',self.name)
 		#	if vars:
