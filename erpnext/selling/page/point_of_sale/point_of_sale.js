@@ -1767,6 +1767,9 @@ class POSItems {
 				this.all_items = items;
 				this.items = items;
 				this.render_items(items);
+				$("img.lazyload").lazyload({ 
+					effect: "fadeIn" 
+				    }).removeClass("lazy");
 			});
 	}
 
