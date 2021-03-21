@@ -2447,7 +2447,7 @@ class POSItems {
 				this.render_items(items);
 				this.set_item_in_the_cart(items, serial_no, batch_no, barcode);
 			});
-		
+		loadLazzy();
 	}
 
 	set_item_in_the_cart(items, serial_no, batch_no, barcode) {
