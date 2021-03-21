@@ -3549,10 +3549,11 @@ class Payment {
 
 function loadLazzy() {
 	console.log("lazy");
-	$('.image-view-row').appear(function() {
+	$('.lazy').appear(function() {
 		lazyloadImages = document.querySelectorAll(".lazy");
+		console.log("appear");
 		lazyloadImages.forEach(function(img) {
-				console.log("img");
+			      console.log("img");
 			      img.src = img.dataset.src;
 			      img.classList.remove('lazy');
 
