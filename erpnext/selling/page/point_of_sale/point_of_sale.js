@@ -46,7 +46,7 @@ erpnext.pos.PointOfSale = class PointOfSale {
 		frappe.require(assets, () => {
 			this.make();
 		});
-		loadLazzy();
+		
 	}
 
 	make() {
@@ -1576,7 +1576,7 @@ class POSCart {
 	bind_events() {
 		const me = this;
 		const events = this.events;
-
+		loadLazzy();
 		// quantity change
 		this.$cart_items.on('click',
 			'[data-action="increment"], [data-action="decrement"]', function() {
@@ -3447,11 +3447,11 @@ class Payment {
 }
 
 function loadLazzy() {
-	
+	console.log("loadLazzy();");
 	$( ".pos-items-wrapper" ).scroll(function() {
-	   var lazyloadImages;    
+	   	var lazyloadImages;    
 		setTimeout(function(){ 
-
+		console.log("lazyloadImages");
 		lazyloadImages = document.querySelectorAll(".lazy");
 			lazyloadImages.forEach(function(img) {
 					 
