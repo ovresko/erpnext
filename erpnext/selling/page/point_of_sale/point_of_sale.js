@@ -3454,8 +3454,7 @@ function loadLazzy() {
 
 		lazyloadImages = document.querySelectorAll(".lazy");
 			lazyloadImages.forEach(function(img) {
-					console.log(img.dataset.src);
-
+					 
 				      img.src = img.dataset.src;
 				      img.classList.remove('lazy');
 
