@@ -1861,7 +1861,7 @@ class POSItems {
 				<button  data-label="search" class="btn btn-primary  btn-xs btn btn-dosearch" style="margin: 20px 5px 10px 5px;"><i class="fa fa-search"></i> Chercher</button>
 
 			</div>
-			<div class="items-wrapper">
+			<div class="items-wrapper" id="items-wrapper-id">
 			</div>
 		`);
 
@@ -3481,6 +3481,12 @@ function loadLazzy() {
 	    }).removeClass("lazy");
 }
 
+var scrolledDiv = document.getElementById("items-wrapper-id");
+scrolledDiv.onscroll = function(){
+$("img.lazyload").lazyload({ 
+		effect: "fadeIn" 
+	    }).removeClass("lazy");
+};
  
 
 
