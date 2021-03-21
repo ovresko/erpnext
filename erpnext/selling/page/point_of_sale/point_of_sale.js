@@ -3483,5 +3483,10 @@ function loadLazzy() {
 //	});
 	 
 }
+$(".pos-items-wrapper").bind('scroll', function() {
+   lazyLoadInstance.update();
+}); 
+
+
 	
 
