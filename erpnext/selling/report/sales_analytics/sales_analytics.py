@@ -135,7 +135,7 @@ class Analytics(object):
 			value_field = 'qty'
 
 		self.entries = frappe.db.sql("""
-			select i.item_code as entity, i.item_name as entity_name, i.{value_field} as value_field, s.{date_field}, i.ref_fabricant,qb.manufacturer, qb.qts_total, qb.qts_depot
+			select i.item_code as entity, i.item_name as entity_name, i.{value_field} as value_field, s.{date_field}, i.ref_fabricant,qb.manufacturer , qb.qts_total, qb.qts_depot
 			from `tab{doctype} Item` i 
 			left join (select item_code, qts_total, qts_depot from `tabItem`) qb on (i.item_code = qb.item_code), 
 			`tab{doctype}` s
