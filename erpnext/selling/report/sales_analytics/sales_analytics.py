@@ -41,9 +41,35 @@ class Analytics(object):
 				"fieldtype": "Data",
 				"width": 140
 			})
+		if self.filters.tree_type == "Item":
+			self.columns.append({
+				"label": "Fabricant",
+				"fieldname": "fabricant",
+				"fieldtype": "Data",
+				"width": 130
+			})
+			self.columns.append({
+				"label": "Reference",
+				"fieldname": "reference",
+				"fieldtype": "Data",
+				"width": 130
+			})
+			self.columns.append({
+				"label": "Qts Total",
+				"fieldname": "qts_total",
+				"fieldtype": "Data",
+				"width": 100
+			})
+			self.columns.append({
+				"label": "Qts Depot",
+				"fieldname": "qts_depot",
+				"fieldtype": "Data",
+				"width": 100
+			})
+			
 		for end_date in self.periodic_daterange:
 			period = self.get_period(end_date)
-			frappe.msgprint(period)
+			#frappe.msgprint(period)
 			self.columns.append({
 				"label": period,
 				"fieldname": scrub(period),
@@ -109,7 +135,7 @@ class Analytics(object):
 			value_field = 'qty'
 
 		self.entries = frappe.db.sql("""
-			select i.item_code as entity, i.item_name as entity_name, i.{value_field} as value_field, s.{date_field}
+			select i.item_code as entity, i.item_name as entity_name, i.{value_field} as value_field, s.{date_field}, i.ref_fabricant, s.qts_total, s.qts_depot
 			from `tab{doctype} Item` i , `tab{doctype}` s
 			where s.name = i.parent and i.docstatus = 1 and s.company = %s
 			and s.{date_field} between %s and %s
@@ -168,8 +194,13 @@ class Analytics(object):
 		for entity, period_data in iteritems(self.entity_periodic_data):
 			row = {
 				"entity": entity,
-				"entity_name": self.entity_names.get(entity)
+				"entity_name": self.entity_names.get(entity),
+				"fabricant": entity.fabricant,
+				"reference": entity.ref_fabricant,
+				"qts_total": entity.qts_total,
+				"qts_depot": entity.qts_depot,
 			}
+			
 			total = 0
 			for end_date in self.periodic_daterange:
 				period = self.get_period(end_date)
