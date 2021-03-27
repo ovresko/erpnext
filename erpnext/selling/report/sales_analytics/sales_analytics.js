@@ -2,6 +2,7 @@
 // For license information, please see license.txt
 /* eslint-disable */
 
+// frappe.defaults.get_user_default("year_end_date"),
 frappe.query_reports["Sales Analytics"] = {
 	"filters": [
 		{
@@ -9,7 +10,7 @@ frappe.query_reports["Sales Analytics"] = {
 			label: __("Tree Type"),
 			fieldtype: "Select",
 			options: ["Customer Group","Customer","Item Group","Item","Territory"],
-			default: "Customer",
+			default: "Item",
 			reqd: 1
 		},
 		{
@@ -28,21 +29,21 @@ frappe.query_reports["Sales Analytics"] = {
 				{ "value": "Value", "label": __("Value") },
 				{ "value": "Quantity", "label": __("Quantity") },
 			],
-			default: "Value",
+			default: "Quantity",
 			reqd: 1
 		},
 		{
 			fieldname: "from_date",
 			label: __("From Date"),
 			fieldtype: "Date",
-			default: frappe.defaults.get_user_default("year_start_date"),
+			default:  frappe.datetime.add_days(frappe.datetime.nowdate(), -365),
 			reqd: 1
 		},
 		{
 			fieldname:"to_date",
 			label: __("To Date"),
 			fieldtype: "Date",
-			default: frappe.defaults.get_user_default("year_end_date"),
+			default: frappe.datetime.add_days(frappe.datetime.nowdate(), 1),
 			reqd: 1
 		},
 		{
@@ -65,6 +66,28 @@ frappe.query_reports["Sales Analytics"] = {
 			],
 			default: "Monthly",
 			reqd: 1
+		},
+		{
+			fieldname: "item_code",
+			label: __("Item"),
+			fieldtype: "Link",
+			options: "Item",
+			get_query: () => {
+				return {
+					filters: { "has_variants": 0 }
+				}
+			}
+		},
+		{
+			fieldname: "item_model",
+			label: "Modele Article",
+			fieldtype: "Link",
+			options: "Item",
+			get_query: () => {
+				return {
+					filters: { "has_variants": 1 }
+				}
+			}
 		}
 	],
 	after_datatable_render: function(datatable_obj) {
