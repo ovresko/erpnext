@@ -147,7 +147,7 @@ class Analytics(object):
 
 		self.entity_names = {}
 		for d in self.entries:
-			self.entity_names.setdefault(d.entity, d.entity_name)
+			self.entity_names.setdefault(d.entity, d)
 
 	def get_sales_transactions_based_on_customer_or_territory_group(self):
 		if self.filters["value_quantity"] == 'Value':
@@ -194,15 +194,26 @@ class Analytics(object):
 		self.get_periodic_data()
 
 		for entity, period_data in iteritems(self.entity_periodic_data):
-			row = {
-				"entity": entity,
-				"entity_name": self.entity_names.get(entity),
-				"fabricant": entity.fabricant,
-				"reference": entity.ref_fabricant,
-				"qts_total": entity.qts_total,
-				"qts_depot": entity.qts_depot,
-			}
-			
+			item_data = self.entity_names.get(entity)
+			row = {}
+			if self.filters.tree_type == 'Item': 
+				row = {
+					"entity": entity,
+					"entity_name": item_data.entity_name,
+					"fabricant": item_data.fabricant,
+					"reference": item_data.ref_fabricant,
+					"qts_total": item_data.qts_total,
+					"qts_depot": item_data.qts_depot,
+				}
+			else:
+				row = {
+					"entity": entity,
+					"entity_name": item_data,
+					"fabricant": "",
+					"reference": "",
+					"qts_total": "",
+					"qts_depot": "",
+				}
 			total = 0
 			for end_date in self.periodic_daterange:
 				period = self.get_period(end_date)
