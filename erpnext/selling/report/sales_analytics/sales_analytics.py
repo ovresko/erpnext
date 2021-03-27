@@ -18,7 +18,7 @@ class Analytics(object):
 			if self.filters.doc_type in ['Sales Order', 'Purchase Order'] else 'posting_date'
 		self.months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 		self.get_period_date_ranges()
-		frappe.msgprint(str(self.periodic_daterange))
+		#frappe.msgprint(str(self.periodic_daterange))
 
 	def run(self):
 		self.get_columns()
@@ -212,6 +212,8 @@ class Analytics(object):
 			self.entity_periodic_data[d.entity][period] += flt(d.value_field)
 
 	def get_period(self, posting_date):
+		frappe.msgprint(str(posting_date))
+		frappe.msgprint(self.filters.range)
 		if self.filters.range == 'Weekly':
 			period = "Week " + str(posting_date.isocalendar()[1]) + " " + str(posting_date.year)
 		elif self.filters.range == 'Monthly':
