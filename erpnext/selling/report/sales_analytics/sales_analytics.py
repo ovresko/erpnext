@@ -18,7 +18,7 @@ class Analytics(object):
 			if self.filters.doc_type in ['Sales Order', 'Purchase Order'] else 'posting_date'
 		self.months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 		self.get_period_date_ranges()
-		frappe.msgprint(self.filters.range)
+		#frappe.msgprint(self.filters.range)
 
 	def run(self):
 		self.get_columns()
@@ -43,8 +43,9 @@ class Analytics(object):
 			})
 		for end_date in self.periodic_daterange:
 			period = self.get_period(end_date)
+			frappe.msgprint(period)
 			self.columns.append({
-				"label": _(period),
+				"label": period,
 				"fieldname": scrub(period),
 				"fieldtype": "Int",
 				"width": 120
