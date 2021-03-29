@@ -136,7 +136,7 @@ class Analytics(object):
 
 		ic = ""
 		if self.filters.item_code:
-			ic = " and entity = '%s'" % self.filters.item_code
+			ic = " and i.item_code = '%s'" % self.filters.item_code
 		if self.filters.item_model:
 			ic = " and qb.variant_of = '%s'" %  self.filters.item_model
 		
