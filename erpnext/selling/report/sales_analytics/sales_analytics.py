@@ -135,10 +135,10 @@ class Analytics(object):
 			value_field = 'qty'
 
 		ic = ""
-		if self.filters["item_code"]:
-			ic = " and i.item_code = %s" % self.filters["item_code"]
+		if self.filters.item_code:
+			ic = " and i.item_code = %s" % self.filters.item_code
 		if self.filters["item_model"]:
-			ic = " and i.variant_of = %s" % self.filters["item_model"]
+			ic = " and i.variant_of = %s" %  self.filters.item_model
 			
 		self.entries = frappe.db.sql("""
 			select i.item_code as entity, i.item_name as entity_name, i.{value_field} as value_field, s.{date_field}, i.ref_fabricant,qb.manufacturer , qb.qts_total, qb.qts_depot
