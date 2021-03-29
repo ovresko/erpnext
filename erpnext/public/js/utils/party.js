@@ -23,6 +23,12 @@ erpnext.utils.open_item_info =  function(item_code,me) {
 					window.open(url , '_blank', 'toolbar=0,location=0,menubar=0,location=yes, scrollbars=yes,status=yes'); 
 				});
 				
+				//btn-analyse
+				$(document).off("click", ".btn-analyse").on('click', '.btn-analyse', function(){
+					 event.stopPropagation();  
+					var url = window.location.origin + "/desk#query-report/Sales%20Analytics?item_model="+item_code
+					window.open(url , '_blank', 'toolbar=0,location=0,menubar=0,location=yes, scrollbars=yes,status=yes'); 
+				});
 				$(document).off("click", ".btn-info-price").on('click', '.btn-info-price', function(){
 					event.stopPropagation(); 
 					
