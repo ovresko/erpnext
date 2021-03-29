@@ -28,7 +28,7 @@ erpnext.utils.open_item_info =  function(item_code,me) {
 					 event.stopPropagation();  
 					var model = $('.btn-analyse').attr("data-item-code");
 					var url = window.location.origin + "/desk#query-report/Sales%20Analytics?item_model="+model
-					window.open(url , '_blank', 'toolbar=0,location=0,menubar=0,location=yes, scrollbars=yes,status=yes'); 
+					window.open(url , '_blank'); 
 				});
 				$(document).off("click", ".btn-info-price").on('click', '.btn-info-price', function(){
 					event.stopPropagation(); 
