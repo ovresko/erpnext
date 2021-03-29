@@ -136,9 +136,9 @@ class Analytics(object):
 
 		ic = ""
 		if self.filters.item_code:
-			ic = " and entity = '%s'" % self.filters.item_code
+			ic = " and i.item_code = %s" % self.filters.item_code
 		if self.filters.item_model:
-			ic = " and qb.variant_of = '%s'" %  self.filters.item_model
+			ic = " and qb.variant_of = %s" %  self.filters.item_model
 		frappe.msgprint(ic)
 		self.entries = frappe.db.sql("""
 			select i.item_code as entity, i.item_name as entity_name, i.{value_field} as value_field, s.{date_field}, i.ref_fabricant,qb.manufacturer , qb.qts_total, qb.qts_depot
@@ -146,10 +146,10 @@ class Analytics(object):
 			left join (select item_code,variant_of,manufacturer, qts_total, qts_depot from `tabItem`) qb on (i.item_code = qb.item_code), 
 			`tab{doctype}` s
 			where s.name = i.parent and i.docstatus = 1 and s.company = %s
-			and s.{date_field} between %s and %s %s
+			and s.{date_field} between %s and %s {ic}
 		"""
-		.format(date_field=self.date_field, value_field = value_field, doctype=self.filters.doc_type),
-		(self.filters.company, self.filters.from_date, self.filters.to_date, ic), as_dict=1)
+		.format(date_field=self.date_field, value_field = value_field, doctype=self.filters.doc_type, ic=ic),
+		(self.filters.company, self.filters.from_date, self.filters.to_date), as_dict=1)
 
 		self.entity_names = {}
 		for d in self.entries:
