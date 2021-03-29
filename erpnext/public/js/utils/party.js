@@ -26,7 +26,8 @@ erpnext.utils.open_item_info =  function(item_code,me) {
 				//btn-analyse
 				$(document).off("click", ".btn-analyse").on('click', '.btn-analyse', function(){
 					 event.stopPropagation();  
-					var url = window.location.origin + "/desk#query-report/Sales%20Analytics?item_model="+item_code
+					var model = $('.btn-analyse').attr("data-item-code");
+					var url = window.location.origin + "/desk#query-report/Sales%20Analytics?item_model="+model
 					window.open(url , '_blank', 'toolbar=0,location=0,menubar=0,location=yes, scrollbars=yes,status=yes'); 
 				});
 				$(document).off("click", ".btn-info-price").on('click', '.btn-info-price', function(){
@@ -71,7 +72,7 @@ erpnext.utils.open_item_info =  function(item_code,me) {
 					    },
 					    "callback": function(response) {
 						var item = response.message; 
-						console.log("val :"+item);
+						//console.log("val :"+item);
 						if (item) {
 
 							var html  =`<br><strong>Valorisation</strong><br>`+item;
@@ -99,7 +100,7 @@ erpnext.utils.open_item_info =  function(item_code,me) {
 						    var item = response.message; 
 							if (item) {
 								var orderd = item[2];
-								console.log(orderd);
+								//console.log(orderd);
 								var html  =`<br><br>Qts disponible dans le réseau <br><br>`;
 								if(orderd){
 									html+= "<strong>Article Commandé</strong><br><br>"
