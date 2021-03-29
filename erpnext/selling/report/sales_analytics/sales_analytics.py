@@ -150,8 +150,8 @@ class Analytics(object):
 		"""
 		.format(date_field=self.date_field, value_field = value_field, doctype=self.filters.doc_type, ic=ic),
 		(self.filters.company, self.filters.from_date, self.filters.to_date), as_dict=1)
-		cnt = len(self.entries)
-		frappe.msgprint("%s %s" % (ic,cnt))
+		#cnt = len(self.entries)
+		#frappe.msgprint("%s %s" % (ic,cnt))
 		self.entity_names = {}
 		for d in self.entries:
 			self.entity_names.setdefault(d.entity, d)
