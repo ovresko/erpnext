@@ -345,6 +345,7 @@ def open_item_info(item_code):
 						<button  class="btn btn-default btn-sm  btn-etat-stock" data-item-code="{item_code}"  style="margin-right: 5px;">Etat Stock</button>
 						<button  class="btn btn-default btn-sm  btn-etat-val" data-item-code="{item_code}"  style="margin-right: 5px;">Valorisation</button>
 						<button  class="btn btn-default btn-sm  btn-print" data-item-code="{item_code}"  style="margin-right: 5px;">Exporter</button>
+						<button  class="btn btn-default btn-sm  btn-analyse" data-item-code="{item.variant_of}"  style="margin-right: 5px;">Analyse</button>
 <br>
 						<div class="etat-stock"></div>
 						<div class="etat-price"></div>
