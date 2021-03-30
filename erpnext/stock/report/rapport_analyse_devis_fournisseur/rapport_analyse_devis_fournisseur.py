@@ -711,7 +711,7 @@ def execute(filters=None):
 		where item_code=%s and voucher_type=%s 
 		order by posting_date desc, posting_time desc""", (mri.item_code,"Purchase Receipt"), as_dict=1)
 		relq = 0
-		fac_total = frappe.db.sql("""select sum(qty)-sum(received_qty)  from  `tabPurchase Order Item` where item_code=%s and received_qty>0  and docstatus=1 """, (mri.item_code))[0][0]
+		fac_total = frappe.db.sql("""select sum(qty)-sum(received_qty)  from  `tabPurchase Order Item` where item_code=%s  and docstatus=1 """, (mri.item_code))[0][0]
 		relq = fac_total or 0
 		if relq < 0:
 			relq = 0
