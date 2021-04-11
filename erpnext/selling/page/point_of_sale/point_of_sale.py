@@ -450,7 +450,7 @@ def print_address_magasin(items,qts,pos_profile,customer):
 	if items:
 		for idx, item in enumerate(items):
 			if item:
-				item = item.replace("[").replace("]")
+				item = item.replace("[","").replace("]","")
 			q = qts[idx]
 			adr = frappe.db.get_value("Adresse Magasin", {"parent": item,"warehouse":warehouse}, 'adresse')
 			fabricant = frappe.db.get_value("Item", {"item_code": item}, 'manufacturer')
