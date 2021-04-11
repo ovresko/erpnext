@@ -506,7 +506,10 @@ def prepare_bulk_print_html(names,customer,warehouse):
 	
 	{% for sc in names %}<small>{{sc}} : <span style="font-weight:bold"">{{names[sc].qts}} <span> ************************ <span>{{names[sc].adr}}<span>
 	</small><br>{{names[sc].fabricant}} / {{names[sc].ref}}<br>----------------------------------------------------------<br>{% endfor %}
-	</div><body></html>
+	</div><body>
+	
+	{{names}}
+	</html>
 	""", {"names":names,"warehouse":warehouse,"customer":customer})
 	return final_html
 
