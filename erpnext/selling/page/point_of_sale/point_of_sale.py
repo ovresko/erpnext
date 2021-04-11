@@ -450,7 +450,7 @@ def print_address_magasin(items,qts,pos_profile,customer):
 	if items:
 		for idx, item in enumerate(items):
 			if item:
-				item = item.replace("[","").replace("]","")
+				item = item.replace("[","").replace("]","").replace('"', '')
 			q = qts[idx]
 			adr = frappe.db.get_value("Adresse Magasin", {"parent": item,"warehouse":warehouse}, 'adresse')
 			fabricant = frappe.db.get_value("Item", {"item_code": item}, 'manufacturer')
@@ -509,7 +509,7 @@ def prepare_bulk_print_html(names,customer,warehouse):
 	<p style="text-align:center">{{warehouse}}</p>
 	<p style="text-align:center">Client : {{customer}}</p>
 	
-	{% for sc in names %}<small>{{sc}} {{names[sc].item}} : <span style="font-weight:bold"">{{names[sc].qts}} <span> ************************ <span>{{names[sc].adr}}<span>
+	{% for sc in names %}<small>{{sc}} : <span style="font-weight:bold"">{{names[sc].qts}} <span> ************************ <span>{{names[sc].adr}}<span>
 	</small><br>{{names[sc].fabricant}} / {{names[sc].ref}}<br>----------------------------------------------------------<br>{% endfor %}
 	</div><body>
 	
