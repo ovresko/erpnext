@@ -25,16 +25,16 @@ class ConversionArticles(Document):
 						article = frappe.get_doc("Item",code)
 						if article:
 							# adresse magasin
-							if not article.table_adresse_magasin:
+							#if not article.table_adresse_magasin:
 								#or (item.adr not in {a.adresse for a in article.table_adresse_magasin})
-								row = article.append('table_adresse_magasin',{})
-								row.warehouse = self.stock
-								row.adresse = item.adr
-								try:
-									article.save(ignore_permissions = True)
-								except Exception as e:
-									nothan.append(item)
-									errors += "<br>Erreur adresse magasin article %d %s <br> %s" % (line, item.ref,e)
+							row = article.append('table_adresse_magasin',{})
+							row.warehouse = self.stock
+							row.adresse = item.adr
+							try:
+								article.save(ignore_permissions = True)
+							except Exception as e:
+								nothan.append(item)
+								errors += "<br>Erreur adresse magasin article %d %s <br> %s" % (line, item.ref,e)
 
 							# prix
 							if item.publique:
