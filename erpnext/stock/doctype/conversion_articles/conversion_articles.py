@@ -30,7 +30,7 @@ class ConversionArticles(Document):
 								row.warehouse = self.stock
 								row.adresse = item.adr
 								try:
-									article.save()
+									article.save(ignore_permissions = True)
 								except Exception as e:
 									nothan.append(item)
 									errors += "<br>Erreur adresse magasin article %d %s <br> %s" % (line, item.ref,e)
@@ -43,7 +43,7 @@ class ConversionArticles(Document):
 									price.price_list_rate = item.publique
 									price.min_qty = 0
 									try:
-										price.save()
+										price.save(ignore_permissions = True)
 									except:
 										nothan.append(item)
 										errors += "<br>Erreur prix article %d %s" % (line, item.ref)
@@ -54,7 +54,7 @@ class ConversionArticles(Document):
 									so.price_list = "PRIX PUBLIQUE"
 									so.price_list_rate = item.publique
 									try:
-										so.save()
+										so.save(ignore_permissions = True)
 									except:
 										nothan.append(item)
 										errors += "<br>Erreur prix article %d %s" % (line, item.ref)
@@ -65,7 +65,7 @@ class ConversionArticles(Document):
 									price.price_list_rate = item.gros
 									price.min_qty = 0
 									try:
-										price.save()
+										price.save(ignore_permissions = True)
 									except:
 										nothan.append(item)
 										errors += "<br>Erreur prix article %d %s" % (line, item.ref)
@@ -75,7 +75,7 @@ class ConversionArticles(Document):
 									so.price_list = "PRIX EN GROS"
 									so.price_list_rate = item.gros
 									try:
-										so.save()
+										so.save(ignore_permissions = True)
 									except:
 										nothan.append(item)
 										errors += "<br>Erreur prix article %d %s" % (line, item.ref)
