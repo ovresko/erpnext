@@ -7,12 +7,12 @@ import frappe
 from frappe.model.document import Document
 
 class ConversionArticles(Document):
-	def save_items(self):
+	def save_items(self,warehouse):
 		saved = 0
 		line = 0
 		nothan = []
 		errors = ''
-		if not self.stock:
+		if not warehouse:
 			frappe.msgprint("Champ Stock est vide")
 			return
 		if self.articles:
@@ -28,7 +28,7 @@ class ConversionArticles(Document):
 							#if not article.table_adresse_magasin:
 								#or (item.adr not in {a.adresse for a in article.table_adresse_magasin})
 							row = article.append('table_adresse_magasin',{})
-							row.warehouse = self.stock
+							row.warehouse = warehouse
 							row.adresse = item.adr
 							try:
 								article.save(ignore_permissions = True)
@@ -86,7 +86,7 @@ class ConversionArticles(Document):
 				except:
 					errors += "<br>Erreurs"
 
-		self.articles = nothan
+		#self.articles = nothan
 		frappe.msgprint("Traite: %d   <br>%s" % (saved,errors))
 		
 
