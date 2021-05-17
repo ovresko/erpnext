@@ -11,6 +11,9 @@ frappe.ui.form.on('Conversion Articles', {
 		frappe.call({
                         doc: frm.doc,
                         method: "save_items",
+			args: {
+				warehouse: frm.doc.stock,
+			},
                         callback: function (data) {
                             frappe.show_alert('Done !');
                         }
