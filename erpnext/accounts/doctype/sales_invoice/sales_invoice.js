@@ -55,7 +55,7 @@ erpnext.accounts.SalesInvoiceController = erpnext.selling.SellingController.exte
 			cur_frm.page.set_inner_btn_group_as_primary(__("Make"));
 		}
 		
-		if(this.frm.doc.customer && doc.docstatus == 0) {
+		if(this.frm.doc.customer) {
 			//frappe.call({
 			//	method: "erpnext.accounts.utils.get_balance_on",
 			//	args: {date: me.frm.doc.posting_date, party_type: 'Customer', party: me.frm.doc.customer},
