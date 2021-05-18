@@ -55,7 +55,7 @@ erpnext.accounts.SalesInvoiceController = erpnext.selling.SellingController.exte
 			cur_frm.page.set_inner_btn_group_as_primary(__("Make"));
 		}
 		
-		if(this.frm.doc.customer && doc.docstatus==0) {
+		if(this.frm.doc.customer ) {
 			//frappe.call({
 			//	method: "erpnext.accounts.utils.get_balance_on",
 			//	args: {date: me.frm.doc.posting_date, party_type: 'Customer', party: me.frm.doc.customer},
@@ -141,27 +141,7 @@ erpnext.accounts.SalesInvoiceController = erpnext.selling.SellingController.exte
 			});
 		}
 	},
-
-	on_submit: function(doc, dt, dn) {
-		var me = this;
-
-		if (frappe.get_route()[0] != 'Form') {
-			return
-		}
-		if(this.frm.doc.customer) {
-			frappe.call({
-				method: "erpnext.accounts.utils.get_balance_on",
-				args: {date: me.frm.doc.posting_date, party_type: 'Customer', party: me.frm.doc.customer},
-				callback: function(r) {
-					me.frm.doc.solde_client = format_currency(r.message, erpnext.get_currency(me.frm.doc.company));
-					refresh_field('solde_client', 'accounts');
-				}
-			});
-		}
-		$.each(doc["items"], function(i, row) {
-			if(row.delivery_note) frappe.model.clear_doc("Delivery Note", row.delivery_note)
-		})
-		
+	before_save: function() {
 		frappe.call({
 				method: "erpnext.selling.doctype.customer.customer.get_customer_outstanding",
 				args: {
@@ -174,6 +154,34 @@ erpnext.accounts.SalesInvoiceController = erpnext.selling.SellingController.exte
 					refresh_field('solde_client', 'accounts');
 				}
 			});
+	},
+	before_submit: function() {
+		frappe.call({
+				method: "erpnext.selling.doctype.customer.customer.get_customer_outstanding",
+				args: {
+					customer: me.frm.doc.customer,
+					company: me.frm.doc.company,
+					ignore_outstanding_sales_order: True
+				      },
+				callback: function(r) {
+					me.frm.doc.solde_client = format_currency(r.message, erpnext.get_currency(me.frm.doc.company));
+					refresh_field('solde_client', 'accounts');
+				}
+			});
+	},
+
+	on_submit: function(doc, dt, dn) {
+		var me = this;
+
+		if (frappe.get_route()[0] != 'Form') {
+			return
+		}
+		
+		$.each(doc["items"], function(i, row) {
+			if(row.delivery_note) frappe.model.clear_doc("Delivery Note", row.delivery_note)
+		})
+		
+		
 	},
 
 	set_default_print_format: function() {
