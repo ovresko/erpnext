@@ -269,14 +269,6 @@ erpnext.accounts.SalesInvoiceController = erpnext.selling.SellingController.exte
 		
 		if(this.frm.doc.customer) {
 			//solde_client
-			frappe.call({
-				method: "erpnext.accounts.utils.get_balance_on",
-				args: {date: me.frm.doc.posting_date, party_type: 'Customer', party: me.frm.doc.customer},
-				callback: function(r) {
-					me.frm.doc.solde_client = format_currency(r.message, erpnext.get_currency(me.frm.doc.company));
-					refresh_field('solde_client', 'accounts');
-				}
-			});
 			
 			frappe.call({
 				"method": "erpnext.accounts.doctype.sales_invoice.sales_invoice.get_loyalty_programs",
