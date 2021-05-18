@@ -263,6 +263,7 @@ def check_credit_limit(customer, company, ignore_outstanding_sales_order=False, 
 			throw(_("Please contact to the user who have Sales Master Manager {0} role")
 				.format(" / " + credit_controller if credit_controller else ""))
 
+@frappe.whitelist()			
 def get_customer_outstanding(customer, company, ignore_outstanding_sales_order=False):
 	# Outstanding based on GL Entries
 	outstanding_based_on_gle = frappe.db.sql("""
