@@ -55,7 +55,7 @@ erpnext.accounts.SalesInvoiceController = erpnext.selling.SellingController.exte
 			cur_frm.page.set_inner_btn_group_as_primary(__("Make"));
 		}
 		
-		if(this.frm.doc.customer) {
+		if(this.frm.doc.customer && doc.docstatus==0) {
 			//frappe.call({
 			//	method: "erpnext.accounts.utils.get_balance_on",
 			//	args: {date: me.frm.doc.posting_date, party_type: 'Customer', party: me.frm.doc.customer},
@@ -76,7 +76,7 @@ erpnext.accounts.SalesInvoiceController = erpnext.selling.SellingController.exte
 					refresh_field('solde_client', 'accounts');
 				}
 			});
-			//erpnext.selling.doctype.customer.customer.get_customer_outstanding(customer, company, ignore_outstanding_sales_order=False)
+			 
 		}
 
 		if(doc.docstatus==1 && !doc.is_return) {
@@ -161,6 +161,19 @@ erpnext.accounts.SalesInvoiceController = erpnext.selling.SellingController.exte
 		$.each(doc["items"], function(i, row) {
 			if(row.delivery_note) frappe.model.clear_doc("Delivery Note", row.delivery_note)
 		})
+		
+		frappe.call({
+				method: "erpnext.selling.doctype.customer.customer.get_customer_outstanding",
+				args: {
+					customer: me.frm.doc.customer,
+					company: me.frm.doc.company,
+					ignore_outstanding_sales_order: True
+				      },
+				callback: function(r) {
+					me.frm.doc.solde_client = format_currency(r.message, erpnext.get_currency(me.frm.doc.company));
+					refresh_field('solde_client', 'accounts');
+				}
+			});
 	},
 
 	set_default_print_format: function() {
