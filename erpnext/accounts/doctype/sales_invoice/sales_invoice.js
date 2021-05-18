@@ -55,29 +55,7 @@ erpnext.accounts.SalesInvoiceController = erpnext.selling.SellingController.exte
 			cur_frm.page.set_inner_btn_group_as_primary(__("Make"));
 		}
 		
-		if(this.frm.doc.customer ) {
-			//frappe.call({
-			//	method: "erpnext.accounts.utils.get_balance_on",
-			//	args: {date: me.frm.doc.posting_date, party_type: 'Customer', party: me.frm.doc.customer},
-			//	callback: function(r) {
-			//		me.frm.doc.solde_client = format_currency(r.message, erpnext.get_currency(me.frm.doc.company));
-			//		refresh_field('solde_client', 'accounts');
-			//	}
-			//});
-			frappe.call({
-				method: "erpnext.selling.doctype.customer.customer.get_customer_outstanding",
-				args: {
-					customer: me.frm.doc.customer,
-					company: me.frm.doc.company,
-					ignore_outstanding_sales_order: true
-				      },
-				callback: function(r) {
-					me.frm.doc.solde_client = format_currency(r.message, erpnext.get_currency(me.frm.doc.company));
-					refresh_field('solde_client', 'accounts');
-				}
-			});
-			 
-		}
+		
 
 		if(doc.docstatus==1 && !doc.is_return) {
 
