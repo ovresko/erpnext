@@ -128,13 +128,9 @@ erpnext.accounts.SalesInvoiceController = erpnext.selling.SellingController.exte
 					ignore_outstanding_sales_order: true
 				      },
 				callback: function(r) {
-					let solde = format_currency(r.message, erpnext.get_currency(me.frm.doc.company));
-					frm.set_value("solde_client", solde);
-					//me.frm.doc.solde_client = format_currency(r.message, erpnext.get_currency(me.frm.doc.company));
-					console.log(solde);
-					//frm.set_value("solde_client", format_currency(r.message, erpnext.get_currency(me.frm.doc.company)));
-					//refresh_field('solde_client', 'accounts');
-					console.log(me.frm.doc.solde_client);
+					let solde = r.message
+					//frm.set_value("solde_client", solde);
+					me.frm.doc.solde_client = solde;
 				}
 			});
 	},
@@ -147,13 +143,10 @@ erpnext.accounts.SalesInvoiceController = erpnext.selling.SellingController.exte
 					ignore_outstanding_sales_order: true
 				      },
 				callback: function(r) {
-					let solde = format_currency(r.message, erpnext.get_currency(me.frm.doc.company));
-					frm.set_value("solde_client", solde);
-					//me.frm.doc.solde_client = format_currency(r.message, erpnext.get_currency(me.frm.doc.company));
-					console.log(solde);
-					//frm.set_value("solde_client", format_currency(r.message, erpnext.get_currency(me.frm.doc.company)));
-					//refresh_field('solde_client', 'accounts');
-					console.log(me.frm.doc.solde_client);
+					let solde = r.message
+					//frm.set_value("solde_client", solde);
+					me.frm.doc.solde_client = solde;
+					
 				}
 			});
 	},
