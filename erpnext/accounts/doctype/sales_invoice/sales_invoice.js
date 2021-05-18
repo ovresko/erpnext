@@ -69,7 +69,7 @@ erpnext.accounts.SalesInvoiceController = erpnext.selling.SellingController.exte
 				args: {
 					customer: me.frm.doc.customer,
 					company: me.frm.doc.company,
-					ignore_outstanding_sales_order: True
+					ignore_outstanding_sales_order: true
 				      },
 				callback: function(r) {
 					me.frm.doc.solde_client = format_currency(r.message, erpnext.get_currency(me.frm.doc.company));
@@ -147,7 +147,7 @@ erpnext.accounts.SalesInvoiceController = erpnext.selling.SellingController.exte
 				args: {
 					customer: me.frm.doc.customer,
 					company: me.frm.doc.company,
-					ignore_outstanding_sales_order: True
+					ignore_outstanding_sales_order: true
 				      },
 				callback: function(r) {
 					me.frm.doc.solde_client = format_currency(r.message, erpnext.get_currency(me.frm.doc.company));
@@ -161,7 +161,7 @@ erpnext.accounts.SalesInvoiceController = erpnext.selling.SellingController.exte
 				args: {
 					customer: me.frm.doc.customer,
 					company: me.frm.doc.company,
-					ignore_outstanding_sales_order: True
+					ignore_outstanding_sales_order: true
 				      },
 				callback: function(r) {
 					me.frm.doc.solde_client = format_currency(r.message, erpnext.get_currency(me.frm.doc.company));
