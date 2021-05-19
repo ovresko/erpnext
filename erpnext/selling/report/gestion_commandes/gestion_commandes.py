@@ -70,17 +70,18 @@ def execute(filters=None):
 			"options": "Sales Order",
 			"width": 100
 		})
+	
+	columns.append({
+			"fieldname": "item_commande",
+			"label": "Art. Commande",
+			"width": 10
+		})
 	columns.append({
 			"fieldname": "regle",
 			"label": "Livraison",
 			"fieldtype": "Link",
 			"options": "Shipping Rule",
 			"width": 150
-		})
-	columns.append({
-			"fieldname": "item_commande",
-			"label": "Art. Commande",
-			"width": 10
 		})
 	columns.append({
 			"fieldname": "commercial",
