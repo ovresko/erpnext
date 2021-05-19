@@ -79,8 +79,6 @@ def execute(filters=None):
 	columns.append({
 			"fieldname": "regle",
 			"label": "Livraison",
-			"fieldtype": "Link",
-			"options": "Shipping Rule",
 			"width": 150
 		})
 	columns.append({
