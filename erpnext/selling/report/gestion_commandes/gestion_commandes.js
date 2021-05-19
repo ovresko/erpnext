@@ -3,6 +3,29 @@
 /* eslint-disable */
 
 frappe.query_reports["Gestion Commandes"] = {
+	"formatter": function (value, row, column, data, default_formatter) {
+		value = default_formatter(value, row, column, data);
+		var ovalue = value;
+		
+		 if(data != null && data != undefined){
+		 	if(data["regle"] == "Livraison Par Date" ){
+			value = "<div style='color: #FF7200;padding: 1px;'>" + ovalue + "</div>";
+			}
+		 	if(data["regle"] == "Enlèvement Client Présent" ){
+			value = "<div style='color: #1A98E6;padding: 1px;'>" + ovalue + "</div>";
+			}
+			if(data["regle"] == "Enlèvement Par Date" ){
+			value = "<div style='color: #00AD0D;padding: 1px;'>" + ovalue + "</div>";
+			}
+			if(data["type"] == "Reliquat" ){
+			value = "<div style='color: #FC412F;padding: 1px;'>" + ovalue + "</div>";
+			}
+		 }
+		
+		
+		 
+		return value
+	},
 	"filters": [
 		{
 			"fieldname": "customer",
