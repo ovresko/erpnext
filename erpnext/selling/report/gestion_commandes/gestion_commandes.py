@@ -68,13 +68,19 @@ def execute(filters=None):
 			"label": "Commande",
 			"fieldtype": "Link",
 			"options": "Sales Order",
+			"width": 100
+		})
+	columns.append({
+			"fieldname": "regle",
+			"label": "Livraison",
+			"fieldtype": "Link",
+			"options": "Shipping Rule",
 			"width": 150
 		})
-	
 	columns.append({
 			"fieldname": "item_commande",
 			"label": "Art. Commande",
-			"width": 0
+			"width": 10
 		})
 	columns.append({
 			"fieldname": "commercial",
@@ -164,6 +170,7 @@ def execute(filters=None):
 			item.territory,
 			item.parent,
 			item.name,
+			item.shipping_rule,
 			commerical,
 			item.warehouse,
 			qty,
