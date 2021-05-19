@@ -27,9 +27,7 @@ def execute(filters=None):
 	columns.append({
 			"fieldname": "item",
 			"label": "Article",
-			"fieldtype": "Link",
-			"options": "Item",
-			"width": 200
+			"width": 10
 		})
 	columns.append({
 			"fieldname": "item_name",
@@ -51,7 +49,7 @@ def execute(filters=None):
 			"label": "Client",
 			"fieldtype": "Link",
 			"options": "Customer",
-			"width": 150
+			"width": 80
 		})
 	columns.append({
 			"fieldname": "client",
