@@ -461,7 +461,10 @@ def get_conditions(filters):
 		conditions.append("it.item_group=%(group)s")
 	
 	if filters.get('prix_traite'):
-		conditions.append(""" it.prix_traite=%(prix_traite)s""")
+		if "Suspendu" != filters.get('prix_traite'):
+			conditions.append(""" it.prix_traite=%(prix_traite)s""")
+		else:
+			conditions.append(""" it.qts_total=0""")
 	#receipt
 	if filters.get('receipt'):
 		conditions.append(""" it.item_code in (select item_code from `tabPurchase Receipt Item` sqi where sqi.parent=%(receipt)s)""")
